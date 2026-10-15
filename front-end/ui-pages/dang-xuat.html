@@ -1,0 +1,2232 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description" content="Ginsengfood – Đăng xuất khỏi tài khoản thành viên. Bạn có thể đăng nhập lại bất cứ lúc nào để xem quyền lợi theo hạng.">
+  <meta name="theme-color" content="#072A4E">
+  <title>Ginsengfood – Đăng xuất</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Serif:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+  <link rel="preload" as="image" href="../public/banner_login.webp" fetchpriority="high">
+
+  <style>
+    /* =====================================================================
+       TRANG ĐĂNG XUẤT (mock tĩnh) — cùng token, phông, nút và kiểu thẻ với dang-nhap.html và trang-chu.html
+       Hai trạng thái trong một trang: hỏi xác nhận → đã đăng xuất. Bản mockup: không xoá phiên thật nào.
+       ===================================================================== */
+    :root {
+      --gf-navy: #10305F;
+      --gf-navy-dark: #072A4E;
+      --gf-navy-700: #315E82;
+      --gf-gold: #C69A2B;
+      --gf-gold-text: #7B5614;
+      --gf-gold-soft: #E8C979;
+      --gf-cream: #FBF8F1;
+      --gf-ivory: #FFF8EA;
+      --gf-sand: #F0EADF;
+      --gf-text: #172B4D;
+      --gf-muted: #667085;
+      --gf-border: #E8DDC3;
+      --tier-silver: #5C6673;
+      --tier-silver-accent: #9DA4AD;
+      --tier-silver-surface: #EEF0F2;
+
+      --radius-sm: 8px; --radius-md: 12px; --radius-lg: 16px; --radius-xl: 20px; --radius-pill: 999px;
+      --shadow-elevated: 0 18px 48px rgba(16,48,95,.14);
+      --focus-ring: 0 0 0 3px rgba(49,94,130,.28);
+      --motion-fast: 120ms; --motion-base: 180ms;
+      --ease-standard: cubic-bezier(.2,0,0,1);
+
+      --font-sans: Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      --font-serif: "Noto Serif", Georgia, "Times New Roman", serif;
+      --header-h: 74px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html { -webkit-text-size-adjust: 100%; }
+    body {
+      margin: 0; min-height: 100svh; display: flex; flex-direction: column;
+      background: var(--gf-cream); color: var(--gf-text);
+      font-family: var(--font-sans); font-size: 16px; line-height: 1.55; -webkit-font-smoothing: antialiased;
+    }
+    img { max-width: 100%; height: auto; display: block; }
+    a { color: var(--gf-navy); text-decoration: none; }
+    a:hover { color: var(--gf-navy-700); }
+    button { font: inherit; color: inherit; cursor: pointer; }
+    h1, h2, h3, p, ul { margin: 0; }
+    ul { padding: 0; list-style: none; }
+    :focus-visible { outline: none; box-shadow: var(--focus-ring); border-radius: var(--radius-sm); }
+    [hidden] { display: none !important; }
+    .icon { width: 1em; height: 1em; fill: none; stroke: currentColor; stroke-width: 1.85; stroke-linecap: round; stroke-linejoin: round; flex: 0 0 auto; }
+
+
+
+    /* =====================================================================
+       KHỐI THÂN TRANG XÁC THỰC — đồng bộ với storefront (/vi/logout)
+       Chép nguyên bộ kiểu AUTH_PAGES_CSS của storefront (mọi selector nằm dưới [data-auth-page]); tên class dùng đúng như
+       storefront. Hook của bản thiết kế (.card__title) giữ lại để script mock chạy như cũ.
+       ===================================================================== */
+    @font-face {
+      font-family: "Material Symbols Outlined";
+      src: url("../public/fonts/material-symbols/material-symbols-outlined-variable.woff2") format("woff2");
+      font-style: normal; font-weight: 100 700; font-display: block;
+    }
+    .material-symbols-outlined {
+      display: inline-flex; width: auto; min-width: 1em; height: auto; min-height: 1em; align-items: center; justify-content: center;
+      flex-shrink: 0; overflow: visible; text-align: center; vertical-align: middle; white-space: nowrap; direction: ltr;
+      font-family: "Material Symbols Outlined" !important; font-style: normal; font-weight: normal;
+      font-feature-settings: 'liga' 1; font-variant-ligatures: common-ligatures;
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      letter-spacing: normal; line-height: 1; text-transform: none; word-wrap: normal; -webkit-font-smoothing: antialiased;
+    }
+    /* Khung <main>: cột flex như .focus-main của storefront */
+    .auth { flex: 1 1 auto; display: flex; flex-direction: column; }
+    /* Đặt lại kiểu Tailwind preflight của storefront (margin/padding 0, input kế thừa phông, liên kết kế thừa màu) chỉ trong vùng trang; :where giữ độ ưu tiên bằng 0 */
+    :where([data-auth-page]) *, :where([data-auth-page]) *::before, :where([data-auth-page]) *::after { margin: 0; padding: 0; border: 0 solid; }
+    :where([data-auth-page]) button, :where([data-auth-page]) input { font: inherit; letter-spacing: inherit; color: inherit; background-color: transparent; border-radius: 0; }
+    :where([data-auth-page]) h1, :where([data-auth-page]) h2 { font-size: inherit; font-weight: inherit; }
+    :where([data-auth-page]) a { color: inherit; text-decoration: inherit; }
+    :where([data-auth-page]) ul { list-style: none; }
+    :where([data-auth-page]) img { display: block; max-width: 100%; height: auto; }
+    :where([data-auth-page]) button { cursor: default; }
+    [data-auth-page] {
+      /* Token cùng tên với storefront (globals.css) mà :root của bản thiết kế chưa có */
+      --gf-white: #FFFFFF; --gf-radius-sm: 8px; --gf-radius-md: 12px; --gf-radius-lg: 16px; --gf-radius-xl: 20px; --gf-radius-pill: 999px;
+      --gf-shadow-elevated: 0 18px 48px rgba(16, 48, 95, 0.14); --gf-focus-ring: 0 0 0 3px rgba(49, 94, 130, 0.28);
+      --gf-motion-fast: 120ms; --gf-motion-base: 180ms; --gf-ease-standard: cubic-bezier(0.2, 0, 0, 1);
+      --gf-font-sans: Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; --gf-font-serif: "Noto Serif", Georgia, "Times New Roman", serif;
+      line-height: 1.5;
+    }
+
+  [data-auth-page] {
+    --gf-auth-danger: #B42318;
+    --gf-auth-error-bg: #FEF3F2;
+    --gf-auth-error-border: #FDA29B;
+    --gf-auth-ok: #2F6F4A;
+    --gf-auth-ok-bg: #F1F7F2;
+    --gf-auth-ok-border: #C9E2CE;
+    --gf-auth-placeholder: #98A2B3;
+    --gf-auth-input-hover: #D9C79C;
+    --gf-auth-on-dark-muted: rgba(255, 255, 255, 0.88);
+    --gf-auth-quote-light: #F8E3A0;
+    --gf-auth-quote-mid: #E8C979;
+    --gf-auth-quote-dark: #D2A43C;
+    --gf-auth-who-shadow: rgba(16, 48, 95, 0.6);
+    display: flex;
+    flex: 1 1 auto;
+    width: 100%;
+    background: var(--gf-cream);
+    color: var(--gf-text);
+    font-family: var(--gf-font-sans);
+  }
+
+  [data-auth-page] *,
+  [data-auth-page] *::before,
+  [data-auth-page] *::after {
+    box-sizing: border-box;
+  }
+
+  [data-auth-page] .auth-page__stage {
+    display: flex;
+    width: 100%;
+    flex: 1 1 auto;
+    align-items: center;
+    justify-content: center;
+    padding: 34px 24px;
+  }
+
+  [data-auth-page] .auth-layout {
+    display: grid;
+    width: 100%;
+    max-width: 1080px;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+    overflow: hidden;
+    border: 1px solid var(--gf-border);
+    border-radius: var(--gf-radius-xl);
+    background: var(--gf-white);
+    box-shadow: var(--gf-shadow-elevated);
+  }
+
+  [data-auth-page] .auth-layout--single {
+    display: block;
+    max-width: 560px;
+  }
+
+  [data-auth-page] .auth-layout--login-single {
+    display: block;
+    max-width: 480px;
+  }
+
+  [data-auth-page] .auth-layout--reset {
+    max-width: 620px;
+  }
+
+  [data-auth-page] .auth-aside {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    background: var(--gf-navy-dark);
+    color: var(--gf-white);
+  }
+
+  [data-auth-page] .auth-aside__media {
+    position: relative;
+    min-height: 220px;
+    flex: 1 1 auto;
+  }
+
+  [data-auth-page] .auth-aside__media img,
+  [data-auth-page] .auth-card__media img {
+    object-fit: cover;
+  }
+
+  [data-auth-page] .auth-aside__media img {
+    object-position: 40% 60%;
+  }
+
+  [data-auth-page] .auth-aside__copy {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 22px 26px 26px;
+  }
+
+  [data-auth-page] .auth-aside__quote {
+    color: var(--gf-auth-quote-light);
+    font-family: var(--gf-font-serif);
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: -0.005em;
+    line-height: 1.22;
+  }
+
+  @supports ((-webkit-background-clip: text) or (background-clip: text)) {
+    [data-auth-page] .auth-aside__quote {
+      background: linear-gradient(
+        180deg,
+        var(--gf-auth-quote-light) 0%,
+        var(--gf-auth-quote-mid) 55%,
+        var(--gf-auth-quote-dark) 100%
+      );
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+  }
+
+  [data-auth-page] .auth-aside__rule {
+    display: block;
+    width: 58px;
+    height: 2px;
+    margin-top: 10px;
+    background: var(--gf-gold);
+  }
+
+  [data-auth-page] .auth-aside__perks,
+  [data-auth-page] .auth-keep-list {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  [data-auth-page] .auth-aside__perks {
+    gap: 8px;
+    color: var(--gf-auth-on-dark-muted);
+    font-size: 13.5px;
+    line-height: 1.45;
+  }
+
+  [data-auth-page] .auth-aside__perks li,
+  [data-auth-page] .auth-keep-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 9px;
+  }
+
+  [data-auth-page] .auth-aside__perks .material-symbols-outlined {
+    margin-top: 2px;
+    color: var(--gf-gold-soft);
+    font-size: 17px;
+  }
+
+  [data-auth-page] .auth-aside__perks strong {
+    color: var(--gf-white);
+  }
+
+  [data-auth-page] .auth-panel,
+  [data-auth-page] .auth-card__body {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+  }
+
+  [data-auth-page] .auth-panel {
+    padding: 34px 38px 30px;
+  }
+
+  [data-auth-page] .auth-card__media {
+    position: relative;
+    height: 140px;
+  }
+
+  [data-auth-page] .auth-card__media img {
+    object-position: 35% 60%;
+  }
+
+  [data-auth-page] .auth-card__body {
+    gap: 14px;
+    padding: 26px 30px 28px;
+  }
+
+  [data-auth-page] .auth-title,
+  [data-auth-page] .auth-card__title {
+    margin: 0;
+    color: var(--gf-navy);
+    font-family: var(--gf-font-serif);
+    font-weight: 700;
+  }
+
+  [data-auth-page] .auth-title {
+    font-size: 30px;
+    line-height: 1.2;
+  }
+
+  [data-auth-page] .auth-card__title {
+    font-size: 27px;
+    line-height: 1.25;
+  }
+
+  [data-auth-page] .auth-lead,
+  [data-auth-page] .auth-card__text {
+    margin: 0;
+    color: var(--gf-muted);
+    font-size: 14.5px;
+  }
+
+  [data-auth-page] .auth-lead {
+    margin-top: 8px;
+    line-height: 1.6;
+  }
+
+  [data-auth-page] .auth-card__text {
+    line-height: 1.65;
+  }
+
+  [data-auth-page] .auth-card__text strong {
+    color: var(--gf-text);
+  }
+
+  [data-auth-page] .auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-top: 20px;
+  }
+
+  [data-auth-page] .auth-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  [data-auth-page] .auth-field__label {
+    color: var(--gf-text);
+    font-size: 13.5px;
+    font-weight: 600;
+  }
+
+  [data-auth-page] .auth-field__box {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  [data-auth-page] .auth-field__lead {
+    position: absolute;
+    left: 14px;
+    z-index: 1;
+    color: var(--gf-muted);
+    font-size: 19px;
+    pointer-events: none;
+  }
+
+  [data-auth-page] .auth-field input {
+    width: 100%;
+    height: 50px;
+    border: 1px solid var(--gf-border);
+    border-radius: var(--gf-radius-md);
+    background: var(--gf-white);
+    color: var(--gf-text);
+    font: inherit;
+    font-size: 15px;
+    transition:
+      border-color var(--gf-motion-fast) var(--gf-ease-standard),
+      box-shadow var(--gf-motion-fast) var(--gf-ease-standard);
+  }
+
+  [data-auth-page] .auth-field input {
+    padding: 0 14px 0 42px;
+  }
+
+  [data-auth-page] .auth-field input::placeholder {
+    color: var(--gf-auth-placeholder);
+  }
+
+  [data-auth-page] .auth-field input:hover {
+    border-color: var(--gf-auth-input-hover);
+  }
+
+  [data-auth-page] .auth-field input:focus {
+    outline: none;
+    border-color: var(--gf-navy-700);
+    box-shadow: var(--gf-focus-ring);
+  }
+
+  [data-auth-page] .auth-field--password input {
+    padding-right: 52px;
+  }
+
+  [data-auth-page] .auth-field__toggle {
+    position: absolute;
+    right: 7px;
+    display: grid;
+    width: 38px;
+    height: 38px;
+    place-items: center;
+    border: 0;
+    border-radius: var(--gf-radius-pill);
+    background: transparent;
+    color: var(--gf-muted);
+    cursor: pointer;
+  }
+
+  [data-auth-page] .auth-field__toggle:hover {
+    background: var(--gf-ivory);
+    color: var(--gf-navy);
+  }
+
+  [data-auth-page] .auth-field__error {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin: 0;
+    color: var(--gf-auth-danger);
+    font-size: 12.5px;
+    font-weight: 600;
+  }
+
+  [data-auth-page] .auth-field__error .material-symbols-outlined {
+    font-size: 15px;
+  }
+
+  [data-auth-page] .auth-field input[aria-invalid="true"] {
+    border-color: var(--gf-auth-danger);
+  }
+
+  [data-auth-page] .auth-form__row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+  }
+
+  [data-auth-page] .auth-check {
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+    gap: 9px;
+    color: var(--gf-text);
+    cursor: pointer;
+    font-size: 13.5px;
+  }
+
+  [data-auth-page] .auth-check input {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--gf-navy);
+  }
+
+  [data-auth-page] .auth-link,
+  [data-auth-page] .auth-mode-button {
+    color: var(--gf-navy);
+    font-size: 13.5px;
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  [data-auth-page] .auth-link:hover,
+  [data-auth-page] .auth-mode-button:hover {
+    color: var(--gf-navy-700);
+  }
+
+  [data-auth-page] .auth-mode-button {
+    min-height: 44px;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+    padding: 0 2px;
+  }
+
+  [data-auth-page] .auth-alert {
+    display: flex;
+    align-items: flex-start;
+    gap: 9px;
+    margin: 0;
+    padding: 11px 14px;
+    border: 1px solid var(--gf-auth-error-border);
+    border-radius: var(--gf-radius-md);
+    background: var(--gf-auth-error-bg);
+    color: var(--gf-auth-danger);
+    font-size: 13.5px;
+    line-height: 1.5;
+  }
+
+  [data-auth-page] .auth-alert .material-symbols-outlined {
+    margin-top: 2px;
+    font-size: 17px;
+  }
+
+  /* Thông báo thành công một lần (P1-17-F01-P01): cùng khuôn với .auth-alert,
+  tông xanh. */
+  [data-auth-page] .auth-notice {
+    display: flex;
+    align-items: flex-start;
+    gap: 9px;
+    margin: 0;
+    padding: 11px 14px;
+    border: 1px solid var(--gf-auth-ok-border);
+    border-radius: var(--gf-radius-md);
+    background: var(--gf-auth-ok-bg);
+    color: var(--gf-auth-ok);
+    font-size: 13.5px;
+    line-height: 1.5;
+  }
+
+  [data-auth-page] .auth-notice .material-symbols-outlined {
+    margin-top: 2px;
+    font-size: 17px;
+  }
+
+  [data-auth-page] .auth-visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    margin: -1px;
+    padding: 0;
+    border: 0;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  [data-auth-page] .auth-button {
+    display: inline-flex;
+    min-height: 48px;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    border: 1px solid transparent;
+    border-radius: var(--gf-radius-pill);
+    cursor: pointer;
+    padding: 0 22px;
+    font: inherit;
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: none;
+    transition:
+      background var(--gf-motion-base) var(--gf-ease-standard),
+      color var(--gf-motion-base) var(--gf-ease-standard),
+      box-shadow var(--gf-motion-base) var(--gf-ease-standard);
+  }
+
+  [data-auth-page] .auth-button--primary {
+    background: var(--gf-navy);
+    color: var(--gf-white);
+  }
+
+  [data-auth-page] .auth-button--primary:hover {
+    background: var(--gf-navy-700);
+    color: var(--gf-white);
+  }
+
+  [data-auth-page] .auth-button--outline {
+    border-color: var(--gf-navy);
+    background: var(--gf-white);
+    color: var(--gf-navy);
+  }
+
+  [data-auth-page] .auth-button--outline:hover {
+    background: var(--gf-ivory);
+  }
+
+  [data-auth-page] .auth-button--block {
+    width: 100%;
+  }
+
+  [data-auth-page] .auth-button:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+
+  [data-auth-page] .auth-button .material-symbols-outlined {
+    font-size: 20px;
+  }
+
+  [data-auth-page] .auth-staff-note {
+    margin: 0;
+    padding-top: 2px;
+    color: var(--gf-muted);
+    font-size: 12px;
+    line-height: 1.5;
+    text-align: center;
+  }
+
+  [data-auth-page] .auth-foot {
+    margin: 18px 0 0;
+    padding-top: 16px;
+    border-top: 1px solid var(--gf-border);
+    color: var(--gf-muted);
+    font-size: 14px;
+  }
+
+  [data-auth-page] .auth-who {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 14px;
+    border: 1px solid var(--gf-border);
+    border-left: 4px solid var(--tier);
+    border-radius: var(--gf-radius-lg);
+    background: var(--gf-white);
+    box-shadow: 0 10px 22px -16px var(--gf-auth-who-shadow);
+  }
+
+  [data-auth-page] .auth-who__avatar {
+    display: grid;
+    width: 38px;
+    height: 38px;
+    flex: 0 0 auto;
+    place-items: center;
+    overflow: hidden;
+    border: 1.5px solid var(--tier-accent);
+    border-radius: var(--gf-radius-pill);
+    background: var(--tier-surface);
+    color: var(--tier);
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  [data-auth-page] .auth-who__avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  [data-auth-page] .auth-who__text {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    line-height: 1.3;
+  }
+
+  [data-auth-page] .auth-who__name {
+    overflow: hidden;
+    color: var(--gf-text);
+    font-size: 14.5px;
+    font-weight: 600;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  [data-auth-page] .auth-who__tier {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--tier);
+    font-size: 12.5px;
+    font-weight: 600;
+  }
+
+  [data-auth-page] .auth-who__dot {
+    width: 7px;
+    height: 7px;
+    border-radius: var(--gf-radius-pill);
+    background: var(--tier-accent);
+    box-shadow: 0 0 0 1.5px var(--gf-white), 0 0 0 3px var(--tier-surface);
+  }
+
+  [data-auth-page] .auth-card__icon {
+    display: grid;
+    width: 46px;
+    height: 46px;
+    place-items: center;
+    border: 1px solid var(--gf-border);
+    border-radius: var(--gf-radius-pill);
+    background: var(--gf-ivory);
+    color: var(--gf-gold-text);
+  }
+
+  [data-auth-page] .auth-card__icon--done {
+    border-color: var(--gf-auth-ok-border);
+    background: var(--gf-auth-ok-bg);
+    color: var(--gf-auth-ok);
+  }
+
+  [data-auth-page] .auth-card__icon .material-symbols-outlined {
+    font-size: 23px;
+  }
+
+  [data-auth-page] .auth-keep-list {
+    gap: 8px;
+    padding: 12px 14px;
+    border: 1px solid var(--gf-border);
+    border-radius: var(--gf-radius-lg);
+    background: var(--gf-ivory);
+    font-size: 13.5px;
+    line-height: 1.5;
+  }
+
+  [data-auth-page] .auth-keep-list .material-symbols-outlined {
+    margin-top: 2px;
+    color: var(--gf-gold-text);
+    font-size: 17px;
+  }
+
+  [data-auth-page] .auth-keep-list strong {
+    color: var(--gf-text);
+  }
+
+  [data-auth-page] .auth-card__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  [data-auth-page] .auth-card__actions .auth-button {
+    flex: 1 1 200px;
+  }
+
+  [data-auth-page] .auth-card__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 14px;
+    margin: 0;
+    font-size: 13px;
+  }
+
+  [data-auth-page] .auth-card__links a {
+    color: var(--gf-navy);
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  [data-auth-page] .auth-card__note {
+    margin: 0;
+    color: var(--gf-muted);
+    font-size: 12px;
+    line-height: 1.5;
+  }
+
+  [data-auth-page] .auth-session-loading {
+    display: flex;
+    min-height: 280px;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    color: var(--gf-muted);
+    font-size: 14px;
+  }
+
+  @media (max-width: 1023px) {
+    [data-auth-page] .auth-layout:not(.auth-layout--single) {
+          max-width: 480px;
+          grid-template-columns: minmax(0, 1fr);
+        }
+
+    [data-auth-page] .auth-aside {
+          display: none;
+        }
+
+    [data-auth-page] .auth-panel {
+          padding: 26px 24px 24px;
+        }
+  }
+
+  @media (max-width: 767px) {
+    [data-auth-page] .auth-page__stage {
+          align-items: flex-start;
+          padding: 18px 16px 24px;
+        }
+
+    [data-auth-page] .auth-panel,
+      [data-auth-page] .auth-card__body {
+          padding: 22px 18px 20px;
+        }
+
+    [data-auth-page] .auth-title {
+          font-size: 25px;
+        }
+
+    [data-auth-page] .auth-card__title {
+          font-size: 23px;
+        }
+
+    [data-auth-page] .auth-card__media {
+          height: 116px;
+        }
+
+    [data-auth-page] .auth-field input {
+          height: 48px;
+        }
+
+    [data-auth-page] .auth-card__actions .auth-button {
+          flex: 1 1 100%;
+        }
+  }
+
+  @media (max-width: 359px) {
+    [data-auth-page] .auth-card__media {
+          display: none;
+        }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-auth-page] * {
+          scroll-behavior: auto !important;
+          transition-duration: 0.01ms !important;
+        }
+  }
+
+    /* ---- Hook của bản thiết kế ---- */
+    /* Màu hạng (--tier*) trong storefront do khung gọn gán theo [data-tier]; ở đây dùng token Silver của bản thiết kế */
+    [data-auth-page] .auth-who[data-tier="silver"] { --tier: var(--tier-silver); --tier-accent: var(--tier-silver-accent); --tier-surface: var(--tier-silver-surface); }
+    /* next/image fill của storefront: ảnh phủ kín khung */
+    [data-auth-page] .auth-aside__media img, [data-auth-page] .auth-card__media img { position: absolute; inset: 0; width: 100%; height: 100%; }
+
+
+    @media (max-width: 767px) {
+      :root { --header-h: 64px; }
+    }
+    @media (prefers-reduced-motion: reduce) { * { transition-duration: .01ms !important; } }
+  </style>
+<!-- gf-shell:css:begin -->
+<style id="gf-shell-css">
+/* ---- Biến của lớp vỏ (giá trị chép từ globals.css của storefront; không phụ thuộc token của từng trang) ---- */
+.storefront-reference-shell, .focus-header, .gf-site-footer, .gf-cw, .gf-scroll-top, .to-top {
+  --storefront-background: #FBF7EF;
+  --storefront-surface: #FFFFFF;
+  --storefront-navy: #10305F;
+  --storefront-navy-dark: #0B2447;
+  --storefront-navy-deep: #081B38;
+  --storefront-blue: #1B79C0;
+  --storefront-link: #12639E;
+  --storefront-metal-gold: #C9A227;
+  --storefront-natural: #2F7A2A;
+  --storefront-sale-error: #BA1A1A;
+  --storefront-tier-silver: #B9BFC7;
+  --storefront-tier-silver-light: #F2F4F7;
+  --storefront-tier-silver-dark: #8F959D;
+  --storefront-tier-gold: #D4AF37;
+  --storefront-tier-gold-light: #FFE9A8;
+  --storefront-tier-gold-dark: #B08D22;
+  --storefront-tier-platinum: #E5EAF0;
+  --storefront-tier-platinum-light: #FFFFFF;
+  --storefront-tier-platinum-dark: #A9B6C6;
+  --storefront-tier-diamond: #EAF6FF;
+  --storefront-tier-diamond-light: #FFFFFF;
+  --storefront-tier-diamond-dark: #B9D4EA;
+  --gf-navy: #10305F;
+  --gf-navy-dark: #072A4E;
+  --gf-navy-700: #315E82;
+  --gf-gold: #C69A2B;
+  --gf-gold-text: #7B5614;
+  --gf-gold-soft: #E8C979;
+  --gf-cream: #FBF8F1;
+  --gf-ivory: #FFF8EA;
+  --gf-sand: #F0EADF;
+  --gf-white: #FFFFFF;
+  --gf-text: #172B4D;
+  --gf-muted: #667085;
+  --gf-border: #E8DDC3;
+  --gf-border-strong: #D9C79C;
+  --gf-danger: #B42318;
+  --gf-container: 1240px;
+  --gf-font-sans: var(--font-sans, Inter, "Segoe UI", Arial, sans-serif);
+  --gf-font-serif: var(--font-serif, "Noto Serif", Georgia, serif);
+  --gf-motion-fast: .12s;
+  --gf-motion-base: .18s;
+  --gf-ease-standard: cubic-bezier(.2, 0, 0, 1);
+  --gf-focus-ring: 0 0 0 3px rgba(49, 94, 130, .28);
+  --gf-radius-sm: 8px;
+  --gf-radius-pill: 999px;
+}
+
+/* ---- Reset có phạm vi: thay cho preflight của storefront, chỉ áp cho lớp vỏ (không đụng phần thân trang) ---- */
+:where(.storefront-reference-shell, .focus-header, .gf-site-footer, .gf-cw, .gf-scroll-top, .to-top) {
+  font-family: var(--font-sans, Inter, "Segoe UI", Arial, sans-serif);
+  color: #1b1c1a;
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+}
+:where(.storefront-reference-shell, .focus-header, .gf-site-footer, .gf-cw, .gf-scroll-top, .to-top) :where(*, *::before, *::after) {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  border: 0 solid;
+}
+:where(.storefront-reference-shell, .focus-header, .gf-site-footer, .gf-cw, .gf-scroll-top, .to-top) :where(button, input, select, textarea) {
+  font: inherit;
+  letter-spacing: inherit;
+  color: inherit;
+  border-radius: 0;
+  background-color: transparent;
+  opacity: 1;
+}
+:where(.storefront-reference-shell, .focus-header, .gf-site-footer, .gf-cw, .gf-scroll-top, .to-top) :where(a) {
+  color: inherit;
+  text-decoration: inherit;
+}
+:where(.storefront-reference-shell, .focus-header, .gf-site-footer, .gf-cw, .gf-scroll-top, .to-top) :where(ul, ol) {
+  list-style: none;
+}
+:where(.storefront-reference-shell, .focus-header, .gf-site-footer, .gf-cw, .gf-scroll-top, .to-top) :where(img, svg) {
+  display: block;
+  vertical-align: middle;
+}
+:where(.storefront-reference-shell, .focus-header, .gf-site-footer, .gf-cw, .gf-scroll-top, .to-top) :where(img) {
+  max-width: 100%;
+  height: auto;
+}
+.gf-site-footer, .gf-site-footer .home-footer { box-sizing: border-box; }
+
+/* ---- Biểu tượng Material Symbols (phông cục bộ của storefront) ---- */
+@font-face {
+  font-family: "Material Symbols Outlined";
+  src: url("../public/fonts/material-symbols/material-symbols-outlined-variable.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 100 700;
+  font-display: block;
+}
+.material-symbols-outlined {
+  display: inline-flex;
+  width: auto;
+  min-width: 1em;
+  height: auto;
+  min-height: 1em;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  overflow: visible;
+  text-align: center;
+  vertical-align: middle;
+  white-space: nowrap;
+  direction: ltr;
+  font-family: "Material Symbols Outlined" !important;
+  font-style: normal;
+  font-weight: normal;
+  font-feature-settings: 'liga' 1;
+  font-variant-ligatures: common-ligatures;
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  letter-spacing: normal;
+  line-height: 1;
+  text-transform: none;
+  word-wrap: normal;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---- Footer chung (HomeFooter) ---- */
+.gf-site-footer .home-frame { width: 100%; min-width: 0px; max-width: 1320px; margin-inline: auto; padding-inline: 40px; }
+.gf-site-footer .home-footer { background: var(--gf-navy-dark); color: var(--gf-white); font-family: var(--gf-font-sans); }
+.gf-site-footer .home-footer__rule { background: var(--gf-gold); height: 2px; }
+.gf-site-footer .home-footer__grid { grid-template-columns: clamp(250px, 19.5vw, 280px) minmax(0px, 1fr) minmax(0px, 1fr) minmax(0px, 1.4fr) clamp(190px, 15vw, 220px); gap: 32px; padding: 46px 0px 34px; display: grid; }
+.gf-site-footer .home-footer__brand { flex-direction: column; gap: 16px; display: flex; }
+.gf-site-footer .home-footer__logo img { width: auto; height: 42px; }
+.gf-site-footer .home-footer__slogan { font-family: var(--gf-font-serif); flex-direction: column; gap: 6px; display: flex; }
+.gf-site-footer .home-footer__slogan b { font-size: 21px; font-weight: 700; line-height: 1.3; }
+.gf-site-footer .home-footer__slogan i { color: var(--gf-gold-soft); font-size: 19px; font-weight: 600; line-height: 1.3; }
+.gf-site-footer .home-footer__slogan .home-story__rule { width: 52px; margin-top: 4px; }
+.gf-site-footer .home-footer__phil { color: rgba(255, 255, 255, 0.74); max-width: 300px; font-size: 14px; line-height: 1.65; }
+.gf-site-footer .home-footer__addr { color: rgba(255, 255, 255, 0.74); flex-direction: column; gap: 5px; padding-top: 4px; font-size: 13.5px; font-style: normal; display: flex; }
+.gf-site-footer .home-footer__addr a { color: var(--gf-gold-soft); text-decoration: none; }
+.gf-site-footer .home-footer__col { border-left: 1px solid rgba(255, 255, 255, 0.12); flex-direction: column; gap: 14px; padding-left: 24px; display: flex; }
+.gf-site-footer .home-footer__col-title { color: var(--gf-gold); letter-spacing: 0.12em; text-transform: uppercase; align-items: center; gap: 8px; font-size: 11.5px; font-weight: 700; display: flex; }
+.gf-site-footer .home-footer__col-title::before { background: var(--gf-gold); content: ""; width: 14px; height: 1.5px; }
+.gf-site-footer .home-footer__links { flex-direction: column; gap: 10px; margin: 0px; padding: 0px; list-style: none; display: flex; }
+.gf-site-footer .home-footer__links a, .gf-site-footer .home-footer__links-plain { color: rgba(255, 255, 255, 0.8); font-size: 14px; line-height: 1.4; text-decoration: none; }
+.gf-site-footer .home-footer__links-plain { color: rgba(255, 255, 255, 0.52); }
+.gf-site-footer .home-footer__social { display: flex; flex-wrap: wrap; margin: 0px; padding: 0px; gap: 14px; list-style: none; }
+.gf-site-footer .home-footer__social-btn { display: inline-grid; width: 48px; height: 48px; place-items: center; border: 2px solid var(--gf-gold); border-radius: 999px; background: var(--gf-white); text-decoration: none; transition: border-color 160ms ease, transform 160ms ease; }
+.gf-site-footer .home-footer__social-btn svg { width: 28px; height: 28px; }
+.gf-site-footer .home-footer__social-btn[data-disabled="true"] { cursor: default; }
+.gf-site-footer a.home-footer__social-btn:focus-visible { outline: 2px solid var(--gf-white); outline-offset: 3px; border-radius: 999px; }
+@media (hover: hover) { .gf-site-footer a.home-footer__social-btn:hover { border-color: var(--gf-gold-soft); transform: translateY(-2px); } }
+@media (prefers-reduced-motion: reduce) { .gf-site-footer .home-footer__social-btn { transition: none; } .gf-site-footer a.home-footer__social-btn:hover { transform: none; } }
+.gf-site-footer .home-footer__line { background: rgba(255, 255, 255, 0.12); height: 1px; }
+.gf-site-footer .home-footer__legal { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 22px 0px 30px; text-align: center; }
+.gf-site-footer .home-footer__legal-name { margin: 0px; color: var(--gf-white); font-size: 14px; font-weight: 700; letter-spacing: 0.04em; line-height: 1.4; }
+.gf-site-footer .home-footer__legal-line { margin: 0px; color: rgba(255, 255, 255, 0.72); font-size: 13.5px; line-height: 1.5; }
+@media (hover: hover) {
+  .gf-site-footer .home-footer__links a:hover { color: var(--gf-white); }
+}
+@media (max-width: 1279px) {
+  .gf-site-footer .home-footer__grid { grid-template-columns: repeat(2, minmax(0px, 1fr)); gap: 32px; }
+  .gf-site-footer .home-footer__brand { grid-column: 1 / -1; }
+  .gf-site-footer .home-footer__col { border-left: 0px; padding-left: 0px; }
+}
+@media (max-width: 767px) {
+  .gf-site-footer .home-footer__grid { grid-template-columns: minmax(0px, 1fr); gap: 26px; padding: 32px 0px 26px; }
+}
+.gf-site-footer .home-story__rule { background: var(--gf-gold); width: 56px; height: 1.5px; margin-top: 6px; display: block; }
+@media (max-width: 1279px) {
+  .gf-site-footer .home-frame { padding-inline: 32px; }
+}
+@media (max-width: 767px) {
+  .gf-site-footer .home-frame { padding-inline: 16px; }
+}
+
+/* ---- Nút và khung chat tư vấn (StorefrontConsultationWidget, theme navy + kem). Mở/đóng bằng CSS thuần. ---- */
+.gf-cw {
+  display: contents;
+  --cw-navy: #10305F;
+  --cw-navy-dark: #072A4E;
+  --cw-navy-700: #315E82;
+  --cw-gold: #C69A2B;
+  --cw-gold-soft: #E8C979;
+  --cw-gold-text: #7B5614;
+  --cw-cream: #FBF8F1;
+  --cw-ivory: #FFF8EA;
+  --cw-border: #E8DDC3;
+  --cw-border-strong: #D9C79C;
+  --cw-text: #172B4D;
+  --cw-muted: #667085;
+  font-family: var(--font-sans, Inter, "Segoe UI", Arial, sans-serif);
+}
+.gf-cw__toggle {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}
+.gf-cw__dock {
+  position: fixed;
+  bottom: calc(6rem + env(safe-area-inset-bottom));
+  right: calc(1rem + env(safe-area-inset-right));
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+.gf-cw__launcher {
+  position: relative;
+  display: flex;
+  width: 3.5rem;
+  height: 3.5rem;
+  align-items: center;
+  justify-content: flex-end;
+  overflow: hidden;
+  padding: 0 .5rem;
+  border: 1.5px solid var(--cw-gold);
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--cw-navy) 0%, var(--cw-navy-dark) 100%);
+  color: #fff;
+  box-shadow: 0 16px 36px -14px rgba(7, 42, 78, .65), 0 0 0 4px rgba(198, 154, 43, .16);
+  cursor: pointer;
+  transition: width 300ms ease-out, box-shadow 300ms ease-out, transform 300ms ease-out, background-color 300ms ease-out, border-color 300ms ease-out;
+}
+.gf-cw__launcher:hover {
+  width: 14.25rem;
+  border-color: var(--cw-gold-soft);
+  background: linear-gradient(135deg, var(--cw-navy-700) 0%, var(--cw-navy) 100%);
+  box-shadow: 0 20px 44px -14px rgba(7, 42, 78, .75), 0 0 0 5px rgba(198, 154, 43, .24);
+}
+.gf-cw__launcher:active { transform: scale(.95); }
+.gf-cw__toggle:focus-visible + .gf-cw__dock .gf-cw__launcher { outline: 3px solid var(--cw-gold-soft); outline-offset: 3px; }
+.gf-cw__label {
+  max-width: 0;
+  padding-right: 0;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: normal;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateX(.75rem);
+  pointer-events: none;
+  transition: max-width 300ms ease-out, opacity 300ms ease-out, padding 300ms ease-out, transform 300ms ease-out;
+}
+.gf-cw__launcher:hover .gf-cw__label {
+  max-width: 12rem;
+  padding-right: .75rem;
+  opacity: 1;
+  transform: none;
+}
+.gf-cw__icon {
+  position: relative;
+  display: grid;
+  width: 2.5rem;
+  height: 2.5rem;
+  flex-shrink: 0;
+  place-items: center;
+  overflow: hidden;
+  border-radius: 999px;
+  background: var(--cw-ivory);
+  color: var(--cw-navy);
+  box-shadow: inset 0 0 0 1.5px var(--cw-gold), 0 6px 16px -8px rgba(0, 0, 0, .55);
+  transition: transform 300ms ease-out, background-color 300ms ease-out;
+}
+.gf-cw__launcher:hover .gf-cw__icon { background: #fff; transform: translateX(-.25rem) rotate(-3deg); }
+.gf-cw__icon svg { width: 1.75rem; height: 1.75rem; }
+.gf-cw__panel {
+  position: fixed;
+  z-index: 110;
+  bottom: calc(5.5rem + env(safe-area-inset-bottom));
+  left: calc(1rem + env(safe-area-inset-left));
+  right: calc(1rem + env(safe-area-inset-right));
+  top: calc(var(--storefront-sticky-header-height, 65px) + 1rem);
+  display: flex;
+  height: min(590px, calc(100dvh - 8rem));
+  max-height: calc(100dvh - var(--storefront-sticky-header-height, 65px) - 7rem);
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--cw-border);
+  border-radius: 22px;
+  background: var(--cw-cream);
+  color: var(--cw-text);
+  box-shadow: 0 30px 72px -28px rgba(16, 48, 95, .5), 0 0 0 1px rgba(255, 255, 255, .6) inset;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(1rem);
+  transition: all 300ms cubic-bezier(.4, 0, .2, 1);
+}
+.gf-cw__toggle:checked ~ .gf-cw__panel { opacity: 1; visibility: visible; transform: none; }
+@media (min-width: 640px) {
+  .gf-cw__dock { bottom: calc(6.5rem + env(safe-area-inset-bottom)); right: calc(2rem + env(safe-area-inset-right)); }
+  .gf-cw__panel {
+    bottom: calc(6.25rem + env(safe-area-inset-bottom));
+    left: auto;
+    right: calc(2rem + env(safe-area-inset-right));
+    top: auto;
+    height: min(600px, calc(100dvh - 8rem));
+    max-height: calc(100dvh - 8rem);
+    width: 380px;
+  }
+}
+@media (min-width: 768px) { .gf-cw__panel { width: 404px; } }
+.gf-cw__head {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  overflow: hidden;
+  padding: 1rem;
+  border-bottom: 2px solid var(--cw-gold);
+  background: linear-gradient(135deg, var(--cw-navy) 0%, var(--cw-navy-dark) 100%);
+  color: #fff;
+}
+.gf-cw__head::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 0% 0%, rgba(255, 255, 255, .1), transparent 46%);
+  pointer-events: none;
+}
+.gf-cw__who { position: relative; display: flex; align-items: center; gap: .75rem; }
+.gf-cw__avatar {
+  display: grid;
+  width: 3rem;
+  height: 3rem;
+  flex-shrink: 0;
+  place-items: center;
+  overflow: hidden;
+  border-radius: 999px;
+  background: var(--cw-ivory);
+  color: var(--cw-navy);
+  box-shadow: inset 0 0 0 1.5px var(--cw-gold), 0 10px 22px -12px rgba(0, 0, 0, .7);
+}
+.gf-cw__avatar svg { width: 2rem; height: 2rem; }
+.gf-cw__title {
+  color: #fff;
+  font-family: var(--font-serif, "Noto Serif", Georgia, serif);
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: 0;
+}
+.gf-cw__sub { margin-top: .125rem; color: rgba(255, 255, 255, .84); font-size: 13px; font-weight: 500; line-height: 1.45; }
+.gf-cw__actions { position: relative; display: flex; align-items: center; gap: .5rem; }
+.gf-cw__action {
+  display: grid;
+  width: 2.25rem;
+  height: 2.25rem;
+  place-items: center;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .1);
+  color: rgba(255, 255, 255, .9);
+  cursor: pointer;
+  transition: background-color 150ms, color 150ms;
+}
+.gf-cw__action:hover { background: rgba(255, 255, 255, .2); color: #fff; }
+.gf-cw__action .material-symbols-outlined { font-size: 20px; }
+.gf-cw__list {
+  display: flex;
+  flex: 1 1 0%;
+  flex-direction: column;
+  gap: 1rem;
+  overflow-y: auto;
+  padding: 1rem;
+  background: linear-gradient(180deg, var(--cw-cream) 0%, #F6F0E2 100%);
+}
+.gf-cw__msg { display: flex; flex-direction: column; align-items: flex-start; gap: .25rem; }
+.gf-cw__bubble {
+  max-width: 94%;
+  width: fit-content;
+  padding: .75rem .875rem;
+  border: 1px solid var(--cw-border);
+  border-radius: 4px 18px 18px 18px;
+  background: #fff;
+  color: var(--cw-text);
+  font-size: 14px;
+  line-height: 1.5rem;
+  box-shadow: 0 10px 22px -18px rgba(16, 48, 95, .4);
+}
+.gf-cw__bubble p + p { margin-top: .75rem; }
+.gf-cw__time { margin-left: .25rem; color: var(--cw-muted); font-size: 13px; font-weight: 600; line-height: 1.45; }
+.gf-cw__composer {
+  display: flex;
+  flex-direction: column;
+  gap: .75rem;
+  padding: 1rem;
+  border-top: 1px solid var(--cw-border);
+  background: #fff;
+}
+.gf-cw__lead {
+  align-self: flex-start;
+  padding: .25rem .75rem;
+  border: 1px solid var(--cw-gold);
+  border-radius: 999px;
+  background: var(--cw-ivory);
+  color: var(--cw-gold-text);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.45;
+  cursor: pointer;
+}
+.gf-cw__lead:hover { background: #FDEFD2; }
+.gf-cw__chips { display: flex; align-items: flex-start; gap: .5rem; }
+.gf-cw__chiplist { display: flex; min-width: 0; flex: 1 1 0%; flex-wrap: wrap; gap: .375rem .75rem; }
+.gf-cw__chip {
+  display: inline-flex;
+  min-height: 2rem;
+  max-width: 100%;
+  align-items: center;
+  padding: .25rem .75rem;
+  border: 1px solid var(--cw-border-strong);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--cw-navy);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.25rem;
+  text-align: left;
+  cursor: pointer;
+}
+.gf-cw__chip:hover { border-color: var(--cw-gold); background: var(--cw-ivory); }
+.gf-cw__chipsoff {
+  display: grid;
+  width: 1.75rem;
+  height: 1.75rem;
+  flex-shrink: 0;
+  place-items: center;
+  border-radius: 999px;
+  color: var(--cw-muted);
+  cursor: pointer;
+}
+.gf-cw__chipsoff .material-symbols-outlined { font-size: 16px; }
+.gf-cw__row { display: flex; align-items: flex-end; gap: .5rem; }
+.gf-cw__input {
+  display: block;
+  min-height: 2.75rem;
+  min-width: 0;
+  flex: 1 1 0%;
+  padding: .625rem .75rem;
+  border: 1px solid var(--cw-border-strong);
+  border-radius: 16px;
+  background: var(--cw-cream);
+  color: var(--cw-text);
+  font-size: 14px;
+  line-height: 1.5rem;
+  resize: none;
+  outline: none;
+}
+.gf-cw__input::placeholder { color: var(--cw-muted); }
+.gf-cw__input:focus { border-color: var(--cw-navy); background: #fff; box-shadow: 0 0 0 3px rgba(16, 48, 95, .12); }
+.gf-cw__send {
+  display: grid;
+  width: 2.75rem;
+  height: 2.75rem;
+  flex-shrink: 0;
+  place-items: center;
+  border-radius: 14px;
+  background: var(--cw-navy);
+  color: #fff;
+  opacity: .5;
+  cursor: not-allowed;
+}
+.gf-cw__send .material-symbols-outlined { font-size: 24px; }
+@media (prefers-reduced-motion: reduce) {
+  .gf-cw__launcher, .gf-cw__label, .gf-cw__icon, .gf-cw__panel { transition: none; }
+}
+
+/* ---- Neo đầu trang cho nút "Lên đầu trang" không dùng JS ---- */
+.gf-top-anchor { position: absolute; top: 0; left: 0; width: 1px; height: 1px; pointer-events: none; }
+
+/* ---- Nút lên đầu trang (StorefrontScrollTopButton) ---- */
+.gf-scroll-top,
+.to-top {
+  position: fixed;
+  bottom: calc(10.5rem + env(safe-area-inset-bottom));
+  right: calc(1rem + env(safe-area-inset-right));
+  z-index: 100;
+  display: flex;
+  width: 3.5rem;
+  height: 3.5rem;
+  align-items: center;
+  justify-content: center;
+  border: 1.5px solid #C69A2B;
+  border-radius: 999px;
+  background: #072A4E;
+  color: #fff;
+  box-shadow: 0 10px 26px rgba(16, 48, 95, .22);
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 300ms cubic-bezier(.4, 0, .2, 1);
+}
+.gf-scroll-top:hover,
+.to-top:hover {
+  transform: translateY(-2px);
+  background: #10305F;
+  color: #fff;
+  box-shadow: 0 18px 48px rgba(16, 48, 95, .14);
+}
+.gf-scroll-top:focus-visible,
+.to-top:focus-visible {
+  outline: none;
+  border-radius: 999px;
+  box-shadow: 0 0 0 3px rgba(198, 154, 43, .6);
+}
+.gf-scroll-top:active,
+.to-top:active { transform: scale(.95); }
+.gf-scroll-top .material-symbols-outlined,
+.to-top .material-symbols-outlined { font-size: 24px; transition: transform 300ms cubic-bezier(.4, 0, .2, 1); }
+.gf-scroll-top:hover .material-symbols-outlined,
+.to-top:hover .material-symbols-outlined { transform: translateY(-2px); }
+.gf-scroll-top__tip {
+  position: absolute;
+  right: 100%;
+  margin-right: 1rem;
+  padding: 6px 12px;
+  border-radius: 8px;
+  background: #072A4E;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 16px;
+  white-space: nowrap;
+  box-shadow: 0 10px 26px rgba(16, 48, 95, .22);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 150ms;
+}
+.gf-scroll-top:hover .gf-scroll-top__tip,
+.gf-scroll-top:focus-visible .gf-scroll-top__tip,
+.to-top:hover .gf-scroll-top__tip,
+.to-top:focus-visible .gf-scroll-top__tip { opacity: 1; }
+@media (min-width: 640px) {
+  .gf-scroll-top, .to-top {
+    bottom: calc(11rem + env(safe-area-inset-bottom));
+    right: calc(2rem + env(safe-area-inset-right));
+  }
+}
+/* Bản có JS sẵn (#toTop) bật bằng lớp is-on; bản không JS hiện khi đã cuộn quá 200px nhờ timeline cuộn của CSS. */
+.to-top { opacity: 0; visibility: hidden; pointer-events: none; }
+.to-top.is-on { opacity: 1; visibility: visible; pointer-events: auto; }
+.gf-scroll-top { opacity: 0; pointer-events: none; }
+@supports (animation-timeline: scroll()) {
+  @keyframes gf-scroll-top-in { from { opacity: 0; pointer-events: none; } to { opacity: 1; pointer-events: auto; } }
+  .gf-scroll-top {
+    animation: gf-scroll-top-in linear both;
+    animation-timeline: scroll(root block);
+    animation-range: 200px 201px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .gf-scroll-top, .to-top, .gf-scroll-top .material-symbols-outlined, .to-top .material-symbols-outlined { transition: none; }
+  .gf-scroll-top:hover, .to-top:hover { transform: none; }
+}
+
+/* ---- Header gọn của khung tập trung (StorefrontFocusHeader) ---- */
+.focus-header { font-family: var(--gf-font-sans); }
+.focus-header :focus-visible { outline: none; box-shadow: var(--gf-focus-ring); border-radius: var(--gf-radius-sm); }
+.focus-header .locale-dropdown:focus-within .locale-menu { display: grid; }
+.focus-header .locale-dropdown:focus-within .locale-pill { border-color: var(--storefront-blue); background: var(--storefront-blue); color: var(--storefront-surface); }
+.focus-header .locale-dropdown:focus-within .locale-caret { transform: translateY(2px) rotate(225deg); }
+.focus-header {
+    position: relative;
+    z-index: 40;
+    display: flex;
+    flex: 0 0 auto;
+    height: 74px;
+    align-items: center;
+    border-bottom: 1px solid var(--gf-border);
+    background: var(--gf-white);
+  }
+
+  .focus-header .focus-header__inner {
+    display: flex;
+    width: 100%;
+    max-width: var(--gf-container);
+    align-items: center;
+    gap: 16px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  .focus-header .focus-header__logo {
+    display: inline-flex;
+    flex-shrink: 0;
+  }
+
+  .focus-header .focus-header__logo img {
+    display: block;
+    width: 150px;
+    height: auto;
+  }
+
+  .focus-header .focus-header__actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-left: auto;
+  }
+
+  .focus-header .focus-header__back {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--gf-navy);
+    font-size: 14.5px;
+    font-weight: 600;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: color var(--gf-motion-base) var(--gf-ease-standard);
+  }
+
+  .focus-header .focus-header__back:hover {
+    color: var(--gf-navy-700);
+  }
+
+  .focus-header .focus-header__back svg {
+    width: 17px;
+    height: 17px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.85;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  /* Màu theo hạng (P1-17): chép từ đường ray 4 hạng của bộ mẫu ui-pages/
+     (--tier-primary/accent/surface). "none" = chưa có hạng, dùng tông trung tính. */
+  .focus-header [data-tier="silver"] {
+    --tier: #5C6673;
+    --tier-accent: #9DA4AD;
+    --tier-surface: #EEF0F2;
+  }
+
+  .focus-header [data-tier="gold"] {
+    --tier: #7B5614;
+    --tier-accent: #C89723;
+    --tier-surface: #FFF3CC;
+  }
+
+  .focus-header [data-tier="platinum"] {
+    --tier: #315E82;
+    --tier-accent: #8BA6BE;
+    --tier-surface: #EDF4FA;
+  }
+
+  .focus-header [data-tier="diamond"] {
+    --tier: #10305F;
+    --tier-accent: #C69A2B;
+    --tier-surface: #FFF8EA;
+  }
+
+  .focus-header [data-tier="none"] {
+    --tier: var(--gf-muted);
+    --tier-accent: var(--gf-border);
+    --tier-surface: var(--gf-sand);
+  }
+
+  /* Chip tài khoản ở trang hội viên (bản mẫu .who, .avatar, .tier-line). */
+  .focus-header .who {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding-left: 18px;
+    border-left: 1px solid var(--gf-border);
+  }
+
+  .focus-header .who__avatar {
+    display: grid;
+    width: 36px;
+    height: 36px;
+    flex: 0 0 auto;
+    place-items: center;
+    overflow: hidden;
+    border: 1.5px solid var(--tier-accent);
+    border-radius: 999px;
+    background: var(--tier-surface);
+    color: var(--tier);
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  .focus-header .who__avatar img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .focus-header .who__text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.25;
+  }
+
+  .focus-header .who__name {
+    color: var(--gf-text);
+    font-size: 13.5px;
+    font-weight: 600;
+  }
+
+  .focus-header .who__tier {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--tier);
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  .focus-header .who__dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 999px;
+    background: var(--tier-accent);
+    box-shadow: 0 0 0 1.5px var(--gf-white), 0 0 0 3px var(--tier-surface);
+  }
+
+  
+
+  .focus-header .locale-dropdown {
+    position: relative;
+    flex-shrink: 0;
+  }
+
+  .focus-header .locale-pill {
+    display: inline-flex;
+    width: auto;
+    min-width: 40px;
+    height: 40px;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    border: 1px solid rgba(16, 48, 95, 0.2);
+    border-radius: 999px;
+    background: var(--storefront-surface);
+    color: var(--storefront-navy);
+    cursor: pointer;
+    padding: 5px 8px;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.84),
+      0 8px 16px rgba(8, 27, 56, 0.22);
+    transition: background 180ms ease, border-color 180ms ease, color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
+  }
+
+  .focus-header .locale-pill:hover,
+  .focus-header .locale-pill:focus-visible,
+  .focus-header .locale-pill[aria-expanded="true"] {
+    border-color: var(--storefront-blue);
+    background: var(--storefront-blue);
+    color: var(--storefront-surface);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.18),
+      0 10px 18px rgba(8, 27, 56, 0.28);
+  }
+
+  .focus-header .locale-pill:focus-visible {
+    outline: 3px solid var(--storefront-blue);
+    outline-offset: 4px;
+  }
+
+  .focus-header .locale-current-flag {
+    display: inline-flex;
+  }
+
+  .focus-header .locale-caret {
+    width: 7px;
+    height: 7px;
+    border-right: 2px solid currentColor;
+    border-bottom: 2px solid currentColor;
+    color: currentColor;
+    transform: translateY(-2px) rotate(45deg);
+    transition: transform 180ms ease;
+  }
+
+  .focus-header .locale-pill[aria-expanded="true"] .locale-caret {
+    transform: translateY(2px) rotate(225deg);
+  }
+
+  .focus-header .locale-flag {
+    display: inline-flex;
+    width: 28px;
+    height: 20px;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border: 1px solid rgba(16, 48, 95, 0.24);
+    border-radius: 4px;
+    box-shadow: 0 2px 5px rgba(8, 27, 56, 0.18);
+  }
+
+  .focus-header .locale-flag svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .focus-header .locale-flag.is-active {
+    border-color: var(--storefront-blue);
+    box-shadow:
+      0 0 0 1px rgba(27, 121, 192, 0.28),
+      0 3px 7px rgba(8, 27, 56, 0.22);
+  }
+
+  .focus-header .locale-menu {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    z-index: 150;
+    display: none;
+    min-width: 54px;
+    gap: 6px;
+    padding: 7px;
+    border: 1px solid rgba(16, 48, 95, 0.18);
+    border-radius: 12px;
+    background: var(--storefront-surface);
+    box-shadow: 0 20px 44px rgba(8, 27, 56, 0.22);
+  }
+
+  .focus-header .locale-dropdown.open .locale-menu {
+    display: grid;
+  }
+
+  .focus-header .locale-option {
+    display: inline-flex;
+    width: 40px;
+    height: 32px;
+    align-items: center;
+    justify-content: center;
+    border: 0;
+    border-radius: 8px;
+    background: transparent;
+    cursor: pointer;
+    padding: 0;
+    transition: background 160ms ease, transform 160ms ease;
+  }
+
+  .focus-header .locale-option:hover,
+  .focus-header .locale-option:focus-visible,
+  .focus-header .locale-option.is-selected {
+    background: rgba(27, 121, 192, 0.12);
+  }
+
+  @media (max-width: 1279px) {
+    .focus-header .locale-pill {
+      width: 44px;
+      min-width: 44px;
+      height: 44px;
+      min-height: 44px;
+      padding: 0;
+    }
+
+    .focus-header .locale-caret {
+      display: none;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .focus-header {
+      height: 64px;
+    }
+
+    .focus-header .focus-header__inner {
+      gap: 12px;
+      padding: 0 16px;
+    }
+
+    .focus-header .focus-header__logo img {
+      width: 128px;
+    }
+
+    .focus-header .focus-header__actions {
+      gap: 12px;
+    }
+
+    /* Trang có chip: chỉ giữ mũi tên "về trang chủ" và vòng tròn tài khoản. */
+    .focus-header [data-has-account-chip] .focus-header__back-label,
+    .focus-header .who__text {
+      display: none;
+    }
+
+    .focus-header .who {
+      padding-left: 12px;
+    }
+  }
+
+  /* Bản mẫu không có mốc 320px: thu logo và khoảng cách để header không tràn ngang. */
+  @media (max-width: 359px) {
+    .focus-header .focus-header__inner,
+    .focus-header .focus-header__actions {
+      gap: 8px;
+    }
+
+    .focus-header .focus-header__logo img {
+      width: 112px;
+    }
+
+    .focus-header .focus-header__back {
+      gap: 4px;
+      font-size: 13.5px;
+    }
+
+    /* Luồng thanh toán gọi link này là "Tiếp tục mua sắm" (dài hơn "Về trang chủ"): giảm cỡ chữ để vừa 320px. */
+    .focus-header [data-long-back-label] .focus-header__back {
+      gap: 3px;
+      font-size: 12.5px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .focus-header * {
+      transition-duration: 0.01ms !important;
+    }
+  }
+</style>
+<!-- gf-shell:css:end -->
+<!-- gf-contact-rail:css:begin -->
+<style id="gf-contact-rail-css">
+/* Thanh liên hệ nhanh của trang chủ storefront (ReferenceFooter → .reference-social-shell). Chép từ
+   referenceHomeSupplementalCss + nền .social-* của bộ mẫu; nút đóng/mở dùng ô chọn ẩn + nhãn (CSS thuần, không JS).
+   Máy tính: mặc định mở, tích ô thì thu gọn. Điện thoại/máy tính bảng ≤1024px: mặc định thu gọn, tích ô thì mở (đúng
+   như storefront: khởi tạo theo khổ màn hình). */
+.reference-social-shell {
+  position: fixed;
+  top: 50%;
+  right: calc(32px + env(safe-area-inset-right));
+  bottom: auto;
+  z-index: 80;
+  box-sizing: border-box;
+  display: flex;
+  width: 56px;
+  max-height: calc(100vh - 56px);
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  overflow: hidden;
+  border: 1px solid #E8DDC3;
+  border-radius: 999px;
+  background: #FFFFFF;
+  box-shadow: 0 18px 48px rgba(16, 48, 95, 0.14);
+  padding: 7px;
+  pointer-events: auto;
+  transform: translateY(-50%);
+  font-family: Inter, Arial, sans-serif;
+}
+.reference-social-shell .rs-state {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+  opacity: 0;
+  clip: rect(0 0 0 0);
+}
+.reference-social-toggle-input {
+  order: 2;
+  display: inline-grid;
+  width: 40px;
+  height: 40px;
+  flex: 0 0 auto;
+  place-items: center;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  border: 1.5px solid #C69A2B;
+  border-radius: 999px;
+  background: #072A4E;
+  color: #E8C979;
+  cursor: pointer;
+  transition: background-color 180ms ease, border-color 180ms ease, transform 180ms ease;
+}
+.reference-social-toggle-input::before {
+  content: "close";
+  font-family: "Material Symbols Outlined";
+  font-size: 22px;
+  font-style: normal;
+  font-variation-settings: "FILL" 0, "wght" 700, "GRAD" 0, "opsz" 20;
+  line-height: 1;
+}
+.reference-social-toggle-input:hover,
+.rs-state:focus-visible + .reference-social-toggle-input {
+  background: #10305F;
+  transform: translateY(-1px);
+}
+.rs-state:focus-visible + .reference-social-toggle-input {
+  outline: 3px solid rgba(198, 154, 43, 0.6);
+  outline-offset: 2px;
+}
+.reference-social-mask {
+  order: 1;
+  display: flex;
+  width: 100%;
+  max-width: 100%;
+  max-height: 280px;
+  margin-bottom: 8px;
+  overflow: hidden;
+  opacity: 1;
+  transform: translateY(0);
+  transition:
+    max-height 720ms cubic-bezier(0.22, 1, 0.36, 1),
+    max-width 720ms cubic-bezier(0.22, 1, 0.36, 1),
+    margin-bottom 720ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 520ms ease,
+    transform 720ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.rs-state:checked ~ .reference-social-mask {
+  max-height: 0;
+  margin-bottom: 0;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(64px) scale(0.94);
+}
+.rs-state:checked ~ .reference-social-toggle-input::before {
+  content: "keyboard_arrow_up";
+}
+.reference-social-shell .reference-social-rail {
+  position: static;
+  display: flex;
+  width: 100%;
+  max-width: none;
+  max-height: 280px;
+  margin: 0;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  overflow: hidden;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  padding: 0;
+  pointer-events: auto;
+  transform: none;
+}
+.reference-social-rail .social-pill {
+  position: relative;
+  display: grid;
+  width: 40px;
+  min-width: 0;
+  justify-items: center;
+  gap: 0;
+  border-radius: 999px;
+  color: #10305F;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.2;
+  text-decoration: none;
+}
+.reference-social-rail .social-label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.reference-social-rail .social-pill .social-dot {
+  position: relative;
+  display: grid;
+  width: 40px;
+  height: 40px;
+  box-sizing: border-box;
+  place-items: center;
+  border: 1px solid #E8DDC3;
+  border-radius: 999px;
+  background: #FBF8F1;
+  box-shadow: none;
+  color: #10305F;
+  font-family: Inter, Arial, sans-serif;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0;
+  transition: background-color 180ms ease, border-color 180ms ease, color 180ms ease, transform 180ms ease;
+}
+/* YouTube, Facebook, Zalo dùng logo thật (SVG tô màu chính thức), chủ dự án 2026-10-14 */
+.reference-social-rail .social-pill .social-dot svg {
+  display: block;
+  width: 24px;
+  height: 24px;
+}
+.reference-social-rail .social-pill .social-dot .material-symbols-outlined {
+  font-size: 22px;
+}
+.reference-social-rail .social-pill .social-dot.live::after {
+  content: "";
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: #C69A2B;
+  box-shadow: 0 0 0 1.5px #FBF8F1;
+}
+.reference-social-rail .social-pill:focus-visible {
+  outline: 3px solid rgba(198, 154, 43, 0.6);
+  outline-offset: 2px;
+}
+.reference-social-rail .social-pill:focus-visible .social-dot,
+.reference-social-rail .social-pill:active .social-dot {
+  border-color: #C69A2B;
+  background: #072A4E;
+  color: #FFFFFF;
+}
+/* Ba nút logo kênh giữ nền kem khi rê, focus hay bấm để logo màu vẫn rõ; chỉ đổi viền vàng */
+.reference-social-rail .social-pill:focus-visible .social-dot:is(.youtube, .facebook, .zalo),
+.reference-social-rail .social-pill:active .social-dot:is(.youtube, .facebook, .zalo) {
+  background: #FBF8F1;
+}
+.reference-social-rail .social-pill:focus-visible .social-dot.live::after,
+.reference-social-rail .social-pill:active .social-dot.live::after {
+  box-shadow: 0 0 0 1.5px #072A4E;
+}
+@media (hover: hover) {
+  .reference-social-rail .social-pill:hover .social-dot {
+    border-color: #C69A2B;
+    background: #072A4E;
+    color: #FFFFFF;
+    transform: translateY(-1px);
+  }
+  .reference-social-rail .social-pill:hover .social-dot:is(.youtube, .facebook, .zalo) {
+    background: #FBF8F1;
+  }
+  .reference-social-rail .social-pill:hover .social-dot.live::after {
+    box-shadow: 0 0 0 1.5px #072A4E;
+  }
+}
+@media (max-width: 1024px) {
+  .reference-social-shell {
+    top: auto;
+    right: auto;
+    bottom: calc(24px + env(safe-area-inset-bottom));
+    left: calc(16px + env(safe-area-inset-left));
+    max-height: calc(100vh - 48px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+    transform: none;
+  }
+  .reference-social-shell .reference-social-mask {
+    max-height: 0;
+    margin-bottom: 0;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(64px) scale(0.94);
+  }
+  .reference-social-shell .reference-social-toggle-input::before {
+    content: "keyboard_arrow_up";
+  }
+  .reference-social-shell .rs-state:checked ~ .reference-social-mask {
+    max-height: 280px;
+    margin-bottom: 8px;
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+  .reference-social-shell .rs-state:checked ~ .reference-social-toggle-input::before {
+    content: "close";
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .reference-social-toggle-input,
+  .reference-social-rail .social-pill .social-dot {
+    transition: none;
+  }
+  .reference-social-toggle-input:hover,
+  .rs-state:focus-visible + .reference-social-toggle-input,
+  .reference-social-rail .social-pill:hover .social-dot {
+    transform: none;
+  }
+}
+/* Điện thoại: trang có thanh mua/tạm tính dính đáy (.sticky-bar, cao khoảng 70px) thì nâng cụm nút lên trên thanh để không che nút (đồng bộ storefront 14/10/2026) */
+@media (max-width: 767px) {
+  body:has(.sticky-bar:not([hidden])) .reference-social-shell {
+    bottom: calc(94px + env(safe-area-inset-bottom));
+  }
+}
+/* Trang khác trang chủ: từ 1025px tới 1415px nội dung còn chạm sát mép phải (nút giỏ, ô tìm kiếm, nút "Áp dụng"...) nên cụm nút dùng dạng gọn như điện thoại: vòng tròn góc trái dưới, bấm để mở; từ 1416px mới ở mép phải dạng đầy đủ (đồng bộ storefront 14/10/2026) */
+@media (min-width: 1025px) and (max-width: 1415px) {
+  .reference-social-shell {
+    top: auto;
+    right: auto;
+    bottom: calc(24px + env(safe-area-inset-bottom));
+    left: calc(16px + env(safe-area-inset-left));
+    max-height: calc(100vh - 48px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+    transform: none;
+  }
+  .reference-social-shell .reference-social-mask {
+    max-height: 0;
+    margin-bottom: 0;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(64px) scale(0.94);
+  }
+  .reference-social-shell .reference-social-toggle-input::before {
+    content: "keyboard_arrow_up";
+  }
+  .reference-social-shell .rs-state:checked ~ .reference-social-mask {
+    max-height: 280px;
+    margin-bottom: 8px;
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+  .reference-social-shell .rs-state:checked ~ .reference-social-toggle-input::before {
+    content: "close";
+  }
+}
+</style>
+<!-- gf-contact-rail:css:end -->
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h13M13 6.5l5.5 5.5L13 17.5"/></symbol>
+  <symbol id="i-chev-l" viewBox="0 0 24 24"><path d="M14 6.5L8.5 12l5.5 5.5"/></symbol>
+  <symbol id="i-logout" viewBox="0 0 24 24"><path d="M14 5.5H6.5A1.5 1.5 0 005 7v10a1.5 1.5 0 001.5 1.5H14"/><path d="M17 8.5l3.5 3.5L17 15.5"/><path d="M20 12h-9"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M4.5 12.5l4.5 4.5L19.5 6.5"/></symbol>
+  <symbol id="i-gift" viewBox="0 0 24 24"><path d="M4 11h16v9H4z"/><path d="M3 7h18v4H3z"/><path d="M12 7v13"/><path d="M12 7c-1.5-3-5-3.5-5-1.5S10.5 7 12 7zm0 0c1.5-3 5-3.5 5-1.5S13.5 7 12 7z"/></symbol>
+  <symbol id="i-alarm" viewBox="0 0 24 24"><circle cx="12" cy="13" r="7"/><path d="M12 9.5V13l2.5 1.5"/><path d="M4.5 5.5L7 7.5M19.5 5.5L17 7.5"/><path d="M7.5 19.5L6 21.5M16.5 19.5L18 21.5"/></symbol>
+  <symbol id="i-cart" viewBox="0 0 24 24"><path d="M2.8 4h2.4l2.3 11.2a1.6 1.6 0 001.6 1.3h8.6a1.6 1.6 0 001.6-1.3L21.2 8.2H6.2"/><circle cx="9.7" cy="20" r="1.4"/><circle cx="17" cy="20" r="1.4"/></symbol>
+</svg>
+
+<!-- gf-shell:header:begin -->
+<!-- gf-shell:cfg {"navHiddenMode":false,"initials":"MA","chip":null,"extra":""} -->
+<header class="focus-header">
+<div class="focus-header__inner">
+<a class="focus-header__logo" aria-label="Ginsengfood – Trang chủ" href="trang-chu-theo-doi-tuong/trang-chu.html">
+<img src="../public/home-webp-v1/logo-header-light.w558.webp" srcset="../public/home-webp-v1/logo-header-light.w186.webp 186w, ../public/home-webp-v1/logo-header-light.w372.webp 372w, ../public/home-webp-v1/logo-header-light.w558.webp 558w" sizes="(max-width: 767px) 128px, 150px" alt="Ginsengfood · Y thực đồng nguyên" width="186" height="67" decoding="async">
+</a>
+<div class="focus-header__actions">
+<nav id="localeDropdown" class="locale-dropdown" aria-label="Chọn ngôn ngữ">
+<button id="localeButton" class="locale-pill" type="button" aria-label="Chọn ngôn ngữ: Tiếng Việt" aria-haspopup="menu" aria-controls="localeMenu" aria-expanded="false"><span class="locale-current-flag"><span class="locale-flag is-active" role="img" aria-label="Tiếng Việt" title="Tiếng Việt"><svg viewBox="0 0 28 20" aria-hidden="true" focusable="false"><rect width="28" height="20" fill="#da251d"/><path fill="#ffdf00" d="M14 3.2 15.57 7.98h5.03l-4.07 2.96 1.56 4.86L14 12.79 9.91 15.8l1.56-4.86L7.4 7.98h5.03L14 3.2Z"/></svg></span></span><span class="locale-caret" aria-hidden="true"></span></button>
+<div id="localeMenu" class="locale-menu" role="menu" aria-label="Chọn ngôn ngữ">
+<a class="locale-option is-selected" role="menuitemradio" aria-checked="true" aria-label="Tiếng Việt" href="#"><span class="locale-flag is-active" role="img" aria-label="Tiếng Việt" title="Tiếng Việt"><svg viewBox="0 0 28 20" aria-hidden="true" focusable="false"><rect width="28" height="20" fill="#da251d"/><path fill="#ffdf00" d="M14 3.2 15.57 7.98h5.03l-4.07 2.96 1.56 4.86L14 12.79 9.91 15.8l1.56-4.86L7.4 7.98h5.03L14 3.2Z"/></svg></span></a>
+<a class="locale-option" role="menuitemradio" aria-checked="false" aria-label="English" href="#"><span class="locale-flag" role="img" aria-label="English" title="English"><svg viewBox="0 0 28 20" aria-hidden="true" focusable="false"><rect width="28" height="20" fill="#012169"/><path d="M0 0 28 20M28 0 0 20" stroke="#fff" stroke-width="4"/><path d="M0 0 28 20M28 0 0 20" stroke="#c8102e" stroke-width="2"/><path d="M14 0v20M0 10h28" stroke="#fff" stroke-width="7"/><path d="M14 0v20M0 10h28" stroke="#c8102e" stroke-width="4"/></svg></span></a>
+</div>
+</nav>
+<a class="focus-header__back" aria-label="Về trang chủ" href="trang-chu-theo-doi-tuong/trang-chu.html"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 6.5L8.5 12l5.5 5.5"/></svg><span class="focus-header__back-label">Về trang chủ</span></a>
+</div>
+</div>
+</header>
+<!-- gf-shell:header:end -->
+
+<main class="auth" id="noi-dung">
+  <!-- Cấu trúc và tên class đúng như /vi/logout của storefront (LogoutPage.tsx + AUTH_PAGES_CSS). Bản mockup: không gọi API, không xoá phiên thật nào.
+       (Bản trước có dòng chú thích dưới nút "Trang thiết kế chỉ minh hoạ bước đăng xuất; phiên đăng nhập thực tế không thay đổi." — storefront không có dòng này nên đã bỏ khỏi thẻ.) -->
+  <div data-auth-page="logout">
+    <div class="auth-page__stage">
+      <!-- Trạng thái 1: hỏi xác nhận (phase "confirm") -->
+      <section class="auth-layout auth-layout--single" id="stepConfirm" aria-labelledby="logoutTitle" data-testid="logout-confirm-card">
+        <div class="auth-card__media">
+          <img src="../public/banner_login.webp" width="1920" height="1080" alt="Củ sâm vùng cát biển trên nền cát vàng" fetchpriority="high" decoding="sync">
+        </div>
+        <div class="auth-card__body">
+          <span class="auth-card__icon"><span class="material-symbols-outlined" aria-hidden="true">logout</span></span>
+          <h1 class="auth-card__title" id="logoutTitle">Đăng xuất khỏi tài khoản?</h1>
+
+          <span class="auth-who" data-tier="silver" data-testid="auth-who-card">
+            <span class="auth-who__avatar" aria-hidden="true">MA</span>
+            <span class="auth-who__text">
+              <span class="auth-who__name">Minh Anh</span>
+              <span class="auth-who__tier" data-testid="auth-who-card-tier"><span class="auth-who__dot" aria-hidden="true"></span>Silver · Quyền lợi 5%</span>
+            </span>
+          </span>
+
+          <p class="auth-card__text">Sau khi đăng xuất, trang sẽ hiển thị như với khách chưa đăng nhập. Bạn cần đăng nhập lại để dùng tiếp các quyền lợi bên dưới.</p>
+          <ul class="auth-keep-list">
+            <li><span class="material-symbols-outlined" aria-hidden="true">redeem</span><span>Giá <strong>đã trừ quyền lợi</strong> theo hạng trên từng sản phẩm</span></li>
+            <li><span class="material-symbols-outlined" aria-hidden="true">alarm</span><span>Quyền <strong>mua sớm</strong> trong phiên Giờ Vàng Tri Ân</span></li>
+            <li><span class="material-symbols-outlined" aria-hidden="true">shopping_cart</span><span>Theo dõi doanh số hợp lệ và hành trình lên hạng</span></li>
+          </ul>
+          <div class="auth-card__actions">
+            <button type="button" class="auth-button auth-button--primary" id="logoutBtn">Đăng xuất<span class="material-symbols-outlined" aria-hidden="true">logout</span></button>
+            <a class="auth-button auth-button--outline" href="tai-khoan.html">Ở lại trang</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Trạng thái 2: đã đăng xuất (phase "done") -->
+      <section class="auth-layout auth-layout--single" id="stepDone" aria-labelledby="doneTitle" data-testid="logout-done-card" hidden>
+        <div class="auth-card__media">
+          <img src="../public/banner_login.webp" width="1920" height="1080" alt="Củ sâm vùng cát biển trên nền cát vàng" loading="lazy" decoding="async">
+        </div>
+        <div class="auth-card__body">
+          <span class="auth-card__icon auth-card__icon--done"><span class="material-symbols-outlined" aria-hidden="true">check</span></span>
+          <h1 class="auth-card__title card__title" id="doneTitle" tabindex="-1">Bạn đã đăng xuất</h1>
+          <p class="auth-card__text">Cảm ơn bạn đã ghé Ginsengfood. Hạng thành viên và doanh số hợp lệ của bạn <strong>vẫn được giữ nguyên</strong>, đăng nhập lại là thấy đầy đủ.</p>
+          <div class="auth-card__actions">
+            <a class="auth-button auth-button--primary" href="dang-nhap.html">Đăng nhập lại<span class="material-symbols-outlined" aria-hidden="true">arrow_forward</span></a>
+            <a class="auth-button auth-button--outline" href="trang-chu-theo-doi-tuong/trang-chu.html">Về trang chủ</a>
+          </div>
+          <p class="auth-card__links">
+            <a href="trang-chu-theo-doi-tuong/trang-chu.html#gio-vang">Xem Giờ Vàng Tri Ân</a>
+            <a href="trang-chu-theo-doi-tuong/trang-chu.html#quyen-loi">Quyền lợi thành viên</a>
+            <a href="trang-chu-theo-doi-tuong/trang-chu.html#collections">Xem sản phẩm</a>
+          </p>
+        </div>
+      </section>
+    </div>
+  </div>
+</main>
+
+<!-- gf-shell:footer:begin -->
+<div class="gf-site-footer">
+<footer class="home-footer">
+<div aria-hidden="true" class="home-footer__rule"></div>
+<div class="home-frame">
+<div class="home-footer__grid">
+<div class="home-footer__brand">
+<a aria-label="Ginsengfood – Trang chủ" class="home-footer__logo" href="trang-chu-theo-doi-tuong/trang-chu.html">
+<img alt="Ginsengfood · Y thực đồng nguyên" decoding="async" loading="lazy" src="../public/home-webp-v1/logo-header-v2.w360.webp" srcset="../public/home-webp-v1/logo-header-v2.w120.webp 120w, ../public/home-webp-v1/logo-header-v2.w240.webp 240w, ../public/home-webp-v1/logo-header-v2.w360.webp 360w">
+</a>
+<p class="home-footer__slogan"><b>Ngon như Mẹ nấu</b><i>– thương ngay từ vị đầu tiên</i><span aria-hidden="true" class="home-story__rule"></span></p>
+<p class="home-footer__phil">Y thực đồng nguyên – hiện đại trong từng bữa ăn. Tinh hoa Sâm vùng cát biển Việt Nam.</p>
+<address class="home-footer__addr">
+<span>SSAVIGROUP / Ginsengfood</span>
+<span>Vùng trồng: Thạnh Phú · Nhà máy: Vĩnh Long</span>
+<span>Điện thoại: <a href="tel:0888098686">0888 098 686</a></span>
+<span>Email: <a href="mailto:info@ssavigroup.com">info@ssavigroup.com</a></span>
+</address>
+</div>
+<nav aria-label="Chính sách" class="home-footer__col">
+<p class="home-footer__col-title">Chính sách</p>
+<ul class="home-footer__links">
+<li><span class="home-footer__links-plain">Chính sách bảo mật</span></li>
+<li><span class="home-footer__links-plain">Tuyên bố miễn trừ</span></li>
+<li><span class="home-footer__links-plain">Hình thức thanh toán</span></li>
+<li><span class="home-footer__links-plain">Chính sách vận chuyển</span></li>
+<li><span class="home-footer__links-plain">Chính sách mua hàng</span></li>
+<li><span class="home-footer__links-plain">Chính sách đổi trả</span></li>
+<li><span class="home-footer__links-plain">Các điều khoản</span></li>
+</ul>
+</nav>
+<nav aria-label="Niềm tin" class="home-footer__col">
+<p class="home-footer__col-title">Niềm tin</p>
+<ul class="home-footer__links">
+<li><a href="trang-chu-theo-doi-tuong/trang-chu.html#cau-chuyen">Nguồn gốc và truy xuất</a></li>
+<li><a href="trang-chu-theo-doi-tuong/dai-ly-nha-phan-phoi.html">Hợp tác nhà phân phối</a></li>
+<li><span class="home-footer__links-plain">Vùng trồng Thạnh Phú</span></li>
+<li><span class="home-footer__links-plain">Công nghệ sấy thăng hoa</span></li>
+<li><span class="home-footer__links-plain">Chứng nhận và kiểm nghiệm</span></li>
+</ul>
+</nav>
+<nav aria-label="Thành viên và quyền lợi" class="home-footer__col">
+<p class="home-footer__col-title">Thành viên và quyền lợi</p>
+<ul class="home-footer__links">
+<li><a href="trang-chu-theo-doi-tuong/trang-chu.html#quyen-loi">Thành viên Ginsengfood</a></li>
+<li><a href="trang-chu-theo-doi-tuong/trang-chu.html#gio-vang">Giờ Vàng Tri Ân</a></li>
+<li><a href="trang-chu-theo-doi-tuong/dieu-khoan-cong-tac-vien.html">Khởi nghiệp cùng Ginsengfood</a></li>
+<li><a href="trang-chu-theo-doi-tuong/dai-ly-nha-phan-phoi.html#hinh-thuc">Đại lý nhà phân phối</a></li>
+</ul>
+</nav>
+<div class="home-footer__col home-footer__col--contact">
+<p class="home-footer__col-title" id="home-footer-contact-title">Liên hệ</p>
+<ul aria-labelledby="home-footer-contact-title" class="home-footer__social">
+<li><span aria-label="YouTube (sắp mở)" class="home-footer__social-btn" data-channel="youtube" data-disabled="true" role="img" title="YouTube (sắp mở)"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" fill="#FF0000"/><path d="M9.545 15.568V8.432L15.818 12l-6.273 3.568Z" fill="#FFFFFF"/></svg></span></li>
+<li><span aria-label="Facebook (sắp mở)" class="home-footer__social-btn" data-channel="facebook" data-disabled="true" role="img" title="Facebook (sắp mở)"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><circle cx="12" cy="12" fill="#FFFFFF" r="11.5"/><path d="M9.101 23.691v-7.98H6.627v-3.667h2.474v-1.58c0-4.085 1.848-5.978 5.858-5.978.401 0 .955.042 1.468.103a8.68 8.68 0 0 1 1.141.195v3.325a8.623 8.623 0 0 0-.653-.036 26.805 26.805 0 0 0-.733-.009c-.707 0-1.259.096-1.675.309a1.686 1.686 0 0 0-.679.622c-.258.42-.374.995-.374 1.752v1.297h3.919l-.386 2.103-.287 1.564h-3.246v8.245C19.396 23.238 24 18.179 24 12.044c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.628 3.874 10.35 9.101 11.647Z" fill="#0866FF"/></svg></span></li>
+<li><span aria-label="Zalo (sắp mở)" class="home-footer__social-btn" data-channel="zalo" data-disabled="true" role="img" title="Zalo (sắp mở)"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><rect fill="#0068FF" height="24" rx="5.5" width="24"/><path d="M12.49 10.2722v-.4496h1.3467v6.3218h-.7704a.576.576 0 01-.5763-.5729l-.0006.0005a3.273 3.273 0 01-1.9372.6321c-1.8138 0-3.2844-1.4697-3.2844-3.2823 0-1.8125 1.4706-3.2822 3.2844-3.2822a3.273 3.273 0 011.9372.6321l.0006.0005zM6.9188 7.7896v.205c0 .3823-.051.6944-.2995 1.0605l-.03.0343c-.0542.0615-.1815.206-.2421.2843L2.024 14.8h4.8948v.7682a.5764.5764 0 01-.5767.5761H0v-.3622c0-.4436.1102-.6414.2495-.8476L4.8582 9.23H.1922V7.7896h6.7266zm8.5513 8.3548a.4805.4805 0 01-.4803-.4798v-7.875h1.4416v8.3548H15.47zM20.6934 9.6C22.52 9.6 24 11.0807 24 12.9044c0 1.8252-1.4801 3.306-3.3066 3.306-1.8264 0-3.3066-1.4808-3.3066-3.306 0-1.8237 1.4802-3.3044 3.3066-3.3044zm-10.1412 5.253c1.0675 0 1.9324-.8645 1.9324-1.9312 0-1.065-.865-1.9295-1.9324-1.9295s-1.9324.8644-1.9324 1.9295c0 1.0667.865 1.9312 1.9324 1.9312zm10.1412-.0033c1.0737 0 1.945-.8707 1.945-1.9453 0-1.073-.8713-1.9436-1.945-1.9436-1.0753 0-1.945.8706-1.945 1.9436 0 1.0746.8697 1.9453 1.945 1.9453z" fill="#FFFFFF" transform="translate(12 12) scale(0.8) translate(-12 -12)"/></svg></span></li>
+</ul>
+</div>
+</div>
+<div aria-hidden="true" class="home-footer__line"></div>
+<div class="home-footer__legal">
+<p class="home-footer__legal-name">CÔNG TY CỔ PHẦN TẬP ĐOÀN SSAVIGROUP</p>
+<p class="home-footer__legal-line">Số giấy phép kinh doanh: 1301015435 · Ngày cấp: 06/09/2016</p>
+</div>
+</div>
+</footer>
+</div>
+<!-- gf-shell:footer:end -->
+<!-- gf-contact-rail:begin -->
+<aside class="reference-social-shell" aria-label="Kênh liên hệ nhanh">
+<input class="rs-state" id="rsState" type="checkbox" aria-label="Ẩn hoặc hiện kênh liên hệ nhanh" aria-controls="reference-social-rail">
+<label class="reference-social-toggle-input" for="rsState" title="Ẩn hoặc hiện kênh liên hệ nhanh" aria-hidden="true"></label>
+<div class="reference-social-mask">
+<div class="reference-social-rail" id="reference-social-rail" aria-label="Kênh liên hệ nhanh">
+<a class="social-pill" href="trang-chu-theo-doi-tuong/trang-chu.html#gio-vang" aria-label="Livestream" title="Livestream"><span class="social-dot live">LIVE</span><span class="social-label">Livestream</span></a>
+<a class="social-pill" href="trang-chu-theo-doi-tuong/trang-chu.html#cau-chuyen" aria-label="YouTube" title="YouTube"><span class="social-dot youtube"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" fill="#FF0000"/><path d="M9.545 15.568V8.432L15.818 12l-6.273 3.568Z" fill="#FFFFFF"/></svg></span><span class="social-label">YouTube</span></a>
+<a class="social-pill" href="trang-chu-theo-doi-tuong/trang-chu.html#about-us" aria-label="Facebook" title="Facebook"><span class="social-dot facebook"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><circle cx="12" cy="12" fill="#FFFFFF" r="11.5"/><path d="M9.101 23.691v-7.98H6.627v-3.667h2.474v-1.58c0-4.085 1.848-5.978 5.858-5.978.401 0 .955.042 1.468.103a8.68 8.68 0 0 1 1.141.195v3.325a8.623 8.623 0 0 0-.653-.036 26.805 26.805 0 0 0-.733-.009c-.707 0-1.259.096-1.675.309a1.686 1.686 0 0 0-.679.622c-.258.42-.374.995-.374 1.752v1.297h3.919l-.386 2.103-.287 1.564h-3.246v8.245C19.396 23.238 24 18.179 24 12.044c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.628 3.874 10.35 9.101 11.647Z" fill="#0866FF"/></svg></span><span class="social-label">Facebook</span></a>
+<a class="social-pill" href="trang-chu-theo-doi-tuong/trang-chu.html#about-us" aria-label="Zalo" title="Zalo"><span class="social-dot zalo"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><rect fill="#0068FF" height="24" rx="5.5" width="24"/><path d="M12.49 10.2722v-.4496h1.3467v6.3218h-.7704a.576.576 0 01-.5763-.5729l-.0006.0005a3.273 3.273 0 01-1.9372.6321c-1.8138 0-3.2844-1.4697-3.2844-3.2823 0-1.8125 1.4706-3.2822 3.2844-3.2822a3.273 3.273 0 011.9372.6321l.0006.0005zM6.9188 7.7896v.205c0 .3823-.051.6944-.2995 1.0605l-.03.0343c-.0542.0615-.1815.206-.2421.2843L2.024 14.8h4.8948v.7682a.5764.5764 0 01-.5767.5761H0v-.3622c0-.4436.1102-.6414.2495-.8476L4.8582 9.23H.1922V7.7896h6.7266zm8.5513 8.3548a.4805.4805 0 01-.4803-.4798v-7.875h1.4416v8.3548H15.47zM20.6934 9.6C22.52 9.6 24 11.0807 24 12.9044c0 1.8252-1.4801 3.306-3.3066 3.306-1.8264 0-3.3066-1.4808-3.3066-3.306 0-1.8237 1.4802-3.3044 3.3066-3.3044zm-10.1412 5.253c1.0675 0 1.9324-.8645 1.9324-1.9312 0-1.065-.865-1.9295-1.9324-1.9295s-1.9324.8644-1.9324 1.9295c0 1.0667.865 1.9312 1.9324 1.9312zm10.1412-.0033c1.0737 0 1.945-.8707 1.945-1.9453 0-1.073-.8713-1.9436-1.945-1.9436-1.0753 0-1.945.8706-1.945 1.9436 0 1.0746.8697 1.9453 1.945 1.9453z" fill="#FFFFFF" transform="translate(12 12) scale(0.8) translate(-12 -12)"/></svg></span><span class="social-label">Zalo</span></a>
+<a class="social-pill" href="trang-chu-theo-doi-tuong/trang-chu.html#about-us" aria-label="Chat" title="Chat"><span class="social-dot chat"><span class="material-symbols-outlined" aria-hidden="true">chat</span></span><span class="social-label">Chat</span></a>
+<a class="social-pill" href="trang-chu-theo-doi-tuong/trang-chu.html#about-us" aria-label="Điện thoại" title="Điện thoại"><span class="social-dot phone"><span class="material-symbols-outlined" aria-hidden="true">call</span></span><span class="social-label">Điện thoại</span></a>
+</div>
+</div>
+</aside>
+<!-- gf-contact-rail:end -->
+<!-- gf-shell:float:begin -->
+
+<!-- gf-shell:float:end -->
+
+<script>
+  /* Mock: đổi giữa hai trạng thái trong cùng một trang, không gọi API và không xoá phiên thật nào */
+  (function () {
+    var confirmStep = document.getElementById('stepConfirm');
+    var doneStep = document.getElementById('stepDone');
+    var btn = document.getElementById('logoutBtn');
+    if (!confirmStep || !doneStep || !btn) return;
+    btn.addEventListener('click', function () {
+      confirmStep.hidden = true;
+      doneStep.hidden = false;
+      document.title = 'Ginsengfood – Đã đăng xuất';
+      var focusTarget = doneStep.querySelector('.card__title');
+      focusTarget.setAttribute('tabindex', '-1');
+      focusTarget.focus({ preventScroll: true });
+    });
+  })();
+</script>
+</body>
+</html>

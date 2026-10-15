@@ -1,0 +1,178 @@
+/* Chuyển động của bảy bản thiết kế trang chủ, theo các component storefront đang dùng. */
+.hero .home-preview-hero-background { position: absolute; inset: 0; z-index: -1; pointer-events: none; }
+.hero .home-preview-hero-slide { display: block; position: absolute; inset: 0; z-index: 0; opacity: 0; }
+.hero .home-preview-hero-slide[data-state="previous"] { z-index: 1; opacity: 1; }
+.hero .home-preview-hero-slide[data-state="active"] {
+  z-index: 2;
+  opacity: 1;
+  transition: opacity 1200ms cubic-bezier(.4,0,.2,1);
+}
+
+.hero {
+  --hero-intro-start: .15s;
+  --hero-letter-step: .04s;
+  --hero-letter-time: .45s;
+  --hero-line-time: .55s;
+  --hero-gap: .05s;
+  --hero-letters: 29;
+  --hero-slogan-at: calc(var(--hero-intro-start) + (var(--hero-letters) - 1) * var(--hero-letter-step) + var(--hero-letter-time) + var(--hero-gap));
+  --hero-tagline-at: calc(var(--hero-slogan-at) + var(--hero-line-time) + var(--hero-gap));
+  --hero-rest-at: calc(var(--hero-tagline-at) + var(--hero-line-time) + var(--hero-gap));
+}
+
+.hero .home-preview-word { display: inline-block; white-space: nowrap; }
+.hero .home-preview-letter {
+  display: inline-block;
+  animation: homePreviewLetterIn var(--hero-letter-time) cubic-bezier(.2,.72,.2,1) backwards;
+  animation-delay: calc(var(--hero-intro-start) + var(--letter-index) * var(--hero-letter-step));
+}
+
+.hero .slogan__l1,
+.hero .slogan__l2,
+.hero .slogan__rule,
+.hero .hero__copy > .eyebrow,
+.hero .hero__body {
+  animation: homePreviewLineIn var(--hero-line-time) cubic-bezier(.2,.72,.2,1) backwards;
+}
+.hero .slogan__l1 { animation-delay: var(--hero-slogan-at); }
+.hero .slogan__l2,
+.hero .slogan__rule { animation-delay: var(--hero-tagline-at); }
+.hero .hero__copy > .eyebrow { animation-delay: var(--hero-rest-at); }
+.hero .hero__body { animation-delay: calc(var(--hero-rest-at) + .12s); }
+
+.hero .hero__member,
+.hero .hero-golden {
+  animation: homePreviewRiseIn .6s cubic-bezier(.2,.72,.2,1) backwards;
+  animation-delay: calc(var(--hero-rest-at) + .24s);
+}
+.hero .scroll-cue {
+  animation: homePreviewFadeIn .6s ease backwards;
+  animation-delay: calc(var(--hero-rest-at) + .9s);
+}
+
+@keyframes homePreviewLetterIn {
+  from { opacity: 0; transform: translateY(.3em); filter: blur(6px); }
+  to { opacity: 1; transform: none; filter: blur(0); }
+}
+@keyframes homePreviewLineIn {
+  from { opacity: 0; transform: translateY(14px); filter: blur(5px); }
+  to { opacity: 1; transform: none; filter: blur(0); }
+}
+@keyframes homePreviewRiseIn {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes homePreviewFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Chỉ JS gắn lớp này khi IntersectionObserver hoạt động; nội dung luôn đọc được nếu JS lỗi. */
+html.home-motion-ready .home-preview-reveal {
+  transition: opacity 720ms cubic-bezier(.22,1,.36,1), transform 720ms cubic-bezier(.22,1,.36,1), filter 720ms cubic-bezier(.22,1,.36,1);
+  transition-delay: var(--home-preview-delay, 0s);
+  will-change: opacity, transform, filter;
+}
+html.home-motion-ready .home-preview-reveal:not(.is-visible) {
+  opacity: 0;
+  pointer-events: none;
+  transform: translate3d(0, 28px, 0);
+  filter: blur(10px);
+}
+html.home-motion-ready .home-preview-reveal.is-visible {
+  opacity: 1;
+  filter: blur(0);
+}
+
+/* Ảnh lazy-load hiện rõ dần khi tải xong, kể cả ảnh được thêm vào sau lần tải trang đầu. */
+.home-preview-lazy-media {
+  opacity: 0;
+  filter: blur(10px);
+  transform: scale(1.015);
+  transition: opacity 520ms ease, filter 520ms ease, transform 520ms ease;
+  will-change: opacity, filter, transform;
+}
+.home-preview-lazy-media.is-loaded { opacity: 1; filter: blur(0); transform: scale(1); will-change: auto; }
+
+/* Sóng sáng chạy từng chữ trong tiêu đề; phần trăm phóng sáng cùng một nhịp. */
+.golden__brand { --flare-cycle: 3.6s; --flare-lead: .2s; --flare-step: .14s; }
+.home-preview-golden-word { display: inline-block; white-space: nowrap; }
+.home-preview-golden-letter,
+.home-preview-offer-value { display: inline-block; color: #E8C979; transform-origin: 50% 60%; }
+.home-preview-golden-letter {
+  animation: homePreviewGoldenFlare var(--flare-cycle) ease-in-out infinite;
+  animation-delay: calc(var(--flare-lead) + var(--letter-index, 0) * var(--flare-step));
+}
+.home-preview-offer-value { animation: homePreviewOfferPulse 1.8s ease-in-out infinite; }
+@supports ((-webkit-background-clip: text) or (background-clip: text)) {
+  .golden__brand { background: none; }
+  .home-preview-golden-letter,
+  .home-preview-offer-value {
+    background: linear-gradient(180deg, #F8E3A0 0%, #E8C979 55%, #D2A43C 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+}
+@keyframes homePreviewGoldenFlare {
+  0%, 24%, 100% {
+    filter: brightness(1) drop-shadow(0 0 0 rgba(255,246,205,0)) drop-shadow(0 0 0 rgba(255,214,110,0)) drop-shadow(0 0 0 rgba(255,176,60,0));
+    transform: translateY(0) scale(1);
+  }
+  9% {
+    filter: brightness(1.9) drop-shadow(0 0 4px rgba(255,246,205,1)) drop-shadow(0 0 12px rgba(255,214,110,.95)) drop-shadow(0 0 24px rgba(255,176,60,.7));
+    transform: translateY(-1px) scale(1.14);
+  }
+}
+@keyframes homePreviewOfferPulse {
+  0%, 100% {
+    transform: scale(1);
+    filter: brightness(1) drop-shadow(0 0 0 rgba(255,246,205,0)) drop-shadow(0 0 0 rgba(255,214,110,0)) drop-shadow(0 0 0 rgba(255,176,60,0));
+  }
+  50% {
+    transform: scale(1.16);
+    filter: brightness(1.9) drop-shadow(0 0 4px rgba(255,246,205,1)) drop-shadow(0 0 12px rgba(255,214,110,.95)) drop-shadow(0 0 24px rgba(255,176,60,.7));
+  }
+  80% {
+    filter: brightness(1) drop-shadow(0 0 0 rgba(255,246,205,0)) drop-shadow(0 0 0 rgba(255,214,110,0)) drop-shadow(0 0 0 rgba(255,176,60,0));
+  }
+}
+
+.tiers.is-in .tiers__list::after { transform: scaleX(var(--tier-fill, 0)); }
+.home-about__card { transition: border-color 180ms var(--ease-standard), box-shadow 180ms var(--ease-standard); }
+.home-about__card-arrow { transition: transform 180ms var(--ease-standard); }
+@media (hover: hover) {
+  .home-about__card:hover { box-shadow: 0 18px 48px rgba(16,48,95,.14); }
+  .home-about__card:hover .home-about__card-arrow { transform: translateX(3px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero .home-preview-hero-slide[data-state="active"] { transition: none; }
+  .home-preview-golden-letter,
+  .home-preview-offer-value { animation: none; }
+  .home-preview-lazy-media,
+  .home-preview-lazy-media.is-loaded { opacity: 1; filter: none; transform: none; transition: none; will-change: auto; }
+  .home-about__card,
+  .home-about__card-arrow { transition: none; }
+  .home-about__card:hover .home-about__card-arrow { transform: none; }
+
+  .hero .home-preview-letter,
+  .hero .slogan__l1,
+  .hero .slogan__l2,
+  .hero .slogan__rule,
+  .hero .hero__copy > .eyebrow,
+  .hero .hero__body,
+  .hero .hero__member,
+  .hero .hero-golden,
+  .hero .scroll-cue { animation: none !important; }
+
+  html.home-motion-ready .home-preview-reveal,
+  html.home-motion-ready .home-preview-reveal:not(.is-visible) {
+    opacity: 1 !important;
+    pointer-events: auto;
+    transform: none !important;
+    filter: none !important;
+    transition: none !important;
+    will-change: auto;
+  }
+}

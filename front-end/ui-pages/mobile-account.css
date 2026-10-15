@@ -1,0 +1,42 @@
+.mobile-nav > .mobile-nav__account {
+  display: flex;
+  width: 100%;
+  min-height: 48px;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  margin-bottom: 8px;
+  padding: 0 8px 12px;
+  border-bottom: 1px solid var(--gf-border);
+  color: var(--gf-navy);
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.25;
+  text-decoration: none;
+}
+
+.mobile-nav > .mobile-nav__account:focus-visible {
+  outline: 2px solid var(--gf-navy-700);
+  outline-offset: 2px;
+}
+
+.mobile-nav__account-icon {
+  display: inline-grid;
+  flex: 0 0 38px;
+  width: 38px;
+  height: 38px;
+  place-items: center;
+  border: 2px solid var(--gf-navy);
+  border-radius: 50%;
+  background: var(--gf-cream);
+  color: var(--gf-navy);
+}
+
+.mobile-nav > .mobile-nav__account .mobile-nav__account-icon .icon {
+  width: 24px;
+  height: 24px;
+}
+
+.mobile-nav__foot > .btn--primary {
+  color: var(--gf-white, white);
+}

@@ -1,0 +1,4942 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description" content="Ginsengfood – Tài khoản của tôi: hồ sơ cá nhân, sổ địa chỉ, đơn hàng, hạng thành viên, đổi mật khẩu và tuỳ chọn thông báo.">
+  <meta name="theme-color" content="#072A4E">
+  <title>Ginsengfood – Tài khoản của tôi</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=Manrope:wght@400;500;600;700&family=Noto+Serif:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+
+  <style>
+    /* =====================================================================
+       TÀI KHOẢN CỦA TÔI (mock tĩnh) — cùng token, phông, nút, ô nhập và kiểu thẻ với login/register/checkout/home.
+       Dữ liệu mẫu khớp trang hạng Silver (Minh Anh · Silver · 5%). Mọi thao tác chỉ đổi trong bộ nhớ trang, không gửi dữ liệu đi đâu.
+       ===================================================================== */
+    :root {
+      --gf-navy: #10305F;
+      --gf-navy-dark: #072A4E;
+      --gf-navy-700: #315E82;
+      --gf-gold: #C69A2B;
+      --gf-gold-text: #7B5614;
+      --gf-gold-soft: #E8C979;
+      --gf-cream: #FBF8F1;
+      --gf-ivory: #FFF8EA;
+      --gf-sand: #F0EADF;
+      --gf-text: #172B4D;
+      --gf-muted: #667085;
+      --gf-border: #E8DDC3;
+      --gf-danger: #B42318;
+      --gf-ok: #2F6F4A;
+      --tier: #5C6673; --tier-accent: #9DA4AD; --tier-surface: #EEF0F2; /* Silver */
+
+      --radius-sm: 8px; --radius-md: 12px; --radius-lg: 16px; --radius-xl: 20px; --radius-pill: 999px;
+      --shadow-card: 0 8px 24px rgba(16,48,95,.08);
+      --shadow-elevated: 0 18px 48px rgba(16,48,95,.14);
+      --focus-ring: 0 0 0 3px rgba(49,94,130,.28);
+      --motion-fast: 120ms; --motion-base: 180ms;
+      --ease-standard: cubic-bezier(.2,0,0,1);
+
+      --font-sans: Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      --font-serif: "Noto Serif", Georgia, "Times New Roman", serif;
+      --header-h: 74px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+    body {
+      margin: 0; min-height: 100svh; display: flex; flex-direction: column;
+      background: var(--gf-cream); color: var(--gf-text);
+      font-family: var(--font-sans); font-size: 16px; line-height: 1.55; -webkit-font-smoothing: antialiased;
+    }
+    img { max-width: 100%; height: auto; display: block; }
+    a { color: var(--gf-navy); text-decoration: none; }
+    a:hover { color: var(--gf-navy-700); }
+    button { font: inherit; color: inherit; cursor: pointer; }
+    h1, h2, h3, p, ul, ol, dl, dd { margin: 0; }
+    ul, ol { padding: 0; list-style: none; }
+    fieldset { margin: 0; padding: 0; border: 0; min-width: 0; }
+    :focus-visible { outline: none; box-shadow: var(--focus-ring); border-radius: var(--radius-sm); }
+    [hidden] { display: none !important; }
+    .sr-only { position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+    .icon { width: 1em; height: 1em; fill: none; stroke: currentColor; stroke-width: 1.85; stroke-linecap: round; stroke-linejoin: round; flex: 0 0 auto; }
+    .tabular { font-variant-numeric: tabular-nums; }
+
+
+    /* ---- Header: logo, về trang chủ, chip tài khoản ---- */
+
+    /* ---- Khung trang và các khối: đồng bộ với /vi/account của storefront ----
+       Chép nguyên CSS của storefront (ACCOUNT_PAGE_CSS, ACCOUNT_MEMBERSHIP_CSS, khối .ctv-acc của COLLABORATOR_ACCOUNT_CSS; mọi selector nằm dưới
+       [data-account-page]), bỏ phần popup xác minh / menu ảnh / khung lỗi gọn vì bản thiết kế không có. Tên class dùng đúng như storefront;
+       các hook cũ của script mock (.field, .field__toggle, .status) giữ lại và được định kiểu ở phần cuối khối này. */
+    @font-face {
+      font-family: "Material Symbols Outlined";
+      src: url("../public/fonts/material-symbols/material-symbols-outlined-variable.woff2") format("woff2");
+      font-style: normal; font-weight: 100 700; font-display: block;
+    }
+    .material-symbols-outlined {
+      display: inline-flex; width: auto; min-width: 1em; height: auto; min-height: 1em; align-items: center; justify-content: center;
+      flex-shrink: 0; overflow: visible; text-align: center; vertical-align: middle; white-space: nowrap; direction: ltr;
+      font-family: "Material Symbols Outlined" !important; font-style: normal; font-weight: normal;
+      font-feature-settings: 'liga' 1; font-variant-ligatures: common-ligatures;
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      letter-spacing: normal; line-height: 1; text-transform: none; word-wrap: normal; -webkit-font-smoothing: antialiased;
+    }
+    /* Token cùng tên với storefront (globals.css) mà :root của bản thiết kế chưa có */
+    :root {
+      --gf-white: #FFFFFF; --gf-radius-sm: 8px; --gf-radius-md: 12px; --gf-radius-lg: 16px; --gf-radius-xl: 20px; --gf-radius-pill: 999px;
+      --gf-shadow-card: 0 8px 24px rgba(16, 48, 95, 0.08); --gf-shadow-elevated: 0 18px 48px rgba(16, 48, 95, 0.14); --gf-focus-ring: 0 0 0 3px rgba(49, 94, 130, 0.28);
+      --gf-motion-fast: 120ms; --gf-motion-base: 180ms; --gf-ease-standard: cubic-bezier(0.2, 0, 0, 1);
+      --gf-font-sans: Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; --gf-font-serif: "Noto Serif", Georgia, "Times New Roman", serif;
+      --gf-warning: #B7791F;
+    }
+    /* Đặt lại kiểu Tailwind preflight của storefront chỉ trong vùng trang; :where giữ độ ưu tiên bằng 0 */
+    :where([data-account-page]) *, :where([data-account-page]) *::before, :where([data-account-page]) *::after { margin: 0; padding: 0; border: 0 solid; }
+    :where([data-account-page]) button, :where([data-account-page]) input, :where([data-account-page]) select { font: inherit; letter-spacing: inherit; color: inherit; background-color: transparent; border-radius: 0; }
+    :where([data-account-page]) h1, :where([data-account-page]) h2, :where([data-account-page]) h3 { font-size: inherit; font-weight: inherit; }
+    :where([data-account-page]) a { color: inherit; text-decoration: inherit; }
+    :where([data-account-page]) ul, :where([data-account-page]) ol { list-style: none; }
+    :where([data-account-page]) svg, :where([data-account-page]) img { display: block; vertical-align: middle; }
+    :where([data-account-page]) button { cursor: default; }
+    :where([data-account-page]) fieldset { min-width: 0; }
+    :where([data-account-page]) b, :where([data-account-page]) strong { font-weight: bolder; }
+  [data-account-page] {
+    /* Hai màu bản mẫu dùng nhưng globals.css chưa có token. */
+    --acc-danger: #B42318;
+    --acc-ok: #2F6F4A;
+
+    flex: 1 1 auto;
+    padding: 26px 24px 48px;
+    color: var(--gf-text);
+    font-size: 16px;
+    line-height: 1.55;
+  }
+
+  html:has([data-account-page]) {
+    scroll-behavior: smooth;
+  }
+
+  [data-account-page] .acc-icon {
+    width: 1em;
+    height: 1em;
+    flex: 0 0 auto;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.85;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  /* Nút pill theo bản mẫu (.btn): navy chính, viền navy, trong suốt. */
+  [data-account-page] .acc-btn {
+    display: inline-flex;
+    height: 44px;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 0 20px;
+    border: 1px solid transparent;
+    border-radius: 999px;
+    cursor: pointer;
+    font: inherit;
+    font-size: 14.5px;
+    font-weight: 600;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background var(--gf-motion-base) var(--gf-ease-standard), color var(--gf-motion-base) var(--gf-ease-standard);
+  }
+
+  [data-account-page] .acc-btn--primary {
+    background: var(--gf-navy);
+    color: var(--gf-white);
+  }
+
+  [data-account-page] .acc-btn--primary:hover {
+    background: var(--gf-navy-700);
+    color: var(--gf-white);
+  }
+
+  [data-account-page] .acc-btn--outline {
+    border-color: var(--gf-navy);
+    background: var(--gf-white);
+    color: var(--gf-navy);
+  }
+
+  [data-account-page] .acc-btn--outline:hover {
+    background: var(--gf-ivory);
+  }
+
+  [data-account-page] .acc-btn--ghost {
+    background: transparent;
+    color: var(--gf-navy);
+  }
+
+  [data-account-page] .acc-btn--ghost:hover {
+    background: var(--gf-cream);
+  }
+
+  [data-account-page] .acc-btn:disabled {
+    cursor: not-allowed;
+    opacity: 0.55;
+  }
+
+  [data-account-page] .acc__inner {
+    display: grid;
+    grid-template-columns: 260px minmax(0, 1fr);
+    gap: 24px;
+    align-items: start;
+    max-width: 1160px;
+    margin: 0 auto;
+  }
+
+  [data-account-page] .acc__main {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  /* Dính trên chính ô lưới (ô chỉ cao bằng nav nên đặt trên nav thì không dính được). */
+  [data-account-page] .acc__side {
+    position: sticky;
+    top: 18px;
+  }
+
+  [data-account-page] .side {
+    padding: 16px 12px;
+    border: 1px solid var(--gf-border);
+    border-radius: var(--gf-radius-xl);
+    background: var(--gf-white);
+    box-shadow: var(--gf-shadow-card);
+  }
+
+  [data-account-page] .side__title {
+    margin: 0;
+    padding: 2px 10px 10px;
+    color: var(--gf-muted);
+    font-size: 11.5px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  [data-account-page] .side__list {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  [data-account-page] .side__link {
+    display: flex;
+    width: 100%;
+    min-height: 44px;
+    align-items: center;
+    gap: 10px;
+    padding: 0 12px;
+    border: 0;
+    border-radius: var(--gf-radius-md);
+    background: transparent;
+    color: var(--gf-text);
+    cursor: pointer;
+    font: inherit;
+    font-size: 14.5px;
+    font-weight: 500;
+    text-align: left;
+    text-decoration: none;
+  }
+
+  [data-account-page] .side__link .acc-icon {
+    width: 19px;
+    height: 19px;
+    color: var(--gf-muted);
+  }
+
+  [data-account-page] .side__link:hover {
+    background: var(--gf-cream);
+    color: var(--gf-navy);
+  }
+
+  [data-account-page] .side__link.is-active {
+    background: var(--gf-ivory);
+    box-shadow: inset 3px 0 0 var(--gf-gold);
+    color: var(--gf-navy);
+    font-weight: 600;
+  }
+
+  [data-account-page] .side__link.is-active .acc-icon {
+    color: var(--gf-gold-text);
+  }
+
+  [data-account-page] .side__sep {
+    height: 1px;
+    margin: 8px 10px;
+    background: var(--gf-border);
+  }
+
+  [data-account-page] .side__link--out,
+  [data-account-page] .side__link--out .acc-icon {
+    color: var(--acc-danger);
+  }
+
+  [data-account-page] .side__link--out:hover {
+    background: #FEF3F2;
+    color: var(--acc-danger);
+  }
+
+  [data-account-page] .side__link--out:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+
+  [data-account-page] .page-title {
+    margin: 0;
+    color: var(--gf-navy);
+    font-family: var(--gf-font-serif);
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  [data-account-page] .page-lead {
+    margin: 4px 0 0;
+    color: var(--gf-muted);
+    font-size: 14.5px;
+  }
+
+  /* Thẻ thành viên (bản mẫu .member, .bar). Màu hạng --tier* do khung gọn gán theo [data-tier]. */
+  [data-account-page] .member {
+    display: grid;
+    grid-template-columns: minmax(0, 300px) minmax(0, 1fr);
+    overflow: hidden;
+    border: 1px solid var(--gf-border);
+    border-left: 4px solid var(--tier);
+    border-radius: var(--gf-radius-xl);
+    background: var(--gf-white);
+    box-shadow: var(--gf-shadow-card);
+  }
+
+  [data-account-page] .member--single {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  [data-account-page] .member__id {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 20px 22px;
+    background: var(--tier-surface);
+  }
+
+  [data-account-page] .member__top {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  [data-account-page] .member__avatar {
+    display: grid;
+    width: 48px;
+    height: 48px;
+    flex: 0 0 auto;
+    place-items: center;
+    overflow: hidden;
+    border: 1.5px solid var(--tier-accent);
+    border-radius: 999px;
+    background: var(--gf-white);
+    color: var(--tier);
+    font-size: 16px;
+    font-weight: 700;
+  }
+
+  [data-account-page] .member__avatar img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  [data-account-page] .member__name {
+    margin: 0;
+    color: var(--gf-text);
+    font-size: 17px;
+    font-weight: 700;
+    line-height: 1.35;
+  }
+
+  [data-account-page] .member__since {
+    margin: 0;
+    color: var(--gf-muted);
+    font-size: 12.5px;
+  }
+
+  [data-account-page] .member__badge {
+    display: inline-flex;
+    height: 28px;
+    align-items: center;
+    align-self: flex-start;
+    gap: 7px;
+    padding: 0 12px;
+    border-radius: 999px;
+    background: var(--tier);
+    color: var(--gf-white);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  [data-account-page] .member__badge .acc-icon {
+    width: 15px;
+    height: 15px;
+  }
+
+  [data-account-page] .member__perks {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin: 0;
+    padding: 0;
+    font-size: 13.5px;
+    list-style: none;
+  }
+
+  [data-account-page] .member__perks li {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  [data-account-page] .member__perks .acc-icon {
+    width: 16px;
+    height: 16px;
+    color: var(--tier);
+  }
+
+  [data-account-page] .member__hold {
+    color: var(--acc-danger);
+    font-weight: 600;
+  }
+
+  [data-account-page] .member__journey {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    gap: 10px;
+    padding: 20px 24px;
+  }
+
+  [data-account-page] .member__label {
+    margin: 0;
+    color: var(--gf-muted);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  [data-account-page] .bar {
+    height: 10px;
+    overflow: hidden;
+    border-radius: 999px;
+    background: var(--gf-sand);
+  }
+
+  [data-account-page] .bar span {
+    display: block;
+    width: var(--member-progress, 0%);
+    height: 100%;
+    border-radius: 999px;
+    background: linear-gradient(90deg, var(--tier-accent), #C89723);
+  }
+
+  [data-account-page] .member__line {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  [data-account-page] .member__figs {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+    margin: auto 0 0;
+    padding-top: 12px;
+    border-top: 1px solid var(--gf-border);
+  }
+
+  [data-account-page] .member__figs dt {
+    color: var(--gf-muted);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  [data-account-page] .member__figs dd {
+    margin: 2px 0 0;
+    color: var(--gf-navy);
+    font-size: 15px;
+    font-variant-numeric: tabular-nums;
+    font-weight: 700;
+  }
+
+  [data-account-page] .member__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 22px;
+  }
+
+  [data-account-page] .member__more {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--gf-navy);
+    font-size: 13.5px;
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  [data-account-page] .member__more:hover {
+    color: var(--gf-navy-700);
+  }
+
+  [data-account-page] .member__more .acc-icon {
+    width: 16px;
+    height: 16px;
+  }
+
+  [data-account-page] .panel {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 20px 22px 22px;
+    border: 1px solid var(--gf-border);
+    border-radius: var(--gf-radius-xl);
+    background: var(--gf-white);
+    box-shadow: var(--gf-shadow-card);
+    scroll-margin-top: 18px;
+  }
+
+  [data-account-page] .panel__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px 16px;
+  }
+
+  [data-account-page] .panel__title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0;
+    color: var(--gf-navy);
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.4;
+  }
+
+  [data-account-page] .panel__title .acc-icon {
+    width: 21px;
+    height: 21px;
+    color: var(--gf-gold-text);
+  }
+
+  [data-account-page] .panel__desc {
+    margin: 0;
+    color: var(--gf-muted);
+    font-size: 13.5px;
+  }
+
+  /* Vòng tròn ảnh ở thẻ thành viên là nút mở menu "Đổi ảnh / Gỡ ảnh" (P02). Menu mở sang
+     phải vòng tròn vì .member cắt phần tràn (overflow: hidden). */
+  [data-account-page] .member__avatar-wrap {
+    position: relative;
+    flex: 0 0 auto;
+  }
+
+  [data-account-page] button.member__avatar {
+    position: relative;
+    overflow: visible;
+    padding: 0;
+    cursor: pointer;
+    font: inherit;
+    font-size: 16px;
+    font-weight: 700;
+  }
+
+  [data-account-page] button.member__avatar img {
+    border-radius: 999px;
+  }
+
+  [data-account-page] button.member__avatar:focus-visible {
+    outline: none;
+    box-shadow: var(--gf-focus-ring);
+  }
+
+  [data-account-page] button.member__avatar[aria-busy='true'] {
+    cursor: progress;
+    opacity: 0.6;
+  }
+
+  [data-account-page] .member__avatar-edit {
+    position: absolute;
+    right: -3px;
+    bottom: -3px;
+    display: grid;
+    width: 20px;
+    height: 20px;
+    place-items: center;
+    border: 2px solid var(--gf-white);
+    border-radius: 999px;
+    background: var(--gf-navy);
+    color: var(--gf-white);
+    pointer-events: none;
+  }
+
+  [data-account-page] .member__avatar-edit .acc-icon {
+    width: 11px;
+    height: 11px;
+    stroke-width: 2.2;
+  }
+
+  /* Form hồ sơ (bản mẫu .grid2, .field*, .verified, .radios, .actions). Ô dùng FormField
+     dùng chung: nhãn và trạng thái xác minh chung một hàng, ô nhập xuống hàng dưới. */
+  [data-account-page] .acc-form {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  [data-account-page] .acc-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+  }
+
+  /* align-content: ô bị lưới kéo cao bằng ô bên cạnh thì các dòng vẫn dồn lên trên, để
+     ô nhập hai cột nằm cùng một hàng. */
+  [data-account-page] .acc-field {
+    display: flex;
+    min-width: 0;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    align-items: center;
+    gap: 6px 8px;
+  }
+
+  [data-account-page] .acc-field > * {
+    margin: 0;
+  }
+
+  [data-account-page] .acc-field > :not(label):not(.acc-field__status) {
+    flex: 1 1 100%;
+    min-width: 0;
+  }
+
+  /* Cao tối thiểu bằng nút "Xác minh" cạnh nhãn, để nhãn thường và nhãn có trạng thái cùng cao. */
+  [data-account-page] .acc-field > label {
+    display: inline-flex;
+    min-height: 24px;
+    align-items: center;
+    gap: 6px;
+    color: var(--gf-text);
+    font-size: 13.5px;
+    font-weight: 600;
+    line-height: 1.4;
+  }
+
+  [data-account-page] .acc-field__optional {
+    color: var(--gf-muted);
+    font-weight: 500;
+  }
+
+  [data-account-page] .acc-field--wide {
+    grid-column: 1 / -1;
+  }
+
+  [data-account-page] .acc-field--half {
+    grid-column: 1 / -1;
+    max-width: calc(50% - 7px);
+  }
+
+  [data-account-page] .acc-field > p {
+    color: var(--gf-muted);
+    font-size: 12px;
+    line-height: 1.45;
+  }
+
+  [data-account-page] .acc-field > p[role='alert'] {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--acc-danger);
+    font-size: 12.5px;
+    font-weight: 600;
+  }
+
+  /* Icon cảnh báo của bản mẫu (#i-warning) vẽ bằng CSS, để cả lỗi của VietnamAddressPicker
+     (chỉ nhận chuỗi) cũng có icon. */
+  [data-account-page] .acc-field > p[role='alert']::before {
+    content: '';
+    width: 14px;
+    height: 14px;
+    flex: 0 0 auto;
+    background-color: currentColor;
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 4.5l8.5 15H3.5z'/%3E%3Cpath d='M12 10v4'/%3E%3Cpath d='M12 17.2v.2'/%3E%3C/svg%3E") center / contain no-repeat;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 4.5l8.5 15H3.5z'/%3E%3Cpath d='M12 10v4'/%3E%3Cpath d='M12 17.2v.2'/%3E%3C/svg%3E") center / contain no-repeat;
+  }
+
+  [data-account-page] .acc-input,
+  [data-account-page] .acc-select > button,
+  [data-account-page] .acc-date > button {
+    width: 100%;
+    height: 46px;
+    min-height: 46px;
+    padding: 0 14px;
+    border: 1px solid var(--gf-border);
+    border-radius: var(--gf-radius-md);
+    background: var(--gf-white);
+    color: var(--gf-text);
+    font: inherit;
+    font-size: 15px;
+    transition: border-color var(--gf-motion-fast) var(--gf-ease-standard), box-shadow var(--gf-motion-fast) var(--gf-ease-standard);
+  }
+
+  [data-account-page] .acc-select > button span:not(.material-symbols-outlined),
+  [data-account-page] .acc-date > button span:not(.material-symbols-outlined) {
+    font-size: 15px;
+  }
+
+  [data-account-page] .acc-input::placeholder {
+    color: #98A2B3;
+  }
+
+  [data-account-page] .acc-input:hover,
+  [data-account-page] .acc-select > button:hover,
+  [data-account-page] .acc-date > button:hover {
+    border-color: #D9C79C;
+    background: var(--gf-white);
+  }
+
+  [data-account-page] .acc-input:focus,
+  [data-account-page] .acc-select > button:focus-visible,
+  [data-account-page] .acc-date > button:focus-visible {
+    outline: none;
+    border-color: var(--gf-navy-700);
+    box-shadow: var(--gf-focus-ring);
+  }
+
+  [data-account-page] .acc-input[readonly] {
+    background: var(--gf-cream);
+    color: var(--gf-muted);
+  }
+
+  [data-account-page] .acc-input[aria-invalid='true'] {
+    border-color: var(--acc-danger);
+  }
+
+  [data-account-page] .acc-field__inline {
+    display: flex;
+    gap: 8px;
+  }
+
+  [data-account-page] .acc-field__inline .acc-input {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  [data-account-page] .acc-field__status {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  [data-account-page] .acc-verified,
+  [data-account-page] .acc-unverified {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 1px 8px;
+    border: 1px solid #C9E2CE;
+    border-radius: 999px;
+    background: #F1F7F2;
+    color: var(--acc-ok);
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 1.6;
+  }
+
+  [data-account-page] .acc-verified .acc-icon {
+    width: 12px;
+    height: 12px;
+    stroke-width: 2.6;
+  }
+
+  [data-account-page] .acc-unverified {
+    border-color: #EAD9AE;
+    background: var(--gf-ivory);
+    color: var(--gf-gold-text);
+  }
+
+  /* Nút chữ nhỏ cạnh nhãn ("Xác minh"). Cao 24px cho đủ vùng chạm tối thiểu. */
+  [data-account-page] .acc-link-btn {
+    display: inline-flex;
+    min-height: 24px;
+    align-items: center;
+    padding: 0 2px;
+    border: 0;
+    background: transparent;
+    color: var(--gf-navy);
+    cursor: pointer;
+    font: inherit;
+    font-size: 12.5px;
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  [data-account-page] .acc-link-btn:hover {
+    color: var(--gf-navy-700);
+  }
+
+  [data-account-page] .acc-link-btn:focus-visible {
+    outline: none;
+    border-radius: 4px;
+    box-shadow: var(--gf-focus-ring);
+  }
+
+  /* Nút "Xác minh" chưa mở (ô Facebook): xám, không gạch chân. */
+  [data-account-page] .acc-link-btn:disabled {
+    color: var(--gf-muted);
+    cursor: not-allowed;
+    text-decoration: none;
+  }
+
+  [data-account-page] .acc-field__status .acc-soon {
+    padding: 1px 8px;
+    font-size: 11px;
+  }
+
+  [data-account-page] .acc-btn--sm {
+    height: 46px;
+    padding: 0 16px;
+    font-size: 14px;
+  }
+
+  [data-account-page] .acc-radios {
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+
+  [data-account-page] .acc-radios legend {
+    margin-bottom: 6px;
+    padding: 0;
+    color: var(--gf-text);
+    font-size: 13.5px;
+    font-weight: 600;
+  }
+
+  [data-account-page] .acc-radios__list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  [data-account-page] .acc-radio {
+    display: inline-flex;
+    height: 44px;
+    align-items: center;
+    gap: 8px;
+    padding: 0 14px;
+    border: 1px solid var(--gf-border);
+    border-radius: var(--gf-radius-md);
+    background: var(--gf-white);
+    cursor: pointer;
+    font-size: 14.5px;
+  }
+
+  [data-account-page] .acc-radio input {
+    width: 17px;
+    height: 17px;
+    margin: 0;
+    accent-color: var(--gf-navy);
+  }
+
+  [data-account-page] .acc-radio:has(input:checked) {
+    border-color: var(--gf-navy);
+    background: var(--gf-ivory);
+  }
+
+  [data-account-page] .acc-radio:has(input:focus-visible) {
+    box-shadow: var(--gf-focus-ring);
+  }
+
+  [data-account-page] .acc-note {
+    margin: 0;
+    padding: 10px 14px;
+    border: 1px solid #EAD9AE;
+    border-radius: var(--gf-radius-md);
+    background: var(--gf-ivory);
+    color: var(--gf-gold-text);
+    font-size: 13.5px;
+    line-height: 1.5;
+  }
+
+  [data-account-page] .acc-alert {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    margin: 0;
+    padding: 10px 14px;
+    border: 1px solid #FECDCA;
+    border-radius: var(--gf-radius-md);
+    background: #FEF3F2;
+    color: var(--acc-danger);
+    font-size: 13.5px;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+
+  [data-account-page] .acc-alert .acc-icon {
+    width: 16px;
+    height: 16px;
+    margin-top: 2px;
+  }
+
+  [data-account-page] .acc-status {
+    margin: 0;
+    padding: 10px 14px;
+    border: 1px solid #C9E2CE;
+    border-radius: var(--gf-radius-md);
+    background: #F1F7F2;
+    color: var(--acc-ok);
+    font-size: 13.5px;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+
+  /* "Thông tin bổ sung" thu gọn, mặc định đóng. */
+  [data-account-page] .acc-extra {
+    border: 1px solid var(--gf-border);
+    border-radius: var(--gf-radius-lg);
+    background: var(--gf-white);
+  }
+
+  [data-account-page] .acc-extra > summary {
+    display: flex;
+    min-height: 52px;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 10px 16px;
+    border-radius: var(--gf-radius-lg);
+    cursor: pointer;
+    list-style: none;
+  }
+
+  [data-account-page] .acc-extra > summary::-webkit-details-marker {
+    display: none;
+  }
+
+  [data-account-page] .acc-extra > summary:focus-visible {
+    outline: none;
+    box-shadow: var(--gf-focus-ring);
+  }
+
+  [data-account-page] .acc-extra__title {
+    display: block;
+    color: var(--gf-navy);
+    font-size: 14.5px;
+    font-weight: 700;
+  }
+
+  [data-account-page] .acc-extra__desc {
+    display: block;
+    color: var(--gf-muted);
+    font-size: 12.5px;
+  }
+
+  [data-account-page] .acc-extra > summary > .acc-icon {
+    width: 18px;
+    height: 18px;
+    color: var(--gf-muted);
+    transition: transform var(--gf-motion-base) var(--gf-ease-standard);
+  }
+
+  [data-account-page] .acc-extra[open] > summary > .acc-icon {
+    transform: rotate(180deg);
+  }
+
+  [data-account-page] .acc-extra__body {
+    padding: 14px 16px 16px;
+    border-top: 1px solid var(--gf-border);
+  }
+
+  [data-account-page] .acc-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 10px;
+    padding-top: 2px;
+  }
+
+  /* Sổ địa chỉ (P03, bản mẫu .addr*, .linkbtn*, .addr-add, .addr-form, .check). */
+  [data-account-page] .addr-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  [data-account-page] .addr {
+    position: relative;
+    display: grid;
+    grid-template-columns: 44px minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 16px;
+    border: 1px solid var(--gf-border);
+    border-radius: var(--gf-radius-lg);
+    background: var(--gf-white);
+    transition: border-color var(--gf-motion-fast) var(--gf-ease-standard);
+  }
+
+  [data-account-page] .addr:hover {
+    border-color: #D9C79C;
+  }
+
+  [data-account-page] .addr.is-default {
+    border-color: var(--gf-navy);
+    background: #FCFBF7;
+    box-shadow: inset 3px 0 0 var(--gf-navy);
+  }
+
+  [data-account-page] .addr__icon {
+    display: grid;
+    width: 44px;
+    height: 44px;
+    place-items: center;
+    border: 1px solid var(--gf-border);
+    border-radius: 999px;
+    background: var(--gf-cream);
+    color: var(--gf-gold-text);
+  }
+
+  [data-account-page] .addr__icon .acc-icon {
+    width: 20px;
+    height: 20px;
+  }
+
+  [data-account-page] .addr.is-default .addr__icon {
+    border-color: var(--gf-navy);
+    background: var(--gf-navy);
+    color: var(--gf-white);
+  }
+
+  [data-account-page] .addr__body {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  [data-account-page] .addr__top {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+  }
+
+  [data-account-page] .addr__label {
+    color: var(--gf-navy);
+    font-size: 14.5px;
+    font-weight: 700;
+  }
+
+  [data-account-page] .addr__default {
+    padding: 2px 9px;
+    border-radius: 999px;
+    background: var(--gf-navy);
+    color: var(--gf-white);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+  }
+
+  [data-account-page] .addr__who {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  [data-account-page] .addr__line {
+    margin: 0;
+    color: var(--gf-muted);
+    font-size: 13.5px;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+  }
+
+  [data-account-page] .addr__acts {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 4px 14px;
+  }
+
+  [data-account-page] .addr__error {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin: 0;
+    color: var(--acc-danger);
+    font-size: 12.5px;
+    font-weight: 600;
+  }
+
+  [data-account-page] .addr__error .acc-icon {
+    width: 14px;
+    height: 14px;
+  }
+
+  [data-account-page] .linkbtn {
+    display: inline-flex;
+    height: 32px;
+    align-items: center;
+    gap: 5px;
+    padding: 0 2px;
+    border: 0;
+    background: transparent;
+    color: var(--gf-navy);
+    cursor: pointer;
+    font: inherit;
+    font-size: 13.5px;
+    font-weight: 600;
+  }
+
+  [data-account-page] .linkbtn .acc-icon {
+    width: 15px;
+    height: 15px;
+  }
+
+  [data-account-page] .linkbtn:hover {
+    color: var(--gf-navy-700);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  [data-account-page] .linkbtn:focus-visible {
+    outline: none;
+    border-radius: 6px;
+    box-shadow: var(--gf-focus-ring);
+  }
+
+  [data-account-page] .linkbtn--danger,
+  [data-account-page] .linkbtn--danger:hover {
+    color: var(--acc-danger);
+  }
+
+  [data-account-page] .linkbtn:disabled {
+    color: #B8B2A3;
+    cursor: not-allowed;
+    text-decoration: none;
+  }
+
+  [data-account-page] .addr-add {
+    display: flex;
+    width: 100%;
+    min-height: 58px;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 16px;
+    border: 1.5px dashed #D9C79C;
+    border-radius: var(--gf-radius-lg);
+    background: var(--gf-cream);
+    color: var(--gf-navy);
+    cursor: pointer;
+    font: inherit;
+    font-size: 14.5px;
+    font-weight: 600;
+  }
+
+  [data-account-page] .addr-add:hover {
+    border-color: var(--gf-gold);
+    background: var(--gf-ivory);
+  }
+
+  [data-account-page] .addr-add:focus-visible {
+    outline: none;
+    box-shadow: var(--gf-focus-ring);
+  }
+
+  [data-account-page] .addr-add .acc-icon {
+    width: 20px;
+    height: 20px;
+  }
+
+  [data-account-page] .addr-form {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding: 18px;
+    border: 1px solid var(--gf-border);
+    border-radius: var(--gf-radius-lg);
+    background: var(--gf-cream);
+  }
+
+  [data-account-page] .addr-form__title {
+    margin: 0;
+    color: var(--gf-navy);
+    font-size: 15.5px;
+    font-weight: 700;
+  }
+
+  [data-account-page] .acc-check {
+    display: inline-flex;
+    align-items: center;
+    align-self: flex-start;
+    gap: 9px;
+    min-height: 32px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+
+  [data-account-page] .acc-check input {
+    width: 18px;
+    height: 18px;
+    margin: 0;
+    accent-color: var(--gf-navy);
+  }
+
+  [data-account-page] .acc-check:has(input:disabled) {
+    color: var(--gf-muted);
+    cursor: not-allowed;
+  }
+
+  [data-account-page] .acc-visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  /* Đơn hàng gần đây (P04, bản mẫu .orders, .order*). Nhãn trạng thái dùng StateBadge +
+     màu của trang tra cứu (ODR-ACC-13). */
+  /* Cả danh sách dùng chung một lưới 4 cột như bản mẫu (1.3fr | 1fr | auto | auto). Bản mẫu
+     cho mỗi hàng một lưới riêng nên cột nhãn/tổng lệch nhau giữa các hàng; ở đây mỗi hàng là
+     subgrid của danh sách, cột auto co theo nhãn/tổng rộng nhất và các hàng thẳng cột. */
+  [data-account-page] .orders {
+    display: grid;
+    grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr) auto auto;
+    column-gap: 14px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  [data-account-page] .order {
+    display: grid;
+    grid-column: 1 / -1;
+    grid-template-columns: subgrid;
+    align-items: center;
+    column-gap: 14px;
+    padding: 14px 0;
+    border-top: 1px solid var(--gf-border);
+  }
+
+  /* Trình duyệt chưa có subgrid: lưới riêng từng hàng, cột nhãn/tổng cố định (rộng nhất là
+     nhãn "Đang xác nhận" 129px và tổng tiền 9 chữ số) để các hàng vẫn thẳng cột. */
+  @supports not (grid-template-columns: subgrid) {
+    [data-account-page] .orders {
+      display: flex;
+      flex-direction: column;
+    }
+
+    [data-account-page] .order {
+      grid-column: auto;
+      grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr) 132px 104px;
+    }
+  }
+
+  [data-account-page] .order:first-child {
+    padding-top: 2px;
+    border-top: 0;
+  }
+
+  [data-account-page] .order p {
+    margin: 0;
+  }
+
+  [data-account-page] .order__main {
+    min-width: 0;
+  }
+
+  [data-account-page] .order__code {
+    overflow: hidden;
+    color: var(--gf-navy);
+    font-size: 14.5px;
+    font-variant-numeric: tabular-nums;
+    font-weight: 700;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  [data-account-page] .order__date {
+    color: var(--gf-muted);
+    font-size: 12.5px;
+  }
+
+  [data-account-page] .order__items {
+    min-width: 0;
+    color: var(--gf-text);
+    font-size: 13.5px;
+  }
+
+  [data-account-page] .order__skeleton {
+    display: block;
+    width: 70%;
+    height: 12px;
+    border-radius: 999px;
+    background: var(--gf-sand);
+  }
+
+  /* Nhãn sát cột tổng như bản mẫu (mỗi nhãn nằm ngay cạnh cột tổng, mép phải thẳng hàng). */
+  [data-account-page] .order__status {
+    justify-self: end;
+  }
+
+  [data-account-page] .order__end {
+    text-align: right;
+  }
+
+  [data-account-page] .order__total {
+    color: var(--gf-navy);
+    font-size: 15px;
+    font-variant-numeric: tabular-nums;
+    font-weight: 700;
+  }
+
+  [data-account-page] .order__more {
+    color: var(--gf-navy);
+    font-size: 13.5px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  [data-account-page] .order__more:hover {
+    color: var(--gf-navy-700);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  [data-account-page] .order__more:focus-visible,
+  [data-account-page] .member__more:focus-visible {
+    outline: none;
+    border-radius: 4px;
+    box-shadow: var(--gf-focus-ring);
+  }
+
+  /* Nút "Xem thêm đơn hàng" dưới danh sách (thay trang danh sách cũ /account/orders). */
+  [data-account-page] .orders__more {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 8px 12px;
+  }
+
+  [data-account-page] .orders__more-error {
+    margin: 0;
+    color: var(--gf-muted);
+    font-size: 13.5px;
+  }
+
+  /* Dòng "Thêm đơn cũ vào tài khoản" cuối khối Đơn hàng (P02). */
+  [data-account-page] .acc-sync {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding-top: 14px;
+    border-top: 1px dashed var(--gf-border);
+  }
+
+  [data-account-page] .acc-sync__row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 2px 8px;
+    margin: 0;
+    color: var(--gf-muted);
+    font-size: 14px;
+  }
+
+  [data-account-page] .acc-sync__toggle {
+    display: inline-flex;
+    min-height: 32px;
+    align-items: center;
+    gap: 6px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--gf-navy);
+    cursor: pointer;
+    font: inherit;
+    font-size: 14px;
+    font-weight: 700;
+  }
+
+  [data-account-page] .acc-sync__toggle:hover {
+    color: var(--gf-navy-700);
+  }
+
+  [data-account-page] .acc-sync__toggle:focus-visible {
+    outline: none;
+    border-radius: 6px;
+    box-shadow: var(--gf-focus-ring);
+  }
+
+  [data-account-page] .acc-sync__toggle .acc-icon {
+    width: 16px;
+    height: 16px;
+    transition: transform var(--gf-motion-base) var(--gf-ease-standard);
+  }
+
+  [data-account-page] .acc-sync__toggle[aria-expanded='true'] .acc-icon {
+    transform: rotate(180deg);
+  }
+
+  [data-account-page] .acc-sync__panel {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 16px;
+    border: 1px solid var(--gf-border);
+    border-radius: var(--gf-radius-lg);
+    background: var(--gf-cream);
+  }
+
+  [data-account-page] .acc-sync__title {
+    margin: 0;
+    color: var(--gf-navy);
+    font-size: 15px;
+    font-weight: 700;
+  }
+
+  [data-account-page] .acc-sync__desc {
+    margin: 0;
+    color: var(--gf-muted);
+    font-size: 13.5px;
+  }
+
+  [data-account-page] .acc-sync__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr);
+    align-items: start;
+    gap: 14px;
+  }
+
+  [data-account-page] .acc-sync__panel .acc-actions {
+    justify-content: flex-start;
+  }
+
+  /* Đổi mật khẩu (P05, bản mẫu .field--pass, .field__toggle). Từ F01-P01 form chạy thật; fieldset chỉ khoá lúc đang gửi. */
+  [data-account-page] .acc-fieldset {
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+
+  [data-account-page] .acc-pass {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  [data-account-page] .acc-input--pass {
+    padding-right: 50px;
+  }
+
+  [data-account-page] .acc-input:disabled,
+  [data-account-page] .acc-input:disabled:hover {
+    border-color: var(--gf-border);
+    background: var(--gf-cream);
+    color: var(--gf-muted);
+    cursor: not-allowed;
+  }
+
+  [data-account-page] .acc-pass__toggle {
+    position: absolute;
+    right: 6px;
+    display: grid;
+    width: 34px;
+    height: 34px;
+    place-items: center;
+    padding: 0;
+    border: 0;
+    border-radius: 999px;
+    background: transparent;
+    color: var(--gf-muted);
+    cursor: pointer;
+  }
+
+  [data-account-page] .acc-pass__toggle:hover:not(:disabled) {
+    background: var(--gf-ivory);
+    color: var(--gf-navy);
+  }
+
+  [data-account-page] .acc-pass__toggle:focus-visible {
+    outline: none;
+    box-shadow: var(--gf-focus-ring);
+  }
+
+  [data-account-page] .acc-pass__toggle:disabled {
+    cursor: not-allowed;
+    opacity: 0.55;
+  }
+
+  [data-account-page] .acc-pass__toggle .acc-icon {
+    width: 18px;
+    height: 18px;
+  }
+
+  [data-account-page] .acc-pass__foot {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px 16px;
+    padding-top: 2px;
+  }
+
+  [data-account-page] .acc-pass__forgot {
+    margin: 0;
+    color: var(--gf-muted);
+    font-size: 13.5px;
+  }
+
+  [data-account-page] .acc-pass__forgot a {
+    color: var(--gf-navy);
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  [data-account-page] .acc-pass__forgot a:hover {
+    color: var(--gf-navy-700);
+  }
+
+  [data-account-page] .acc-pass__forgot a:focus-visible {
+    outline: none;
+    border-radius: 4px;
+    box-shadow: var(--gf-focus-ring);
+  }
+
+  [data-account-page] .acc-pass__submit {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: auto;
+  }
+
+  [data-account-page] .acc-soon {
+    display: inline-flex;
+    align-items: center;
+    padding: 2px 10px;
+    border: 1px solid #EAD9AE;
+    border-radius: 999px;
+    background: var(--gf-ivory);
+    color: var(--gf-gold-text);
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1.6;
+    white-space: nowrap;
+  }
+
+  /* Tuỳ chọn thông báo (P05, bản mẫu .prefs, .pref*, .switch*). Vùng bấm công tắc 46×44px;
+     trạng thái "unknown" (chưa có dữ liệu / đang tải / lỗi) đặt núm ở giữa, không giả bật tắt. */
+  [data-account-page] .acc-notify {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  [data-account-page] .prefs {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  [data-account-page] .pref {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    column-gap: 16px;
+    padding: 14px 0;
+    border-top: 1px solid var(--gf-border);
+  }
+
+  [data-account-page] .pref:first-child {
+    padding-top: 0;
+    border-top: 0;
+  }
+
+  [data-account-page] .pref__body {
+    min-width: 0;
+  }
+
+  [data-account-page] .pref__title {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 4px 8px;
+    margin: 0;
+    font-size: 14.5px;
+    font-weight: 600;
+  }
+
+  [data-account-page] .pref__title [data-gap-chip] {
+    font-size: 12px;
+  }
+
+  [data-account-page] .pref__desc {
+    margin: 2px 0 0;
+    color: var(--gf-muted);
+    font-size: 13px;
+  }
+
+  [data-account-page] .pref__error {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin: 8px 0 0;
+    color: var(--acc-danger);
+    font-size: 12.5px;
+    font-weight: 600;
+  }
+
+  [data-account-page] .pref__error .acc-icon {
+    width: 14px;
+    height: 14px;
+  }
+
+  [data-account-page] .acc-switch {
+    position: relative;
+    flex: 0 0 auto;
+    width: 46px;
+    height: 44px;
+  }
+
+  [data-account-page] .acc-switch input {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    cursor: pointer;
+    opacity: 0;
+  }
+
+  [data-account-page] .acc-switch__track {
+    position: absolute;
+    top: 9px;
+    right: 0;
+    left: 0;
+    height: 26px;
+    border-radius: 999px;
+    background: #D5D0C4;
+    transition: background var(--gf-motion-base) var(--gf-ease-standard);
+  }
+
+  [data-account-page] .acc-switch__track::after {
+    content: '';
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 20px;
+    height: 20px;
+    border-radius: 999px;
+    background: var(--gf-white);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    transition: transform var(--gf-motion-base) var(--gf-ease-standard);
+  }
+
+  [data-account-page] .acc-switch input:checked + .acc-switch__track {
+    background: var(--gf-navy);
+  }
+
+  [data-account-page] .acc-switch input:checked + .acc-switch__track::after {
+    transform: translateX(20px);
+  }
+
+  [data-account-page] .acc-switch input:focus-visible + .acc-switch__track {
+    box-shadow: var(--gf-focus-ring);
+  }
+
+  [data-account-page] .acc-switch input:disabled {
+    cursor: not-allowed;
+  }
+
+  [data-account-page] .acc-switch input[aria-busy='true'] {
+    cursor: progress;
+  }
+
+  [data-account-page] .acc-switch input:disabled + .acc-switch__track {
+    opacity: 0.55;
+  }
+
+  [data-account-page] .acc-switch--unknown .acc-switch__track,
+  [data-account-page] .acc-switch--unknown input:disabled + .acc-switch__track {
+    background: var(--gf-sand);
+    opacity: 1;
+  }
+
+  [data-account-page] .acc-switch--unknown .acc-switch__track::after {
+    border: 1px solid #D5D0C4;
+    box-shadow: none;
+    transform: translateX(10px);
+  }
+
+  /* Thông báo nhỏ sau khi lưu: viên thuốc navy đáy giữa màn hình. */
+  .acc-toast {
+    position: fixed;
+    left: 50%;
+    bottom: 24px;
+    z-index: 220;
+    display: flex;
+    max-width: calc(100vw - 32px);
+    align-items: center;
+    gap: 9px;
+    padding: 12px 18px;
+    border-radius: 999px;
+    background: var(--gf-navy-dark);
+    box-shadow: var(--gf-shadow-elevated);
+    color: var(--gf-white);
+    font-family: var(--gf-font-sans);
+    font-size: 14px;
+    font-weight: 600;
+    opacity: 0;
+    transform: translate(-50%, 16px);
+    visibility: hidden;
+    transition: opacity 220ms var(--gf-ease-standard), transform 220ms var(--gf-ease-standard), visibility 0s 220ms;
+  }
+
+  .acc-toast.is-on {
+    opacity: 1;
+    transform: translate(-50%, 0);
+    visibility: visible;
+    transition: opacity 220ms var(--gf-ease-standard), transform 220ms var(--gf-ease-standard), visibility 0s;
+  }
+
+  .acc-toast .acc-icon {
+    width: 17px;
+    height: 17px;
+    color: var(--gf-gold-soft);
+    stroke-width: 2.4;
+  }
+
+  @media (max-width: 1023px) {
+    [data-account-page] .acc__inner {
+          grid-template-columns: minmax(0, 1fr);
+          gap: 16px;
+        }
+
+    /* Menu thành dải tab cuộn ngang, dính đầu trang. */
+      [data-account-page] .acc__side {
+          top: 0;
+          z-index: 20;
+        }
+
+    [data-account-page] .side {
+          padding: 8px;
+          border-radius: var(--gf-radius-lg);
+        }
+
+    [data-account-page] .side__title,
+      [data-account-page] .side__sep {
+          display: none;
+        }
+
+    [data-account-page] .side__list {
+          flex-direction: row;
+          gap: 6px;
+          overflow-x: auto;
+          scrollbar-width: none;
+        }
+
+    [data-account-page] .side__list::-webkit-scrollbar {
+          display: none;
+        }
+
+    [data-account-page] .side__link {
+          flex: 0 0 auto;
+          min-height: 40px;
+          font-size: 14px;
+          white-space: nowrap;
+        }
+
+    [data-account-page] .side__link.is-active {
+          box-shadow: inset 0 -2px 0 var(--gf-gold);
+        }
+
+    [data-account-page] .panel {
+          scroll-margin-top: 72px;
+        }
+
+    [data-account-page] .member {
+          grid-template-columns: minmax(0, 1fr);
+        }
+  }
+
+  @media (max-width: 767px) {
+    [data-account-page] {
+          padding: 14px 16px 36px;
+        }
+
+    [data-account-page] .page-title {
+          font-size: 25px;
+        }
+
+    [data-account-page] .panel {
+          padding: 16px;
+        }
+
+    [data-account-page] .member__id,
+      [data-account-page] .member__journey {
+          padding: 16px;
+        }
+
+    [data-account-page] .member__figs {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+    [data-account-page] .acc-grid,
+      [data-account-page] .acc-sync__grid {
+          grid-template-columns: minmax(0, 1fr);
+        }
+
+    [data-account-page] .acc-field--half {
+          max-width: none;
+        }
+
+    /* Màn hẹp: thao tác của hàng địa chỉ xuống dưới, ngăn bằng vạch mảnh (bản mẫu). */
+      [data-account-page] .addr {
+          grid-template-columns: 40px minmax(0, 1fr);
+          gap: 12px;
+          padding: 14px;
+        }
+
+    [data-account-page] .addr__icon {
+          width: 40px;
+          height: 40px;
+        }
+
+    [data-account-page] .addr__acts {
+          grid-column: 1 / -1;
+          justify-content: flex-start;
+          padding-top: 8px;
+          border-top: 1px solid var(--gf-border);
+        }
+
+    [data-account-page] .addr-form {
+          padding: 14px;
+        }
+
+    /* Màn hẹp: mỗi đơn 2 cột (mã + ngày | tổng + link, cùng hàng trên), nhãn ở hàng dưới bên
+           trái, ẩn ô món. Đúng hình bản mẫu vẽ ra: khối tổng + "Xem chi tiết" nằm hàng trên. */
+      [data-account-page] .orders {
+          display: flex;
+          flex-direction: column;
+        }
+
+    [data-account-page] .order {
+          grid-column: auto;
+          grid-template-columns: minmax(0, 1fr) auto;
+          row-gap: 6px;
+        }
+
+    [data-account-page] .order__items {
+          display: none;
+        }
+
+    [data-account-page] .order__main {
+          grid-column: 1;
+          grid-row: 1;
+        }
+
+    [data-account-page] .order__end {
+          grid-column: 2;
+          grid-row: 1;
+        }
+
+    [data-account-page] .order__status {
+          grid-column: 1;
+          grid-row: 2;
+          justify-self: start;
+        }
+
+    [data-account-page] .acc-actions .acc-btn {
+          flex: 1 1 auto;
+        }
+
+    /* Màn hẹp: nút cập nhật mật khẩu thành một hàng riêng, giãn hết hàng; nút con mắt đủ vùng chạm 44px. */
+      [data-account-page] .acc-pass__submit {
+          width: 100%;
+          margin-left: 0;
+        }
+
+    [data-account-page] .acc-pass__toggle {
+          right: 2px;
+          width: 44px;
+          height: 44px;
+        }
+
+    [data-account-page] .acc-input--pass {
+          padding-right: 54px;
+        }
+
+    [data-account-page] .acc-pass__submit .acc-btn {
+          flex: 1 1 auto;
+        }
+
+    .acc-toast {
+          bottom: 16px;
+          border-radius: var(--gf-radius-lg);
+        }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html:has([data-account-page]) {
+          scroll-behavior: auto;
+        }
+
+    [data-account-page] *,
+      .acc-toast {
+          transition-duration: 0.01ms !important;
+        }
+  }
+
+  [data-account-page] .rank {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  /* Nhãn trạng thái (bản mẫu .status): chấm tròn trước chữ. Màu do guestOrderBadgeClassName. */
+  [data-account-page] .rank-status::before {
+    content: "";
+    width: 7px;
+    height: 7px;
+    flex: 0 0 auto;
+    border-radius: 999px;
+    background: currentColor;
+  }
+
+  [data-account-page] .rank-status--hold {
+    border-color: #EAD9AE !important;
+    background: var(--gf-ivory) !important;
+    color: var(--gf-gold-text) !important;
+  }
+
+  [data-account-page] .rank-hold {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px 14px;
+    padding: 14px 16px;
+    border: 1px solid #E3C47A;
+    border-radius: var(--gf-radius-md);
+    background: var(--gf-ivory);
+  }
+
+  [data-account-page] .rank-hold > .acc-icon {
+    width: 22px;
+    height: 22px;
+    color: #B7791F;
+  }
+
+  /* Nền 0: màn hẹp chỉ nút xuống hàng, icon vẫn cạnh chữ. */
+  [data-account-page] .rank-hold__body {
+    min-width: 0;
+    flex: 1 1 0;
+  }
+
+  [data-account-page] .rank-hold__title {
+    margin: 0;
+    color: var(--gf-gold-text);
+    font-size: 14.5px;
+    font-weight: 700;
+  }
+
+  [data-account-page] .rank-hold__text {
+    margin: 0;
+    font-size: 13.5px;
+  }
+
+  [data-account-page] .rank-hold__action {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  [data-account-page] .rank-hold__mail {
+    color: var(--gf-muted);
+    font-size: 13px;
+    overflow-wrap: anywhere;
+  }
+
+  /* Bản mẫu .btn--sm cao 38px; .acc-btn--sm của trang cao 46px nên đè riêng trong khung cảnh báo. */
+  [data-account-page] .rank-hold .acc-btn--sm {
+    height: 38px;
+    min-height: 38px;
+    padding: 0 16px;
+    font-size: 13.5px;
+  }
+
+  [data-account-page] .rank-block {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  [data-account-page] .rank-block + .rank-block {
+    padding-top: 18px;
+    border-top: 1px solid var(--gf-border);
+  }
+
+  [data-account-page] .rank-block__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px 14px;
+  }
+
+  [data-account-page] .rank-sub {
+    margin: 0;
+    color: var(--gf-navy);
+    font-size: 15.5px;
+    font-weight: 700;
+    line-height: 1.4;
+  }
+
+  [data-account-page] .rank-note {
+    margin: 0;
+    color: var(--gf-muted);
+    font-size: 12.5px;
+    line-height: 1.5;
+  }
+
+  [data-account-page] .rank-stats {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+    margin: 0;
+  }
+
+  [data-account-page] .rank-stat {
+    min-width: 0;
+    padding: 14px 16px;
+    border: 1px solid var(--gf-border);
+    border-radius: var(--gf-radius-md);
+    background: var(--gf-cream);
+  }
+
+  [data-account-page] .rank-stat dt {
+    color: var(--gf-muted);
+    font-size: 12.5px;
+    font-weight: 600;
+  }
+
+  [data-account-page] .rank-stat__val {
+    margin: 4px 0 0;
+    color: var(--gf-navy);
+    font-size: 20px;
+    font-variant-numeric: tabular-nums;
+    font-weight: 700;
+    line-height: 1.25;
+  }
+
+  [data-account-page] .rank-stat__note {
+    margin: 2px 0 0;
+    color: var(--gf-muted);
+    font-size: 12px;
+  }
+
+  [data-account-page] .rank-figs {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px;
+    margin: 0;
+    padding-top: 12px;
+    border-top: 1px solid var(--gf-border);
+  }
+
+  [data-account-page] .rank-figs dt {
+    color: var(--gf-muted);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  [data-account-page] .rank-figs dd {
+    margin: 2px 0 0;
+    color: var(--gf-navy);
+    font-size: 15px;
+    font-variant-numeric: tabular-nums;
+    font-weight: 700;
+  }
+
+  [data-account-page] .rank-figs .rank-figs__sub {
+    margin-top: 0;
+    color: var(--gf-muted);
+    font-size: 12px;
+    font-weight: 500;
+  }
+
+  [data-account-page] .rank-perks {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  [data-account-page] .rank-perk {
+    display: flex;
+    min-width: 0;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 14px;
+    border: 1px solid var(--gf-border);
+    border-radius: var(--gf-radius-md);
+    background: var(--gf-white);
+  }
+
+  [data-account-page] .rank-perk__icon {
+    display: grid;
+    width: 38px;
+    height: 38px;
+    flex: 0 0 auto;
+    place-items: center;
+    border: 1px solid var(--tier-accent);
+    border-radius: 999px;
+    background: var(--tier-surface);
+    color: var(--tier);
+  }
+
+  [data-account-page] .rank-perk__icon .acc-icon {
+    width: 18px;
+    height: 18px;
+  }
+
+  [data-account-page] .rank-perk__body {
+    min-width: 0;
+  }
+
+  [data-account-page] .rank-perk__title {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.4;
+  }
+
+  [data-account-page] .rank-perk__state {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin: 2px 0 0;
+    color: var(--acc-ok);
+    font-size: 12.5px;
+    font-weight: 600;
+  }
+
+  [data-account-page] .rank-perk__state::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 999px;
+    background: currentColor;
+  }
+
+  [data-account-page] .rank-perk.is-held .rank-perk__state {
+    color: var(--gf-gold-text);
+  }
+
+  [data-account-page] .rank-perk.is-upcoming {
+    background: var(--gf-cream);
+  }
+
+  [data-account-page] .rank-perk.is-upcoming .rank-perk__state {
+    color: var(--gf-muted);
+    font-weight: 500;
+  }
+
+  [data-account-page] .rank-perk.is-unknown .rank-perk__state::before {
+    display: none;
+  }
+
+  [data-account-page] .rank-locked {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    margin: 0;
+    color: var(--gf-muted);
+    font-size: 13px;
+  }
+
+  [data-account-page] .rank-locked .acc-icon {
+    width: 15px;
+    height: 15px;
+    margin-top: 3px;
+  }
+
+  [data-account-page] .hist {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  [data-account-page] .hist__row {
+    display: grid;
+    grid-template-columns: 138px minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 4px 16px;
+    padding: 12px 0;
+    border-top: 1px solid var(--gf-border);
+  }
+
+  [data-account-page] .hist__row:first-child {
+    padding-top: 2px;
+    border-top: 0;
+  }
+
+  [data-account-page] .hist__date {
+    color: var(--gf-muted);
+    font-size: 13px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  [data-account-page] .hist__main {
+    min-width: 0;
+  }
+
+  [data-account-page] .hist__type {
+    margin: 0;
+    font-size: 14.5px;
+    font-weight: 600;
+  }
+
+  [data-account-page] .hist__desc {
+    margin: 0;
+    color: var(--gf-muted);
+    font-size: 13px;
+    overflow-wrap: anywhere;
+  }
+
+  [data-account-page] .hist__end {
+    justify-self: end;
+  }
+
+  [data-account-page] .hist__delta {
+    color: var(--acc-ok);
+    font-size: 15px;
+    font-variant-numeric: tabular-nums;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  [data-account-page] .hist__delta--minus {
+    color: var(--acc-danger);
+  }
+
+  [data-account-page] .hist__tier {
+    display: inline-flex;
+    height: 26px;
+    align-items: center;
+    padding: 0 10px;
+    border: 1px solid var(--tier-accent);
+    border-radius: 999px;
+    background: var(--tier-surface);
+    color: var(--tier);
+    font-size: 12px;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  [data-account-page] .hist__skeleton {
+    display: inline-block;
+    width: 180px;
+    max-width: 100%;
+    height: 12px;
+    border-radius: 999px;
+    background: var(--gf-sand);
+  }
+
+  [data-account-page] .hist-foot {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px 16px;
+    padding-top: 12px;
+    border-top: 1px solid var(--gf-border);
+  }
+
+  [data-account-page] .pager {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  [data-account-page] .pager__arrow {
+    position: relative;
+    display: inline-grid;
+    width: 36px;
+    height: 40px;
+    place-items: center;
+    padding: 0;
+    border: 0;
+    border-radius: var(--gf-radius-sm);
+    background: transparent;
+    color: var(--gf-navy);
+    cursor: pointer;
+    transition: color var(--gf-motion-fast) var(--gf-ease-standard);
+  }
+
+  /* Vùng chạm 44–48px dù không có viền. */
+  [data-account-page] .pager__arrow::before {
+    content: "";
+    position: absolute;
+    inset: -4px;
+  }
+
+  [data-account-page] .pager__arrow .acc-icon {
+    width: 22px;
+    height: 22px;
+    stroke-width: 2.2;
+    transition: transform var(--gf-motion-fast) var(--gf-ease-standard);
+  }
+
+  [data-account-page] .pager__arrow:hover:not(:disabled) {
+    color: var(--gf-navy-700);
+  }
+
+  [data-account-page] .pager__arrow--prev:hover:not(:disabled) .acc-icon {
+    transform: translateX(-2px);
+  }
+
+  [data-account-page] .pager__arrow--next:hover:not(:disabled) .acc-icon {
+    transform: translateX(2px);
+  }
+
+  [data-account-page] .pager__arrow:disabled {
+    color: #D5CCB5;
+    cursor: default;
+  }
+
+  [data-account-page] .pager__pages {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin: 0 6px;
+  }
+
+  [data-account-page] .pager__page {
+    display: inline-grid;
+    min-width: 32px;
+    height: 40px;
+    place-items: center;
+    padding: 0 6px;
+    border: 0;
+    border-radius: var(--gf-radius-sm);
+    background: transparent;
+    color: var(--gf-muted);
+    cursor: pointer;
+    font: inherit;
+    font-size: 15px;
+    font-variant-numeric: tabular-nums;
+    font-weight: 500;
+    text-decoration-line: underline;
+    text-decoration-thickness: 2px;
+    text-decoration-color: transparent;
+    text-underline-offset: 6px;
+    transition: color var(--gf-motion-fast) var(--gf-ease-standard), text-decoration-color var(--gf-motion-fast) var(--gf-ease-standard);
+  }
+
+  [data-account-page] .pager__page:hover {
+    color: var(--gf-navy);
+    text-decoration-color: var(--gf-border);
+  }
+
+  [data-account-page] .pager__page[aria-current="page"] {
+    color: var(--gf-navy);
+    font-weight: 700;
+    text-decoration-color: var(--gf-navy);
+  }
+
+  [data-account-page] .pager__arrow:focus-visible,
+  [data-account-page] .pager__page:focus-visible {
+    outline: none;
+    box-shadow: var(--gf-focus-ring);
+  }
+
+  [data-account-page] .pager__gap {
+    width: 22px;
+    color: var(--gf-muted);
+    font-size: 14px;
+    text-align: center;
+    user-select: none;
+  }
+
+  @media (max-width: 1023px) {
+    [data-account-page] .rank-perks {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+  }
+
+  @media (max-width: 767px) {
+    [data-account-page] .rank-hold .acc-btn {
+          flex: 1 1 auto;
+        }
+
+    [data-account-page] .rank-hold__action {
+          flex: 1 1 100%;
+          flex-wrap: wrap;
+        }
+
+    /* Ô doanh số thành hàng ngang: nhãn trái, số phải. */
+      [data-account-page] .rank-stats,
+      [data-account-page] .rank-perks {
+          grid-template-columns: minmax(0, 1fr);
+          gap: 8px;
+        }
+
+    [data-account-page] .rank-stat {
+          display: grid;
+          grid-template-columns: minmax(0, 1fr) auto;
+          align-items: center;
+          column-gap: 12px;
+          padding: 12px 14px;
+        }
+
+    [data-account-page] .rank-stat dt {
+          grid-column: 1;
+          grid-row: 1;
+        }
+
+    [data-account-page] .rank-stat__val {
+          grid-column: 2;
+          grid-row: 1 / span 2;
+          margin-top: 0;
+          font-size: 17px;
+        }
+
+    [data-account-page] .rank-stat__note {
+          grid-column: 1;
+          grid-row: 2;
+        }
+
+    [data-account-page] .rank-figs {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+    /* Lịch sử: ngày xuống dưới tên dòng. */
+      [data-account-page] .hist__row {
+          grid-template-columns: minmax(0, 1fr) auto;
+          column-gap: 12px;
+        }
+
+    [data-account-page] .hist__main {
+          grid-column: 1;
+          grid-row: 1;
+        }
+
+    [data-account-page] .hist__date {
+          grid-column: 1;
+          grid-row: 2;
+          font-size: 12.5px;
+        }
+
+    [data-account-page] .hist__end {
+          grid-column: 2;
+          grid-row: 1 / span 2;
+        }
+
+    [data-account-page] .hist-foot {
+          flex-direction: column;
+          justify-content: center;
+        }
+
+    [data-account-page] .pager__arrow {
+          width: 44px;
+          height: 44px;
+        }
+
+    [data-account-page] .pager__page {
+          min-width: 44px;
+          height: 44px;
+          padding: 0 10px;
+        }
+
+    [data-account-page] .pager__pages {
+          margin: 0 4px;
+        }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-account-page] .pager__arrow,
+      [data-account-page] .pager__arrow .acc-icon,
+      [data-account-page] .pager__page {
+          transition: none;
+        }
+  }
+
+    /* Khối Cộng tác viên (CTV-P05) */
+
+  [data-account-page] .ctv-acc {
+    --ctv-danger: #B42318;
+    --ctv-ok: #2F6F4A;
+    padding: 20px 22px;
+    border: 1px solid var(--gf-border);
+    border-top: 3px solid var(--gf-navy);
+    border-radius: var(--gf-radius-xl);
+    background: var(--gf-white);
+    box-shadow: var(--gf-shadow-card);
+    scroll-margin-top: 18px;
+  }
+
+  [data-account-page] .ctv-acc:focus-visible {
+    outline: none;
+    box-shadow: var(--gf-focus-ring);
+  }
+
+  [data-account-page] .ctv-acc__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px 12px;
+  }
+
+  [data-account-page] .ctv-acc__title {
+    margin: 0;
+    color: var(--gf-navy);
+    font-size: 17px;
+    font-weight: 700;
+  }
+
+  [data-account-page] .ctv-acc__badge {
+    display: inline-flex;
+    align-items: center;
+    min-height: 28px;
+    padding: 0 12px;
+    border-radius: 999px;
+    background: #E7F3EC;
+    color: var(--ctv-ok);
+    font-size: 12.5px;
+    font-weight: 700;
+  }
+
+  [data-account-page] .ctv-acc[data-state="suspended"] {
+    border-top-color: var(--gf-warning);
+  }
+
+  [data-account-page] .ctv-acc__text {
+    margin: 10px 0 0;
+    font-size: 14.5px;
+    line-height: 1.65;
+  }
+
+  [data-account-page] .ctv-acc__text[data-tone="warning"] {
+    color: var(--gf-warning);
+    font-weight: 600;
+  }
+
+  [data-account-page] .ctv-acc__rates {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px 14px;
+    margin: 12px 0 0;
+  }
+
+  [data-account-page] .ctv-acc__rates > div {
+    min-width: 0;
+    padding: 10px 12px;
+    border: 1px solid var(--gf-border);
+    border-radius: var(--gf-radius-md);
+    background: var(--gf-cream);
+  }
+
+  [data-account-page] .ctv-acc__rates dt {
+    margin: 0;
+    color: var(--gf-muted);
+    font-size: 12.5px;
+    font-weight: 600;
+  }
+
+  [data-account-page] .ctv-acc__rates dd {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2px 14px;
+    margin: 4px 0 0;
+    font-size: 14px;
+  }
+
+  [data-account-page] .ctv-acc__rates dd span {
+    display: inline-flex;
+    gap: 6px;
+    align-items: baseline;
+  }
+
+  [data-account-page] .ctv-acc__rates b {
+    color: var(--gf-navy);
+    font-variant-numeric: tabular-nums;
+    font-weight: 700;
+  }
+
+  [data-account-page] .ctv-acc__conds {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin: 12px 0 0;
+    padding: 0;
+    list-style: none;
+    font-size: 14.5px;
+  }
+
+  [data-account-page] .ctv-acc__cond {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  [data-account-page] .ctv-acc__cond i {
+    display: inline-grid;
+    width: 20px;
+    height: 20px;
+    flex: 0 0 auto;
+    place-items: center;
+    margin-top: 2px;
+    border-radius: 999px;
+    color: var(--gf-white);
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 700;
+  }
+
+  [data-account-page] .ctv-acc__cond[data-met="true"] i {
+    background: var(--ctv-ok);
+  }
+
+  [data-account-page] .ctv-acc__cond[data-met="false"] i {
+    background: var(--ctv-danger);
+  }
+
+  [data-account-page] .ctv-acc__acts {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    margin-top: 14px;
+  }
+
+  @media (max-width: 599px) {
+    [data-account-page] .ctv-acc {
+      padding: 16px 16px;
+    }
+
+    [data-account-page] .ctv-acc__rates {
+      grid-template-columns: 1fr;
+    }
+
+    [data-account-page] .ctv-acc__acts .acc-btn {
+      width: 100%;
+    }
+  }
+
+
+    /* ===== Phần dành riêng cho bản thiết kế (không có trong CSS của storefront) ===== */
+
+    /* Hook của script mock: .is-invalid trên .field bật dòng lỗi (<p role="alert">), ẩn dòng gợi ý và viền đỏ ô nhập. Storefront dựng/bỏ dòng lỗi bằng React. */
+    [data-account-page] .field:not(.is-invalid) > .field__error { display: none; }
+    [data-account-page] .field.is-invalid > .field__hint { display: none; }
+    [data-account-page] .field.is-invalid .acc-input { border-color: var(--acc-danger); }
+
+    /* Nhãn trạng thái (StateBadge + guestOrderBadgeClassName của storefront): viên thuốc 12.5px đậm; hậu tố --icon là nhãn có icon thay chấm */
+    [data-account-page] .status {
+      display: inline-flex; width: fit-content; max-width: 100%; flex-shrink: 0; align-items: center; align-self: flex-start; gap: 4px;
+      padding: 4px 10px; border: 1px solid transparent; border-radius: 9999px; white-space: nowrap;
+      font-size: 12.5px; font-weight: 700; line-height: 14px; letter-spacing: normal; text-transform: none;
+    }
+    [data-account-page] .status::before { content: ""; width: 7px; height: 7px; flex: 0 0 auto; border-radius: 999px; background: currentColor; }
+    [data-account-page] .status--icon::before { display: none; }
+    [data-account-page] .status .material-symbols-outlined { font-size: 1em; line-height: 1; }
+    [data-account-page] .status--ship { border-color: #C9DCEB; background: #EEF6FC; color: #315E82; }
+    [data-account-page] .status--done { border-color: #C9E2CE; background: #F1F7F2; color: #2F6F4A; }
+    [data-account-page] .status--cancel { border-color: #FDA29B; background: #FEF3F2; color: #B42318; }
+    [data-account-page] .status--hold { border-color: #EAD9AE; background: var(--gf-ivory); color: var(--gf-gold-text); }
+
+    /* Ô chọn tỉnh/thành, xã/phường dùng <select> gốc nhưng dáng như nút .acc-select của storefront */
+    [data-account-page] .acc-input--select {
+      appearance: none; padding-right: 40px; cursor: pointer;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2358413F' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6.5 10l5.5 5.5L17.5 10'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 12px center; background-size: 20px;
+    }
+    [data-account-page] .acc-input--select:has(option[value=""]:checked) { color: #58413F; }
+    [data-account-page] .acc-input.acc-input--select:disabled { border-color: var(--gf-border); background-color: var(--gf-white); background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2358413F' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6.5 10l5.5 5.5L17.5 10'/%3E%3C/svg%3E"); color: #58413F; opacity: 0.6; cursor: not-allowed; }
+    [data-account-page] input[type="date"].acc-input { color: var(--gf-text); }
+
+    /* Nhãn ô nhập: storefront dùng lớp font-body của FormField (Manrope) */
+    [data-account-page] .acc-field > label { font-family: Manrope, "Segoe UI", Arial, sans-serif; }
+
+    /* Ô ngày sinh: <input type=date> gốc, giấu nút lịch gốc và vẽ icon calendar_month như DatePicker của storefront */
+    [data-account-page] .acc-date { position: relative; }
+    [data-account-page] .acc-date > .acc-input { padding-right: 44px; }
+    [data-account-page] .acc-date > .acc-input::-webkit-calendar-picker-indicator { position: absolute; top: 0; right: 0; width: 46px; height: 100%; margin: 0; padding: 0; opacity: 0; cursor: pointer; }
+    [data-account-page] .acc-date > .material-symbols-outlined { position: absolute; top: 13px; right: 14px; font-size: 20px; color: #58413F; pointer-events: none; }
+
+    /* Đánh dấu bắt buộc của nhãn (text-error của storefront) */
+    [data-account-page] .acc-required { color: #BA1A1A; }
+
+    /* <details> thay cho nút mở/đóng bằng React (ở storefront là <summary> tự điều khiển hoặc nút aria-expanded) */
+    [data-account-page] .acc-extra > summary:focus-visible { outline: none; }
+    [data-account-page] .acc-extra > .acc-extra__body.acc-grid { gap: 14px; }
+    [data-account-page] details.acc-sync__details > summary { list-style: none; cursor: pointer; }
+    [data-account-page] details.acc-sync__details > summary::-webkit-details-marker { display: none; }
+    [data-account-page] details.acc-sync__details > summary.acc-sync__row { display: flex; }
+    [data-account-page] details.acc-sync__details[open] .acc-sync__toggle .acc-icon { transform: rotate(180deg); }
+    [data-account-page] details.acc-sync__details > .acc-sync__panel { margin-top: 12px; }
+    [data-account-page] .acc-sync__details > summary:hover .acc-sync__toggle { color: var(--gf-navy-700); }
+    [data-account-page] .acc-sync__panel .acc-field > label { font-family: inherit; }
+
+    /* Khung OTP của IdentityOtpVerifier (dựng tĩnh): thẻ trắng viền kem, nút Gửi mã / Xác minh dạng viên thuốc */
+    [data-account-page] .acc-otp-card { min-width: 0; padding: 16px; border: 1px solid var(--gf-border); border-radius: var(--gf-radius-md); background: var(--gf-white); }
+    [data-account-page] .acc-otp-card__title { color: #1B1C1A; font-size: 14px; font-weight: 600; line-height: 20px; margin-bottom: 0; }
+    [data-account-page] .acc-otp-card__desc { margin-top: 4px; color: #58413F; font-size: 14px; line-height: 20px; }
+    [data-account-page] .acc-otp-card > div:first-child { margin-bottom: 12px; }
+    [data-account-page] .acc-otp-card__row { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: end; gap: 12px; }
+    [data-account-page] .acc-otp-card__send,
+    [data-account-page] .acc-otp-card__verify { display: flex; min-height: 40px; align-items: center; justify-content: center; padding: 0 16px; border-radius: 999px; font-size: 14px; font-weight: 600; line-height: 20px; cursor: pointer; }
+    [data-account-page] .acc-otp-card__send { border: 1px solid var(--gf-navy); background: var(--gf-white); color: var(--gf-navy); }
+    [data-account-page] .acc-otp-card__verify { border: 0; background: var(--gf-navy); color: var(--gf-white); }
+    [data-account-page] .acc-otp-card__code label { display: block; margin-bottom: 8px; color: var(--gf-text); font-size: 14px; font-weight: 600; line-height: 20px; }
+    [data-account-page] .acc-otp-card__code input { display: inline-block; width: 100%; min-height: 40px; padding: 8px 12px; border: 1px solid var(--gf-border); border-radius: 6px; background: var(--gf-white); color: #1B1C1A; font-size: 14px; line-height: 20px; }
+    [data-account-page] .acc-otp-card__code input::placeholder { color: #98A2B3; }
+
+    /* Kho tài nguyên hội viên: thành phần cũ của trang /me/membership, storefront giữ nguyên giao diện (bảng màu Material cũ, phông Manrope) */
+    [data-account-page] .rank-legacy .lg-card { padding: 24px; border: 1px solid lab(80.076 11.4035 5.96309 / 0.3); border-radius: 8px; background: #fff; color: #1B1C1A; }
+    [data-account-page] .rank-legacy .lg-card__head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 20px; }
+    [data-account-page] .rank-legacy .lg-card__titles { min-width: 0; }
+    [data-account-page] .rank-legacy .lg-card__title,
+    [data-account-page] .rank-legacy .lg-card__locked-title { font-family: Manrope, "Segoe UI", Arial, sans-serif; font-size: 16px; font-weight: 600; line-height: 24px; color: #1B1C1A; }
+    [data-account-page] .rank-legacy .lg-card__title { margin-bottom: 4px; }
+    [data-account-page] .rank-legacy .lg-card__desc,
+    [data-account-page] .rank-legacy .lg-card__locked-desc { font-size: 14px; line-height: 24px; color: #58413F; }
+    [data-account-page] .rank-legacy .lg-card__locked { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 48px 20px; border-radius: 8px; background: #F5F3EF; text-align: center; }
+    [data-account-page] .rank-legacy .lg-card__lock { font-size: 36px; color: #58413F; }
+    [data-account-page] .rank-legacy .lg-card__locked-title { margin-top: 12px; }
+    [data-account-page] .rank-legacy .lg-card__locked-desc { margin-top: 4px; max-width: 576px; }
+    [data-account-page] .rank-legacy .lg-card__cta { margin-top: 16px; }
+    [data-account-page] .rank-legacy .lg-card__cta a {
+      display: inline-flex; min-height: 44px; align-items: center; justify-content: center; gap: 8px; padding: 0 20px;
+      border: 1px solid lab(50.13 10.1797 5.72743 / 0.3); border-radius: 9999px;
+      font-family: Manrope, "Segoe UI", Arial, sans-serif; font-size: 14px; font-weight: 600; line-height: 20px; color: #570005;
+    }
+    [data-account-page] .rank-legacy .lg-card__cta a:hover { background: #F5F3EF; }
+    @media (max-width: 767px) {
+      [data-account-page] .rank-legacy .lg-card { padding: 20px; }
+      [data-account-page] .rank-legacy .lg-card__head { flex-direction: column; }
+    }
+
+
+    @media (max-width: 767px) {
+      :root { --header-h: 64px; }
+       /* chỉ giữ mũi tên trên màn hẹp */
+    }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition-duration: .01ms !important; } }
+  </style>
+<!-- gf-shell:css:begin -->
+<style id="gf-shell-css">
+/* ---- Biến của lớp vỏ (giá trị chép từ globals.css của storefront; không phụ thuộc token của từng trang) ---- */
+.storefront-reference-shell, .focus-header, .gf-site-footer, .gf-cw, .gf-scroll-top, .to-top {
+  --storefront-background: #FBF7EF;
+  --storefront-surface: #FFFFFF;
+  --storefront-navy: #10305F;
+  --storefront-navy-dark: #0B2447;
+  --storefront-navy-deep: #081B38;
+  --storefront-blue: #1B79C0;
+  --storefront-link: #12639E;
+  --storefront-metal-gold: #C9A227;
+  --storefront-natural: #2F7A2A;
+  --storefront-sale-error: #BA1A1A;
+  --storefront-tier-silver: #B9BFC7;
+  --storefront-tier-silver-light: #F2F4F7;
+  --storefront-tier-silver-dark: #8F959D;
+  --storefront-tier-gold: #D4AF37;
+  --storefront-tier-gold-light: #FFE9A8;
+  --storefront-tier-gold-dark: #B08D22;
+  --storefront-tier-platinum: #E5EAF0;
+  --storefront-tier-platinum-light: #FFFFFF;
+  --storefront-tier-platinum-dark: #A9B6C6;
+  --storefront-tier-diamond: #EAF6FF;
+  --storefront-tier-diamond-light: #FFFFFF;
+  --storefront-tier-diamond-dark: #B9D4EA;
+  --gf-navy: #10305F;
+  --gf-navy-dark: #072A4E;
+  --gf-navy-700: #315E82;
+  --gf-gold: #C69A2B;
+  --gf-gold-text: #7B5614;
+  --gf-gold-soft: #E8C979;
+  --gf-cream: #FBF8F1;
+  --gf-ivory: #FFF8EA;
+  --gf-sand: #F0EADF;
+  --gf-white: #FFFFFF;
+  --gf-text: #172B4D;
+  --gf-muted: #667085;
+  --gf-border: #E8DDC3;
+  --gf-border-strong: #D9C79C;
+  --gf-danger: #B42318;
+  --gf-container: 1240px;
+  --gf-font-sans: var(--font-sans, Inter, "Segoe UI", Arial, sans-serif);
+  --gf-font-serif: var(--font-serif, "Noto Serif", Georgia, serif);
+  --gf-motion-fast: .12s;
+  --gf-motion-base: .18s;
+  --gf-ease-standard: cubic-bezier(.2, 0, 0, 1);
+  --gf-focus-ring: 0 0 0 3px rgba(49, 94, 130, .28);
+  --gf-radius-sm: 8px;
+  --gf-radius-pill: 999px;
+}
+
+/* ---- Reset có phạm vi: thay cho preflight của storefront, chỉ áp cho lớp vỏ (không đụng phần thân trang) ---- */
+:where(.storefront-reference-shell, .focus-header, .gf-site-footer, .gf-cw, .gf-scroll-top, .to-top) {
+  font-family: var(--font-sans, Inter, "Segoe UI", Arial, sans-serif);
+  color: #1b1c1a;
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+}
+:where(.storefront-reference-shell, .focus-header, .gf-site-footer, .gf-cw, .gf-scroll-top, .to-top) :where(*, *::before, *::after) {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  border: 0 solid;
+}
+:where(.storefront-reference-shell, .focus-header, .gf-site-footer, .gf-cw, .gf-scroll-top, .to-top) :where(button, input, select, textarea) {
+  font: inherit;
+  letter-spacing: inherit;
+  color: inherit;
+  border-radius: 0;
+  background-color: transparent;
+  opacity: 1;
+}
+:where(.storefront-reference-shell, .focus-header, .gf-site-footer, .gf-cw, .gf-scroll-top, .to-top) :where(a) {
+  color: inherit;
+  text-decoration: inherit;
+}
+:where(.storefront-reference-shell, .focus-header, .gf-site-footer, .gf-cw, .gf-scroll-top, .to-top) :where(ul, ol) {
+  list-style: none;
+}
+:where(.storefront-reference-shell, .focus-header, .gf-site-footer, .gf-cw, .gf-scroll-top, .to-top) :where(img, svg) {
+  display: block;
+  vertical-align: middle;
+}
+:where(.storefront-reference-shell, .focus-header, .gf-site-footer, .gf-cw, .gf-scroll-top, .to-top) :where(img) {
+  max-width: 100%;
+  height: auto;
+}
+.gf-site-footer, .gf-site-footer .home-footer { box-sizing: border-box; }
+
+/* ---- Biểu tượng Material Symbols (phông cục bộ của storefront) ---- */
+@font-face {
+  font-family: "Material Symbols Outlined";
+  src: url("../public/fonts/material-symbols/material-symbols-outlined-variable.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 100 700;
+  font-display: block;
+}
+.material-symbols-outlined {
+  display: inline-flex;
+  width: auto;
+  min-width: 1em;
+  height: auto;
+  min-height: 1em;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  overflow: visible;
+  text-align: center;
+  vertical-align: middle;
+  white-space: nowrap;
+  direction: ltr;
+  font-family: "Material Symbols Outlined" !important;
+  font-style: normal;
+  font-weight: normal;
+  font-feature-settings: 'liga' 1;
+  font-variant-ligatures: common-ligatures;
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  letter-spacing: normal;
+  line-height: 1;
+  text-transform: none;
+  word-wrap: normal;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---- Footer chung (HomeFooter) ---- */
+.gf-site-footer .home-frame { width: 100%; min-width: 0px; max-width: 1320px; margin-inline: auto; padding-inline: 40px; }
+.gf-site-footer .home-footer { background: var(--gf-navy-dark); color: var(--gf-white); font-family: var(--gf-font-sans); }
+.gf-site-footer .home-footer__rule { background: var(--gf-gold); height: 2px; }
+.gf-site-footer .home-footer__grid { grid-template-columns: clamp(250px, 19.5vw, 280px) minmax(0px, 1fr) minmax(0px, 1fr) minmax(0px, 1.4fr) clamp(190px, 15vw, 220px); gap: 32px; padding: 46px 0px 34px; display: grid; }
+.gf-site-footer .home-footer__brand { flex-direction: column; gap: 16px; display: flex; }
+.gf-site-footer .home-footer__logo img { width: auto; height: 42px; }
+.gf-site-footer .home-footer__slogan { font-family: var(--gf-font-serif); flex-direction: column; gap: 6px; display: flex; }
+.gf-site-footer .home-footer__slogan b { font-size: 21px; font-weight: 700; line-height: 1.3; }
+.gf-site-footer .home-footer__slogan i { color: var(--gf-gold-soft); font-size: 19px; font-weight: 600; line-height: 1.3; }
+.gf-site-footer .home-footer__slogan .home-story__rule { width: 52px; margin-top: 4px; }
+.gf-site-footer .home-footer__phil { color: rgba(255, 255, 255, 0.74); max-width: 300px; font-size: 14px; line-height: 1.65; }
+.gf-site-footer .home-footer__addr { color: rgba(255, 255, 255, 0.74); flex-direction: column; gap: 5px; padding-top: 4px; font-size: 13.5px; font-style: normal; display: flex; }
+.gf-site-footer .home-footer__addr a { color: var(--gf-gold-soft); text-decoration: none; }
+.gf-site-footer .home-footer__col { border-left: 1px solid rgba(255, 255, 255, 0.12); flex-direction: column; gap: 14px; padding-left: 24px; display: flex; }
+.gf-site-footer .home-footer__col-title { color: var(--gf-gold); letter-spacing: 0.12em; text-transform: uppercase; align-items: center; gap: 8px; font-size: 11.5px; font-weight: 700; display: flex; }
+.gf-site-footer .home-footer__col-title::before { background: var(--gf-gold); content: ""; width: 14px; height: 1.5px; }
+.gf-site-footer .home-footer__links { flex-direction: column; gap: 10px; margin: 0px; padding: 0px; list-style: none; display: flex; }
+.gf-site-footer .home-footer__links a, .gf-site-footer .home-footer__links-plain { color: rgba(255, 255, 255, 0.8); font-size: 14px; line-height: 1.4; text-decoration: none; }
+.gf-site-footer .home-footer__links-plain { color: rgba(255, 255, 255, 0.52); }
+.gf-site-footer .home-footer__social { display: flex; flex-wrap: wrap; margin: 0px; padding: 0px; gap: 14px; list-style: none; }
+.gf-site-footer .home-footer__social-btn { display: inline-grid; width: 48px; height: 48px; place-items: center; border: 2px solid var(--gf-gold); border-radius: 999px; background: var(--gf-white); text-decoration: none; transition: border-color 160ms ease, transform 160ms ease; }
+.gf-site-footer .home-footer__social-btn svg { width: 28px; height: 28px; }
+.gf-site-footer .home-footer__social-btn[data-disabled="true"] { cursor: default; }
+.gf-site-footer a.home-footer__social-btn:focus-visible { outline: 2px solid var(--gf-white); outline-offset: 3px; border-radius: 999px; }
+@media (hover: hover) { .gf-site-footer a.home-footer__social-btn:hover { border-color: var(--gf-gold-soft); transform: translateY(-2px); } }
+@media (prefers-reduced-motion: reduce) { .gf-site-footer .home-footer__social-btn { transition: none; } .gf-site-footer a.home-footer__social-btn:hover { transform: none; } }
+.gf-site-footer .home-footer__line { background: rgba(255, 255, 255, 0.12); height: 1px; }
+.gf-site-footer .home-footer__legal { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 22px 0px 30px; text-align: center; }
+.gf-site-footer .home-footer__legal-name { margin: 0px; color: var(--gf-white); font-size: 14px; font-weight: 700; letter-spacing: 0.04em; line-height: 1.4; }
+.gf-site-footer .home-footer__legal-line { margin: 0px; color: rgba(255, 255, 255, 0.72); font-size: 13.5px; line-height: 1.5; }
+@media (hover: hover) {
+  .gf-site-footer .home-footer__links a:hover { color: var(--gf-white); }
+}
+@media (max-width: 1279px) {
+  .gf-site-footer .home-footer__grid { grid-template-columns: repeat(2, minmax(0px, 1fr)); gap: 32px; }
+  .gf-site-footer .home-footer__brand { grid-column: 1 / -1; }
+  .gf-site-footer .home-footer__col { border-left: 0px; padding-left: 0px; }
+}
+@media (max-width: 767px) {
+  .gf-site-footer .home-footer__grid { grid-template-columns: minmax(0px, 1fr); gap: 26px; padding: 32px 0px 26px; }
+}
+.gf-site-footer .home-story__rule { background: var(--gf-gold); width: 56px; height: 1.5px; margin-top: 6px; display: block; }
+@media (max-width: 1279px) {
+  .gf-site-footer .home-frame { padding-inline: 32px; }
+}
+@media (max-width: 767px) {
+  .gf-site-footer .home-frame { padding-inline: 16px; }
+}
+
+/* ---- Nút và khung chat tư vấn (StorefrontConsultationWidget, theme navy + kem). Mở/đóng bằng CSS thuần. ---- */
+.gf-cw {
+  display: contents;
+  --cw-navy: #10305F;
+  --cw-navy-dark: #072A4E;
+  --cw-navy-700: #315E82;
+  --cw-gold: #C69A2B;
+  --cw-gold-soft: #E8C979;
+  --cw-gold-text: #7B5614;
+  --cw-cream: #FBF8F1;
+  --cw-ivory: #FFF8EA;
+  --cw-border: #E8DDC3;
+  --cw-border-strong: #D9C79C;
+  --cw-text: #172B4D;
+  --cw-muted: #667085;
+  font-family: var(--font-sans, Inter, "Segoe UI", Arial, sans-serif);
+}
+.gf-cw__toggle {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}
+.gf-cw__dock {
+  position: fixed;
+  bottom: calc(6rem + env(safe-area-inset-bottom));
+  right: calc(1rem + env(safe-area-inset-right));
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+.gf-cw__launcher {
+  position: relative;
+  display: flex;
+  width: 3.5rem;
+  height: 3.5rem;
+  align-items: center;
+  justify-content: flex-end;
+  overflow: hidden;
+  padding: 0 .5rem;
+  border: 1.5px solid var(--cw-gold);
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--cw-navy) 0%, var(--cw-navy-dark) 100%);
+  color: #fff;
+  box-shadow: 0 16px 36px -14px rgba(7, 42, 78, .65), 0 0 0 4px rgba(198, 154, 43, .16);
+  cursor: pointer;
+  transition: width 300ms ease-out, box-shadow 300ms ease-out, transform 300ms ease-out, background-color 300ms ease-out, border-color 300ms ease-out;
+}
+.gf-cw__launcher:hover {
+  width: 14.25rem;
+  border-color: var(--cw-gold-soft);
+  background: linear-gradient(135deg, var(--cw-navy-700) 0%, var(--cw-navy) 100%);
+  box-shadow: 0 20px 44px -14px rgba(7, 42, 78, .75), 0 0 0 5px rgba(198, 154, 43, .24);
+}
+.gf-cw__launcher:active { transform: scale(.95); }
+.gf-cw__toggle:focus-visible + .gf-cw__dock .gf-cw__launcher { outline: 3px solid var(--cw-gold-soft); outline-offset: 3px; }
+.gf-cw__label {
+  max-width: 0;
+  padding-right: 0;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: normal;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateX(.75rem);
+  pointer-events: none;
+  transition: max-width 300ms ease-out, opacity 300ms ease-out, padding 300ms ease-out, transform 300ms ease-out;
+}
+.gf-cw__launcher:hover .gf-cw__label {
+  max-width: 12rem;
+  padding-right: .75rem;
+  opacity: 1;
+  transform: none;
+}
+.gf-cw__icon {
+  position: relative;
+  display: grid;
+  width: 2.5rem;
+  height: 2.5rem;
+  flex-shrink: 0;
+  place-items: center;
+  overflow: hidden;
+  border-radius: 999px;
+  background: var(--cw-ivory);
+  color: var(--cw-navy);
+  box-shadow: inset 0 0 0 1.5px var(--cw-gold), 0 6px 16px -8px rgba(0, 0, 0, .55);
+  transition: transform 300ms ease-out, background-color 300ms ease-out;
+}
+.gf-cw__launcher:hover .gf-cw__icon { background: #fff; transform: translateX(-.25rem) rotate(-3deg); }
+.gf-cw__icon svg { width: 1.75rem; height: 1.75rem; }
+.gf-cw__panel {
+  position: fixed;
+  z-index: 110;
+  bottom: calc(5.5rem + env(safe-area-inset-bottom));
+  left: calc(1rem + env(safe-area-inset-left));
+  right: calc(1rem + env(safe-area-inset-right));
+  top: calc(var(--storefront-sticky-header-height, 65px) + 1rem);
+  display: flex;
+  height: min(590px, calc(100dvh - 8rem));
+  max-height: calc(100dvh - var(--storefront-sticky-header-height, 65px) - 7rem);
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--cw-border);
+  border-radius: 22px;
+  background: var(--cw-cream);
+  color: var(--cw-text);
+  box-shadow: 0 30px 72px -28px rgba(16, 48, 95, .5), 0 0 0 1px rgba(255, 255, 255, .6) inset;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(1rem);
+  transition: all 300ms cubic-bezier(.4, 0, .2, 1);
+}
+.gf-cw__toggle:checked ~ .gf-cw__panel { opacity: 1; visibility: visible; transform: none; }
+@media (min-width: 640px) {
+  .gf-cw__dock { bottom: calc(6.5rem + env(safe-area-inset-bottom)); right: calc(2rem + env(safe-area-inset-right)); }
+  .gf-cw__panel {
+    bottom: calc(6.25rem + env(safe-area-inset-bottom));
+    left: auto;
+    right: calc(2rem + env(safe-area-inset-right));
+    top: auto;
+    height: min(600px, calc(100dvh - 8rem));
+    max-height: calc(100dvh - 8rem);
+    width: 380px;
+  }
+}
+@media (min-width: 768px) { .gf-cw__panel { width: 404px; } }
+.gf-cw__head {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  overflow: hidden;
+  padding: 1rem;
+  border-bottom: 2px solid var(--cw-gold);
+  background: linear-gradient(135deg, var(--cw-navy) 0%, var(--cw-navy-dark) 100%);
+  color: #fff;
+}
+.gf-cw__head::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 0% 0%, rgba(255, 255, 255, .1), transparent 46%);
+  pointer-events: none;
+}
+.gf-cw__who { position: relative; display: flex; align-items: center; gap: .75rem; }
+.gf-cw__avatar {
+  display: grid;
+  width: 3rem;
+  height: 3rem;
+  flex-shrink: 0;
+  place-items: center;
+  overflow: hidden;
+  border-radius: 999px;
+  background: var(--cw-ivory);
+  color: var(--cw-navy);
+  box-shadow: inset 0 0 0 1.5px var(--cw-gold), 0 10px 22px -12px rgba(0, 0, 0, .7);
+}
+.gf-cw__avatar svg { width: 2rem; height: 2rem; }
+.gf-cw__title {
+  color: #fff;
+  font-family: var(--font-serif, "Noto Serif", Georgia, serif);
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: 0;
+}
+.gf-cw__sub { margin-top: .125rem; color: rgba(255, 255, 255, .84); font-size: 13px; font-weight: 500; line-height: 1.45; }
+.gf-cw__actions { position: relative; display: flex; align-items: center; gap: .5rem; }
+.gf-cw__action {
+  display: grid;
+  width: 2.25rem;
+  height: 2.25rem;
+  place-items: center;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .1);
+  color: rgba(255, 255, 255, .9);
+  cursor: pointer;
+  transition: background-color 150ms, color 150ms;
+}
+.gf-cw__action:hover { background: rgba(255, 255, 255, .2); color: #fff; }
+.gf-cw__action .material-symbols-outlined { font-size: 20px; }
+.gf-cw__list {
+  display: flex;
+  flex: 1 1 0%;
+  flex-direction: column;
+  gap: 1rem;
+  overflow-y: auto;
+  padding: 1rem;
+  background: linear-gradient(180deg, var(--cw-cream) 0%, #F6F0E2 100%);
+}
+.gf-cw__msg { display: flex; flex-direction: column; align-items: flex-start; gap: .25rem; }
+.gf-cw__bubble {
+  max-width: 94%;
+  width: fit-content;
+  padding: .75rem .875rem;
+  border: 1px solid var(--cw-border);
+  border-radius: 4px 18px 18px 18px;
+  background: #fff;
+  color: var(--cw-text);
+  font-size: 14px;
+  line-height: 1.5rem;
+  box-shadow: 0 10px 22px -18px rgba(16, 48, 95, .4);
+}
+.gf-cw__bubble p + p { margin-top: .75rem; }
+.gf-cw__time { margin-left: .25rem; color: var(--cw-muted); font-size: 13px; font-weight: 600; line-height: 1.45; }
+.gf-cw__composer {
+  display: flex;
+  flex-direction: column;
+  gap: .75rem;
+  padding: 1rem;
+  border-top: 1px solid var(--cw-border);
+  background: #fff;
+}
+.gf-cw__lead {
+  align-self: flex-start;
+  padding: .25rem .75rem;
+  border: 1px solid var(--cw-gold);
+  border-radius: 999px;
+  background: var(--cw-ivory);
+  color: var(--cw-gold-text);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.45;
+  cursor: pointer;
+}
+.gf-cw__lead:hover { background: #FDEFD2; }
+.gf-cw__chips { display: flex; align-items: flex-start; gap: .5rem; }
+.gf-cw__chiplist { display: flex; min-width: 0; flex: 1 1 0%; flex-wrap: wrap; gap: .375rem .75rem; }
+.gf-cw__chip {
+  display: inline-flex;
+  min-height: 2rem;
+  max-width: 100%;
+  align-items: center;
+  padding: .25rem .75rem;
+  border: 1px solid var(--cw-border-strong);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--cw-navy);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.25rem;
+  text-align: left;
+  cursor: pointer;
+}
+.gf-cw__chip:hover { border-color: var(--cw-gold); background: var(--cw-ivory); }
+.gf-cw__chipsoff {
+  display: grid;
+  width: 1.75rem;
+  height: 1.75rem;
+  flex-shrink: 0;
+  place-items: center;
+  border-radius: 999px;
+  color: var(--cw-muted);
+  cursor: pointer;
+}
+.gf-cw__chipsoff .material-symbols-outlined { font-size: 16px; }
+.gf-cw__row { display: flex; align-items: flex-end; gap: .5rem; }
+.gf-cw__input {
+  display: block;
+  min-height: 2.75rem;
+  min-width: 0;
+  flex: 1 1 0%;
+  padding: .625rem .75rem;
+  border: 1px solid var(--cw-border-strong);
+  border-radius: 16px;
+  background: var(--cw-cream);
+  color: var(--cw-text);
+  font-size: 14px;
+  line-height: 1.5rem;
+  resize: none;
+  outline: none;
+}
+.gf-cw__input::placeholder { color: var(--cw-muted); }
+.gf-cw__input:focus { border-color: var(--cw-navy); background: #fff; box-shadow: 0 0 0 3px rgba(16, 48, 95, .12); }
+.gf-cw__send {
+  display: grid;
+  width: 2.75rem;
+  height: 2.75rem;
+  flex-shrink: 0;
+  place-items: center;
+  border-radius: 14px;
+  background: var(--cw-navy);
+  color: #fff;
+  opacity: .5;
+  cursor: not-allowed;
+}
+.gf-cw__send .material-symbols-outlined { font-size: 24px; }
+@media (prefers-reduced-motion: reduce) {
+  .gf-cw__launcher, .gf-cw__label, .gf-cw__icon, .gf-cw__panel { transition: none; }
+}
+
+/* ---- Neo đầu trang cho nút "Lên đầu trang" không dùng JS ---- */
+.gf-top-anchor { position: absolute; top: 0; left: 0; width: 1px; height: 1px; pointer-events: none; }
+
+/* ---- Nút lên đầu trang (StorefrontScrollTopButton) ---- */
+.gf-scroll-top,
+.to-top {
+  position: fixed;
+  bottom: calc(10.5rem + env(safe-area-inset-bottom));
+  right: calc(1rem + env(safe-area-inset-right));
+  z-index: 100;
+  display: flex;
+  width: 3.5rem;
+  height: 3.5rem;
+  align-items: center;
+  justify-content: center;
+  border: 1.5px solid #C69A2B;
+  border-radius: 999px;
+  background: #072A4E;
+  color: #fff;
+  box-shadow: 0 10px 26px rgba(16, 48, 95, .22);
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 300ms cubic-bezier(.4, 0, .2, 1);
+}
+.gf-scroll-top:hover,
+.to-top:hover {
+  transform: translateY(-2px);
+  background: #10305F;
+  color: #fff;
+  box-shadow: 0 18px 48px rgba(16, 48, 95, .14);
+}
+.gf-scroll-top:focus-visible,
+.to-top:focus-visible {
+  outline: none;
+  border-radius: 999px;
+  box-shadow: 0 0 0 3px rgba(198, 154, 43, .6);
+}
+.gf-scroll-top:active,
+.to-top:active { transform: scale(.95); }
+.gf-scroll-top .material-symbols-outlined,
+.to-top .material-symbols-outlined { font-size: 24px; transition: transform 300ms cubic-bezier(.4, 0, .2, 1); }
+.gf-scroll-top:hover .material-symbols-outlined,
+.to-top:hover .material-symbols-outlined { transform: translateY(-2px); }
+.gf-scroll-top__tip {
+  position: absolute;
+  right: 100%;
+  margin-right: 1rem;
+  padding: 6px 12px;
+  border-radius: 8px;
+  background: #072A4E;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 16px;
+  white-space: nowrap;
+  box-shadow: 0 10px 26px rgba(16, 48, 95, .22);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 150ms;
+}
+.gf-scroll-top:hover .gf-scroll-top__tip,
+.gf-scroll-top:focus-visible .gf-scroll-top__tip,
+.to-top:hover .gf-scroll-top__tip,
+.to-top:focus-visible .gf-scroll-top__tip { opacity: 1; }
+@media (min-width: 640px) {
+  .gf-scroll-top, .to-top {
+    bottom: calc(11rem + env(safe-area-inset-bottom));
+    right: calc(2rem + env(safe-area-inset-right));
+  }
+}
+/* Bản có JS sẵn (#toTop) bật bằng lớp is-on; bản không JS hiện khi đã cuộn quá 200px nhờ timeline cuộn của CSS. */
+.to-top { opacity: 0; visibility: hidden; pointer-events: none; }
+.to-top.is-on { opacity: 1; visibility: visible; pointer-events: auto; }
+.gf-scroll-top { opacity: 0; pointer-events: none; }
+@supports (animation-timeline: scroll()) {
+  @keyframes gf-scroll-top-in { from { opacity: 0; pointer-events: none; } to { opacity: 1; pointer-events: auto; } }
+  .gf-scroll-top {
+    animation: gf-scroll-top-in linear both;
+    animation-timeline: scroll(root block);
+    animation-range: 200px 201px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .gf-scroll-top, .to-top, .gf-scroll-top .material-symbols-outlined, .to-top .material-symbols-outlined { transition: none; }
+  .gf-scroll-top:hover, .to-top:hover { transform: none; }
+}
+
+/* ---- Header gọn của khung tập trung (StorefrontFocusHeader) ---- */
+.focus-header { font-family: var(--gf-font-sans); }
+.focus-header :focus-visible { outline: none; box-shadow: var(--gf-focus-ring); border-radius: var(--gf-radius-sm); }
+.focus-header .locale-dropdown:focus-within .locale-menu { display: grid; }
+.focus-header .locale-dropdown:focus-within .locale-pill { border-color: var(--storefront-blue); background: var(--storefront-blue); color: var(--storefront-surface); }
+.focus-header .locale-dropdown:focus-within .locale-caret { transform: translateY(2px) rotate(225deg); }
+.focus-header {
+    position: relative;
+    z-index: 40;
+    display: flex;
+    flex: 0 0 auto;
+    height: 74px;
+    align-items: center;
+    border-bottom: 1px solid var(--gf-border);
+    background: var(--gf-white);
+  }
+
+  .focus-header .focus-header__inner {
+    display: flex;
+    width: 100%;
+    max-width: var(--gf-container);
+    align-items: center;
+    gap: 16px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  .focus-header .focus-header__logo {
+    display: inline-flex;
+    flex-shrink: 0;
+  }
+
+  .focus-header .focus-header__logo img {
+    display: block;
+    width: 150px;
+    height: auto;
+  }
+
+  .focus-header .focus-header__actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-left: auto;
+  }
+
+  .focus-header .focus-header__back {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--gf-navy);
+    font-size: 14.5px;
+    font-weight: 600;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: color var(--gf-motion-base) var(--gf-ease-standard);
+  }
+
+  .focus-header .focus-header__back:hover {
+    color: var(--gf-navy-700);
+  }
+
+  .focus-header .focus-header__back svg {
+    width: 17px;
+    height: 17px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.85;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  /* Màu theo hạng (P1-17): chép từ đường ray 4 hạng của bộ mẫu ui-pages/
+     (--tier-primary/accent/surface). "none" = chưa có hạng, dùng tông trung tính. */
+  .focus-header [data-tier="silver"] {
+    --tier: #5C6673;
+    --tier-accent: #9DA4AD;
+    --tier-surface: #EEF0F2;
+  }
+
+  .focus-header [data-tier="gold"] {
+    --tier: #7B5614;
+    --tier-accent: #C89723;
+    --tier-surface: #FFF3CC;
+  }
+
+  .focus-header [data-tier="platinum"] {
+    --tier: #315E82;
+    --tier-accent: #8BA6BE;
+    --tier-surface: #EDF4FA;
+  }
+
+  .focus-header [data-tier="diamond"] {
+    --tier: #10305F;
+    --tier-accent: #C69A2B;
+    --tier-surface: #FFF8EA;
+  }
+
+  .focus-header [data-tier="none"] {
+    --tier: var(--gf-muted);
+    --tier-accent: var(--gf-border);
+    --tier-surface: var(--gf-sand);
+  }
+
+  /* Chip tài khoản ở trang hội viên (bản mẫu .who, .avatar, .tier-line). */
+  .focus-header .who {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding-left: 18px;
+    border-left: 1px solid var(--gf-border);
+  }
+
+  .focus-header .who__avatar {
+    display: grid;
+    width: 36px;
+    height: 36px;
+    flex: 0 0 auto;
+    place-items: center;
+    overflow: hidden;
+    border: 1.5px solid var(--tier-accent);
+    border-radius: 999px;
+    background: var(--tier-surface);
+    color: var(--tier);
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  .focus-header .who__avatar img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .focus-header .who__text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.25;
+  }
+
+  .focus-header .who__name {
+    color: var(--gf-text);
+    font-size: 13.5px;
+    font-weight: 600;
+  }
+
+  .focus-header .who__tier {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--tier);
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  .focus-header .who__dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 999px;
+    background: var(--tier-accent);
+    box-shadow: 0 0 0 1.5px var(--gf-white), 0 0 0 3px var(--tier-surface);
+  }
+
+  
+
+  .focus-header .locale-dropdown {
+    position: relative;
+    flex-shrink: 0;
+  }
+
+  .focus-header .locale-pill {
+    display: inline-flex;
+    width: auto;
+    min-width: 40px;
+    height: 40px;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    border: 1px solid rgba(16, 48, 95, 0.2);
+    border-radius: 999px;
+    background: var(--storefront-surface);
+    color: var(--storefront-navy);
+    cursor: pointer;
+    padding: 5px 8px;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.84),
+      0 8px 16px rgba(8, 27, 56, 0.22);
+    transition: background 180ms ease, border-color 180ms ease, color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
+  }
+
+  .focus-header .locale-pill:hover,
+  .focus-header .locale-pill:focus-visible,
+  .focus-header .locale-pill[aria-expanded="true"] {
+    border-color: var(--storefront-blue);
+    background: var(--storefront-blue);
+    color: var(--storefront-surface);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.18),
+      0 10px 18px rgba(8, 27, 56, 0.28);
+  }
+
+  .focus-header .locale-pill:focus-visible {
+    outline: 3px solid var(--storefront-blue);
+    outline-offset: 4px;
+  }
+
+  .focus-header .locale-current-flag {
+    display: inline-flex;
+  }
+
+  .focus-header .locale-caret {
+    width: 7px;
+    height: 7px;
+    border-right: 2px solid currentColor;
+    border-bottom: 2px solid currentColor;
+    color: currentColor;
+    transform: translateY(-2px) rotate(45deg);
+    transition: transform 180ms ease;
+  }
+
+  .focus-header .locale-pill[aria-expanded="true"] .locale-caret {
+    transform: translateY(2px) rotate(225deg);
+  }
+
+  .focus-header .locale-flag {
+    display: inline-flex;
+    width: 28px;
+    height: 20px;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border: 1px solid rgba(16, 48, 95, 0.24);
+    border-radius: 4px;
+    box-shadow: 0 2px 5px rgba(8, 27, 56, 0.18);
+  }
+
+  .focus-header .locale-flag svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .focus-header .locale-flag.is-active {
+    border-color: var(--storefront-blue);
+    box-shadow:
+      0 0 0 1px rgba(27, 121, 192, 0.28),
+      0 3px 7px rgba(8, 27, 56, 0.22);
+  }
+
+  .focus-header .locale-menu {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    z-index: 150;
+    display: none;
+    min-width: 54px;
+    gap: 6px;
+    padding: 7px;
+    border: 1px solid rgba(16, 48, 95, 0.18);
+    border-radius: 12px;
+    background: var(--storefront-surface);
+    box-shadow: 0 20px 44px rgba(8, 27, 56, 0.22);
+  }
+
+  .focus-header .locale-dropdown.open .locale-menu {
+    display: grid;
+  }
+
+  .focus-header .locale-option {
+    display: inline-flex;
+    width: 40px;
+    height: 32px;
+    align-items: center;
+    justify-content: center;
+    border: 0;
+    border-radius: 8px;
+    background: transparent;
+    cursor: pointer;
+    padding: 0;
+    transition: background 160ms ease, transform 160ms ease;
+  }
+
+  .focus-header .locale-option:hover,
+  .focus-header .locale-option:focus-visible,
+  .focus-header .locale-option.is-selected {
+    background: rgba(27, 121, 192, 0.12);
+  }
+
+  @media (max-width: 1279px) {
+    .focus-header .locale-pill {
+      width: 44px;
+      min-width: 44px;
+      height: 44px;
+      min-height: 44px;
+      padding: 0;
+    }
+
+    .focus-header .locale-caret {
+      display: none;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .focus-header {
+      height: 64px;
+    }
+
+    .focus-header .focus-header__inner {
+      gap: 12px;
+      padding: 0 16px;
+    }
+
+    .focus-header .focus-header__logo img {
+      width: 128px;
+    }
+
+    .focus-header .focus-header__actions {
+      gap: 12px;
+    }
+
+    /* Trang có chip: chỉ giữ mũi tên "về trang chủ" và vòng tròn tài khoản. */
+    .focus-header [data-has-account-chip] .focus-header__back-label,
+    .focus-header .who__text {
+      display: none;
+    }
+
+    .focus-header .who {
+      padding-left: 12px;
+    }
+  }
+
+  /* Bản mẫu không có mốc 320px: thu logo và khoảng cách để header không tràn ngang. */
+  @media (max-width: 359px) {
+    .focus-header .focus-header__inner,
+    .focus-header .focus-header__actions {
+      gap: 8px;
+    }
+
+    .focus-header .focus-header__logo img {
+      width: 112px;
+    }
+
+    .focus-header .focus-header__back {
+      gap: 4px;
+      font-size: 13.5px;
+    }
+
+    /* Luồng thanh toán gọi link này là "Tiếp tục mua sắm" (dài hơn "Về trang chủ"): giảm cỡ chữ để vừa 320px. */
+    .focus-header [data-long-back-label] .focus-header__back {
+      gap: 3px;
+      font-size: 12.5px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .focus-header * {
+      transition-duration: 0.01ms !important;
+    }
+  }
+</style>
+<!-- gf-shell:css:end -->
+<!-- gf-contact-rail:css:begin -->
+<style id="gf-contact-rail-css">
+/* Thanh liên hệ nhanh của trang chủ storefront (ReferenceFooter → .reference-social-shell). Chép từ
+   referenceHomeSupplementalCss + nền .social-* của bộ mẫu; nút đóng/mở dùng ô chọn ẩn + nhãn (CSS thuần, không JS).
+   Máy tính: mặc định mở, tích ô thì thu gọn. Điện thoại/máy tính bảng ≤1024px: mặc định thu gọn, tích ô thì mở (đúng
+   như storefront: khởi tạo theo khổ màn hình). */
+.reference-social-shell {
+  position: fixed;
+  top: 50%;
+  right: calc(32px + env(safe-area-inset-right));
+  bottom: auto;
+  z-index: 80;
+  box-sizing: border-box;
+  display: flex;
+  width: 56px;
+  max-height: calc(100vh - 56px);
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  overflow: hidden;
+  border: 1px solid #E8DDC3;
+  border-radius: 999px;
+  background: #FFFFFF;
+  box-shadow: 0 18px 48px rgba(16, 48, 95, 0.14);
+  padding: 7px;
+  pointer-events: auto;
+  transform: translateY(-50%);
+  font-family: Inter, Arial, sans-serif;
+}
+.reference-social-shell .rs-state {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+  opacity: 0;
+  clip: rect(0 0 0 0);
+}
+.reference-social-toggle-input {
+  order: 2;
+  display: inline-grid;
+  width: 40px;
+  height: 40px;
+  flex: 0 0 auto;
+  place-items: center;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  border: 1.5px solid #C69A2B;
+  border-radius: 999px;
+  background: #072A4E;
+  color: #E8C979;
+  cursor: pointer;
+  transition: background-color 180ms ease, border-color 180ms ease, transform 180ms ease;
+}
+.reference-social-toggle-input::before {
+  content: "close";
+  font-family: "Material Symbols Outlined";
+  font-size: 22px;
+  font-style: normal;
+  font-variation-settings: "FILL" 0, "wght" 700, "GRAD" 0, "opsz" 20;
+  line-height: 1;
+}
+.reference-social-toggle-input:hover,
+.rs-state:focus-visible + .reference-social-toggle-input {
+  background: #10305F;
+  transform: translateY(-1px);
+}
+.rs-state:focus-visible + .reference-social-toggle-input {
+  outline: 3px solid rgba(198, 154, 43, 0.6);
+  outline-offset: 2px;
+}
+.reference-social-mask {
+  order: 1;
+  display: flex;
+  width: 100%;
+  max-width: 100%;
+  max-height: 280px;
+  margin-bottom: 8px;
+  overflow: hidden;
+  opacity: 1;
+  transform: translateY(0);
+  transition:
+    max-height 720ms cubic-bezier(0.22, 1, 0.36, 1),
+    max-width 720ms cubic-bezier(0.22, 1, 0.36, 1),
+    margin-bottom 720ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 520ms ease,
+    transform 720ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.rs-state:checked ~ .reference-social-mask {
+  max-height: 0;
+  margin-bottom: 0;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(64px) scale(0.94);
+}
+.rs-state:checked ~ .reference-social-toggle-input::before {
+  content: "keyboard_arrow_up";
+}
+.reference-social-shell .reference-social-rail {
+  position: static;
+  display: flex;
+  width: 100%;
+  max-width: none;
+  max-height: 280px;
+  margin: 0;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  overflow: hidden;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  padding: 0;
+  pointer-events: auto;
+  transform: none;
+}
+.reference-social-rail .social-pill {
+  position: relative;
+  display: grid;
+  width: 40px;
+  min-width: 0;
+  justify-items: center;
+  gap: 0;
+  border-radius: 999px;
+  color: #10305F;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.2;
+  text-decoration: none;
+}
+.reference-social-rail .social-label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.reference-social-rail .social-pill .social-dot {
+  position: relative;
+  display: grid;
+  width: 40px;
+  height: 40px;
+  box-sizing: border-box;
+  place-items: center;
+  border: 1px solid #E8DDC3;
+  border-radius: 999px;
+  background: #FBF8F1;
+  box-shadow: none;
+  color: #10305F;
+  font-family: Inter, Arial, sans-serif;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0;
+  transition: background-color 180ms ease, border-color 180ms ease, color 180ms ease, transform 180ms ease;
+}
+/* YouTube, Facebook, Zalo dùng logo thật (SVG tô màu chính thức), chủ dự án 2026-10-14 */
+.reference-social-rail .social-pill .social-dot svg {
+  display: block;
+  width: 24px;
+  height: 24px;
+}
+.reference-social-rail .social-pill .social-dot .material-symbols-outlined {
+  font-size: 22px;
+}
+.reference-social-rail .social-pill .social-dot.live::after {
+  content: "";
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: #C69A2B;
+  box-shadow: 0 0 0 1.5px #FBF8F1;
+}
+.reference-social-rail .social-pill:focus-visible {
+  outline: 3px solid rgba(198, 154, 43, 0.6);
+  outline-offset: 2px;
+}
+.reference-social-rail .social-pill:focus-visible .social-dot,
+.reference-social-rail .social-pill:active .social-dot {
+  border-color: #C69A2B;
+  background: #072A4E;
+  color: #FFFFFF;
+}
+/* Ba nút logo kênh giữ nền kem khi rê, focus hay bấm để logo màu vẫn rõ; chỉ đổi viền vàng */
+.reference-social-rail .social-pill:focus-visible .social-dot:is(.youtube, .facebook, .zalo),
+.reference-social-rail .social-pill:active .social-dot:is(.youtube, .facebook, .zalo) {
+  background: #FBF8F1;
+}
+.reference-social-rail .social-pill:focus-visible .social-dot.live::after,
+.reference-social-rail .social-pill:active .social-dot.live::after {
+  box-shadow: 0 0 0 1.5px #072A4E;
+}
+@media (hover: hover) {
+  .reference-social-rail .social-pill:hover .social-dot {
+    border-color: #C69A2B;
+    background: #072A4E;
+    color: #FFFFFF;
+    transform: translateY(-1px);
+  }
+  .reference-social-rail .social-pill:hover .social-dot:is(.youtube, .facebook, .zalo) {
+    background: #FBF8F1;
+  }
+  .reference-social-rail .social-pill:hover .social-dot.live::after {
+    box-shadow: 0 0 0 1.5px #072A4E;
+  }
+}
+@media (max-width: 1024px) {
+  .reference-social-shell {
+    top: auto;
+    right: auto;
+    bottom: calc(24px + env(safe-area-inset-bottom));
+    left: calc(16px + env(safe-area-inset-left));
+    max-height: calc(100vh - 48px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+    transform: none;
+  }
+  .reference-social-shell .reference-social-mask {
+    max-height: 0;
+    margin-bottom: 0;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(64px) scale(0.94);
+  }
+  .reference-social-shell .reference-social-toggle-input::before {
+    content: "keyboard_arrow_up";
+  }
+  .reference-social-shell .rs-state:checked ~ .reference-social-mask {
+    max-height: 280px;
+    margin-bottom: 8px;
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+  .reference-social-shell .rs-state:checked ~ .reference-social-toggle-input::before {
+    content: "close";
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .reference-social-toggle-input,
+  .reference-social-rail .social-pill .social-dot {
+    transition: none;
+  }
+  .reference-social-toggle-input:hover,
+  .rs-state:focus-visible + .reference-social-toggle-input,
+  .reference-social-rail .social-pill:hover .social-dot {
+    transform: none;
+  }
+}
+/* Điện thoại: trang có thanh mua/tạm tính dính đáy (.sticky-bar, cao khoảng 70px) thì nâng cụm nút lên trên thanh để không che nút (đồng bộ storefront 14/10/2026) */
+@media (max-width: 767px) {
+  body:has(.sticky-bar:not([hidden])) .reference-social-shell {
+    bottom: calc(94px + env(safe-area-inset-bottom));
+  }
+}
+/* Trang khác trang chủ: từ 1025px tới 1415px nội dung còn chạm sát mép phải (nút giỏ, ô tìm kiếm, nút "Áp dụng"...) nên cụm nút dùng dạng gọn như điện thoại: vòng tròn góc trái dưới, bấm để mở; từ 1416px mới ở mép phải dạng đầy đủ (đồng bộ storefront 14/10/2026) */
+@media (min-width: 1025px) and (max-width: 1415px) {
+  .reference-social-shell {
+    top: auto;
+    right: auto;
+    bottom: calc(24px + env(safe-area-inset-bottom));
+    left: calc(16px + env(safe-area-inset-left));
+    max-height: calc(100vh - 48px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+    transform: none;
+  }
+  .reference-social-shell .reference-social-mask {
+    max-height: 0;
+    margin-bottom: 0;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(64px) scale(0.94);
+  }
+  .reference-social-shell .reference-social-toggle-input::before {
+    content: "keyboard_arrow_up";
+  }
+  .reference-social-shell .rs-state:checked ~ .reference-social-mask {
+    max-height: 280px;
+    margin-bottom: 8px;
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+  .reference-social-shell .rs-state:checked ~ .reference-social-toggle-input::before {
+    content: "close";
+  }
+}
+</style>
+<!-- gf-contact-rail:css:end -->
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <symbol id="i-chev-l" viewBox="0 0 24 24"><path d="M14 6.5L8.5 12l5.5 5.5"/></symbol>
+  <symbol id="i-chev-r" viewBox="0 0 24 24"><path d="M10 6.5l5.5 5.5-5.5 5.5"/></symbol>
+  <symbol id="i-book" viewBox="0 0 24 24"><path d="M12 6.5C10.3 5 7.8 4.5 4 4.5v13c3.8 0 6.3.5 8 2 1.7-1.5 4.2-2 8-2v-13c-3.8 0-6.3.5-8 2z"/><path d="M12 6.5v13"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h13M13 6.5l5.5 5.5L13 17.5"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M4.5 12.5l4.5 4.5L19.5 6.5"/></symbol>
+  <symbol id="i-warning" viewBox="0 0 24 24"><path d="M12 4.5l8.5 15H3.5z"/><path d="M12 10v4"/><path d="M12 17.2v.2"/></symbol>
+  <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8.5" r="3.6"/><path d="M4.8 20c1.3-3.6 4-5.2 7.2-5.2s5.9 1.6 7.2 5.2"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0113 0c0 5.4-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.4"/></symbol>
+  <symbol id="i-box" viewBox="0 0 24 24"><path d="M3.5 7.5L12 3.5l8.5 4v9L12 20.5l-8.5-4z"/><path d="M3.5 7.5L12 11.5l8.5-4M12 11.5v9"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="4.5" y="10" width="15" height="10" rx="2.5"/><path d="M8 10V7.5a4 4 0 018 0V10"/></symbol>
+  <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 16V11a6 6 0 0112 0v5l1.5 2h-15z"/><path d="M10 20a2 2 0 004 0"/></symbol>
+  <symbol id="i-logout" viewBox="0 0 24 24"><path d="M14 5.5H6.5A1.5 1.5 0 005 7v10a1.5 1.5 0 001.5 1.5H14"/><path d="M17 8.5l3.5 3.5L17 15.5"/><path d="M20 12h-9"/></symbol>
+  <symbol id="i-medal" viewBox="0 0 24 24"><circle cx="12" cy="14.5" r="5.5"/><path d="M8.5 9.8L6 3.5h4l2 4M15.5 9.8L18 3.5h-4l-2 4"/><path d="M12 12.2v4.6M10.2 14.5h3.6"/></symbol>
+  <symbol id="i-gift" viewBox="0 0 24 24"><path d="M4 11h16v9H4z"/><path d="M3 7h18v4H3z"/><path d="M12 7v13"/><path d="M12 7c-1.5-3-5-3.5-5-1.5S10.5 7 12 7zm0 0c1.5-3 5-3.5 5-1.5S13.5 7 12 7z"/></symbol>
+  <symbol id="i-alarm" viewBox="0 0 24 24"><circle cx="12" cy="13" r="7"/><path d="M12 9.5V13l2.5 1.5"/><path d="M4.5 5.5L7 7.5M19.5 5.5L17 7.5"/><path d="M7.5 19.5L6 21.5M16.5 19.5L18 21.5"/></symbol>
+  <symbol id="i-home" viewBox="0 0 24 24"><path d="M4 11l8-6.5 8 6.5"/><path d="M6 9.5V20h12V9.5"/><path d="M10 20v-5h4v5"/></symbol>
+  <symbol id="i-briefcase" viewBox="0 0 24 24"><rect x="3.5" y="7.5" width="17" height="12" rx="2"/><path d="M9 7.5V6a1.5 1.5 0 011.5-1.5h3A1.5 1.5 0 0115 6v1.5M3.5 12.5h17"/></symbol>
+  <symbol id="i-edit" viewBox="0 0 24 24"><path d="M4.5 19.5l1-4.2L15.8 5a2 2 0 012.8 0l.4.4a2 2 0 010 2.8L8.7 18.5z"/><path d="M13.8 7l3.2 3.2"/></symbol>
+  <symbol id="i-trash" viewBox="0 0 24 24"><path d="M4.5 7h15"/><path d="M9.5 7V5.2A1.2 1.2 0 0110.7 4h2.6a1.2 1.2 0 011.2 1.2V7"/><path d="M6.5 7l.9 12a1.5 1.5 0 001.5 1.4h6.2a1.5 1.5 0 001.5-1.4l.9-12"/><path d="M10 11v6M14 11v6"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 4l2.4 5 5.4.6-4 3.7 1.1 5.3L12 16l-4.9 2.6 1.1-5.3-4-3.7 5.4-.6z"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5.5v13M5.5 12h13"/></symbol>
+  <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2.5 12S6 6.5 12 6.5 21.5 12 21.5 12 18 17.5 12 17.5 2.5 12 2.5 12z"/><circle cx="12" cy="12" r="3"/></symbol>
+  <symbol id="i-chev-down" viewBox="0 0 24 24"><path d="M6.5 10l5.5 5.5L17.5 10"/></symbol>
+  <symbol id="i-eye-off" viewBox="0 0 24 24"><path d="M4 4l16 16"/><path d="M9.5 9.6A3 3 0 0012 15c.8 0 1.5-.3 2.1-.8"/><path d="M6.4 6.9C4 8.6 2.5 12 2.5 12S6 17.5 12 17.5c1.6 0 3-.4 4.2-1M17.8 15c2-1.5 3.7-3 3.7-3S18 6.5 12 6.5c-.7 0-1.4.1-2 .2"/></symbol>
+</svg>
+
+<!-- gf-shell:header:begin -->
+<!-- gf-shell:cfg {"navHiddenMode":false,"initials":"MA","chip":{"tier":"silver","initials":"MA","name":"Minh Anh","tierLine":"Silver · 5%","avAttr":" data-initials","nameAttr":" data-fullname"},"extra":""} -->
+<header class="focus-header">
+<div class="focus-header__inner">
+<a class="focus-header__logo" aria-label="Ginsengfood – Trang chủ" href="trang-chu-theo-doi-tuong/trang-chu-silver-v2.html">
+<img src="../public/home-webp-v1/logo-header-light.w558.webp" srcset="../public/home-webp-v1/logo-header-light.w186.webp 186w, ../public/home-webp-v1/logo-header-light.w372.webp 372w, ../public/home-webp-v1/logo-header-light.w558.webp 558w" sizes="(max-width: 767px) 128px, 150px" alt="Ginsengfood · Y thực đồng nguyên" width="186" height="67" decoding="async">
+</a>
+<div class="focus-header__actions" data-has-account-chip="true">
+<nav id="localeDropdown" class="locale-dropdown" aria-label="Chọn ngôn ngữ">
+<button id="localeButton" class="locale-pill" type="button" aria-label="Chọn ngôn ngữ: Tiếng Việt" aria-haspopup="menu" aria-controls="localeMenu" aria-expanded="false"><span class="locale-current-flag"><span class="locale-flag is-active" role="img" aria-label="Tiếng Việt" title="Tiếng Việt"><svg viewBox="0 0 28 20" aria-hidden="true" focusable="false"><rect width="28" height="20" fill="#da251d"/><path fill="#ffdf00" d="M14 3.2 15.57 7.98h5.03l-4.07 2.96 1.56 4.86L14 12.79 9.91 15.8l1.56-4.86L7.4 7.98h5.03L14 3.2Z"/></svg></span></span><span class="locale-caret" aria-hidden="true"></span></button>
+<div id="localeMenu" class="locale-menu" role="menu" aria-label="Chọn ngôn ngữ">
+<a class="locale-option is-selected" role="menuitemradio" aria-checked="true" aria-label="Tiếng Việt" href="#"><span class="locale-flag is-active" role="img" aria-label="Tiếng Việt" title="Tiếng Việt"><svg viewBox="0 0 28 20" aria-hidden="true" focusable="false"><rect width="28" height="20" fill="#da251d"/><path fill="#ffdf00" d="M14 3.2 15.57 7.98h5.03l-4.07 2.96 1.56 4.86L14 12.79 9.91 15.8l1.56-4.86L7.4 7.98h5.03L14 3.2Z"/></svg></span></a>
+<a class="locale-option" role="menuitemradio" aria-checked="false" aria-label="English" href="#"><span class="locale-flag" role="img" aria-label="English" title="English"><svg viewBox="0 0 28 20" aria-hidden="true" focusable="false"><rect width="28" height="20" fill="#012169"/><path d="M0 0 28 20M28 0 0 20" stroke="#fff" stroke-width="4"/><path d="M0 0 28 20M28 0 0 20" stroke="#c8102e" stroke-width="2"/><path d="M14 0v20M0 10h28" stroke="#fff" stroke-width="7"/><path d="M14 0v20M0 10h28" stroke="#c8102e" stroke-width="4"/></svg></span></a>
+</div>
+</nav>
+<a class="focus-header__back" aria-label="Về trang chủ" href="trang-chu-theo-doi-tuong/trang-chu-silver-v2.html"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 6.5L8.5 12l5.5 5.5"/></svg><span class="focus-header__back-label">Về trang chủ</span></a>
+<span class="who" data-tier="silver"><span class="who__avatar" aria-hidden="true" data-initials>MA</span><span class="who__text"><span class="who__name" data-fullname>Minh Anh</span><span class="who__tier"><span class="who__dot" aria-hidden="true"></span>Silver · 5%</span></span></span>
+</div>
+</div>
+</header>
+<!-- gf-shell:header:end -->
+
+<main class="acc" id="noi-dung" data-account-page="true">
+  <div class="acc__inner">
+    <!-- Menu tài khoản: bấm để cuộn tới từng khối; khối đang xem được tô sáng -->
+    <aside class="acc__side">
+      <nav class="side" aria-label="Tài khoản của tôi">
+        <p class="side__title">Tài khoản của tôi</p>
+        <ul class="side__list">
+          <li><a class="side__link is-active" href="#ho-so" data-section="ho-so" aria-current="true"><svg class="acc-icon" aria-hidden="true"><use href="#i-user"/></svg>Hồ sơ cá nhân</a></li>
+          <li><a class="side__link" href="#dia-chi" data-section="dia-chi"><svg class="acc-icon" aria-hidden="true"><use href="#i-pin"/></svg>Sổ địa chỉ</a></li>
+          <li><a class="side__link" href="#don-hang" data-section="don-hang"><svg class="acc-icon" aria-hidden="true"><use href="#i-box"/></svg>Đơn hàng của tôi</a></li>
+          <li><a class="side__link" href="#hang-thanh-vien" data-section="hang-thanh-vien"><svg class="acc-icon" aria-hidden="true"><use href="#i-medal"/></svg>Hạng thành viên</a></li>
+          <li><a class="side__link" href="#bao-mat" data-section="bao-mat"><svg class="acc-icon" aria-hidden="true"><use href="#i-lock"/></svg>Đổi mật khẩu</a></li>
+          <li><a class="side__link" href="#thong-bao" data-section="thong-bao"><svg class="acc-icon" aria-hidden="true"><use href="#i-bell"/></svg>Tuỳ chọn thông báo</a></li>
+          <li class="side__sep" aria-hidden="true"></li>
+          <li><a class="side__link side__link--out" href="dang-xuat.html"><svg class="acc-icon" aria-hidden="true"><use href="#i-logout"/></svg>Đăng xuất</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <div class="acc__main">
+      <div>
+        <h1 class="page-title">Tài khoản của tôi</h1>
+        <p class="page-lead">Quản lý thông tin cá nhân, địa chỉ giao hàng và quyền lợi thành viên của bạn.</p>
+      </div>
+
+      <!-- Thẻ thành viên: số liệu khớp trang hạng Silver. Vòng tròn ảnh là nút đổi/gỡ ảnh ở storefront (menu mở bằng JS thật, bản thiết kế chỉ dựng dáng nút). -->
+      <section class="member" data-tier="silver" aria-labelledby="memberTitle" data-testid="account-member-card">
+        <div class="member__id">
+          <div class="member__top">
+            <div class="member__avatar-wrap">
+              <button type="button" class="member__avatar" aria-label="Ảnh đại diện: đổi hoặc gỡ ảnh" title="Ảnh đại diện: đổi hoặc gỡ ảnh"><span data-initials>MA</span><span class="member__avatar-edit" aria-hidden="true"><svg class="acc-icon"><use href="#i-edit"/></svg></span></button>
+            </div>
+            <div>
+              <h2 class="member__name" id="memberTitle" data-fullname>Minh Anh</h2>
+              <p class="member__since">Thành viên từ 12/03/2026 · chu kỳ 12 tháng</p>
+            </div>
+          </div>
+          <span class="member__badge"><svg class="acc-icon" aria-hidden="true"><use href="#i-medal"/></svg>Hạng Silver</span>
+          <ul class="member__perks">
+            <li><svg class="acc-icon" aria-hidden="true"><use href="#i-gift"/></svg><span>Quyền lợi <b>5%</b> trên đơn đủ điều kiện</span></li>
+            <li><svg class="acc-icon" aria-hidden="true"><use href="#i-alarm"/></svg><span>Mua sớm Giờ Vàng <b>5 phút</b></span></li>
+          </ul>
+        </div>
+        <div class="member__journey">
+          <p class="member__label">Hành trình lên Gold</p>
+          <div class="bar" role="img" aria-label="Đã hoàn thành 62% hành trình lên Gold" style="--member-progress: 62%"><span></span></div>
+          <p class="member__line">Bạn đã hoàn thành 62% hành trình Gold. Còn 1.140.000đ doanh số hợp lệ để mở quyền lợi Gold.</p>
+          <dl class="member__figs">
+            <div><dt>Doanh số hợp lệ</dt><dd>1.860.000đ</dd></div>
+            <div><dt>Mốc hạng Gold</dt><dd>3.000.000đ</dd></div>
+            <div><dt>Chu kỳ kết thúc</dt><dd>12/03/2027</dd></div>
+          </dl>
+          <div class="member__links">
+            <a class="member__more" href="#hang-thanh-vien">Xem chi tiết hạng <svg class="acc-icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+            <a class="member__more" href="trang-chu-theo-doi-tuong/trang-chu-silver-v2.html#quyen-loi">Xem quyền lợi thành viên <svg class="acc-icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Trạng thái mẫu: chưa đăng ký CTV; số liệu cùng ảnh chụp thẻ thành viên ở trên. -->
+      <section class="ctv-acc" id="cong-tac-vien" aria-labelledby="ctvTitle" data-collaborator-card="true" data-state="none">
+        <div class="ctv-acc__head"><h2 class="ctv-acc__title" id="ctvTitle">Cộng tác viên</h2></div>
+        <p class="ctv-acc__text">Trở thành cộng tác viên để nhận link chia sẻ sản phẩm và theo dõi đơn hàng phát sinh từ link của bạn.</p>
+        <ul class="ctv-acc__conds">
+          <li class="ctv-acc__cond" data-met="false"><i aria-hidden="true">✗</i><span>Doanh số tích lũy: 1.860.000đ / 2.000.000đ</span></li>
+          <li class="ctv-acc__cond" data-met="true"><i aria-hidden="true">✓</i><span>Số điện thoại đã xác minh</span></li>
+        </ul>
+        <p class="ctv-acc__text">Bạn cần mua thêm 140.000đ để đăng ký.</p>
+        <div class="ctv-acc__acts"><a class="acc-btn acc-btn--primary" href="trang-chu-theo-doi-tuong/dieu-khoan-cong-tac-vien.html">Đăng ký cộng tác viên</a></div>
+      </section>
+
+      <!-- 1. Hồ sơ cá nhân -->
+      <section class="panel" id="ho-so" aria-labelledby="hosoTitle" data-testid="account-section-ho-so" tabindex="-1">
+        <div class="panel__head">
+          <div>
+            <h2 class="panel__title" id="hosoTitle"><svg class="acc-icon" aria-hidden="true"><use href="#i-user"/></svg>Hồ sơ cá nhân</h2>
+            <p class="panel__desc">Thông tin dùng để giao hàng, xuất hoá đơn và gửi thông báo cho bạn.</p>
+          </div>
+        </div>
+        <form class="acc-form" id="profileForm" novalidate aria-labelledby="hosoTitle">
+          <div class="acc-grid">
+            <div class="acc-field field" id="pfName">
+              <label for="pName">Họ và tên</label>
+              <input id="pName" class="acc-input" type="text" autocomplete="name" placeholder="Nhập họ và tên" value="Nguyễn Minh Anh" aria-describedby="peName">
+              <p class="field__error" id="peName" role="alert">Nhập họ và tên.</p>
+            </div>
+            <div class="acc-field">
+              <label for="pPhone">Số điện thoại</label>
+              <span class="acc-field__status"><span class="acc-verified"><svg class="acc-icon" aria-hidden="true"><use href="#i-check"/></svg>Đã xác minh</span></span>
+              <input id="pPhone" class="acc-input" type="tel" value="0912 345 678" readonly aria-describedby="phPhone">
+              <p id="phPhone">Số điện thoại đăng nhập. Liên hệ hỗ trợ nếu cần đổi số.</p>
+            </div>
+            <div class="acc-field field" id="pfMail">
+              <label for="pMail">Email</label>
+              <span class="acc-field__status"><span class="acc-verified"><svg class="acc-icon" aria-hidden="true"><use href="#i-check"/></svg>Đã xác minh</span></span>
+              <input id="pMail" class="acc-input" type="email" autocomplete="email" value="minhanh@example.com" readonly aria-describedby="phMail peMail">
+              <p class="field__hint" id="phMail">Email dùng để đăng nhập và lấy lại mật khẩu. Liên hệ hỗ trợ nếu cần đổi email.</p>
+              <p class="field__error" id="peMail" role="alert">Email chưa đúng định dạng.</p>
+            </div>
+            <div class="acc-field">
+              <label for="pFacebook">Tài khoản Facebook<span class="acc-field__optional">(không bắt buộc)</span></label>
+              <span class="acc-field__status"><button type="button" class="acc-link-btn" disabled aria-label="Xác minh tài khoản Facebook" aria-describedby="pFacebookSoon">Xác minh</button><span class="acc-soon" id="pFacebookSoon">Sắp mở</span></span>
+              <input id="pFacebook" class="acc-input" type="text" inputmode="url" autocomplete="url" placeholder="facebook.com/ten-cua-ban" aria-describedby="phFacebook">
+              <p id="phFacebook">Dán link trang cá nhân (facebook.com/…) hoặc tên người dùng Facebook.</p>
+            </div>
+            <div class="acc-field">
+              <label for="pBirth">Ngày sinh<span class="acc-field__optional">(không bắt buộc)</span></label>
+              <div class="acc-date"><input id="pBirth" class="acc-input" type="date" autocomplete="bday" value="1992-06-18"><span class="material-symbols-outlined" aria-hidden="true">calendar_month</span></div>
+            </div>
+          </div>
+          <fieldset class="acc-radios">
+            <legend>Giới tính</legend>
+            <div class="acc-radios__list">
+              <label class="acc-radio"><input type="radio" name="gender" value="nu" checked>Nữ</label>
+              <label class="acc-radio"><input type="radio" name="gender" value="nam">Nam</label>
+              <label class="acc-radio"><input type="radio" name="gender" value="khac">Khác</label>
+            </div>
+          </fieldset>
+          <details class="acc-extra" data-testid="account-profile-extra">
+            <summary>
+              <span>
+                <span class="acc-extra__title">Thông tin bổ sung</span>
+                <span class="acc-extra__desc">Công ty, địa chỉ hồ sơ và tài khoản ngân hàng. Không thay thế sổ địa chỉ giao hàng.</span>
+              </span>
+              <svg class="acc-icon" aria-hidden="true"><use href="#i-chev-down"/></svg>
+            </summary>
+            <div class="acc-extra__body acc-grid">
+              <div class="acc-field acc-field--half">
+                <label for="pCompany">Công ty</label>
+                <input id="pCompany" class="acc-input" type="text" autocomplete="organization" placeholder="Tên công ty">
+              </div>
+              <div class="acc-field">
+                <label for="pProvince">Tỉnh/Thành phố</label>
+                <select id="pProvince" class="acc-input acc-input--select"><option value="">Chọn tỉnh/thành phố</option><option>TP. Hồ Chí Minh</option><option>TP. Hà Nội</option><option>TP. Đà Nẵng</option><option>TP. Hải Phòng</option><option>TP. Cần Thơ</option></select>
+              </div>
+              <div class="acc-field">
+                <label for="pWard">Xã/Phường</label>
+                <select id="pWard" class="acc-input acc-input--select" disabled><option value="">Chọn tỉnh/thành phố trước</option></select>
+              </div>
+              <div class="acc-field acc-field--wide">
+                <label for="pAddress">Địa chỉ</label>
+                <input id="pAddress" class="acc-input" type="text" placeholder="Số nhà, tên đường">
+              </div>
+              <div class="acc-field">
+                <label for="pBankName">Tên ngân hàng</label>
+                <input id="pBankName" class="acc-input" type="text" placeholder="Vietcombank">
+              </div>
+              <div class="acc-field">
+                <label for="pBankNumber">Số tài khoản</label>
+                <input id="pBankNumber" class="acc-input" type="text" inputmode="numeric" placeholder="Nhập số tài khoản">
+              </div>
+              <div class="acc-field">
+                <label for="pBankHolder">Tên chủ tài khoản</label>
+                <input id="pBankHolder" class="acc-input" type="text" placeholder="Tên trên tài khoản">
+              </div>
+              <div class="acc-field">
+                <label for="pBankBranch">Chi nhánh</label>
+                <input id="pBankBranch" class="acc-input" type="text" placeholder="Chi nhánh ngân hàng">
+              </div>
+            </div>
+          </details>
+          <div class="acc-actions">
+            <button type="reset" class="acc-btn acc-btn--ghost">Huỷ thay đổi</button>
+            <button type="submit" class="acc-btn acc-btn--primary">Lưu thay đổi</button>
+          </div>
+        </form>
+      </section>
+
+      <!-- 2. Sổ địa chỉ -->
+      <section class="panel" id="dia-chi" aria-labelledby="diachiTitle" data-testid="account-section-dia-chi" tabindex="-1">
+        <div class="panel__head">
+          <div>
+            <h2 class="panel__title" id="diachiTitle"><svg class="acc-icon" aria-hidden="true"><use href="#i-pin"/></svg>Sổ địa chỉ</h2>
+            <p class="panel__desc">Địa chỉ mặc định được điền sẵn khi thanh toán.</p>
+          </div>
+        </div>
+        <ul class="addr-list" id="addrList" data-testid="account-address-list"></ul>
+
+        <form class="addr-form" id="addrForm" novalidate hidden data-testid="account-address-form">
+          <p class="addr-form__title" id="addrFormTitle">Thêm địa chỉ mới</p>
+          <div class="acc-grid">
+            <div class="acc-field field" id="afName">
+              <label for="aName">Tên người nhận</label>
+              <input id="aName" class="acc-input" type="text" autocomplete="name" aria-describedby="aeName">
+              <p class="field__error" id="aeName" role="alert">Nhập tên người nhận.</p>
+            </div>
+            <div class="acc-field field" id="afPhone">
+              <label for="aPhone">Số điện thoại</label>
+              <input id="aPhone" class="acc-input" type="tel" inputmode="tel" autocomplete="tel" placeholder="09xx xxx xxx" aria-describedby="aePhone">
+              <p class="field__error" id="aePhone" role="alert">Nhập số điện thoại 10 chữ số.</p>
+            </div>
+            <div class="acc-field field" id="afProvince">
+              <label for="aProvince">Tỉnh / Thành phố</label>
+              <select id="aProvince" class="acc-input acc-input--select" aria-describedby="aeProvince">
+                <option value="">Chọn tỉnh/thành phố</option>
+                <option>TP. Hồ Chí Minh</option><option>TP. Hà Nội</option><option>TP. Đà Nẵng</option><option>TP. Hải Phòng</option><option>TP. Cần Thơ</option>
+                <option>TP. Huế</option><option>Vĩnh Long</option><option>Khánh Hòa</option><option>Lâm Đồng</option><option>Đồng Nai</option>
+              </select>
+              <p class="field__error" id="aeProvince" role="alert">Chọn tỉnh / thành phố.</p>
+            </div>
+            <div class="acc-field field" id="afWard">
+              <label for="aWard">Phường / Xã</label>
+              <input id="aWard" class="acc-input" type="text" placeholder="Ví dụ: Phường Bến Thành" aria-describedby="aeWard">
+              <p class="field__error" id="aeWard" role="alert">Nhập phường / xã.</p>
+            </div>
+            <div class="acc-field acc-field--wide field" id="afLine">
+              <label for="aLine">Địa chỉ cụ thể</label>
+              <input id="aLine" class="acc-input" type="text" autocomplete="street-address" placeholder="Số nhà, tên đường, toà nhà…" aria-describedby="aeLine">
+              <p class="field__error" id="aeLine" role="alert">Nhập số nhà và tên đường.</p>
+            </div>
+          </div>
+          <fieldset class="acc-radios">
+            <legend>Loại địa chỉ</legend>
+            <div class="acc-radios__list">
+              <label class="acc-radio"><input type="radio" name="addrType" value="Nhà riêng" checked>Nhà riêng</label>
+              <label class="acc-radio"><input type="radio" name="addrType" value="Văn phòng">Văn phòng</label>
+            </div>
+          </fieldset>
+          <div class="acc-grid">
+            <div class="acc-field">
+              <label for="aEmail">Email người nhận<span class="acc-field__optional">(không bắt buộc)</span></label>
+              <input id="aEmail" class="acc-input" type="email" autocomplete="email">
+            </div>
+            <div class="acc-field">
+              <label for="aNote">Ghi chú giao hàng<span class="acc-field__optional">(không bắt buộc)</span></label>
+              <input id="aNote" class="acc-input" type="text">
+            </div>
+          </div>
+          <label class="acc-check"><input type="checkbox" id="aDefault">Đặt làm địa chỉ mặc định</label>
+          <div class="acc-actions">
+            <button type="button" class="acc-btn acc-btn--ghost" id="addrCancel">Huỷ</button>
+            <button type="submit" class="acc-btn acc-btn--primary" id="addrSave">Lưu địa chỉ</button>
+          </div>
+        </form>
+      </section>
+
+      <!-- 3. Đơn hàng gần đây (số liệu mẫu) -->
+      <section class="panel" id="don-hang" aria-labelledby="donhangTitle" data-testid="account-section-don-hang" tabindex="-1">
+        <div class="panel__head">
+          <div>
+            <h2 class="panel__title" id="donhangTitle"><svg class="acc-icon" aria-hidden="true"><use href="#i-box"/></svg>Đơn hàng của tôi</h2>
+            <p class="panel__desc">Các đơn hàng gần nhất. Mỗi đơn đủ điều kiện được tính vào doanh số hợp lệ.</p>
+          </div>
+        </div>
+        <ul class="orders" data-testid="account-orders">
+          <li class="order">
+            <div class="order__main"><p class="order__code" title="GF-260912-4821">GF-260912-4821</p><p class="order__date">Đặt ngày 12/09/2026</p></div>
+            <p class="order__items">Cá Basa, Bào ngư ·&nbsp;2&nbsp;sản&nbsp;phẩm</p>
+            <span class="order__status"><span class="status status--ship status--icon"><span class="material-symbols-outlined" aria-hidden="true">local_shipping</span>Đang giao</span></span>
+            <div class="order__end"><p class="order__total">843.120đ</p><a class="order__more" href="chi-tiet-don-hang-khach.html?ma=GF-260912-4821" title="GF-260912-4821" aria-label="Xem chi tiết đơn GF-260912-4821">Xem chi tiết</a></div>
+          </li>
+          <li class="order">
+            <div class="order__main"><p class="order__code" title="GF-260828-1937">GF-260828-1937</p><p class="order__date">Đặt ngày 28/08/2026</p></div>
+            <p class="order__items">Lươn đồng, Gà ác ·&nbsp;2&nbsp;sản&nbsp;phẩm</p>
+            <span class="order__status"><span class="status status--done status--icon"><span class="material-symbols-outlined" aria-hidden="true">done_all</span>Đã giao</span></span>
+            <div class="order__end"><p class="order__total">822.000đ</p><a class="order__more" href="chi-tiet-don-hang-khach.html?ma=GF-260828-1937" title="GF-260828-1937" aria-label="Xem chi tiết đơn GF-260828-1937">Xem chi tiết</a></div>
+          </li>
+          <li class="order">
+            <div class="order__main"><p class="order__code" title="GF-260802-7710">GF-260802-7710</p><p class="order__date">Đặt ngày 02/08/2026</p></div>
+            <p class="order__items">Rau má &amp; Đậu xanh ·&nbsp;1&nbsp;sản&nbsp;phẩm</p>
+            <span class="order__status"><span class="status status--cancel status--icon"><span class="material-symbols-outlined" aria-hidden="true">cancel</span>Đã hủy</span></span>
+            <div class="order__end"><p class="order__total">283.440đ</p><a class="order__more" href="chi-tiet-don-hang-khach.html?ma=GF-260802-7710" title="GF-260802-7710" aria-label="Xem chi tiết đơn GF-260802-7710">Xem chi tiết</a></div>
+          </li>
+        </ul>
+        <div class="orders__more" data-testid="account-orders-more"><button type="button" class="acc-btn acc-btn--outline acc-btn--sm">Xem thêm đơn hàng</button></div>
+
+        <!-- Dòng "Thêm đơn cũ vào tài khoản": ở storefront bấm để mở phần đồng bộ; bản thiết kế dùng <details> để mở/đóng không cần JS -->
+        <div class="acc-sync" data-testid="account-phone-sync">
+          <details class="acc-sync__details">
+            <summary class="acc-sync__row"><span>Từng mua hàng khi chưa đăng nhập?</span><span class="acc-sync__toggle">Thêm đơn cũ vào tài khoản<svg class="acc-icon" aria-hidden="true"><use href="#i-chev-down"/></svg></span></summary>
+            <div class="acc-sync__panel">
+              <div>
+                <p class="acc-sync__title">Đồng bộ đơn đã mua bằng số điện thoại</p>
+                <p class="acc-sync__desc">Nếu trước đây bạn mua hàng không đăng nhập, hãy xác minh số điện thoại để kiểm tra và đồng bộ các đơn phù hợp vào hồ sơ hội viên.</p>
+              </div>
+              <div class="acc-sync__grid">
+                <div class="acc-field">
+                  <label for="syncPhone">Số điện thoại cần đồng bộ<span class="acc-required" aria-hidden="true">*</span></label>
+                  <input id="syncPhone" class="acc-input" type="tel" inputmode="tel" placeholder="0901234567" value="0912345678">
+                </div>
+                <div class="acc-otp-card">
+                  <div><p class="acc-otp-card__title">Xác minh số điện thoại để đồng bộ</p><p class="acc-otp-card__desc">Gửi mã OTP đến số điện thoại này.</p></div>
+                  <div class="acc-otp-card__row">
+                    <button type="button" class="acc-otp-card__send">Gửi mã</button>
+                    <div class="acc-otp-card__code"><label for="syncOtp">Mã xác minh</label><input id="syncOtp" type="text" inputmode="numeric" placeholder="Nhập mã xác minh bạn đã nhận"></div>
+                    <button type="button" class="acc-otp-card__verify">Xác minh</button>
+                  </div>
+                </div>
+              </div>
+              <div class="acc-actions"><button type="button" class="acc-btn acc-btn--outline" disabled>Kiểm tra đơn đã mua</button></div>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <!-- 4. Hạng thành viên: chi tiết hạng hiện tại, trường lấy theo trang /me/membership.
+           Số mẫu khớp thẻ thành viên và đơn hàng phía trên: tích luỹ 1.860.000đ = tổng các dòng cộng/trừ doanh số trong lịch sử;
+           lên Silver ngày 12/03/2026 khi tích luỹ đạt 1.038.000đ; 12 tháng gần nhất bỏ đơn 14/08/2025 (186.000đ);
+           trong chu kỳ: đơn 12/04 bị hoàn tiền nên chỉ còn đơn 28/08 (822.000đ).
+           Không có dòng "Chia sẻ link mời" theo hạng: đã chuyển sang cộng tác viên (quyết định CTV 28/09/2026).
+           Xem mẫu trạng thái tạm giữ quyền lợi: tai-khoan.html?hang=tam-giu#hang-thanh-vien -->
+      <section class="panel" id="hang-thanh-vien" aria-labelledby="hangTitle" data-testid="account-section-hang-thanh-vien" tabindex="-1">
+        <div class="panel__head">
+          <div>
+            <h2 class="panel__title" id="hangTitle"><svg class="acc-icon" aria-hidden="true"><use href="#i-medal"/></svg>Hạng thành viên</h2>
+            <p class="panel__desc">Doanh số được ghi nhận, điều kiện giữ hạng, quyền lợi đang có và lịch sử tích luỹ của bạn.</p>
+          </div>
+          <span class="status status--done" id="rankState">Quyền lợi đang hoạt động</span>
+        </div>
+
+        <div class="rank" data-tier="silver" data-testid="account-membership">
+          <div class="rank-hold" id="rankHold" role="note" hidden>
+            <svg class="acc-icon" aria-hidden="true"><use href="#i-warning"/></svg>
+            <div class="rank-hold__body">
+              <p class="rank-hold__title">Quyền lợi hạng Silver đang tạm giữ</p>
+              <p class="rank-hold__text">Lý do: cần hoàn tất đánh giá duy trì hạng. Trong thời gian tạm giữ, quyền lợi hạng chưa được áp dụng cho đơn mới.</p>
+            </div>
+            <!-- Nút mở thư tới email hỗ trợ (chủ dự án chốt 2026-09-29): tiêu đề soạn sẵn, không kèm dữ liệu cá nhân -->
+            <div class="rank-hold__action">
+              <a class="acc-btn acc-btn--outline acc-btn--sm" href="mailto:info@ssavigroup.com?subject=H%E1%BB%8Fi%20v%E1%BB%81%20quy%E1%BB%81n%20l%E1%BB%A3i%20h%E1%BA%A1ng%20th%C3%A0nh%20vi%C3%AAn%20%C4%91ang%20t%E1%BA%A1m%20gi%E1%BB%AF">Liên hệ hỗ trợ</a>
+              <span class="rank-hold__mail">info@ssavigroup.com</span>
+            </div>
+          </div>
+
+          <div class="rank-block" data-testid="account-membership-spend">
+            <h3 class="rank-sub">Doanh số hợp lệ</h3>
+            <dl class="rank-stats">
+              <div class="rank-stat"><dt>Tích luỹ từ khi tham gia</dt><dd class="rank-stat__val">1.860.000đ</dd><dd class="rank-stat__note">Dùng để xét lên hạng</dd></div>
+              <div class="rank-stat"><dt>12 tháng gần nhất</dt><dd class="rank-stat__val">1.674.000đ</dd><dd class="rank-stat__note">Tính đến hôm nay</dd></div>
+              <div class="rank-stat"><dt>Trong chu kỳ hiện tại</dt><dd class="rank-stat__val">822.000đ</dd><dd class="rank-stat__note">Dùng để xét giữ hạng</dd></div>
+            </dl>
+            <p class="rank-note">Doanh số có thể gồm cả các đơn bạn mua khi chưa đăng nhập, được cộng vào sau khi bạn xác minh số điện thoại.</p>
+          </div>
+
+          <div class="rank-block" data-testid="account-membership-keep">
+            <div class="rank-block__head">
+              <h3 class="rank-sub">Giữ hạng Silver</h3>
+              <span class="status status--done">Đã đạt</span>
+            </div>
+            <div class="bar" role="img" aria-label="Đã đạt 100% mốc giữ hạng Silver" style="--member-progress: 100%"><span></span></div>
+            <p class="member__line">Doanh số trong chu kỳ 822.000đ trên mốc 500.000đ. Bạn đã đạt mốc giữ hạng Silver cho chu kỳ này.</p>
+            <dl class="rank-figs">
+              <div><dt>Mốc giữ hạng</dt><dd>500.000đ</dd></div>
+              <div><dt>Còn thiếu</dt><dd>0đ</dd></div>
+              <div><dt>Hạn giữ hạng</dt><dd>12/03/2027</dd><dd class="rank-figs__sub">còn 164 ngày</dd></div>
+              <div><dt>Thời gian ân hạng</dt><dd>60 ngày</dd></div>
+            </dl>
+            <p class="rank-note">Chu kỳ 12 tháng tính từ ngày công nhận hạng (12/03/2026). Nếu hết chu kỳ mà chưa đạt mốc giữ hạng, bạn có 60 ngày ân hạng và vẫn được tạm giữ hạng.</p>
+          </div>
+
+          <div class="rank-block" data-testid="account-membership-perks">
+            <h3 class="rank-sub">Quyền lợi của hạng Silver</h3>
+            <ul class="rank-perks">
+              <li class="rank-perk">
+                <span class="rank-perk__icon" aria-hidden="true"><svg class="acc-icon"><use href="#i-gift"/></svg></span>
+                <div class="rank-perk__body"><p class="rank-perk__title">Quyền lợi <b>5%</b> trên đơn đủ điều kiện</p><p class="rank-perk__state" data-perk-state>Đang áp dụng</p></div>
+              </li>
+              <li class="rank-perk">
+                <span class="rank-perk__icon" aria-hidden="true"><svg class="acc-icon"><use href="#i-alarm"/></svg></span>
+                <div class="rank-perk__body"><p class="rank-perk__title">Mua sớm Giờ Vàng <b>5 phút</b></p><p class="rank-perk__state" data-perk-state>Đang áp dụng</p></div>
+              </li>
+              <li class="rank-perk">
+                <span class="rank-perk__icon" aria-hidden="true"><svg class="acc-icon"><use href="#i-book"/></svg></span>
+                <div class="rank-perk__body"><p class="rank-perk__title">Hướng dẫn khởi đầu</p><p class="rank-perk__state">Đang mở</p></div>
+              </li>
+            </ul>
+            <p class="rank-locked"><svg class="acc-icon" aria-hidden="true"><use href="#i-lock"/></svg><span>Chưa mở ở hạng Silver: Tài nguyên đào tạo, Tài nguyên khởi nghiệp.</span></p>
+          </div>
+
+          <!-- Kho tài nguyên hội viên (thành phần cũ của trang /me/membership, giữ nguyên giao diện cũ): trạng thái khoá cho hạng Silver -->
+          <div class="rank-block rank-legacy" id="kho-tai-nguyen" data-testid="account-membership-resources">
+            <section class="lg-card">
+              <div class="lg-card__head">
+                <div class="lg-card__titles">
+                  <h2 class="lg-card__title">Kho tài nguyên hội viên</h2>
+                  <div class="lg-card__desc">Kho tài nguyên mở theo đối tượng của từng nhóm tài nguyên.</div>
+                </div>
+              </div>
+              <div class="lg-card__locked">
+                <span class="material-symbols-outlined lg-card__lock" aria-hidden="true">lock</span>
+                <h2 class="lg-card__locked-title">Kho tài nguyên đang khóa</h2>
+                <div class="lg-card__locked-desc">Tài nguyên quảng bá dành cho cộng tác viên.</div>
+                <div class="lg-card__cta"><a href="trang-chu-theo-doi-tuong/dieu-khoan-cong-tac-vien.html">Đăng ký cộng tác viên</a></div>
+              </div>
+            </section>
+          </div>
+
+          <div class="rank-block">
+            <div class="rank-block__head hist-head" id="histHead">
+              <h3 class="rank-sub" id="histTitle">Lịch sử tích luỹ</h3>
+              <span class="rank-note">Mới nhất ở trên</span>
+            </div>
+            <!-- Script dựng từng trang từ mảng histRows (5 mục/trang), cùng tham số page/size của API lịch sử hội viên -->
+            <ul class="hist" id="rankHist" aria-labelledby="histTitle" data-testid="account-membership-history"></ul>
+            <div class="hist-foot">
+              <p class="rank-note" id="histCount"></p>
+              <nav class="pager" id="histPager" aria-label="Phân trang lịch sử tích luỹ">
+                <button type="button" class="pager__arrow pager__arrow--prev" id="histPrev" aria-label="Trang trước"><svg class="acc-icon" aria-hidden="true"><use href="#i-chev-l"/></svg></button>
+                <div class="pager__pages" id="histPages"></div>
+                <button type="button" class="pager__arrow pager__arrow--next" id="histNext" aria-label="Trang sau"><svg class="acc-icon" aria-hidden="true"><use href="#i-chev-r"/></svg></button>
+                <span class="acc-visually-hidden" id="histStatus" aria-live="polite"></span>
+              </nav>
+            </div>
+          </div>
+
+          <!-- Liên kết người giới thiệu hội viên (#sponsor-binding): ở storefront nút mở ô nhập mã -->
+          <div class="rank-block" id="sponsor-binding" data-testid="account-membership-sponsor">
+            <div class="rank-block__head">
+              <h3 class="rank-sub">Liên kết người giới thiệu hội viên</h3>
+              <button type="button" class="acc-btn acc-btn--outline acc-btn--sm">Nhập mã giới thiệu</button>
+            </div>
+            <p class="rank-note">Nhập mã giới thiệu nếu bạn được một hội viên mời tham gia chương trình.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 5. Đổi mật khẩu -->
+      <section class="panel" id="bao-mat" aria-labelledby="baomatTitle" data-testid="account-section-bao-mat" tabindex="-1">
+        <div class="panel__head">
+          <div>
+            <h2 class="panel__title" id="baomatTitle"><svg class="acc-icon" aria-hidden="true"><use href="#i-lock"/></svg>Đổi mật khẩu</h2>
+            <p class="panel__desc">Nên dùng mật khẩu dài, có cả chữ và số, và không dùng chung với trang khác.</p>
+          </div>
+        </div>
+        <form class="acc-form" id="passForm" novalidate aria-labelledby="baomatTitle" data-testid="account-password-form">
+          <fieldset class="acc-fieldset">
+            <div class="acc-grid">
+              <div class="acc-field acc-field--half field" id="wfCur">
+                <label for="wCur">Mật khẩu hiện tại</label>
+                <div class="acc-pass">
+                  <input id="wCur" class="acc-input acc-input--pass" type="password" autocomplete="current-password" aria-describedby="weCur">
+                  <button type="button" class="acc-pass__toggle field__toggle" data-toggle="wCur" aria-pressed="false" aria-label="Hiện mật khẩu"><svg class="acc-icon" aria-hidden="true"><use href="#i-eye"/></svg></button>
+                </div>
+                <p class="field__error" id="weCur" role="alert">Nhập mật khẩu hiện tại.</p>
+              </div>
+              <div class="acc-field field" id="wfNew">
+                <label for="wNew">Mật khẩu mới</label>
+                <div class="acc-pass">
+                  <input id="wNew" class="acc-input acc-input--pass" type="password" autocomplete="new-password" aria-describedby="whNew weNew">
+                  <button type="button" class="acc-pass__toggle field__toggle" data-toggle="wNew" aria-pressed="false" aria-label="Hiện mật khẩu"><svg class="acc-icon" aria-hidden="true"><use href="#i-eye"/></svg></button>
+                </div>
+                <p class="field__hint" id="whNew">Tối thiểu 8 ký tự, khác mật khẩu hiện tại.</p>
+                <p class="field__error" id="weNew" role="alert">Mật khẩu mới cần tối thiểu 8 ký tự và khác mật khẩu hiện tại.</p>
+              </div>
+              <div class="acc-field field" id="wfNew2">
+                <label for="wNew2">Nhập lại mật khẩu mới</label>
+                <div class="acc-pass">
+                  <input id="wNew2" class="acc-input acc-input--pass" type="password" autocomplete="new-password" aria-describedby="weNew2">
+                  <button type="button" class="acc-pass__toggle field__toggle" data-toggle="wNew2" aria-pressed="false" aria-label="Hiện mật khẩu"><svg class="acc-icon" aria-hidden="true"><use href="#i-eye"/></svg></button>
+                </div>
+                <p class="field__error" id="weNew2" role="alert">Hai lần nhập mật khẩu mới chưa khớp nhau.</p>
+              </div>
+            </div>
+          </fieldset>
+          <div class="acc-pass__foot">
+            <p class="acc-pass__forgot">Quên mật khẩu? <a href="#">Đặt lại bằng mã xác minh</a></p>
+            <div class="acc-pass__submit"><button type="submit" class="acc-btn acc-btn--primary">Cập nhật mật khẩu</button></div>
+          </div>
+        </form>
+      </section>
+
+      <!-- 6. Tuỳ chọn thông báo -->
+      <section class="panel" id="thong-bao" aria-labelledby="thongbaoTitle" data-testid="account-section-thong-bao" tabindex="-1">
+        <div class="panel__head">
+          <div>
+            <h2 class="panel__title" id="thongbaoTitle"><svg class="acc-icon" aria-hidden="true"><use href="#i-bell"/></svg>Tuỳ chọn thông báo</h2>
+            <p class="panel__desc">Chọn những tin bạn muốn nhận. Thông báo về đơn hàng luôn được gửi.</p>
+          </div>
+        </div>
+        <div class="acc-notify" data-testid="account-notifications">
+          <ul class="prefs">
+            <li class="pref">
+              <div class="pref__body"><p class="pref__title"><span id="prefGolden">Phiên Giờ Vàng Tri Ân</span></p><p class="pref__desc">Nhắc trước khi mở phiên, kèm thời gian mua sớm theo hạng.</p></div>
+              <span class="acc-switch"><input type="checkbox" role="switch" checked aria-labelledby="prefGolden" data-pref="Phiên Giờ Vàng Tri Ân"><span class="acc-switch__track" aria-hidden="true"></span></span>
+            </li>
+            <li class="pref">
+              <div class="pref__body"><p class="pref__title"><span id="prefOffer">Ưu đãi dành cho thành viên</span></p><p class="pref__desc">Chương trình tri ân và quà tặng theo hạng thành viên.</p></div>
+              <span class="acc-switch"><input type="checkbox" role="switch" checked aria-labelledby="prefOffer" data-pref="Ưu đãi dành cho thành viên"><span class="acc-switch__track" aria-hidden="true"></span></span>
+            </li>
+            <li class="pref">
+              <div class="pref__body"><p class="pref__title"><span id="prefZalo">Nhận tin qua Zalo</span></p><p class="pref__desc">Gửi các thông báo bên trên qua Zalo thay vì chỉ qua email.</p></div>
+              <span class="acc-switch"><input type="checkbox" role="switch" aria-labelledby="prefZalo" data-pref="Nhận tin qua Zalo"><span class="acc-switch__track" aria-hidden="true"></span></span>
+            </li>
+            <li class="pref">
+              <div class="pref__body"><p class="pref__title"><span id="prefNews">Bản tin sản phẩm mới</span></p><p class="pref__desc">Món Cháo Sâm theo mùa và nhóm sản phẩm sắp ra mắt.</p></div>
+              <span class="acc-switch"><input type="checkbox" role="switch" aria-labelledby="prefNews" data-pref="Bản tin sản phẩm mới"><span class="acc-switch__track" aria-hidden="true"></span></span>
+            </li>
+          </ul>
+          <details class="acc-extra" data-testid="account-notifications-more">
+            <summary>
+              <span>
+                <span class="acc-extra__title">Kênh liên hệ khác</span>
+                <span class="acc-extra__desc">Email, SMS, Messenger, Điện thoại, Quảng cáo</span>
+              </span>
+              <svg class="acc-icon" aria-hidden="true"><use href="#i-chev-down"/></svg>
+            </summary>
+            <div class="acc-extra__body">
+              <ul class="prefs">
+                <li class="pref">
+                  <div class="pref__body"><p class="pref__title"><span id="prefEmail">Email</span></p></div>
+                  <span class="acc-switch"><input type="checkbox" role="switch" aria-labelledby="prefEmail" data-pref="Email"><span class="acc-switch__track" aria-hidden="true"></span></span>
+                </li>
+                <li class="pref">
+                  <div class="pref__body"><p class="pref__title"><span id="prefSms">SMS</span></p></div>
+                  <span class="acc-switch"><input type="checkbox" role="switch" checked aria-labelledby="prefSms" data-pref="SMS"><span class="acc-switch__track" aria-hidden="true"></span></span>
+                </li>
+                <li class="pref">
+                  <div class="pref__body"><p class="pref__title"><span id="prefMessenger">Messenger</span></p></div>
+                  <span class="acc-switch"><input type="checkbox" role="switch" aria-labelledby="prefMessenger" data-pref="Messenger"><span class="acc-switch__track" aria-hidden="true"></span></span>
+                </li>
+                <li class="pref">
+                  <div class="pref__body"><p class="pref__title"><span id="prefPhone">Điện thoại</span></p><p class="pref__desc">Chưa có thông tin liên hệ qua kênh này</p></div>
+                  <span class="acc-switch"><input type="checkbox" role="switch" disabled aria-labelledby="prefPhone" data-pref="Điện thoại"><span class="acc-switch__track" aria-hidden="true"></span></span>
+                </li>
+                <li class="pref">
+                  <div class="pref__body"><p class="pref__title"><span id="prefAds">Quảng cáo</span></p></div>
+                  <span class="acc-switch"><input type="checkbox" role="switch" aria-labelledby="prefAds" data-pref="Quảng cáo"><span class="acc-switch__track" aria-hidden="true"></span></span>
+                </li>
+              </ul>
+            </div>
+          </details>
+        </div>
+      </section>
+    </div>
+  </div>
+</main>
+
+<!-- gf-shell:footer:begin -->
+<div class="gf-site-footer">
+<footer class="home-footer">
+<div aria-hidden="true" class="home-footer__rule"></div>
+<div class="home-frame">
+<div class="home-footer__grid">
+<div class="home-footer__brand">
+<a aria-label="Ginsengfood – Trang chủ" class="home-footer__logo" href="trang-chu-theo-doi-tuong/trang-chu-silver-v2.html">
+<img alt="Ginsengfood · Y thực đồng nguyên" decoding="async" loading="lazy" src="../public/home-webp-v1/logo-header-v2.w360.webp" srcset="../public/home-webp-v1/logo-header-v2.w120.webp 120w, ../public/home-webp-v1/logo-header-v2.w240.webp 240w, ../public/home-webp-v1/logo-header-v2.w360.webp 360w">
+</a>
+<p class="home-footer__slogan"><b>Ngon như Mẹ nấu</b><i>– thương ngay từ vị đầu tiên</i><span aria-hidden="true" class="home-story__rule"></span></p>
+<p class="home-footer__phil">Y thực đồng nguyên – hiện đại trong từng bữa ăn. Tinh hoa Sâm vùng cát biển Việt Nam.</p>
+<address class="home-footer__addr">
+<span>SSAVIGROUP / Ginsengfood</span>
+<span>Vùng trồng: Thạnh Phú · Nhà máy: Vĩnh Long</span>
+<span>Điện thoại: <a href="tel:0888098686">0888 098 686</a></span>
+<span>Email: <a href="mailto:info@ssavigroup.com">info@ssavigroup.com</a></span>
+</address>
+</div>
+<nav aria-label="Chính sách" class="home-footer__col">
+<p class="home-footer__col-title">Chính sách</p>
+<ul class="home-footer__links">
+<li><span class="home-footer__links-plain">Chính sách bảo mật</span></li>
+<li><span class="home-footer__links-plain">Tuyên bố miễn trừ</span></li>
+<li><span class="home-footer__links-plain">Hình thức thanh toán</span></li>
+<li><span class="home-footer__links-plain">Chính sách vận chuyển</span></li>
+<li><span class="home-footer__links-plain">Chính sách mua hàng</span></li>
+<li><span class="home-footer__links-plain">Chính sách đổi trả</span></li>
+<li><span class="home-footer__links-plain">Các điều khoản</span></li>
+</ul>
+</nav>
+<nav aria-label="Niềm tin" class="home-footer__col">
+<p class="home-footer__col-title">Niềm tin</p>
+<ul class="home-footer__links">
+<li><a href="trang-chu-theo-doi-tuong/trang-chu-silver-v2.html#cau-chuyen">Nguồn gốc và truy xuất</a></li>
+<li><a href="trang-chu-theo-doi-tuong/dai-ly-nha-phan-phoi.html">Hợp tác nhà phân phối</a></li>
+<li><span class="home-footer__links-plain">Vùng trồng Thạnh Phú</span></li>
+<li><span class="home-footer__links-plain">Công nghệ sấy thăng hoa</span></li>
+<li><span class="home-footer__links-plain">Chứng nhận và kiểm nghiệm</span></li>
+</ul>
+</nav>
+<nav aria-label="Thành viên và quyền lợi" class="home-footer__col">
+<p class="home-footer__col-title">Thành viên và quyền lợi</p>
+<ul class="home-footer__links">
+<li><a href="trang-chu-theo-doi-tuong/trang-chu-silver-v2.html#quyen-loi">Thành viên Ginsengfood</a></li>
+<li><a href="trang-chu-theo-doi-tuong/trang-chu-silver-v2.html#gio-vang">Giờ Vàng Tri Ân</a></li>
+<li><a href="trang-chu-theo-doi-tuong/dieu-khoan-cong-tac-vien.html">Khởi nghiệp cùng Ginsengfood</a></li>
+<li><a href="trang-chu-theo-doi-tuong/dai-ly-nha-phan-phoi.html#hinh-thuc">Đại lý nhà phân phối</a></li>
+</ul>
+</nav>
+<div class="home-footer__col home-footer__col--contact">
+<p class="home-footer__col-title" id="home-footer-contact-title">Liên hệ</p>
+<ul aria-labelledby="home-footer-contact-title" class="home-footer__social">
+<li><span aria-label="YouTube (sắp mở)" class="home-footer__social-btn" data-channel="youtube" data-disabled="true" role="img" title="YouTube (sắp mở)"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" fill="#FF0000"/><path d="M9.545 15.568V8.432L15.818 12l-6.273 3.568Z" fill="#FFFFFF"/></svg></span></li>
+<li><span aria-label="Facebook (sắp mở)" class="home-footer__social-btn" data-channel="facebook" data-disabled="true" role="img" title="Facebook (sắp mở)"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><circle cx="12" cy="12" fill="#FFFFFF" r="11.5"/><path d="M9.101 23.691v-7.98H6.627v-3.667h2.474v-1.58c0-4.085 1.848-5.978 5.858-5.978.401 0 .955.042 1.468.103a8.68 8.68 0 0 1 1.141.195v3.325a8.623 8.623 0 0 0-.653-.036 26.805 26.805 0 0 0-.733-.009c-.707 0-1.259.096-1.675.309a1.686 1.686 0 0 0-.679.622c-.258.42-.374.995-.374 1.752v1.297h3.919l-.386 2.103-.287 1.564h-3.246v8.245C19.396 23.238 24 18.179 24 12.044c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.628 3.874 10.35 9.101 11.647Z" fill="#0866FF"/></svg></span></li>
+<li><span aria-label="Zalo (sắp mở)" class="home-footer__social-btn" data-channel="zalo" data-disabled="true" role="img" title="Zalo (sắp mở)"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><rect fill="#0068FF" height="24" rx="5.5" width="24"/><path d="M12.49 10.2722v-.4496h1.3467v6.3218h-.7704a.576.576 0 01-.5763-.5729l-.0006.0005a3.273 3.273 0 01-1.9372.6321c-1.8138 0-3.2844-1.4697-3.2844-3.2823 0-1.8125 1.4706-3.2822 3.2844-3.2822a3.273 3.273 0 011.9372.6321l.0006.0005zM6.9188 7.7896v.205c0 .3823-.051.6944-.2995 1.0605l-.03.0343c-.0542.0615-.1815.206-.2421.2843L2.024 14.8h4.8948v.7682a.5764.5764 0 01-.5767.5761H0v-.3622c0-.4436.1102-.6414.2495-.8476L4.8582 9.23H.1922V7.7896h6.7266zm8.5513 8.3548a.4805.4805 0 01-.4803-.4798v-7.875h1.4416v8.3548H15.47zM20.6934 9.6C22.52 9.6 24 11.0807 24 12.9044c0 1.8252-1.4801 3.306-3.3066 3.306-1.8264 0-3.3066-1.4808-3.3066-3.306 0-1.8237 1.4802-3.3044 3.3066-3.3044zm-10.1412 5.253c1.0675 0 1.9324-.8645 1.9324-1.9312 0-1.065-.865-1.9295-1.9324-1.9295s-1.9324.8644-1.9324 1.9295c0 1.0667.865 1.9312 1.9324 1.9312zm10.1412-.0033c1.0737 0 1.945-.8707 1.945-1.9453 0-1.073-.8713-1.9436-1.945-1.9436-1.0753 0-1.945.8706-1.945 1.9436 0 1.0746.8697 1.9453 1.945 1.9453z" fill="#FFFFFF" transform="translate(12 12) scale(0.8) translate(-12 -12)"/></svg></span></li>
+</ul>
+</div>
+</div>
+<div aria-hidden="true" class="home-footer__line"></div>
+<div class="home-footer__legal">
+<p class="home-footer__legal-name">CÔNG TY CỔ PHẦN TẬP ĐOÀN SSAVIGROUP</p>
+<p class="home-footer__legal-line">Số giấy phép kinh doanh: 1301015435 · Ngày cấp: 06/09/2016</p>
+</div>
+</div>
+</footer>
+</div>
+<!-- gf-shell:footer:end -->
+<!-- gf-contact-rail:begin -->
+<aside class="reference-social-shell" aria-label="Kênh liên hệ nhanh">
+<input class="rs-state" id="rsState" type="checkbox" aria-label="Ẩn hoặc hiện kênh liên hệ nhanh" aria-controls="reference-social-rail">
+<label class="reference-social-toggle-input" for="rsState" title="Ẩn hoặc hiện kênh liên hệ nhanh" aria-hidden="true"></label>
+<div class="reference-social-mask">
+<div class="reference-social-rail" id="reference-social-rail" aria-label="Kênh liên hệ nhanh">
+<a class="social-pill" href="trang-chu-theo-doi-tuong/trang-chu-silver-v2.html#gio-vang" aria-label="Livestream" title="Livestream"><span class="social-dot live">LIVE</span><span class="social-label">Livestream</span></a>
+<a class="social-pill" href="trang-chu-theo-doi-tuong/trang-chu-silver-v2.html#cau-chuyen" aria-label="YouTube" title="YouTube"><span class="social-dot youtube"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" fill="#FF0000"/><path d="M9.545 15.568V8.432L15.818 12l-6.273 3.568Z" fill="#FFFFFF"/></svg></span><span class="social-label">YouTube</span></a>
+<a class="social-pill" href="trang-chu-theo-doi-tuong/trang-chu-silver-v2.html#about-us" aria-label="Facebook" title="Facebook"><span class="social-dot facebook"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><circle cx="12" cy="12" fill="#FFFFFF" r="11.5"/><path d="M9.101 23.691v-7.98H6.627v-3.667h2.474v-1.58c0-4.085 1.848-5.978 5.858-5.978.401 0 .955.042 1.468.103a8.68 8.68 0 0 1 1.141.195v3.325a8.623 8.623 0 0 0-.653-.036 26.805 26.805 0 0 0-.733-.009c-.707 0-1.259.096-1.675.309a1.686 1.686 0 0 0-.679.622c-.258.42-.374.995-.374 1.752v1.297h3.919l-.386 2.103-.287 1.564h-3.246v8.245C19.396 23.238 24 18.179 24 12.044c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.628 3.874 10.35 9.101 11.647Z" fill="#0866FF"/></svg></span><span class="social-label">Facebook</span></a>
+<a class="social-pill" href="trang-chu-theo-doi-tuong/trang-chu-silver-v2.html#about-us" aria-label="Zalo" title="Zalo"><span class="social-dot zalo"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><rect fill="#0068FF" height="24" rx="5.5" width="24"/><path d="M12.49 10.2722v-.4496h1.3467v6.3218h-.7704a.576.576 0 01-.5763-.5729l-.0006.0005a3.273 3.273 0 01-1.9372.6321c-1.8138 0-3.2844-1.4697-3.2844-3.2823 0-1.8125 1.4706-3.2822 3.2844-3.2822a3.273 3.273 0 011.9372.6321l.0006.0005zM6.9188 7.7896v.205c0 .3823-.051.6944-.2995 1.0605l-.03.0343c-.0542.0615-.1815.206-.2421.2843L2.024 14.8h4.8948v.7682a.5764.5764 0 01-.5767.5761H0v-.3622c0-.4436.1102-.6414.2495-.8476L4.8582 9.23H.1922V7.7896h6.7266zm8.5513 8.3548a.4805.4805 0 01-.4803-.4798v-7.875h1.4416v8.3548H15.47zM20.6934 9.6C22.52 9.6 24 11.0807 24 12.9044c0 1.8252-1.4801 3.306-3.3066 3.306-1.8264 0-3.3066-1.4808-3.3066-3.306 0-1.8237 1.4802-3.3044 3.3066-3.3044zm-10.1412 5.253c1.0675 0 1.9324-.8645 1.9324-1.9312 0-1.065-.865-1.9295-1.9324-1.9295s-1.9324.8644-1.9324 1.9295c0 1.0667.865 1.9312 1.9324 1.9312zm10.1412-.0033c1.0737 0 1.945-.8707 1.945-1.9453 0-1.073-.8713-1.9436-1.945-1.9436-1.0753 0-1.945.8706-1.945 1.9436 0 1.0746.8697 1.9453 1.945 1.9453z" fill="#FFFFFF" transform="translate(12 12) scale(0.8) translate(-12 -12)"/></svg></span><span class="social-label">Zalo</span></a>
+<a class="social-pill" href="trang-chu-theo-doi-tuong/trang-chu-silver-v2.html#about-us" aria-label="Chat" title="Chat"><span class="social-dot chat"><span class="material-symbols-outlined" aria-hidden="true">chat</span></span><span class="social-label">Chat</span></a>
+<a class="social-pill" href="trang-chu-theo-doi-tuong/trang-chu-silver-v2.html#about-us" aria-label="Điện thoại" title="Điện thoại"><span class="social-dot phone"><span class="material-symbols-outlined" aria-hidden="true">call</span></span><span class="social-label">Điện thoại</span></a>
+</div>
+</div>
+</aside>
+<!-- gf-contact-rail:end -->
+<!-- gf-shell:float:begin -->
+<div class="gf-cw">
+<input type="checkbox" id="gfCwToggle" class="gf-cw__toggle" aria-label="Mở chat tư vấn" aria-controls="consultation-chat-panel">
+<div class="gf-cw__dock"><label for="gfCwToggle" class="gf-cw__launcher" title="Mở chat tư vấn"><span aria-hidden="true" class="gf-cw__label">Mở chat tư vấn</span><span aria-hidden="true" class="gf-cw__icon"><svg aria-hidden="true" fill="none" focusable="false" viewBox="0 0 48 48"><path d="M9 26c0-9.4 6.7-17 15-17s15 7.6 15 17" stroke="currentColor" stroke-linecap="round" stroke-width="3"/><rect fill="currentColor" height="13" rx="3.5" width="7" x="4.5" y="22"/><rect fill="currentColor" height="13" rx="3.5" width="7" x="36.5" y="22"/><path d="M40 34.5v1c0 3.3-2.9 5-6.5 5H29.5" stroke="currentColor" stroke-linecap="round" stroke-width="2.6"/><circle cx="27" cy="40.5" fill="currentColor" r="2.7"/><path d="M24 15.5c5.2 0 9.2 3.6 9.2 8.3S29.2 32 24 32c-1 0-2-.1-2.9-.4L16.5 35l1.1-4.6c-1.6-1.5-2.5-3.5-2.5-5.7 0-4.7 4-8.3 9.2-8.3Z" fill="currentColor"/><circle cx="19.6" cy="23.8" fill="#C69A2B" r="1.7"/><circle cx="24" cy="23.8" fill="#C69A2B" r="1.7"/><circle cx="28.4" cy="23.8" fill="#C69A2B" r="1.7"/></svg></span></label></div>
+<div class="gf-cw__panel" id="consultation-chat-panel" role="dialog" aria-modal="false" aria-label="Khung chat tư vấn Ginsengfood">
+<div class="gf-cw__head"><div class="gf-cw__who"><div class="gf-cw__avatar"><svg aria-hidden="true" fill="none" focusable="false" viewBox="0 0 48 48"><path d="M9 26c0-9.4 6.7-17 15-17s15 7.6 15 17" stroke="currentColor" stroke-linecap="round" stroke-width="3"/><rect fill="currentColor" height="13" rx="3.5" width="7" x="4.5" y="22"/><rect fill="currentColor" height="13" rx="3.5" width="7" x="36.5" y="22"/><path d="M40 34.5v1c0 3.3-2.9 5-6.5 5H29.5" stroke="currentColor" stroke-linecap="round" stroke-width="2.6"/><circle cx="27" cy="40.5" fill="currentColor" r="2.7"/><path d="M24 15.5c5.2 0 9.2 3.6 9.2 8.3S29.2 32 24 32c-1 0-2-.1-2.9-.4L16.5 35l1.1-4.6c-1.6-1.5-2.5-3.5-2.5-5.7 0-4.7 4-8.3 9.2-8.3Z" fill="currentColor"/><circle cx="19.6" cy="23.8" fill="#C69A2B" r="1.7"/><circle cx="24" cy="23.8" fill="#C69A2B" r="1.7"/><circle cx="28.4" cy="23.8" fill="#C69A2B" r="1.7"/></svg></div><div><h4 class="gf-cw__title">Tư vấn viên</h4><p class="gf-cw__sub">Tư vấn chọn sản phẩm nhân sâm</p></div></div><div class="gf-cw__actions"><span class="gf-cw__action" title="Xóa cuộc trò chuyện" aria-hidden="true"><span class="material-symbols-outlined" aria-hidden="true">delete</span></span><label for="gfCwToggle" class="gf-cw__action" aria-label="Đóng chat" title="Đóng chat"><span class="material-symbols-outlined" aria-hidden="true">close</span></label></div></div>
+<div class="gf-cw__list"><div class="gf-cw__msg"><div class="gf-cw__bubble"><p>Dạ em chào anh/chị 👋 Em là trợ lí tư vấn của Ginsengfood.</p><p>Em có thể hỗ trợ chọn sản phẩm theo nhu cầu, tìm hiểu nguồn gốc sản phẩm hoặc ghi nhận thông tin để CSKH tư vấn kỹ hơn ạ.</p></div><span class="gf-cw__time">09:00</span></div></div>
+<div class="gf-cw__composer"><span class="gf-cw__lead">Để lại thông tin tư vấn</span><div class="gf-cw__chips" aria-label="Gợi ý câu hỏi nhanh"><div class="gf-cw__chiplist"><span class="gf-cw__chip">Tôi cần món ăn sáng nhẹ bụng</span><span class="gf-cw__chip">Tôi muốn mua làm quà biếu</span></div><span class="gf-cw__chipsoff" aria-hidden="true"><span class="material-symbols-outlined" aria-hidden="true">close</span></span></div><div class="gf-cw__row"><textarea class="gf-cw__input" placeholder="Nhập câu hỏi của anh/chị..." rows="1" aria-label="Nhập câu hỏi"></textarea><span class="gf-cw__send" aria-hidden="true"><span class="material-symbols-outlined" aria-hidden="true">send</span></span></div></div>
+</div>
+</div>
+<!-- gf-shell:float:end -->
+
+<div class="acc-toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+  /* Mock: mọi thay đổi chỉ nằm trong bộ nhớ trang, không gửi dữ liệu đi đâu */
+  (function () {
+    var $ = function (id) { return document.getElementById(id); };
+    function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+
+    /* ---- Thông báo nhỏ ---- */
+    var toast = $('toast'), toastTimer = 0;
+    function notify(text) {
+      toast.innerHTML = '<svg class="acc-icon" aria-hidden="true"><use href="#i-check"/></svg><span></span>';
+      toast.querySelector('span').textContent = text;
+      toast.classList.add('is-on');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(function () { toast.classList.remove('is-on'); }, 2800);
+    }
+    function setInvalid(fieldId, bad) { $(fieldId).classList.toggle('is-invalid', bad); return bad; }
+
+    /* ---- Menu: tô sáng khối đang xem ---- */
+    var links = Array.prototype.slice.call(document.querySelectorAll('.side__link[href^="#"]'));
+    function activate(id) {
+      links.forEach(function (a) {
+        var on = a.getAttribute('href') === '#' + id;
+        a.classList.toggle('is-active', on);
+        if (on) { a.setAttribute('aria-current', 'true'); a.scrollIntoView({ block: 'nearest', inline: 'nearest' }); } else a.removeAttribute('aria-current');
+      });
+    }
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) { if (en.isIntersecting) activate(en.target.id); });
+      }, { rootMargin: '-25% 0px -65% 0px' });
+      links.forEach(function (a) { var s = document.querySelector(a.getAttribute('href')); if (s) io.observe(s); });
+    }
+    links.forEach(function (a) { a.addEventListener('click', function () { activate(a.getAttribute('href').slice(1)); }); });
+
+    /* ---- Hiện/ẩn mật khẩu ---- */
+    Array.prototype.forEach.call(document.querySelectorAll('.field__toggle'), function (btn) {
+      btn.addEventListener('click', function () {
+        var input = $(btn.getAttribute('data-toggle')), show = input.type === 'password';
+        input.type = show ? 'text' : 'password';
+        btn.setAttribute('aria-pressed', String(show));
+        btn.setAttribute('aria-label', show ? 'Ẩn mật khẩu' : 'Hiện mật khẩu');
+        btn.querySelector('use').setAttribute('href', show ? '#i-eye-off' : '#i-eye');
+      });
+    });
+    Array.prototype.forEach.call(document.querySelectorAll('.field input, .field select'), function (el) {
+      el.addEventListener(el.tagName === 'SELECT' ? 'change' : 'input', function () { var f = el.closest('.field'); if (f) f.classList.remove('is-invalid'); });
+    });
+
+    /* ---- Hồ sơ cá nhân ---- */
+    var profileForm = $('profileForm');
+    profileForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var name = $('pName').value.trim(), mail = $('pMail').value.trim();
+      var badName = setInvalid('pfName', name.length < 2);
+      var badMail = setInvalid('pfMail', mail !== '' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mail));
+      if (badName || badMail) { (badName ? $('pName') : $('pMail')).focus(); return; }
+      /* tên hiển thị: hai chữ cuối của họ tên; chữ viết tắt: chữ đầu của hai chữ đó */
+      var parts = name.split(/\s+/), short = parts.slice(-2).join(' ');
+      var initials = parts.slice(-2).map(function (p) { return p.charAt(0); }).join('').toUpperCase();
+      Array.prototype.forEach.call(document.querySelectorAll('[data-fullname]'), function (el) { el.textContent = short; });
+      Array.prototype.forEach.call(document.querySelectorAll('[data-initials]'), function (el) { el.textContent = initials; });
+      Array.prototype.forEach.call(profileForm.querySelectorAll('input'), function (el) { if (el.type !== 'radio') el.defaultValue = el.value; else el.defaultChecked = el.checked; });
+      notify('Đã lưu hồ sơ cá nhân');
+    });
+    profileForm.addEventListener('reset', function () {
+      Array.prototype.forEach.call(profileForm.querySelectorAll('.field'), function (f) { f.classList.remove('is-invalid'); });
+    });
+
+    /* ---- Sổ địa chỉ ---- */
+    var addresses = [
+      { id: 1, type: 'Nhà riêng', name: 'Nguyễn Minh Anh', phone: '0912345678', province: 'TP. Hồ Chí Minh', ward: 'Phường Bến Thành', line: '12 Lê Lợi', isDefault: true },
+      { id: 2, type: 'Văn phòng', name: 'Nguyễn Minh Anh', phone: '0912345678', province: 'TP. Hồ Chí Minh', ward: 'Phường Sài Gòn', line: 'Tầng 5, 45 Nguyễn Huệ', isDefault: false },
+    ];
+    var nextId = 3, editingId = null, addrTrigger = null;
+    var list = $('addrList'), form = $('addrForm');
+    function fmtPhone(p) { return p.replace(/(\d{4})(\d{3})(\d{3})/, '$1 $2 $3'); }
+    function renderAddresses() {
+      addresses.sort(function (a, b) { return (b.isDefault ? 1 : 0) - (a.isDefault ? 1 : 0); });
+      list.innerHTML = addresses.map(function (a) {
+        return '<li class="addr' + (a.isDefault ? ' is-default' : '') + '" data-id="' + a.id + '">'
+          + '<span class="addr__icon" aria-hidden="true"><svg class="acc-icon"><use href="#i-' + (a.type === 'Văn phòng' ? 'briefcase' : 'home') + '"/></svg></span>'
+          + '<div class="addr__body">'
+          +   '<div class="addr__top"><span class="addr__label">' + esc(a.type) + '</span>'
+          +   (a.isDefault ? '<span class="addr__default">Mặc định</span>' : '') + '</div>'
+          +   '<p class="addr__who">' + esc(a.name) + ' · ' + esc(fmtPhone(a.phone)) + '</p>'
+          +   '<p class="addr__line">' + esc([a.line, a.ward, a.province].join(', ')) + '</p>'
+          + '</div>'
+          + '<div class="addr__acts">'
+          +   '<button type="button" class="linkbtn" data-act="edit" aria-label="Sửa địa chỉ ' + esc(a.type) + '"><svg class="acc-icon" aria-hidden="true"><use href="#i-edit"/></svg>Sửa</button>'
+          +   (a.isDefault ? '' : '<button type="button" class="linkbtn" data-act="default" aria-label="Đặt địa chỉ ' + esc(a.type) + ' làm mặc định"><svg class="acc-icon" aria-hidden="true"><use href="#i-star"/></svg>Đặt làm mặc định</button>')
+          +   '<button type="button" class="linkbtn linkbtn--danger" data-act="delete"' + (a.isDefault ? ' disabled title="Không thể xoá địa chỉ mặc định"' : '') + ' aria-label="Xoá địa chỉ ' + esc(a.type) + '"><svg class="acc-icon" aria-hidden="true"><use href="#i-trash"/></svg>Xoá</button>'
+          + '</div></li>';
+      }).join('') + '<li><button type="button" class="addr-add" id="addrAdd"' + (form.hidden ? '' : ' hidden') + '><svg class="acc-icon" aria-hidden="true"><use href="#i-plus"/></svg>Thêm địa chỉ mới</button></li>';
+    }
+    function openForm(addr, trigger) {
+      addrTrigger = trigger || null;
+      editingId = addr ? addr.id : null;
+      $('addrFormTitle').textContent = addr ? 'Sửa địa chỉ' : 'Thêm địa chỉ mới';
+      $('aName').value = addr ? addr.name : '';
+      $('aPhone').value = addr ? fmtPhone(addr.phone) : '';
+      $('aProvince').value = addr ? addr.province : '';
+      $('aWard').value = addr ? addr.ward : '';
+      $('aLine').value = addr ? addr.line : '';
+      Array.prototype.forEach.call(form.querySelectorAll('input[name="addrType"]'), function (r) { r.checked = r.value === (addr ? addr.type : 'Nhà riêng'); });
+      $('aDefault').checked = addr ? addr.isDefault : false;
+      $('aDefault').disabled = !!(addr && addr.isDefault);
+      Array.prototype.forEach.call(form.querySelectorAll('.field'), function (f) { f.classList.remove('is-invalid'); });
+      form.hidden = false;
+      renderAddresses();
+      $('aName').focus();
+    }
+    function closeForm() {
+      form.hidden = true; editingId = null;
+      renderAddresses();
+      var back = addrTrigger && document.contains(addrTrigger) ? addrTrigger : $('addrAdd');
+      if (back) back.focus();
+    }
+    list.addEventListener('click', function (e) {
+      if (e.target.closest('#addrAdd')) { openForm(null, null); return; }
+      var btn = e.target.closest('[data-act]'); if (!btn || btn.disabled) return;
+      var id = +btn.closest('.addr').getAttribute('data-id');
+      var addr = addresses.filter(function (a) { return a.id === id; })[0]; if (!addr) return;
+      var act = btn.getAttribute('data-act');
+      if (act === 'edit') { openForm(addr, null); return; }
+      if (act === 'default') { addresses.forEach(function (a) { a.isDefault = a.id === id; }); renderAddresses(); notify('Đã đặt ' + addr.type.toLowerCase() + ' làm địa chỉ mặc định'); return; }
+      if (act === 'delete') { addresses = addresses.filter(function (a) { return a.id !== id; }); renderAddresses(); notify('Đã xoá địa chỉ'); var add = $('addrAdd'); if (add) add.focus(); }
+    });
+    $('addrCancel').addEventListener('click', closeForm);
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var phone = $('aPhone').value.replace(/\D/g, '');
+      var bad = [
+        setInvalid('afName', $('aName').value.trim().length < 2) && $('aName'),
+        setInvalid('afPhone', phone.length !== 10) && $('aPhone'),
+        setInvalid('afProvince', $('aProvince').value === '') && $('aProvince'),
+        setInvalid('afWard', $('aWard').value.trim().length < 2) && $('aWard'),
+        setInvalid('afLine', $('aLine').value.trim().length < 5) && $('aLine'),
+      ].filter(Boolean);
+      if (bad.length) { bad[0].focus(); return; }
+      var data = {
+        type: form.querySelector('input[name="addrType"]:checked').value, name: $('aName').value.trim(), phone: phone,
+        province: $('aProvince').value, ward: $('aWard').value.trim(), line: $('aLine').value.trim(),
+      };
+      var makeDefault = $('aDefault').checked || addresses.length === 0;
+      if (editingId) {
+        var target = addresses.filter(function (a) { return a.id === editingId; })[0];
+        Object.keys(data).forEach(function (k) { target[k] = data[k]; });
+        if (makeDefault) addresses.forEach(function (a) { a.isDefault = a.id === editingId; });
+        notify('Đã cập nhật địa chỉ');
+      } else {
+        var id = nextId++;
+        if (makeDefault) addresses.forEach(function (a) { a.isDefault = false; });
+        addresses.push(Object.assign({ id: id, isDefault: makeDefault }, data));
+        notify('Đã thêm địa chỉ mới');
+      }
+      closeForm();
+    });
+    renderAddresses();
+
+    /* ---- Đổi mật khẩu ---- */
+    var passForm = $('passForm');
+    passForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var cur = $('wCur').value, nw = $('wNew').value, nw2 = $('wNew2').value;
+      var bad = [
+        setInvalid('wfCur', cur.length < 6) && $('wCur'),
+        setInvalid('wfNew', nw.length < 8 || nw === cur) && $('wNew'),
+        setInvalid('wfNew2', nw2 === '' || nw2 !== nw) && $('wNew2'),
+      ].filter(Boolean);
+      if (bad.length) { bad[0].focus(); return; }
+      passForm.reset();
+      notify('Đã cập nhật mật khẩu');
+    });
+
+    /* ---- Tuỳ chọn thông báo ---- */
+    Array.prototype.forEach.call(document.querySelectorAll('[data-pref]'), function (sw) {
+      sw.addEventListener('change', function () { notify((sw.checked ? 'Đã bật: ' : 'Đã tắt: ') + sw.getAttribute('data-pref')); });
+    });
+
+    /* ---- Hạng thành viên: lịch sử tích luỹ có phân trang ---- */
+    /* Mỗi mục là một dòng của API lịch sử hội viên: cộng/trừ doanh số (amount), đổi hạng (tier) hoặc giữ hạng (chip) */
+    var histRows = [
+      { at: '2026-08-28T16:21', type: 'Đạt mốc giữ hạng Silver', desc: 'Chu kỳ 12/03/2026 – 12/03/2027', chip: ['done', 'Đã đạt'] },
+      { at: '2026-08-28T16:20', type: 'Cộng doanh số', desc: 'Đơn GF-260828-1937 · Đã giao', amount: 822000 },
+      { at: '2026-04-18T14:02', type: 'Trừ doanh số', desc: 'Hoàn tiền đơn GF-260410-6620', amount: -264000 },
+      { at: '2026-04-12T09:30', type: 'Cộng doanh số', desc: 'Đơn GF-260410-6620 · Đã giao', amount: 264000 },
+      { at: '2026-03-12T10:06', type: 'Bắt đầu chu kỳ giữ hạng', desc: 'Mốc giữ hạng Silver 500.000đ · hạn 12/03/2027', chip: ['ship', 'Chu kỳ mới'] },
+      { at: '2026-03-12T10:06', type: 'Lên hạng Silver', desc: 'Từ Thành viên mới · tích luỹ đạt mốc 1.000.000đ', tier: 'Silver' },
+      { at: '2026-03-12T10:05', type: 'Cộng doanh số', desc: 'Đơn GF-260312-0856 · Đã giao', amount: 292000 },
+      { at: '2026-01-20T09:42', type: 'Cộng doanh số', desc: 'Đơn GF-260120-5174 · Đã giao', amount: 248000 },
+      { at: '2025-12-24T20:10', type: 'Cộng doanh số', desc: 'Đơn GF-251224-4418 · Đã giao', amount: 144000 },
+      { at: '2025-11-05T19:15', type: 'Cộng doanh số', desc: 'Đơn GF-251105-2210 · Đã giao', amount: 168000 },
+      { at: '2025-08-14T11:30', type: 'Cộng doanh số', desc: 'Đơn GF-250814-3348 · Đã giao', amount: 186000 },
+    ];
+    var HIST_SIZE = 5, histPage = 0;
+    var histPages = Math.max(1, Math.ceil(histRows.length / HIST_SIZE));
+    function fmtWhen(at) { return at.slice(8, 10) + '/' + at.slice(5, 7) + '/' + at.slice(0, 4) + ' · ' + at.slice(11, 16); }
+    function fmtDelta(n) { return (n < 0 ? '−' : '+') + String(Math.abs(n)).replace(/\B(?=(\d{3})+(?!\d))/g, '.') + 'đ'; }
+    /* Số trang: ≤ 7 trang hiện hết; nhiều hơn thì giữ trang đầu, cuối, quanh trang hiện tại và chèn "…" (như tin-tuc.html) */
+    function pageNumbers(pages, current) {
+      var out = [], k;
+      if (pages <= 7) { for (k = 0; k < pages; k++) out.push(k); return out; }
+      var from = Math.max(1, Math.min(current - 1, pages - 4)), to = Math.min(pages - 2, Math.max(current + 1, 3));
+      out.push(0);
+      if (from > 1) out.push('gap');
+      for (k = from; k <= to; k++) out.push(k);
+      if (to < pages - 2) out.push('gap');
+      out.push(pages - 1);
+      return out;
+    }
+    function renderHistory() {
+      var start = histPage * HIST_SIZE, rows = histRows.slice(start, start + HIST_SIZE);
+      $('rankHist').innerHTML = rows.map(function (h) {
+        var end = h.tier ? '<span class="hist__tier">' + esc(h.tier) + '</span>'
+          : h.chip ? '<span class="status status--' + h.chip[0] + '">' + esc(h.chip[1]) + '</span>'
+          : '<span class="hist__delta' + (h.amount < 0 ? ' hist__delta--minus' : '') + '">' + fmtDelta(h.amount) + '</span>';
+        return '<li class="hist__row"><time class="hist__date" datetime="' + h.at + '">' + fmtWhen(h.at) + '</time>'
+          + '<div class="hist__main"><p class="hist__type">' + esc(h.type) + '</p><p class="hist__desc">' + esc(h.desc) + '</p></div>'
+          + '<span class="hist__end">' + end + '</span></li>';
+      }).join('');
+      var range = rows.length > 1 ? (start + 1) + '–' + (start + rows.length) : String(start + 1);
+      $('histCount').textContent = 'Hiển thị ' + range + ' trong ' + histRows.length + ' mục';
+      var list = $('histPages');
+      list.innerHTML = '';
+      pageNumbers(histPages, histPage).forEach(function (n) {
+        if (n === 'gap') { list.insertAdjacentHTML('beforeend', '<span class="pager__gap" aria-hidden="true">…</span>'); return; }
+        var btn = document.createElement('button');
+        btn.type = 'button'; btn.className = 'pager__page'; btn.textContent = String(n + 1);
+        btn.setAttribute('aria-label', 'Trang ' + (n + 1));
+        if (n === histPage) btn.setAttribute('aria-current', 'page');
+        btn.addEventListener('click', function () { if (n !== histPage) goHistory(n); });
+        list.appendChild(btn);
+      });
+      $('histPrev').disabled = histPage === 0;
+      $('histNext').disabled = histPage >= histPages - 1;
+      $('histPager').hidden = histPages < 2;
+    }
+    function goHistory(n) {
+      histPage = Math.max(0, Math.min(histPages - 1, n));
+      renderHistory();
+      $('histStatus').textContent = 'Trang ' + (histPage + 1) + ' trên ' + histPages;
+      /* Nút số trang vừa bấm bị dựng lại, mũi tên có thể vừa bị khoá: đưa tiêu điểm về số trang hiện tại */
+      var active = document.activeElement;
+      if (!$('histPager').contains(active) || active.disabled) { var cur = $('histPages').querySelector('[aria-current="page"]'); if (cur) cur.focus(); }
+      /* Trang cuối ít dòng hơn làm danh sách ngắn lại: nếu tiêu đề đã trôi khỏi màn hình thì cuộn về tiêu đề */
+      if ($('histHead').getBoundingClientRect().top < 0) $('histHead').scrollIntoView({ block: 'start' });
+    }
+    $('histPrev').addEventListener('click', function () { goHistory(histPage - 1); });
+    $('histNext').addEventListener('click', function () { goHistory(histPage + 1); });
+    renderHistory();
+    /* Mẫu trạng thái tạm giữ quyền lợi (benefitSuspended): mở trang với ?hang=tam-giu */
+    if (new URLSearchParams(location.search).get('hang') === 'tam-giu') {
+      $('rankState').className = 'status status--hold';
+      $('rankState').textContent = 'Quyền lợi đang tạm giữ';
+      $('rankHold').hidden = false;
+      Array.prototype.forEach.call(document.querySelectorAll('[data-perk-state]'), function (el) {
+        el.textContent = 'Tạm giữ';
+        el.closest('.rank-perk').classList.add('is-held');
+      });
+    }
+
+    document.addEventListener('click', function (e) { var a = e.target.closest('a[href="#"]'); if (a) e.preventDefault(); });
+  })();
+</script>
+</body>
+</html>

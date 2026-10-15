@@ -1,0 +1,1913 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description" content="Ginsengfood – Điều khoản chương trình Cộng tác viên: điều kiện đăng ký, link chia sẻ, ghi nhận hoa hồng, đối soát, quy tắc quảng bá và bảo mật thông tin.">
+  <meta name="theme-color" content="#072A4E">
+  <title>Ginsengfood – Điều khoản chương trình Cộng tác viên</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Serif:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+
+  <!--
+    ĐIỀU KHOẢN CHƯƠNG TRÌNH CỘNG TÁC VIÊN (mock tĩnh) — mở từ nút "Đăng ký cộng tác viên" ở trang chủ.
+    Trình bày dạng văn bản: toàn bộ nội dung nằm trong một khung tài liệu, đánh số Điều / khoản, hạn chế icon.
+    - Điều kiện do chủ dự án chốt: đã đạt hạng thành viên (Silver trở lên) + doanh số tích lũy hợp lệ trên 2.000.000đ.
+    - KHÔNG ghi tỷ lệ hoa hồng cố định: tỷ lệ do Runtime trả về và hiển thị trong mục Cộng tác viên (spec 11.2, 15.9).
+    - Mã giới thiệu ngẫu nhiên, không chứa họ tên / email / số điện thoại (spec 11.2).
+    - Mốc đối soát (ngày 05 / 15), 30 ngày phản hồi, báo trước 07 ngày, đủ 18 tuổi là NỘI DUNG MẪU, chờ chủ dự án chốt.
+    - Các nút xác nhận chỉ minh họa trạng thái giao diện, không lưu quyết định hoặc gọi API.
+  -->
+
+  <style>
+    :root {
+      --gf-navy: #10305F; --gf-navy-dark: #072A4E; --gf-navy-700: #315E82;
+      --gf-gold: #C69A2B; --gf-gold-text: #7B5614;
+      --gf-cream: #FBF8F1; --gf-sand: #F0EADF;
+      --gf-text: #172B4D; --gf-muted: #667085; --gf-border: #E8DDC3; --gf-rule: #E6E1D6;
+      --gf-danger: #B42318;
+      --radius-sm: 8px; --radius-pill: 999px;
+      --focus-ring: 0 0 0 3px rgba(49,94,130,.28);
+      --motion-fast: 120ms; --motion-base: 180ms; --ease-standard: cubic-bezier(.2,0,0,1);
+      --font-sans: Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      --font-serif: "Noto Serif", Georgia, "Times New Roman", serif;
+      --header-h: 74px;
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; scroll-padding-top: calc(var(--header-h) + 24px); }
+    body { margin: 0; min-height: 100svh; display: flex; flex-direction: column; background: var(--gf-cream); color: var(--gf-text); font-family: var(--font-sans); font-size: 16px; line-height: 1.55; -webkit-font-smoothing: antialiased; }
+    img { max-width: 100%; height: auto; display: block; }
+    a { color: var(--gf-navy); text-decoration: none; }
+    a:hover { color: var(--gf-navy-700); }
+    button { font: inherit; color: inherit; cursor: pointer; }
+    h1, h2, h3, p, ul, ol { margin: 0; }
+    ul, ol { padding: 0; list-style: none; }
+    :focus-visible { outline: none; box-shadow: var(--focus-ring); border-radius: var(--radius-sm); }
+    [hidden] { display: none !important; }
+    .icon { width: 1em; height: 1em; fill: none; stroke: currentColor; stroke-width: 1.85; stroke-linecap: round; stroke-linejoin: round; flex: 0 0 auto; }
+
+    .btn { display: inline-flex; align-items: center; justify-content: center; height: 48px; padding: 0 24px; border-radius: var(--radius-pill); border: 1px solid transparent; font-weight: 600; font-size: 15px; white-space: nowrap; transition: background var(--motion-base) var(--ease-standard), color var(--motion-base) var(--ease-standard), border-color var(--motion-base) var(--ease-standard); }
+    .btn--primary { background: var(--gf-navy); color: #fff; }
+    .btn--primary:hover { background: var(--gf-navy-700); color: #fff; }
+    .btn--primary[aria-disabled="true"] { background: #C9D1DC; color: #fff; cursor: not-allowed; }
+    .btn--primary[aria-busy="true"] { background: var(--gf-navy-700); cursor: progress; }
+    .btn--outline { background: #fff; color: var(--gf-navy); border-color: var(--gf-navy); }
+    .btn--outline:hover { background: var(--gf-cream); color: var(--gf-navy); }
+
+    /* ---------- Header dính + thanh tiến độ đọc ---------- */
+    .read-bar { position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; pointer-events: none; }
+    .read-bar span { display: block; height: 100%; background: var(--gf-navy-700); transform: scaleX(0); transform-origin: left center; }
+
+    /* ---- Điều khoản cộng tác viên: CSS lấy từ storefront (src/features/collaborator/storefront/collaboratorStorefrontCss.ts), tiền tố [data-collaborator-register] ---- */
+    /* Token --gf-* của storefront (bản mẫu chỉ có tên cũ), đặt trong phạm vi khối trang để không ảnh hưởng header/chân trang. */
+    [data-collaborator-register] { --gf-white: #FFFFFF; --gf-ivory: #FFF8EA; --gf-warning: #B7791F; --gf-radius-pill: 999px; --gf-motion-base: 180ms; --gf-ease-standard: cubic-bezier(0.2, 0, 0, 1); --gf-font-serif: "Noto Serif"; }
+    [data-collaborator-register] { --ctv-danger: #B42318; --ctv-ok: #2F6F4A; flex: 1 1 auto; padding: 22px 24px 56px; color: var(--gf-text); font-size: 16px; line-height: 1.55; }
+    [data-collaborator-register] .ctv-wrap { max-width: 860px; margin: 0 auto; }
+    [data-collaborator-register] .ctv-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 14px; font-size: 13px; }
+    [data-collaborator-register] .ctv-crumbs { display: flex; flex-wrap: wrap; gap: 4px 8px; color: var(--gf-muted); }
+    [data-collaborator-register] .ctv-crumbs a { color: var(--gf-muted); font-weight: 500; text-decoration: none; }
+    [data-collaborator-register] .ctv-crumbs a:hover { color: var(--gf-navy); }
+    [data-collaborator-register] .ctv-crumbs [aria-current] { color: var(--gf-text); font-weight: 600; }
+    [data-collaborator-register] .ctv-print { min-height: 44px; flex: 0 0 auto; padding: 0 4px; border: 0; background: none; color: var(--gf-navy); cursor: pointer; font: inherit; font-size: 13px; font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
+    [data-collaborator-register] .ctv-print:hover { color: var(--gf-navy-700); }
+    /* Khối trạng thái (chưa mở, tạm ngưng, đã là cộng tác viên, lỗi). */
+    [data-collaborator-register] .ctv-state { padding: 28px 28px 26px; border: 1px solid var(--gf-border); border-top: 3px solid var(--gf-navy); border-radius: 6px; background: var(--gf-white); box-shadow: 0 1px 2px rgba(16, 48, 95, 0.05), 0 14px 36px -22px rgba(16, 48, 95, 0.35); }
+    [data-collaborator-register] .ctv-state + .ctv-paper, [data-collaborator-register] .ctv-state + .ctv-state, [data-collaborator-register] .ctv-paper + .ctv-state { margin-top: 18px; }
+    [data-collaborator-register] .ctv-state__title { margin: 0; color: var(--gf-navy); font-family: var(--gf-font-serif), Georgia, serif; font-size: 22px; font-weight: 700; line-height: 1.35; }
+    [data-collaborator-register] .ctv-state__text { margin: 10px 0 0; font-size: 15.5px; line-height: 1.7; }
+    [data-collaborator-register] .ctv-state__text + .ctv-state__text { margin-top: 6px; }
+    [data-collaborator-register] .ctv-state__acts { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+    [data-collaborator-register] .ctv-state[data-tone="warning"] { border-top-color: var(--gf-warning); }
+    [data-collaborator-register] .ctv-state[data-tone="ok"] { border-top-color: var(--ctv-ok); }
+    [data-collaborator-register] .ctv-btn { display: inline-flex; min-height: 48px; align-items: center; justify-content: center; padding: 0 24px; border: 1px solid transparent; border-radius: var(--gf-radius-pill); cursor: pointer; font: inherit; font-size: 15px; font-weight: 600; text-decoration: none; white-space: nowrap; transition: background var(--gf-motion-base) var(--gf-ease-standard), color var(--gf-motion-base) var(--gf-ease-standard), border-color var(--gf-motion-base) var(--gf-ease-standard); }
+    [data-collaborator-register] .ctv-btn--primary { background: var(--gf-navy); color: var(--gf-white); }
+    [data-collaborator-register] .ctv-btn--primary:hover { background: var(--gf-navy-700); color: var(--gf-white); }
+    [data-collaborator-register] .ctv-btn--outline { border-color: var(--gf-navy); background: var(--gf-white); color: var(--gf-navy); }
+    [data-collaborator-register] .ctv-btn--outline:hover { background: var(--gf-cream); }
+    [data-collaborator-register] .ctv-btn[aria-disabled="true"], [data-collaborator-register] .ctv-btn:disabled { border-color: transparent; background: #C9D1DC; color: var(--gf-white); cursor: not-allowed; }
+    [data-collaborator-register] .ctv-btn[aria-busy="true"] { background: var(--gf-navy-700); cursor: progress; }
+    /* Khung tài liệu. */
+    [data-collaborator-register] .ctv-paper { padding: 52px 64px 48px; border: 1px solid var(--gf-border); border-top: 3px solid var(--gf-navy); border-radius: 6px; background: var(--gf-white); box-shadow: 0 1px 2px rgba(16, 48, 95, 0.05), 0 14px 36px -22px rgba(16, 48, 95, 0.35); overflow-wrap: anywhere; }
+    [data-collaborator-register] .ctv-paper__head { padding-bottom: 28px; border-bottom: 1px solid #E6E1D6; text-align: center; }
+    [data-collaborator-register] .ctv-paper__org { margin: 0; color: var(--gf-gold-text); font-size: 12px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; }
+    [data-collaborator-register] .ctv-paper__title { margin: 12px 0 0; color: var(--gf-navy); font-family: var(--gf-font-serif), Georgia, serif; font-size: 27px; font-weight: 700; letter-spacing: 0.01em; line-height: 1.3; text-transform: uppercase; }
+    [data-collaborator-register] .ctv-paper__meta { margin: 12px 0 0; color: var(--gf-muted); font-size: 13.5px; }
+    [data-collaborator-register] .ctv-paper__meta span + span::before { margin: 0 10px; color: #B8BEC8; content: "·"; }
+    [data-collaborator-register] .ctv-legal { margin: 16px 0 0; padding: 10px 14px; border: 1px solid #E6E1D6; border-left: 3px solid var(--gf-gold); border-radius: 4px; background: #FDFBF6; font-size: 14px; line-height: 1.6; }
+    [data-collaborator-register] .ctv-doc { display: flex; flex-direction: column; gap: 10px; }
+    [data-collaborator-register] .ctv-doc--preamble { margin-top: 26px; }
+    [data-collaborator-register] .ctv-contents { margin-top: 26px; padding: 18px 22px 20px; border: 1px solid #E6E1D6; border-radius: 4px; background: #FDFBF6; }
+    [data-collaborator-register] .ctv-contents__title { margin: 0; color: var(--gf-muted); font-size: 12.5px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; }
+    [data-collaborator-register] .ctv-contents ol { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2px 28px; margin: 10px 0 0; padding: 0; list-style: none; }
+    [data-collaborator-register] .ctv-contents a { display: block; min-height: 32px; padding: 3px 0; color: var(--gf-text); font-size: 14.5px; line-height: 1.5; text-decoration: none; }
+    [data-collaborator-register] .ctv-contents a:hover { color: var(--gf-navy); text-decoration: underline; text-underline-offset: 3px; }
+    [data-collaborator-register] .ctv-section { margin-top: 34px; scroll-margin-top: 24px; }
+    [data-collaborator-register] .ctv-section:focus-visible { outline: none; box-shadow: none; }
+    /* Tiêu đề trong tài liệu theo bản mẫu (.art__h): serif navy; ghi đè lớp của renderer dùng chung. */
+    [data-collaborator-register] .ctv-section h2 { padding-top: 0; color: var(--gf-navy); font-family: var(--gf-font-serif), Georgia, serif; font-size: 18.5px; font-weight: 700; line-height: 1.4; }
+    [data-collaborator-register] .ctv-paper__end { margin: 40px 0 0; padding-top: 14px; border-top: 1px solid #E6E1D6; color: var(--gf-muted); font-size: 13px; text-align: right; }
+    /* Điều kiện đăng ký. */
+    [data-collaborator-register] .ctv-conditions { margin-top: 30px; padding: 18px 22px; border: 1px solid #E6E1D6; border-radius: 4px; background: #FDFBF6; }
+    [data-collaborator-register] .ctv-conditions__title { margin: 0; color: var(--gf-navy); font-size: 15px; font-weight: 700; }
+    [data-collaborator-register] .ctv-conditions ul { display: flex; flex-direction: column; gap: 6px; margin: 10px 0 0; padding: 0; list-style: none; }
+    [data-collaborator-register] .ctv-cond { display: flex; min-width: 0; align-items: flex-start; gap: 10px; font-size: 15px; line-height: 1.6; }
+    [data-collaborator-register] .ctv-cond__mark { display: inline-grid; width: 22px; height: 22px; flex: 0 0 auto; place-items: center; margin-top: 1px; border-radius: 999px; font-size: 13px; font-weight: 700; line-height: 1; }
+    [data-collaborator-register] .ctv-cond[data-met="true"] .ctv-cond__mark { background: var(--ctv-ok); color: var(--gf-white); }
+    [data-collaborator-register] .ctv-cond[data-met="false"] .ctv-cond__mark { background: var(--ctv-danger); color: var(--gf-white); }
+    [data-collaborator-register] .ctv-cond a { margin-left: 6px; color: var(--gf-navy); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
+    [data-collaborator-register] .ctv-conditions__note { margin: 10px 0 0; color: var(--gf-text); font-size: 14.5px; font-weight: 600; }
+    [data-collaborator-register] .ctv-conditions__acts { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 12px; }
+    /* Lời nhắc cho người từng là cộng tác viên (CTV2-P04), đứng ngay trên khối điều kiện. */
+    [data-collaborator-register] .ctv-was { margin: 24px 0 0; padding: 12px 16px; border-left: 3px solid var(--gf-gold); border-radius: 4px; background: var(--gf-ivory); color: var(--gf-text); font-size: 15px; line-height: 1.6; }
+    /* Khu xác nhận. */
+    [data-collaborator-register] .ctv-confirm { margin-top: 36px; padding-top: 30px; border-top: 3px double #E6E1D6; scroll-margin-top: 24px; }
+    [data-collaborator-register] .ctv-confirm__title { margin: 0; color: var(--gf-navy); font-family: var(--gf-font-serif), Georgia, serif; font-size: 18.5px; font-weight: 700; letter-spacing: 0.02em; text-transform: uppercase; }
+    [data-collaborator-register] .ctv-confirm__lead { margin: 8px 0 0; color: var(--gf-muted); font-size: 15px; line-height: 1.7; }
+    [data-collaborator-register] .ctv-checks { margin: 14px 0 0; padding: 0; border: 1px solid #E6E1D6; border-radius: 4px; list-style: none; }
+    [data-collaborator-register] .ctv-check { display: flex; min-height: 44px; align-items: flex-start; gap: 12px; padding: 14px 16px; cursor: pointer; font-size: 15px; line-height: 1.6; }
+    [data-collaborator-register] .ctv-checks li + li .ctv-check { border-top: 1px solid #E6E1D6; }
+    [data-collaborator-register] .ctv-check input { width: 20px; height: 20px; flex: 0 0 auto; margin: 2px 0 0; accent-color: var(--gf-navy); cursor: pointer; }
+    [data-collaborator-register] .ctv-check span { min-width: 0; }
+    [data-collaborator-register] .ctv-check[data-invalid="true"] { background: #FEF3F2; color: var(--ctv-danger); }
+    [data-collaborator-register] .ctv-check[data-invalid="true"] input { outline: 2px solid var(--ctv-danger); outline-offset: 2px; }
+    [data-collaborator-register] .ctv-confirm__foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 20px; margin-top: 18px; }
+    [data-collaborator-register] .ctv-hint { margin: 0; color: var(--gf-muted); font-size: 13.5px; }
+    [data-collaborator-register] .ctv-hint[data-tone="ready"] { color: var(--gf-navy-700); font-weight: 500; }
+    [data-collaborator-register] .ctv-hint[data-tone="error"] { color: var(--ctv-danger); font-weight: 600; }
+    [data-collaborator-register] .ctv-acts { display: flex; flex-wrap: wrap; gap: 10px; }
+    [data-collaborator-register] .ctv-alert { margin: 16px 0 0; padding: 12px 14px; border: 1px solid #E6E1D6; border-left: 3px solid var(--gf-navy); border-radius: 4px; background: #FDFBF6; font-size: 14.5px; line-height: 1.6; }
+    [data-collaborator-register] .ctv-alert[data-tone="error"] { border-left-color: var(--ctv-danger); background: #FEF3F2; color: var(--ctv-danger); }
+    [data-collaborator-register] .ctv-next { margin-top: 14px; font-size: 15px; }
+    [data-collaborator-register] .ctv-next summary { min-height: 44px; cursor: pointer; color: var(--gf-navy); font-weight: 600; }
+    [data-collaborator-register] .ctv-next .ctv-doc { margin-top: 10px; padding: 14px 16px; border: 1px solid #E6E1D6; border-radius: 4px; background: #FDFBF6; }
+    /* Điều khoản dạng tệp PDF (CTV-PDF-P02): khung nhúng ở máy tính, thẻ mở tab riêng ở điện thoại/máy tính bảng. */
+    [data-collaborator-register] .ctv-pdf { margin-top: 28px; }
+    /* Khung chứa nhận tiêu điểm bằng mã sau "Thử lại" (như .ctv-section): không vẽ viền vì không phải điều khiển. */
+    [data-collaborator-register] .ctv-pdf__embed:focus-visible { outline: none; box-shadow: none; }
+    [data-collaborator-register] .ctv-pdf__frame { display: block; width: 100%; height: min(78vh, 900px); min-height: 480px; border: 1px solid #E6E1D6; border-radius: 4px; background: var(--gf-white); }
+    [data-collaborator-register] .ctv-pdf__acts { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
+    [data-collaborator-register] .ctv-pdf-card { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 22px; padding: 22px 24px; border: 1px solid #E6E1D6; border-left: 3px solid var(--gf-gold); border-radius: 4px; background: #FDFBF6; }
+    [data-collaborator-register] .ctv-pdf-card__icon { display: inline-grid; width: 52px; height: 64px; flex: 0 0 auto; place-items: center; border: 1px solid #E6E1D6; border-radius: 4px; background: var(--gf-white); color: var(--gf-navy); font-size: 13px; font-weight: 700; letter-spacing: 0.08em; }
+    [data-collaborator-register] .ctv-pdf-card__body { min-width: 0; flex: 1 1 240px; }
+    [data-collaborator-register] .ctv-pdf-card__title { margin: 0; color: var(--gf-navy); font-family: var(--gf-font-serif), Georgia, serif; font-size: 18.5px; font-weight: 700; line-height: 1.4; }
+    [data-collaborator-register] .ctv-pdf-card__meta { margin: 6px 0 0; color: var(--gf-muted); font-size: 14px; }
+    [data-collaborator-register] .ctv-pdf-card__hint { margin: 8px 0 0; font-size: 15px; line-height: 1.65; }
+    [data-collaborator-register] .ctv-pdf-card .ctv-pdf__acts { flex: 1 1 100%; margin-top: 2px; }
+    [data-collaborator-register] .ctv-pdf__error { padding: 22px 20px; }
+    [data-collaborator-register] .ctv-pdf__error .ctv-pdf__acts { justify-content: center; }
+    /* Nút "Thử lại" của khối lỗi dùng chung (Tailwind: nâu đỏ, bo vuông, thấp hơn 44px) về đúng dáng .ctv-btn--primary. */
+    [data-collaborator-register] .ctv-pdf__error button { min-height: 48px; padding: 0 24px; border: 1px solid transparent; border-radius: var(--gf-radius-pill); background: var(--gf-navy); color: var(--gf-white); font-size: 15px; font-weight: 600; }
+    [data-collaborator-register] .ctv-pdf__error button:hover { background: var(--gf-navy-700); }
+    @media (max-width: 1023px) {
+      [data-collaborator-register] .ctv-paper { padding: 44px 44px 40px; }
+    }
+    @media (max-width: 767px) {
+      [data-collaborator-register] { padding: 14px 16px 40px; }
+      [data-collaborator-register] .ctv-state { padding: 22px 18px 20px; }
+      [data-collaborator-register] .ctv-paper { padding: 28px 18px 26px; }
+      [data-collaborator-register] .ctv-paper__head { padding-bottom: 22px; }
+      [data-collaborator-register] .ctv-paper__org { font-size: 11px; letter-spacing: 0.18em; }
+      [data-collaborator-register] .ctv-paper__title { font-size: 21px; }
+      [data-collaborator-register] .ctv-paper__meta span { display: block; }
+      [data-collaborator-register] .ctv-paper__meta span + span::before { content: none; }
+      [data-collaborator-register] .ctv-contents { padding: 14px 14px 16px; }
+      [data-collaborator-register] .ctv-contents ol { grid-template-columns: 1fr; gap: 0; }
+      [data-collaborator-register] .ctv-section { margin-top: 28px; }
+      [data-collaborator-register] .ctv-paper__end { text-align: left; }
+      [data-collaborator-register] .ctv-conditions { padding: 14px 14px 16px; }
+      [data-collaborator-register] .ctv-confirm__title { font-size: 17px; }
+      [data-collaborator-register] .ctv-check { padding: 12px; font-size: 14.5px; }
+      [data-collaborator-register] .ctv-acts, [data-collaborator-register] .ctv-state__acts, [data-collaborator-register] .ctv-pdf__acts { width: 100%; }
+      [data-collaborator-register] .ctv-acts .ctv-btn, [data-collaborator-register] .ctv-state__acts .ctv-btn, [data-collaborator-register] .ctv-pdf__acts .ctv-btn { flex: 1 1 100%; }
+      [data-collaborator-register] .ctv-pdf-card { padding: 18px 16px; }
+      [data-collaborator-register] .ctv-acts .ctv-btn--primary { order: -1; }
+    }
+    @media (max-width: 359px) {
+      [data-collaborator-register] .ctv-paper { padding: 24px 14px 22px; }
+      [data-collaborator-register] .ctv-paper__title { font-size: 19px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html:has([data-collaborator-register]) { scroll-behavior: auto; }
+      [data-collaborator-register] * { transition-duration: 0.01ms !important; }
+    }
+    @media print {
+      [data-storefront-focus-shell] .focus-header, [data-storefront-focus-shell] footer, [data-collaborator-register] .ctv-toolbar, [data-collaborator-register] .ctv-conditions, [data-collaborator-register] .ctv-confirm, [data-collaborator-register] .ctv-state { display: none !important; }
+      [data-collaborator-register] { padding: 0; }
+      [data-collaborator-register] .ctv-paper { border: 0; box-shadow: none; padding: 0; }
+    }
+    html:has([data-collaborator-register]) { scroll-behavior: smooth; }
+    /* ---- Phần storefront lấy từ Tailwind / thành phần dùng chung, dựng lại bằng CSS thuần cho bản mẫu tĩnh ---- */
+    [data-collaborator-register] .sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+    /* Nội dung điều khoản (RichTextRenderer): đoạn 16px/32px, danh sách thụt 24px, liên kết nâu đỏ của storefront. Mục a), b)… đã nằm trong chữ nên danh sách có thứ tự không hiện số; danh sách không thứ tự có chấm. */
+    [data-collaborator-register] .ctv-doc p { margin: 0; color: #1B1C1A; font-size: 16px; line-height: 2rem; }
+    [data-collaborator-register] .ctv-doc ol, [data-collaborator-register] .ctv-doc ul { margin: 0; padding: 0 0 0 24px; color: #1B1C1A; font-size: 16px; line-height: 1.75rem; text-align: left; }
+    [data-collaborator-register] .ctv-doc ol { list-style: none; }
+    [data-collaborator-register] .ctv-doc ul { list-style: disc; }
+    [data-collaborator-register] .ctv-doc li:not(:last-child) { margin-bottom: 8px; }
+    [data-collaborator-register] .ctv-doc a { color: #570005; font-weight: 500; text-decoration: underline; text-underline-offset: 4px; }
+    /* Trạng thái nhắc/lỗi và ô chưa tích của khu xác nhận (bản mẫu giữ tên lớp cũ để kịch bản bật/tắt). */
+    [data-collaborator-register] .ctv-hint.is-ready { color: var(--gf-navy-700); font-weight: 500; }
+    [data-collaborator-register] .ctv-hint.is-error { color: var(--ctv-danger); font-weight: 600; }
+    [data-collaborator-register] .ctv-check.is-invalid { background: #FEF3F2; color: var(--ctv-danger); }
+    [data-collaborator-register] .ctv-check.is-invalid input { outline: 2px solid var(--ctv-danger); outline-offset: 2px; }
+    [data-collaborator-register] .ctv-confirm:focus-visible { outline: none; box-shadow: none; }
+    [data-collaborator-register] .ctv-state:focus-visible { outline: none; box-shadow: none; }
+    /* Khối trạng thái ẩn (bản mẫu giữ mọi khối trong HTML) không được cộng khoảng cách 18px của quy tắc "kề nhau". */
+    [data-collaborator-register] .ctv-state + .ctv-paper { margin-top: 0; }
+    [data-collaborator-register] .ctv-state:not([hidden]) ~ .ctv-paper { margin-top: 18px; }
+
+
+
+    @media (max-width: 767px) {
+      :root { --header-h: 64px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      * { transition-duration: .01ms !important; }
+    }
+    @media print {
+      body { background: #fff; }
+    }
+  </style>
+<!-- gf-shell:css:begin -->
+<style id="gf-shell-css">
+/* ---- Biến của lớp vỏ (giá trị chép từ globals.css của storefront; không phụ thuộc token của từng trang) ---- */
+.storefront-reference-shell, .focus-header, .gf-site-footer, .gf-cw, .gf-scroll-top, .to-top {
+  --storefront-background: #FBF7EF;
+  --storefront-surface: #FFFFFF;
+  --storefront-navy: #10305F;
+  --storefront-navy-dark: #0B2447;
+  --storefront-navy-deep: #081B38;
+  --storefront-blue: #1B79C0;
+  --storefront-link: #12639E;
+  --storefront-metal-gold: #C9A227;
+  --storefront-natural: #2F7A2A;
+  --storefront-sale-error: #BA1A1A;
+  --storefront-tier-silver: #B9BFC7;
+  --storefront-tier-silver-light: #F2F4F7;
+  --storefront-tier-silver-dark: #8F959D;
+  --storefront-tier-gold: #D4AF37;
+  --storefront-tier-gold-light: #FFE9A8;
+  --storefront-tier-gold-dark: #B08D22;
+  --storefront-tier-platinum: #E5EAF0;
+  --storefront-tier-platinum-light: #FFFFFF;
+  --storefront-tier-platinum-dark: #A9B6C6;
+  --storefront-tier-diamond: #EAF6FF;
+  --storefront-tier-diamond-light: #FFFFFF;
+  --storefront-tier-diamond-dark: #B9D4EA;
+  --gf-navy: #10305F;
+  --gf-navy-dark: #072A4E;
+  --gf-navy-700: #315E82;
+  --gf-gold: #C69A2B;
+  --gf-gold-text: #7B5614;
+  --gf-gold-soft: #E8C979;
+  --gf-cream: #FBF8F1;
+  --gf-ivory: #FFF8EA;
+  --gf-sand: #F0EADF;
+  --gf-white: #FFFFFF;
+  --gf-text: #172B4D;
+  --gf-muted: #667085;
+  --gf-border: #E8DDC3;
+  --gf-border-strong: #D9C79C;
+  --gf-danger: #B42318;
+  --gf-container: 1240px;
+  --gf-font-sans: var(--font-sans, Inter, "Segoe UI", Arial, sans-serif);
+  --gf-font-serif: var(--font-serif, "Noto Serif", Georgia, serif);
+  --gf-motion-fast: .12s;
+  --gf-motion-base: .18s;
+  --gf-ease-standard: cubic-bezier(.2, 0, 0, 1);
+  --gf-focus-ring: 0 0 0 3px rgba(49, 94, 130, .28);
+  --gf-radius-sm: 8px;
+  --gf-radius-pill: 999px;
+}
+
+/* ---- Reset có phạm vi: thay cho preflight của storefront, chỉ áp cho lớp vỏ (không đụng phần thân trang) ---- */
+:where(.storefront-reference-shell, .focus-header, .gf-site-footer, .gf-cw, .gf-scroll-top, .to-top) {
+  font-family: var(--font-sans, Inter, "Segoe UI", Arial, sans-serif);
+  color: #1b1c1a;
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+}
+:where(.storefront-reference-shell, .focus-header, .gf-site-footer, .gf-cw, .gf-scroll-top, .to-top) :where(*, *::before, *::after) {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  border: 0 solid;
+}
+:where(.storefront-reference-shell, .focus-header, .gf-site-footer, .gf-cw, .gf-scroll-top, .to-top) :where(button, input, select, textarea) {
+  font: inherit;
+  letter-spacing: inherit;
+  color: inherit;
+  border-radius: 0;
+  background-color: transparent;
+  opacity: 1;
+}
+:where(.storefront-reference-shell, .focus-header, .gf-site-footer, .gf-cw, .gf-scroll-top, .to-top) :where(a) {
+  color: inherit;
+  text-decoration: inherit;
+}
+:where(.storefront-reference-shell, .focus-header, .gf-site-footer, .gf-cw, .gf-scroll-top, .to-top) :where(ul, ol) {
+  list-style: none;
+}
+:where(.storefront-reference-shell, .focus-header, .gf-site-footer, .gf-cw, .gf-scroll-top, .to-top) :where(img, svg) {
+  display: block;
+  vertical-align: middle;
+}
+:where(.storefront-reference-shell, .focus-header, .gf-site-footer, .gf-cw, .gf-scroll-top, .to-top) :where(img) {
+  max-width: 100%;
+  height: auto;
+}
+.gf-site-footer, .gf-site-footer .home-footer { box-sizing: border-box; }
+
+/* ---- Biểu tượng Material Symbols (phông cục bộ của storefront) ---- */
+@font-face {
+  font-family: "Material Symbols Outlined";
+  src: url("../../public/fonts/material-symbols/material-symbols-outlined-variable.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 100 700;
+  font-display: block;
+}
+.material-symbols-outlined {
+  display: inline-flex;
+  width: auto;
+  min-width: 1em;
+  height: auto;
+  min-height: 1em;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  overflow: visible;
+  text-align: center;
+  vertical-align: middle;
+  white-space: nowrap;
+  direction: ltr;
+  font-family: "Material Symbols Outlined" !important;
+  font-style: normal;
+  font-weight: normal;
+  font-feature-settings: 'liga' 1;
+  font-variant-ligatures: common-ligatures;
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  letter-spacing: normal;
+  line-height: 1;
+  text-transform: none;
+  word-wrap: normal;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---- Footer chung (HomeFooter) ---- */
+.gf-site-footer .home-frame { width: 100%; min-width: 0px; max-width: 1320px; margin-inline: auto; padding-inline: 40px; }
+.gf-site-footer .home-footer { background: var(--gf-navy-dark); color: var(--gf-white); font-family: var(--gf-font-sans); }
+.gf-site-footer .home-footer__rule { background: var(--gf-gold); height: 2px; }
+.gf-site-footer .home-footer__grid { grid-template-columns: clamp(250px, 19.5vw, 280px) minmax(0px, 1fr) minmax(0px, 1fr) minmax(0px, 1.4fr) clamp(190px, 15vw, 220px); gap: 32px; padding: 46px 0px 34px; display: grid; }
+.gf-site-footer .home-footer__brand { flex-direction: column; gap: 16px; display: flex; }
+.gf-site-footer .home-footer__logo img { width: auto; height: 42px; }
+.gf-site-footer .home-footer__slogan { font-family: var(--gf-font-serif); flex-direction: column; gap: 6px; display: flex; }
+.gf-site-footer .home-footer__slogan b { font-size: 21px; font-weight: 700; line-height: 1.3; }
+.gf-site-footer .home-footer__slogan i { color: var(--gf-gold-soft); font-size: 19px; font-weight: 600; line-height: 1.3; }
+.gf-site-footer .home-footer__slogan .home-story__rule { width: 52px; margin-top: 4px; }
+.gf-site-footer .home-footer__phil { color: rgba(255, 255, 255, 0.74); max-width: 300px; font-size: 14px; line-height: 1.65; }
+.gf-site-footer .home-footer__addr { color: rgba(255, 255, 255, 0.74); flex-direction: column; gap: 5px; padding-top: 4px; font-size: 13.5px; font-style: normal; display: flex; }
+.gf-site-footer .home-footer__addr a { color: var(--gf-gold-soft); text-decoration: none; }
+.gf-site-footer .home-footer__col { border-left: 1px solid rgba(255, 255, 255, 0.12); flex-direction: column; gap: 14px; padding-left: 24px; display: flex; }
+.gf-site-footer .home-footer__col-title { color: var(--gf-gold); letter-spacing: 0.12em; text-transform: uppercase; align-items: center; gap: 8px; font-size: 11.5px; font-weight: 700; display: flex; }
+.gf-site-footer .home-footer__col-title::before { background: var(--gf-gold); content: ""; width: 14px; height: 1.5px; }
+.gf-site-footer .home-footer__links { flex-direction: column; gap: 10px; margin: 0px; padding: 0px; list-style: none; display: flex; }
+.gf-site-footer .home-footer__links a, .gf-site-footer .home-footer__links-plain { color: rgba(255, 255, 255, 0.8); font-size: 14px; line-height: 1.4; text-decoration: none; }
+.gf-site-footer .home-footer__links-plain { color: rgba(255, 255, 255, 0.52); }
+.gf-site-footer .home-footer__social { display: flex; flex-wrap: wrap; margin: 0px; padding: 0px; gap: 14px; list-style: none; }
+.gf-site-footer .home-footer__social-btn { display: inline-grid; width: 48px; height: 48px; place-items: center; border: 2px solid var(--gf-gold); border-radius: 999px; background: var(--gf-white); text-decoration: none; transition: border-color 160ms ease, transform 160ms ease; }
+.gf-site-footer .home-footer__social-btn svg { width: 28px; height: 28px; }
+.gf-site-footer .home-footer__social-btn[data-disabled="true"] { cursor: default; }
+.gf-site-footer a.home-footer__social-btn:focus-visible { outline: 2px solid var(--gf-white); outline-offset: 3px; border-radius: 999px; }
+@media (hover: hover) { .gf-site-footer a.home-footer__social-btn:hover { border-color: var(--gf-gold-soft); transform: translateY(-2px); } }
+@media (prefers-reduced-motion: reduce) { .gf-site-footer .home-footer__social-btn { transition: none; } .gf-site-footer a.home-footer__social-btn:hover { transform: none; } }
+.gf-site-footer .home-footer__line { background: rgba(255, 255, 255, 0.12); height: 1px; }
+.gf-site-footer .home-footer__legal { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 22px 0px 30px; text-align: center; }
+.gf-site-footer .home-footer__legal-name { margin: 0px; color: var(--gf-white); font-size: 14px; font-weight: 700; letter-spacing: 0.04em; line-height: 1.4; }
+.gf-site-footer .home-footer__legal-line { margin: 0px; color: rgba(255, 255, 255, 0.72); font-size: 13.5px; line-height: 1.5; }
+@media (hover: hover) {
+  .gf-site-footer .home-footer__links a:hover { color: var(--gf-white); }
+}
+@media (max-width: 1279px) {
+  .gf-site-footer .home-footer__grid { grid-template-columns: repeat(2, minmax(0px, 1fr)); gap: 32px; }
+  .gf-site-footer .home-footer__brand { grid-column: 1 / -1; }
+  .gf-site-footer .home-footer__col { border-left: 0px; padding-left: 0px; }
+}
+@media (max-width: 767px) {
+  .gf-site-footer .home-footer__grid { grid-template-columns: minmax(0px, 1fr); gap: 26px; padding: 32px 0px 26px; }
+}
+.gf-site-footer .home-story__rule { background: var(--gf-gold); width: 56px; height: 1.5px; margin-top: 6px; display: block; }
+@media (max-width: 1279px) {
+  .gf-site-footer .home-frame { padding-inline: 32px; }
+}
+@media (max-width: 767px) {
+  .gf-site-footer .home-frame { padding-inline: 16px; }
+}
+
+/* ---- Nút và khung chat tư vấn (StorefrontConsultationWidget, theme navy + kem). Mở/đóng bằng CSS thuần. ---- */
+.gf-cw {
+  display: contents;
+  --cw-navy: #10305F;
+  --cw-navy-dark: #072A4E;
+  --cw-navy-700: #315E82;
+  --cw-gold: #C69A2B;
+  --cw-gold-soft: #E8C979;
+  --cw-gold-text: #7B5614;
+  --cw-cream: #FBF8F1;
+  --cw-ivory: #FFF8EA;
+  --cw-border: #E8DDC3;
+  --cw-border-strong: #D9C79C;
+  --cw-text: #172B4D;
+  --cw-muted: #667085;
+  font-family: var(--font-sans, Inter, "Segoe UI", Arial, sans-serif);
+}
+.gf-cw__toggle {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}
+.gf-cw__dock {
+  position: fixed;
+  bottom: calc(6rem + env(safe-area-inset-bottom));
+  right: calc(1rem + env(safe-area-inset-right));
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+.gf-cw__launcher {
+  position: relative;
+  display: flex;
+  width: 3.5rem;
+  height: 3.5rem;
+  align-items: center;
+  justify-content: flex-end;
+  overflow: hidden;
+  padding: 0 .5rem;
+  border: 1.5px solid var(--cw-gold);
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--cw-navy) 0%, var(--cw-navy-dark) 100%);
+  color: #fff;
+  box-shadow: 0 16px 36px -14px rgba(7, 42, 78, .65), 0 0 0 4px rgba(198, 154, 43, .16);
+  cursor: pointer;
+  transition: width 300ms ease-out, box-shadow 300ms ease-out, transform 300ms ease-out, background-color 300ms ease-out, border-color 300ms ease-out;
+}
+.gf-cw__launcher:hover {
+  width: 14.25rem;
+  border-color: var(--cw-gold-soft);
+  background: linear-gradient(135deg, var(--cw-navy-700) 0%, var(--cw-navy) 100%);
+  box-shadow: 0 20px 44px -14px rgba(7, 42, 78, .75), 0 0 0 5px rgba(198, 154, 43, .24);
+}
+.gf-cw__launcher:active { transform: scale(.95); }
+.gf-cw__toggle:focus-visible + .gf-cw__dock .gf-cw__launcher { outline: 3px solid var(--cw-gold-soft); outline-offset: 3px; }
+.gf-cw__label {
+  max-width: 0;
+  padding-right: 0;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: normal;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateX(.75rem);
+  pointer-events: none;
+  transition: max-width 300ms ease-out, opacity 300ms ease-out, padding 300ms ease-out, transform 300ms ease-out;
+}
+.gf-cw__launcher:hover .gf-cw__label {
+  max-width: 12rem;
+  padding-right: .75rem;
+  opacity: 1;
+  transform: none;
+}
+.gf-cw__icon {
+  position: relative;
+  display: grid;
+  width: 2.5rem;
+  height: 2.5rem;
+  flex-shrink: 0;
+  place-items: center;
+  overflow: hidden;
+  border-radius: 999px;
+  background: var(--cw-ivory);
+  color: var(--cw-navy);
+  box-shadow: inset 0 0 0 1.5px var(--cw-gold), 0 6px 16px -8px rgba(0, 0, 0, .55);
+  transition: transform 300ms ease-out, background-color 300ms ease-out;
+}
+.gf-cw__launcher:hover .gf-cw__icon { background: #fff; transform: translateX(-.25rem) rotate(-3deg); }
+.gf-cw__icon svg { width: 1.75rem; height: 1.75rem; }
+.gf-cw__panel {
+  position: fixed;
+  z-index: 110;
+  bottom: calc(5.5rem + env(safe-area-inset-bottom));
+  left: calc(1rem + env(safe-area-inset-left));
+  right: calc(1rem + env(safe-area-inset-right));
+  top: calc(var(--storefront-sticky-header-height, 65px) + 1rem);
+  display: flex;
+  height: min(590px, calc(100dvh - 8rem));
+  max-height: calc(100dvh - var(--storefront-sticky-header-height, 65px) - 7rem);
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--cw-border);
+  border-radius: 22px;
+  background: var(--cw-cream);
+  color: var(--cw-text);
+  box-shadow: 0 30px 72px -28px rgba(16, 48, 95, .5), 0 0 0 1px rgba(255, 255, 255, .6) inset;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(1rem);
+  transition: all 300ms cubic-bezier(.4, 0, .2, 1);
+}
+.gf-cw__toggle:checked ~ .gf-cw__panel { opacity: 1; visibility: visible; transform: none; }
+@media (min-width: 640px) {
+  .gf-cw__dock { bottom: calc(6.5rem + env(safe-area-inset-bottom)); right: calc(2rem + env(safe-area-inset-right)); }
+  .gf-cw__panel {
+    bottom: calc(6.25rem + env(safe-area-inset-bottom));
+    left: auto;
+    right: calc(2rem + env(safe-area-inset-right));
+    top: auto;
+    height: min(600px, calc(100dvh - 8rem));
+    max-height: calc(100dvh - 8rem);
+    width: 380px;
+  }
+}
+@media (min-width: 768px) { .gf-cw__panel { width: 404px; } }
+.gf-cw__head {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  overflow: hidden;
+  padding: 1rem;
+  border-bottom: 2px solid var(--cw-gold);
+  background: linear-gradient(135deg, var(--cw-navy) 0%, var(--cw-navy-dark) 100%);
+  color: #fff;
+}
+.gf-cw__head::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 0% 0%, rgba(255, 255, 255, .1), transparent 46%);
+  pointer-events: none;
+}
+.gf-cw__who { position: relative; display: flex; align-items: center; gap: .75rem; }
+.gf-cw__avatar {
+  display: grid;
+  width: 3rem;
+  height: 3rem;
+  flex-shrink: 0;
+  place-items: center;
+  overflow: hidden;
+  border-radius: 999px;
+  background: var(--cw-ivory);
+  color: var(--cw-navy);
+  box-shadow: inset 0 0 0 1.5px var(--cw-gold), 0 10px 22px -12px rgba(0, 0, 0, .7);
+}
+.gf-cw__avatar svg { width: 2rem; height: 2rem; }
+.gf-cw__title {
+  color: #fff;
+  font-family: var(--font-serif, "Noto Serif", Georgia, serif);
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: 0;
+}
+.gf-cw__sub { margin-top: .125rem; color: rgba(255, 255, 255, .84); font-size: 13px; font-weight: 500; line-height: 1.45; }
+.gf-cw__actions { position: relative; display: flex; align-items: center; gap: .5rem; }
+.gf-cw__action {
+  display: grid;
+  width: 2.25rem;
+  height: 2.25rem;
+  place-items: center;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .1);
+  color: rgba(255, 255, 255, .9);
+  cursor: pointer;
+  transition: background-color 150ms, color 150ms;
+}
+.gf-cw__action:hover { background: rgba(255, 255, 255, .2); color: #fff; }
+.gf-cw__action .material-symbols-outlined { font-size: 20px; }
+.gf-cw__list {
+  display: flex;
+  flex: 1 1 0%;
+  flex-direction: column;
+  gap: 1rem;
+  overflow-y: auto;
+  padding: 1rem;
+  background: linear-gradient(180deg, var(--cw-cream) 0%, #F6F0E2 100%);
+}
+.gf-cw__msg { display: flex; flex-direction: column; align-items: flex-start; gap: .25rem; }
+.gf-cw__bubble {
+  max-width: 94%;
+  width: fit-content;
+  padding: .75rem .875rem;
+  border: 1px solid var(--cw-border);
+  border-radius: 4px 18px 18px 18px;
+  background: #fff;
+  color: var(--cw-text);
+  font-size: 14px;
+  line-height: 1.5rem;
+  box-shadow: 0 10px 22px -18px rgba(16, 48, 95, .4);
+}
+.gf-cw__bubble p + p { margin-top: .75rem; }
+.gf-cw__time { margin-left: .25rem; color: var(--cw-muted); font-size: 13px; font-weight: 600; line-height: 1.45; }
+.gf-cw__composer {
+  display: flex;
+  flex-direction: column;
+  gap: .75rem;
+  padding: 1rem;
+  border-top: 1px solid var(--cw-border);
+  background: #fff;
+}
+.gf-cw__lead {
+  align-self: flex-start;
+  padding: .25rem .75rem;
+  border: 1px solid var(--cw-gold);
+  border-radius: 999px;
+  background: var(--cw-ivory);
+  color: var(--cw-gold-text);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.45;
+  cursor: pointer;
+}
+.gf-cw__lead:hover { background: #FDEFD2; }
+.gf-cw__chips { display: flex; align-items: flex-start; gap: .5rem; }
+.gf-cw__chiplist { display: flex; min-width: 0; flex: 1 1 0%; flex-wrap: wrap; gap: .375rem .75rem; }
+.gf-cw__chip {
+  display: inline-flex;
+  min-height: 2rem;
+  max-width: 100%;
+  align-items: center;
+  padding: .25rem .75rem;
+  border: 1px solid var(--cw-border-strong);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--cw-navy);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.25rem;
+  text-align: left;
+  cursor: pointer;
+}
+.gf-cw__chip:hover { border-color: var(--cw-gold); background: var(--cw-ivory); }
+.gf-cw__chipsoff {
+  display: grid;
+  width: 1.75rem;
+  height: 1.75rem;
+  flex-shrink: 0;
+  place-items: center;
+  border-radius: 999px;
+  color: var(--cw-muted);
+  cursor: pointer;
+}
+.gf-cw__chipsoff .material-symbols-outlined { font-size: 16px; }
+.gf-cw__row { display: flex; align-items: flex-end; gap: .5rem; }
+.gf-cw__input {
+  display: block;
+  min-height: 2.75rem;
+  min-width: 0;
+  flex: 1 1 0%;
+  padding: .625rem .75rem;
+  border: 1px solid var(--cw-border-strong);
+  border-radius: 16px;
+  background: var(--cw-cream);
+  color: var(--cw-text);
+  font-size: 14px;
+  line-height: 1.5rem;
+  resize: none;
+  outline: none;
+}
+.gf-cw__input::placeholder { color: var(--cw-muted); }
+.gf-cw__input:focus { border-color: var(--cw-navy); background: #fff; box-shadow: 0 0 0 3px rgba(16, 48, 95, .12); }
+.gf-cw__send {
+  display: grid;
+  width: 2.75rem;
+  height: 2.75rem;
+  flex-shrink: 0;
+  place-items: center;
+  border-radius: 14px;
+  background: var(--cw-navy);
+  color: #fff;
+  opacity: .5;
+  cursor: not-allowed;
+}
+.gf-cw__send .material-symbols-outlined { font-size: 24px; }
+@media (prefers-reduced-motion: reduce) {
+  .gf-cw__launcher, .gf-cw__label, .gf-cw__icon, .gf-cw__panel { transition: none; }
+}
+
+/* ---- Neo đầu trang cho nút "Lên đầu trang" không dùng JS ---- */
+.gf-top-anchor { position: absolute; top: 0; left: 0; width: 1px; height: 1px; pointer-events: none; }
+
+/* ---- Nút lên đầu trang (StorefrontScrollTopButton) ---- */
+.gf-scroll-top,
+.to-top {
+  position: fixed;
+  bottom: calc(10.5rem + env(safe-area-inset-bottom));
+  right: calc(1rem + env(safe-area-inset-right));
+  z-index: 100;
+  display: flex;
+  width: 3.5rem;
+  height: 3.5rem;
+  align-items: center;
+  justify-content: center;
+  border: 1.5px solid #C69A2B;
+  border-radius: 999px;
+  background: #072A4E;
+  color: #fff;
+  box-shadow: 0 10px 26px rgba(16, 48, 95, .22);
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 300ms cubic-bezier(.4, 0, .2, 1);
+}
+.gf-scroll-top:hover,
+.to-top:hover {
+  transform: translateY(-2px);
+  background: #10305F;
+  color: #fff;
+  box-shadow: 0 18px 48px rgba(16, 48, 95, .14);
+}
+.gf-scroll-top:focus-visible,
+.to-top:focus-visible {
+  outline: none;
+  border-radius: 999px;
+  box-shadow: 0 0 0 3px rgba(198, 154, 43, .6);
+}
+.gf-scroll-top:active,
+.to-top:active { transform: scale(.95); }
+.gf-scroll-top .material-symbols-outlined,
+.to-top .material-symbols-outlined { font-size: 24px; transition: transform 300ms cubic-bezier(.4, 0, .2, 1); }
+.gf-scroll-top:hover .material-symbols-outlined,
+.to-top:hover .material-symbols-outlined { transform: translateY(-2px); }
+.gf-scroll-top__tip {
+  position: absolute;
+  right: 100%;
+  margin-right: 1rem;
+  padding: 6px 12px;
+  border-radius: 8px;
+  background: #072A4E;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 16px;
+  white-space: nowrap;
+  box-shadow: 0 10px 26px rgba(16, 48, 95, .22);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 150ms;
+}
+.gf-scroll-top:hover .gf-scroll-top__tip,
+.gf-scroll-top:focus-visible .gf-scroll-top__tip,
+.to-top:hover .gf-scroll-top__tip,
+.to-top:focus-visible .gf-scroll-top__tip { opacity: 1; }
+@media (min-width: 640px) {
+  .gf-scroll-top, .to-top {
+    bottom: calc(11rem + env(safe-area-inset-bottom));
+    right: calc(2rem + env(safe-area-inset-right));
+  }
+}
+/* Bản có JS sẵn (#toTop) bật bằng lớp is-on; bản không JS hiện khi đã cuộn quá 200px nhờ timeline cuộn của CSS. */
+.to-top { opacity: 0; visibility: hidden; pointer-events: none; }
+.to-top.is-on { opacity: 1; visibility: visible; pointer-events: auto; }
+.gf-scroll-top { opacity: 0; pointer-events: none; }
+@supports (animation-timeline: scroll()) {
+  @keyframes gf-scroll-top-in { from { opacity: 0; pointer-events: none; } to { opacity: 1; pointer-events: auto; } }
+  .gf-scroll-top {
+    animation: gf-scroll-top-in linear both;
+    animation-timeline: scroll(root block);
+    animation-range: 200px 201px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .gf-scroll-top, .to-top, .gf-scroll-top .material-symbols-outlined, .to-top .material-symbols-outlined { transition: none; }
+  .gf-scroll-top:hover, .to-top:hover { transform: none; }
+}
+
+/* ---- Header gọn của khung tập trung (StorefrontFocusHeader) ---- */
+.focus-header { font-family: var(--gf-font-sans); }
+.focus-header :focus-visible { outline: none; box-shadow: var(--gf-focus-ring); border-radius: var(--gf-radius-sm); }
+.focus-header .locale-dropdown:focus-within .locale-menu { display: grid; }
+.focus-header .locale-dropdown:focus-within .locale-pill { border-color: var(--storefront-blue); background: var(--storefront-blue); color: var(--storefront-surface); }
+.focus-header .locale-dropdown:focus-within .locale-caret { transform: translateY(2px) rotate(225deg); }
+.focus-header {
+    position: relative;
+    z-index: 40;
+    display: flex;
+    flex: 0 0 auto;
+    height: 74px;
+    align-items: center;
+    border-bottom: 1px solid var(--gf-border);
+    background: var(--gf-white);
+  }
+
+  .focus-header .focus-header__inner {
+    display: flex;
+    width: 100%;
+    max-width: var(--gf-container);
+    align-items: center;
+    gap: 16px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  .focus-header .focus-header__logo {
+    display: inline-flex;
+    flex-shrink: 0;
+  }
+
+  .focus-header .focus-header__logo img {
+    display: block;
+    width: 150px;
+    height: auto;
+  }
+
+  .focus-header .focus-header__actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-left: auto;
+  }
+
+  .focus-header .focus-header__back {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--gf-navy);
+    font-size: 14.5px;
+    font-weight: 600;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: color var(--gf-motion-base) var(--gf-ease-standard);
+  }
+
+  .focus-header .focus-header__back:hover {
+    color: var(--gf-navy-700);
+  }
+
+  .focus-header .focus-header__back svg {
+    width: 17px;
+    height: 17px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.85;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  /* Màu theo hạng (P1-17): chép từ đường ray 4 hạng của bộ mẫu ui-pages/
+     (--tier-primary/accent/surface). "none" = chưa có hạng, dùng tông trung tính. */
+  .focus-header [data-tier="silver"] {
+    --tier: #5C6673;
+    --tier-accent: #9DA4AD;
+    --tier-surface: #EEF0F2;
+  }
+
+  .focus-header [data-tier="gold"] {
+    --tier: #7B5614;
+    --tier-accent: #C89723;
+    --tier-surface: #FFF3CC;
+  }
+
+  .focus-header [data-tier="platinum"] {
+    --tier: #315E82;
+    --tier-accent: #8BA6BE;
+    --tier-surface: #EDF4FA;
+  }
+
+  .focus-header [data-tier="diamond"] {
+    --tier: #10305F;
+    --tier-accent: #C69A2B;
+    --tier-surface: #FFF8EA;
+  }
+
+  .focus-header [data-tier="none"] {
+    --tier: var(--gf-muted);
+    --tier-accent: var(--gf-border);
+    --tier-surface: var(--gf-sand);
+  }
+
+  /* Chip tài khoản ở trang hội viên (bản mẫu .who, .avatar, .tier-line). */
+  .focus-header .who {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding-left: 18px;
+    border-left: 1px solid var(--gf-border);
+  }
+
+  .focus-header .who__avatar {
+    display: grid;
+    width: 36px;
+    height: 36px;
+    flex: 0 0 auto;
+    place-items: center;
+    overflow: hidden;
+    border: 1.5px solid var(--tier-accent);
+    border-radius: 999px;
+    background: var(--tier-surface);
+    color: var(--tier);
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  .focus-header .who__avatar img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .focus-header .who__text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.25;
+  }
+
+  .focus-header .who__name {
+    color: var(--gf-text);
+    font-size: 13.5px;
+    font-weight: 600;
+  }
+
+  .focus-header .who__tier {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--tier);
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  .focus-header .who__dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 999px;
+    background: var(--tier-accent);
+    box-shadow: 0 0 0 1.5px var(--gf-white), 0 0 0 3px var(--tier-surface);
+  }
+
+  
+
+  .focus-header .locale-dropdown {
+    position: relative;
+    flex-shrink: 0;
+  }
+
+  .focus-header .locale-pill {
+    display: inline-flex;
+    width: auto;
+    min-width: 40px;
+    height: 40px;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    border: 1px solid rgba(16, 48, 95, 0.2);
+    border-radius: 999px;
+    background: var(--storefront-surface);
+    color: var(--storefront-navy);
+    cursor: pointer;
+    padding: 5px 8px;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.84),
+      0 8px 16px rgba(8, 27, 56, 0.22);
+    transition: background 180ms ease, border-color 180ms ease, color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
+  }
+
+  .focus-header .locale-pill:hover,
+  .focus-header .locale-pill:focus-visible,
+  .focus-header .locale-pill[aria-expanded="true"] {
+    border-color: var(--storefront-blue);
+    background: var(--storefront-blue);
+    color: var(--storefront-surface);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.18),
+      0 10px 18px rgba(8, 27, 56, 0.28);
+  }
+
+  .focus-header .locale-pill:focus-visible {
+    outline: 3px solid var(--storefront-blue);
+    outline-offset: 4px;
+  }
+
+  .focus-header .locale-current-flag {
+    display: inline-flex;
+  }
+
+  .focus-header .locale-caret {
+    width: 7px;
+    height: 7px;
+    border-right: 2px solid currentColor;
+    border-bottom: 2px solid currentColor;
+    color: currentColor;
+    transform: translateY(-2px) rotate(45deg);
+    transition: transform 180ms ease;
+  }
+
+  .focus-header .locale-pill[aria-expanded="true"] .locale-caret {
+    transform: translateY(2px) rotate(225deg);
+  }
+
+  .focus-header .locale-flag {
+    display: inline-flex;
+    width: 28px;
+    height: 20px;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border: 1px solid rgba(16, 48, 95, 0.24);
+    border-radius: 4px;
+    box-shadow: 0 2px 5px rgba(8, 27, 56, 0.18);
+  }
+
+  .focus-header .locale-flag svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .focus-header .locale-flag.is-active {
+    border-color: var(--storefront-blue);
+    box-shadow:
+      0 0 0 1px rgba(27, 121, 192, 0.28),
+      0 3px 7px rgba(8, 27, 56, 0.22);
+  }
+
+  .focus-header .locale-menu {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    z-index: 150;
+    display: none;
+    min-width: 54px;
+    gap: 6px;
+    padding: 7px;
+    border: 1px solid rgba(16, 48, 95, 0.18);
+    border-radius: 12px;
+    background: var(--storefront-surface);
+    box-shadow: 0 20px 44px rgba(8, 27, 56, 0.22);
+  }
+
+  .focus-header .locale-dropdown.open .locale-menu {
+    display: grid;
+  }
+
+  .focus-header .locale-option {
+    display: inline-flex;
+    width: 40px;
+    height: 32px;
+    align-items: center;
+    justify-content: center;
+    border: 0;
+    border-radius: 8px;
+    background: transparent;
+    cursor: pointer;
+    padding: 0;
+    transition: background 160ms ease, transform 160ms ease;
+  }
+
+  .focus-header .locale-option:hover,
+  .focus-header .locale-option:focus-visible,
+  .focus-header .locale-option.is-selected {
+    background: rgba(27, 121, 192, 0.12);
+  }
+
+  @media (max-width: 1279px) {
+    .focus-header .locale-pill {
+      width: 44px;
+      min-width: 44px;
+      height: 44px;
+      min-height: 44px;
+      padding: 0;
+    }
+
+    .focus-header .locale-caret {
+      display: none;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .focus-header {
+      height: 64px;
+    }
+
+    .focus-header .focus-header__inner {
+      gap: 12px;
+      padding: 0 16px;
+    }
+
+    .focus-header .focus-header__logo img {
+      width: 128px;
+    }
+
+    .focus-header .focus-header__actions {
+      gap: 12px;
+    }
+
+    /* Trang có chip: chỉ giữ mũi tên "về trang chủ" và vòng tròn tài khoản. */
+    .focus-header [data-has-account-chip] .focus-header__back-label,
+    .focus-header .who__text {
+      display: none;
+    }
+
+    .focus-header .who {
+      padding-left: 12px;
+    }
+  }
+
+  /* Bản mẫu không có mốc 320px: thu logo và khoảng cách để header không tràn ngang. */
+  @media (max-width: 359px) {
+    .focus-header .focus-header__inner,
+    .focus-header .focus-header__actions {
+      gap: 8px;
+    }
+
+    .focus-header .focus-header__logo img {
+      width: 112px;
+    }
+
+    .focus-header .focus-header__back {
+      gap: 4px;
+      font-size: 13.5px;
+    }
+
+    /* Luồng thanh toán gọi link này là "Tiếp tục mua sắm" (dài hơn "Về trang chủ"): giảm cỡ chữ để vừa 320px. */
+    .focus-header [data-long-back-label] .focus-header__back {
+      gap: 3px;
+      font-size: 12.5px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .focus-header * {
+      transition-duration: 0.01ms !important;
+    }
+  }
+</style>
+<!-- gf-shell:css:end -->
+<!-- gf-contact-rail:css:begin -->
+<style id="gf-contact-rail-css">
+/* Thanh liên hệ nhanh của trang chủ storefront (ReferenceFooter → .reference-social-shell). Chép từ
+   referenceHomeSupplementalCss + nền .social-* của bộ mẫu; nút đóng/mở dùng ô chọn ẩn + nhãn (CSS thuần, không JS).
+   Máy tính: mặc định mở, tích ô thì thu gọn. Điện thoại/máy tính bảng ≤1024px: mặc định thu gọn, tích ô thì mở (đúng
+   như storefront: khởi tạo theo khổ màn hình). */
+.reference-social-shell {
+  position: fixed;
+  top: 50%;
+  right: calc(32px + env(safe-area-inset-right));
+  bottom: auto;
+  z-index: 80;
+  box-sizing: border-box;
+  display: flex;
+  width: 56px;
+  max-height: calc(100vh - 56px);
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  overflow: hidden;
+  border: 1px solid #E8DDC3;
+  border-radius: 999px;
+  background: #FFFFFF;
+  box-shadow: 0 18px 48px rgba(16, 48, 95, 0.14);
+  padding: 7px;
+  pointer-events: auto;
+  transform: translateY(-50%);
+  font-family: Inter, Arial, sans-serif;
+}
+.reference-social-shell .rs-state {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+  opacity: 0;
+  clip: rect(0 0 0 0);
+}
+.reference-social-toggle-input {
+  order: 2;
+  display: inline-grid;
+  width: 40px;
+  height: 40px;
+  flex: 0 0 auto;
+  place-items: center;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  border: 1.5px solid #C69A2B;
+  border-radius: 999px;
+  background: #072A4E;
+  color: #E8C979;
+  cursor: pointer;
+  transition: background-color 180ms ease, border-color 180ms ease, transform 180ms ease;
+}
+.reference-social-toggle-input::before {
+  content: "close";
+  font-family: "Material Symbols Outlined";
+  font-size: 22px;
+  font-style: normal;
+  font-variation-settings: "FILL" 0, "wght" 700, "GRAD" 0, "opsz" 20;
+  line-height: 1;
+}
+.reference-social-toggle-input:hover,
+.rs-state:focus-visible + .reference-social-toggle-input {
+  background: #10305F;
+  transform: translateY(-1px);
+}
+.rs-state:focus-visible + .reference-social-toggle-input {
+  outline: 3px solid rgba(198, 154, 43, 0.6);
+  outline-offset: 2px;
+}
+.reference-social-mask {
+  order: 1;
+  display: flex;
+  width: 100%;
+  max-width: 100%;
+  max-height: 280px;
+  margin-bottom: 8px;
+  overflow: hidden;
+  opacity: 1;
+  transform: translateY(0);
+  transition:
+    max-height 720ms cubic-bezier(0.22, 1, 0.36, 1),
+    max-width 720ms cubic-bezier(0.22, 1, 0.36, 1),
+    margin-bottom 720ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 520ms ease,
+    transform 720ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.rs-state:checked ~ .reference-social-mask {
+  max-height: 0;
+  margin-bottom: 0;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(64px) scale(0.94);
+}
+.rs-state:checked ~ .reference-social-toggle-input::before {
+  content: "keyboard_arrow_up";
+}
+.reference-social-shell .reference-social-rail {
+  position: static;
+  display: flex;
+  width: 100%;
+  max-width: none;
+  max-height: 280px;
+  margin: 0;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  overflow: hidden;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  padding: 0;
+  pointer-events: auto;
+  transform: none;
+}
+.reference-social-rail .social-pill {
+  position: relative;
+  display: grid;
+  width: 40px;
+  min-width: 0;
+  justify-items: center;
+  gap: 0;
+  border-radius: 999px;
+  color: #10305F;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.2;
+  text-decoration: none;
+}
+.reference-social-rail .social-label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.reference-social-rail .social-pill .social-dot {
+  position: relative;
+  display: grid;
+  width: 40px;
+  height: 40px;
+  box-sizing: border-box;
+  place-items: center;
+  border: 1px solid #E8DDC3;
+  border-radius: 999px;
+  background: #FBF8F1;
+  box-shadow: none;
+  color: #10305F;
+  font-family: Inter, Arial, sans-serif;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0;
+  transition: background-color 180ms ease, border-color 180ms ease, color 180ms ease, transform 180ms ease;
+}
+/* YouTube, Facebook, Zalo dùng logo thật (SVG tô màu chính thức), chủ dự án 2026-10-14 */
+.reference-social-rail .social-pill .social-dot svg {
+  display: block;
+  width: 24px;
+  height: 24px;
+}
+.reference-social-rail .social-pill .social-dot .material-symbols-outlined {
+  font-size: 22px;
+}
+.reference-social-rail .social-pill .social-dot.live::after {
+  content: "";
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: #C69A2B;
+  box-shadow: 0 0 0 1.5px #FBF8F1;
+}
+.reference-social-rail .social-pill:focus-visible {
+  outline: 3px solid rgba(198, 154, 43, 0.6);
+  outline-offset: 2px;
+}
+.reference-social-rail .social-pill:focus-visible .social-dot,
+.reference-social-rail .social-pill:active .social-dot {
+  border-color: #C69A2B;
+  background: #072A4E;
+  color: #FFFFFF;
+}
+/* Ba nút logo kênh giữ nền kem khi rê, focus hay bấm để logo màu vẫn rõ; chỉ đổi viền vàng */
+.reference-social-rail .social-pill:focus-visible .social-dot:is(.youtube, .facebook, .zalo),
+.reference-social-rail .social-pill:active .social-dot:is(.youtube, .facebook, .zalo) {
+  background: #FBF8F1;
+}
+.reference-social-rail .social-pill:focus-visible .social-dot.live::after,
+.reference-social-rail .social-pill:active .social-dot.live::after {
+  box-shadow: 0 0 0 1.5px #072A4E;
+}
+@media (hover: hover) {
+  .reference-social-rail .social-pill:hover .social-dot {
+    border-color: #C69A2B;
+    background: #072A4E;
+    color: #FFFFFF;
+    transform: translateY(-1px);
+  }
+  .reference-social-rail .social-pill:hover .social-dot:is(.youtube, .facebook, .zalo) {
+    background: #FBF8F1;
+  }
+  .reference-social-rail .social-pill:hover .social-dot.live::after {
+    box-shadow: 0 0 0 1.5px #072A4E;
+  }
+}
+@media (max-width: 1024px) {
+  .reference-social-shell {
+    top: auto;
+    right: auto;
+    bottom: calc(24px + env(safe-area-inset-bottom));
+    left: calc(16px + env(safe-area-inset-left));
+    max-height: calc(100vh - 48px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+    transform: none;
+  }
+  .reference-social-shell .reference-social-mask {
+    max-height: 0;
+    margin-bottom: 0;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(64px) scale(0.94);
+  }
+  .reference-social-shell .reference-social-toggle-input::before {
+    content: "keyboard_arrow_up";
+  }
+  .reference-social-shell .rs-state:checked ~ .reference-social-mask {
+    max-height: 280px;
+    margin-bottom: 8px;
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+  .reference-social-shell .rs-state:checked ~ .reference-social-toggle-input::before {
+    content: "close";
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .reference-social-toggle-input,
+  .reference-social-rail .social-pill .social-dot {
+    transition: none;
+  }
+  .reference-social-toggle-input:hover,
+  .rs-state:focus-visible + .reference-social-toggle-input,
+  .reference-social-rail .social-pill:hover .social-dot {
+    transform: none;
+  }
+}
+/* Điện thoại: trang có thanh mua/tạm tính dính đáy (.sticky-bar, cao khoảng 70px) thì nâng cụm nút lên trên thanh để không che nút (đồng bộ storefront 14/10/2026) */
+@media (max-width: 767px) {
+  body:has(.sticky-bar:not([hidden])) .reference-social-shell {
+    bottom: calc(94px + env(safe-area-inset-bottom));
+  }
+}
+/* Trang khác trang chủ: từ 1025px tới 1415px nội dung còn chạm sát mép phải (nút giỏ, ô tìm kiếm, nút "Áp dụng"...) nên cụm nút dùng dạng gọn như điện thoại: vòng tròn góc trái dưới, bấm để mở; từ 1416px mới ở mép phải dạng đầy đủ (đồng bộ storefront 14/10/2026) */
+@media (min-width: 1025px) and (max-width: 1415px) {
+  .reference-social-shell {
+    top: auto;
+    right: auto;
+    bottom: calc(24px + env(safe-area-inset-bottom));
+    left: calc(16px + env(safe-area-inset-left));
+    max-height: calc(100vh - 48px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+    transform: none;
+  }
+  .reference-social-shell .reference-social-mask {
+    max-height: 0;
+    margin-bottom: 0;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(64px) scale(0.94);
+  }
+  .reference-social-shell .reference-social-toggle-input::before {
+    content: "keyboard_arrow_up";
+  }
+  .reference-social-shell .rs-state:checked ~ .reference-social-mask {
+    max-height: 280px;
+    margin-bottom: 8px;
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+  .reference-social-shell .rs-state:checked ~ .reference-social-toggle-input::before {
+    content: "close";
+  }
+}
+</style>
+<!-- gf-contact-rail:css:end -->
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <symbol id="i-chev-l" viewBox="0 0 24 24"><path d="M14 6.5L8.5 12l5.5 5.5"/></symbol>
+  <symbol id="i-up" viewBox="0 0 24 24"><path d="M12 19V6M6.5 11.5L12 6l5.5 5.5"/></symbol>
+</svg>
+
+<!-- gf-shell:header:begin -->
+<!-- gf-shell:cfg {"navHiddenMode":false,"initials":"MA","chip":null,"extra":"\n<div class=\"read-bar\" aria-hidden=\"true\"><span id=\"readBar\"></span></div>"} -->
+<header class="focus-header">
+<div class="focus-header__inner">
+<a class="focus-header__logo" aria-label="Ginsengfood – Trang chủ" href="trang-chu.html">
+<img src="../../public/home-webp-v1/logo-header-light.w558.webp" srcset="../../public/home-webp-v1/logo-header-light.w186.webp 186w, ../../public/home-webp-v1/logo-header-light.w372.webp 372w, ../../public/home-webp-v1/logo-header-light.w558.webp 558w" sizes="(max-width: 767px) 128px, 150px" alt="Ginsengfood · Y thực đồng nguyên" width="186" height="67" decoding="async">
+</a>
+<div class="focus-header__actions">
+<nav id="localeDropdown" class="locale-dropdown" aria-label="Chọn ngôn ngữ">
+<button id="localeButton" class="locale-pill" type="button" aria-label="Chọn ngôn ngữ: Tiếng Việt" aria-haspopup="menu" aria-controls="localeMenu" aria-expanded="false"><span class="locale-current-flag"><span class="locale-flag is-active" role="img" aria-label="Tiếng Việt" title="Tiếng Việt"><svg viewBox="0 0 28 20" aria-hidden="true" focusable="false"><rect width="28" height="20" fill="#da251d"/><path fill="#ffdf00" d="M14 3.2 15.57 7.98h5.03l-4.07 2.96 1.56 4.86L14 12.79 9.91 15.8l1.56-4.86L7.4 7.98h5.03L14 3.2Z"/></svg></span></span><span class="locale-caret" aria-hidden="true"></span></button>
+<div id="localeMenu" class="locale-menu" role="menu" aria-label="Chọn ngôn ngữ">
+<a class="locale-option is-selected" role="menuitemradio" aria-checked="true" aria-label="Tiếng Việt" href="#"><span class="locale-flag is-active" role="img" aria-label="Tiếng Việt" title="Tiếng Việt"><svg viewBox="0 0 28 20" aria-hidden="true" focusable="false"><rect width="28" height="20" fill="#da251d"/><path fill="#ffdf00" d="M14 3.2 15.57 7.98h5.03l-4.07 2.96 1.56 4.86L14 12.79 9.91 15.8l1.56-4.86L7.4 7.98h5.03L14 3.2Z"/></svg></span></a>
+<a class="locale-option" role="menuitemradio" aria-checked="false" aria-label="English" href="#"><span class="locale-flag" role="img" aria-label="English" title="English"><svg viewBox="0 0 28 20" aria-hidden="true" focusable="false"><rect width="28" height="20" fill="#012169"/><path d="M0 0 28 20M28 0 0 20" stroke="#fff" stroke-width="4"/><path d="M0 0 28 20M28 0 0 20" stroke="#c8102e" stroke-width="2"/><path d="M14 0v20M0 10h28" stroke="#fff" stroke-width="7"/><path d="M14 0v20M0 10h28" stroke="#c8102e" stroke-width="4"/></svg></span></a>
+</div>
+</nav>
+<a class="focus-header__back" aria-label="Về trang chủ" href="trang-chu.html"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 6.5L8.5 12l5.5 5.5"/></svg><span class="focus-header__back-label">Về trang chủ</span></a>
+</div>
+</div>
+<div class="read-bar" aria-hidden="true"><span id="readBar"></span></div>
+</header>
+<!-- gf-shell:header:end -->
+
+<main class="ctv-register" data-collaborator-register="true" id="noi-dung">
+  <!-- Đồng bộ UI với storefront /vi/collaborator/register (2026-10-12): cùng khung, chữ, thứ tự khối và kiểu dáng; dữ liệu mẫu giữ nguyên.
+       Chế độ xem (bản mẫu, chỉ ẩn/hiện khối tĩnh): ?che-do=khach | da-dang-ky | can-dong-y-lai | da-cham-dut và &noi-dung=pdf. -->
+  <div class="ctv-wrap">
+    <div class="ctv-toolbar">
+      <nav class="ctv-crumbs" aria-label="Đường dẫn">
+        <a href="trang-chu.html">Trang chủ</a><span aria-hidden="true">/</span>
+        <span aria-current="page">Đăng ký cộng tác viên</span>
+      </nav>
+      <button type="button" class="ctv-print" id="printBtn" data-content="text">In điều khoản</button>
+    </div>
+
+    <!-- Khối trạng thái phía trên tài liệu: vừa đăng ký xong / đã là cộng tác viên / cần đồng ý điều khoản mới -->
+    <section class="ctv-state" id="agreeDone" role="status" tabindex="-1" data-tone="ok" hidden>
+      <h2 class="ctv-state__title">Bạn đã là cộng tác viên</h2>
+      <p class="ctv-state__text">Bạn đã đồng ý điều khoản phiên bản 1.0.</p>
+      <p class="ctv-state__text">Để tạo link chia sẻ, mở một trang sản phẩm và bấm “Chia sẻ link sản phẩm”.</p>
+      <div class="ctv-state__acts">
+        <a class="ctv-btn ctv-btn--primary" href="trung-tam-cong-tac-vien.html">Mở Trung tâm cộng tác viên</a>
+        <a class="ctv-btn ctv-btn--outline" href="trang-chu.html#san-pham">Xem sản phẩm</a>
+        <a class="ctv-btn ctv-btn--outline" href="../tai-khoan.html">Về trang Tài khoản</a>
+      </div>
+    </section>
+    <section class="ctv-state" role="status" tabindex="-1" data-tone="ok" data-only="registered" hidden>
+      <h2 class="ctv-state__title">Bạn là cộng tác viên</h2>
+      <p class="ctv-state__text">Bạn đã đồng ý điều khoản phiên bản 1.0.</p>
+      <p class="ctv-state__text">Để tạo link chia sẻ, mở một trang sản phẩm và bấm “Chia sẻ link sản phẩm”.</p>
+      <div class="ctv-state__acts">
+        <a class="ctv-btn ctv-btn--primary" href="trung-tam-cong-tac-vien.html">Mở Trung tâm cộng tác viên</a>
+        <a class="ctv-btn ctv-btn--outline" href="trang-chu.html#san-pham">Xem sản phẩm</a>
+        <a class="ctv-btn ctv-btn--outline" href="../tai-khoan.html">Về trang Tài khoản</a>
+      </div>
+    </section>
+    <section class="ctv-state" role="status" tabindex="-1" data-tone="warning" data-only="reaccept" hidden>
+      <h2 class="ctv-state__title">Điều khoản mới cần bạn đồng ý</h2>
+      <p class="ctv-state__text">Điều khoản mới đã áp dụng. Bạn cần đồng ý để tiếp tục dùng chức năng cộng tác viên.</p>
+    </section>
+
+    <article class="ctv-paper" aria-labelledby="ctv-paper-title" data-collaborator-terms="true">
+      <header class="ctv-paper__head">
+        <p class="ctv-paper__org">Ginsengfood</p>
+        <h1 class="ctv-paper__title" id="ctv-paper-title">Điều khoản chương trình Cộng tác viên</h1>
+        <p class="ctv-paper__meta"><span>Phiên bản 1.0</span><span>Hiệu lực từ ngày 01/09/2026</span></p>
+      </header>
+
+      <!-- Điều kiện đăng ký: người đủ điều kiện thấy hai dòng ✓ (người từng chấm dứt thấy thêm lời nhắc), khách thấy lời mời đăng nhập -->
+      <p class="ctv-was" data-collaborator-was-collaborator="true" data-only="terminated" hidden>Bạn từng là cộng tác viên; hoa hồng đã ghi nhận trước đây được giữ nguyên.</p>
+      <section class="ctv-conditions" id="dkConditions" aria-labelledby="ctv-conditions-title" data-collaborator-conditions="member" data-only="apply terminated">
+        <h2 class="ctv-conditions__title" id="ctv-conditions-title">Điều kiện đăng ký</h2>
+        <ul>
+          <li class="ctv-cond" data-met="true" data-condition="spend"><span aria-hidden="true" class="ctv-cond__mark">✓</span><span>Doanh số tích lũy: 2.500.000đ / 2.000.000đ</span></li>
+          <li class="ctv-cond" data-met="true" data-condition="phone"><span aria-hidden="true" class="ctv-cond__mark">✓</span><span>Số điện thoại đã xác minh</span></li>
+        </ul>
+      </section>
+      <section class="ctv-conditions" aria-labelledby="ctv-conditions-guest-title" data-collaborator-conditions="guest" data-only="guest" hidden>
+        <h2 class="ctv-conditions__title" id="ctv-conditions-guest-title">Điều kiện đăng ký</h2>
+        <div class="ctv-conditions__acts">
+          <p class="ctv-conditions__note" style="margin: 0">Đăng nhập để kiểm tra điều kiện</p>
+          <a class="ctv-btn ctv-btn--primary" href="../dang-nhap.html">Đăng nhập</a>
+        </div>
+      </section>
+
+      <!-- Chế độ văn bản: lời mở đầu, mục lục và từng điều -->
+      <div data-content="text">
+        <div class="ctv-doc ctv-doc--preamble">
+          <p>Điều khoản này quy định quyền và nghĩa vụ giữa Ginsengfood và thành viên tham gia chương trình Cộng tác viên. Vui lòng đọc kỹ toàn bộ nội dung trước khi xác nhận tham gia. Việc xác nhận ở cuối tài liệu được xem là bạn đã đọc, hiểu và đồng ý với toàn bộ điều khoản dưới đây.</p>
+        </div>
+
+        <nav class="ctv-contents" aria-labelledby="ctv-contents-title">
+          <h2 class="ctv-contents__title" id="ctv-contents-title">Mục lục</h2>
+          <ol>
+            <li><a href="#dieu-1">Điều 1. Giải thích từ ngữ</a></li>
+            <li><a href="#dieu-2">Điều 2. Điều kiện đăng ký</a></li>
+            <li><a href="#dieu-3">Điều 3. Link chia sẻ và mã giới thiệu</a></li>
+            <li><a href="#dieu-4">Điều 4. Ghi nhận đơn hàng và hoa hồng</a></li>
+            <li><a href="#dieu-5">Điều 5. Đối soát và chi trả</a></li>
+            <li><a href="#dieu-6">Điều 6. Quy tắc quảng bá</a></li>
+            <li><a href="#dieu-7">Điều 7. Bảo mật thông tin</a></li>
+            <li><a href="#dieu-8">Điều 8. Tạm ngưng và chấm dứt</a></li>
+            <li><a href="#dieu-9">Điều 9. Sửa đổi điều khoản</a></li>
+            <li><a href="#dieu-10">Điều 10. Liên hệ</a></li>
+          </ol>
+        </nav>
+
+        <section class="ctv-section" id="dieu-1" tabindex="-1">
+          <div class="ctv-doc">
+            <h2>Điều 1. Giải thích từ ngữ</h2>
+            <p>Trong điều khoản này, các từ ngữ dưới đây được hiểu như sau:</p>
+            <p>1.1. “Cộng tác viên” là thành viên Ginsengfood đủ điều kiện, đã đồng ý với điều khoản này và được cấp link chia sẻ riêng.</p>
+            <p>1.2. “Link chia sẻ” là đường dẫn tới sản phẩm trên website Ginsengfood có gắn mã giới thiệu của Cộng tác viên.</p>
+            <p>1.3. “Mã giới thiệu” là chuỗi ký tự ngẫu nhiên do hệ thống tạo, dùng để nhận biết đơn hàng phát sinh từ link chia sẻ.</p>
+            <p>1.4. “Đơn hợp lệ” là đơn mua qua link chia sẻ, đã giao thành công và không bị huỷ, trả hàng hoặc hoàn tiền.</p>
+            <p>1.5. “Hoa hồng chờ xác nhận” là hoa hồng tạm tính của đơn đang xử lý, đang giao hoặc còn trong thời hạn đổi trả.</p>
+            <p>1.6. “Hoa hồng đã xác nhận” là hoa hồng của đơn hợp lệ, đã qua đối soát và sẵn sàng chi trả trong kỳ.</p>
+          </div>
+        </section>
+
+        <section class="ctv-section" id="dieu-2" tabindex="-1">
+          <div class="ctv-doc">
+            <h2>Điều 2. Điều kiện đăng ký</h2>
+            <p>2.1. Thành viên được đăng ký tham gia chương trình khi đáp ứng đủ các điều kiện sau:</p>
+            <ol>
+              <li>a) Có tài khoản thành viên Ginsengfood và đã xác minh số điện thoại;</li>
+              <li>b) Đã đạt hạng thành viên từ Silver trở lên và hạng đang còn hiệu lực;</li>
+              <li>c) Có doanh số tích lũy hợp lệ trên 2.000.000đ, chỉ tính các đơn đã giao thành công, không tính đơn bị huỷ hoặc trả hàng;</li>
+              <li>d) Đủ 18 tuổi và cung cấp tài khoản ngân hàng chính chủ, trùng họ tên với tài khoản thành viên.</li>
+            </ol>
+            <p>2.2. Mỗi thành viên chỉ được đăng ký một tài khoản Cộng tác viên.</p>
+            <p>2.3. Ginsengfood có quyền từ chối đăng ký nếu thông tin cung cấp không chính xác hoặc có dấu hiệu gian lận.</p>
+          </div>
+        </section>
+
+        <section class="ctv-section" id="dieu-3" tabindex="-1">
+          <div class="ctv-doc">
+            <h2>Điều 3. Link chia sẻ và mã giới thiệu</h2>
+            <p>3.1. Sau khi được duyệt, link chia sẻ của Cộng tác viên được cung cấp trong trang Tài khoản, mục Cộng tác viên.</p>
+            <p>3.2. Mã giới thiệu là chuỗi ngẫu nhiên, không chứa họ tên, email hoặc số điện thoại của Cộng tác viên.</p>
+            <p>3.3. Đơn hàng được ghi nhận cho Cộng tác viên khi khách truy cập qua link chia sẻ và đặt hàng thành công. Trường hợp khách truy cập qua nhiều link khác nhau, đơn hàng được ghi nhận cho link được truy cập gần nhất.</p>
+            <p>3.4. Đơn hàng do Cộng tác viên tự đặt qua link của chính mình không được tính hoa hồng.</p>
+            <p>3.5. Link chia sẻ chỉ dành cho Cộng tác viên sử dụng; không được mua bán, chuyển nhượng hoặc gắn vào trang giả mạo, trang che giấu địa chỉ đích.</p>
+          </div>
+        </section>
+
+        <section class="ctv-section" id="dieu-4" tabindex="-1">
+          <div class="ctv-doc">
+            <h2>Điều 4. Ghi nhận đơn hàng và hoa hồng</h2>
+            <p>4.1. Hoa hồng được ghi nhận theo trình tự sau:</p>
+            <ol>
+              <li>a) Đơn hàng phát sinh từ link chia sẻ được ghi nhận ở trạng thái hoa hồng chờ xác nhận;</li>
+              <li>b) Khi đơn giao thành công, hết thời hạn đổi trả và qua đối soát, hoa hồng chuyển sang trạng thái đã xác nhận;</li>
+              <li>c) Hoa hồng đã xác nhận được chi trả theo kỳ quy định tại Điều 5.</li>
+            </ol>
+            <p>4.2. Tỷ lệ hoa hồng được công bố trong mục Cộng tác viên và có thể khác nhau giữa giá bán 24/7 và phiên Giờ Vàng Tri Ân.</p>
+            <p>4.3. Hoa hồng được tính trên giá trị hàng hoá khách hàng thực trả, không bao gồm phí vận chuyển.</p>
+            <p>4.4. Không tính hoa hồng đối với:</p>
+            <ol>
+              <li>a) Đơn bị huỷ, trả hàng hoặc hoàn tiền. Trường hợp trả một phần, hoa hồng được điều chỉnh theo phần hàng giữ lại;</li>
+              <li>b) Đơn do Cộng tác viên tự đặt qua link của chính mình;</li>
+              <li>c) Đơn phát sinh từ hành vi gian lận hoặc từ hoạt động quảng bá vi phạm Điều 6.</li>
+            </ol>
+            <p>4.5. Hoa hồng chỉ phát sinh từ đơn mua trực tiếp qua link chia sẻ của Cộng tác viên. Chương trình không thu phí tham gia và không tính hoa hồng nhiều tầng từ việc giới thiệu người khác làm Cộng tác viên. Ginsengfood không cam kết mức hoa hồng hoặc lợi nhuận.</p>
+            <p>4.6. Khách hàng mua qua link chia sẻ được áp dụng một quyền lợi theo thứ tự ưu tiên của chính sách; ưu đãi không cộng dồn với quyền lợi thành viên hoặc chương trình khuyến mãi khác.</p>
+          </div>
+        </section>
+
+        <section class="ctv-section" id="dieu-5" tabindex="-1">
+          <div class="ctv-doc">
+            <h2>Điều 5. Đối soát và chi trả</h2>
+            <p>5.1. Lịch đối soát và chi trả hoa hồng được quy định như sau:</p>
+            <ul>
+              <li><strong>Kỳ đối soát:</strong> Từ ngày 01 đến ngày cuối cùng của mỗi tháng.</li>
+              <li><strong>Công bố số liệu:</strong> Trước ngày 05 của tháng kế tiếp, trong mục Cộng tác viên, gồm đơn hợp lệ, hoa hồng chờ xác nhận và hoa hồng đã xác nhận.</li>
+              <li><strong>Chi trả hoa hồng:</strong> Trước ngày 15 của tháng kế tiếp, vào tài khoản ngân hàng chính chủ đã đăng ký.</li>
+              <li><strong>Phản hồi số liệu:</strong> Trong vòng 30 ngày kể từ ngày công bố số liệu.</li>
+            </ul>
+            <p>5.2. Ginsengfood thực hiện khấu trừ và kê khai thuế theo quy định pháp luật hiện hành trước khi chi trả hoa hồng.</p>
+            <p>5.3. Sau thời hạn phản hồi, số liệu đã công bố được xem là số liệu chính thức của kỳ đối soát.</p>
+          </div>
+        </section>
+
+        <section class="ctv-section" id="dieu-6" tabindex="-1">
+          <div class="ctv-doc">
+            <h2>Điều 6. Quy tắc quảng bá</h2>
+            <p>6.1. Cộng tác viên được phép:</p>
+            <ol>
+              <li>a) Chia sẻ link trên trang cá nhân, nhóm hoặc kênh do mình quản lý;</li>
+              <li>b) Sử dụng hình ảnh và nội dung trong bộ tài nguyên chính thức của Ginsengfood;</li>
+              <li>c) Giới thiệu sản phẩm với đúng giá, ưu đãi và thông tin đang hiển thị trên website.</li>
+            </ol>
+            <p>6.2. Khi giới thiệu sản phẩm, Cộng tác viên phải nêu rõ mình là Cộng tác viên của Ginsengfood.</p>
+            <p>6.3. Cộng tác viên không được:</p>
+            <ol>
+              <li>a) Quảng cáo sản phẩm có tác dụng chữa bệnh hoặc thay thế thuốc chữa bệnh;</li>
+              <li>b) Gửi tin nhắn, bình luận hàng loạt hoặc chia sẻ link ở nơi chưa được phép;</li>
+              <li>c) Giả danh Ginsengfood, nhân viên hoặc cửa hàng chính thức;</li>
+              <li>d) Chạy quảng cáo sử dụng tên thương hiệu Ginsengfood hoặc tên sản phẩm làm từ khoá;</li>
+              <li>đ) Tự đặt mã giảm giá, hứa tặng quà hoặc hoàn tiền ngoài chính sách;</li>
+              <li>e) Mời người khác tham gia bằng cách hứa hẹn thu nhập hoặc lợi nhuận.</li>
+            </ol>
+          </div>
+        </section>
+
+        <section class="ctv-section" id="dieu-7" tabindex="-1">
+          <div class="ctv-doc">
+            <h2>Điều 7. Bảo mật thông tin</h2>
+            <p>7.1. Cộng tác viên chỉ được xem mã đơn rút gọn, trạng thái đơn và hoa hồng tương ứng; không được xem họ tên, số điện thoại hoặc địa chỉ của người mua.</p>
+            <p>7.2. Link chia sẻ và mã giới thiệu không chứa thông tin cá nhân của Cộng tác viên.</p>
+            <p>7.3. Cộng tác viên không được thu thập, lưu trữ hoặc sử dụng thông tin khách hàng cho mục đích khác ngoài việc giới thiệu sản phẩm.</p>
+            <p>7.4. Cộng tác viên có trách nhiệm bảo mật thông tin đăng nhập; mọi hoạt động phát sinh từ tài khoản được xem là do Cộng tác viên thực hiện.</p>
+          </div>
+        </section>
+
+        <section class="ctv-section" id="dieu-8" tabindex="-1">
+          <div class="ctv-doc">
+            <h2>Điều 8. Tạm ngưng và chấm dứt</h2>
+            <p>8.1. Trường hợp Cộng tác viên vi phạm Điều 6 hoặc Điều 7, Ginsengfood có quyền tạm ngưng link chia sẻ, huỷ hoa hồng của các đơn liên quan hoặc chấm dứt tư cách Cộng tác viên.</p>
+            <p>8.2. Trường hợp hạng thành viên hết hiệu lực sau 60 ngày ân hạng, link chia sẻ được tạm ngưng cho đến khi Cộng tác viên đáp ứng lại điều kiện tại Điều 2.</p>
+            <p>8.3. Cộng tác viên có thể chấm dứt tham gia bất kỳ lúc nào trong mục Cộng tác viên. Hoa hồng đã xác nhận trước thời điểm chấm dứt vẫn được chi trả trong kỳ kế tiếp.</p>
+          </div>
+        </section>
+
+        <section class="ctv-section" id="dieu-9" tabindex="-1">
+          <div class="ctv-doc">
+            <h2>Điều 9. Sửa đổi điều khoản</h2>
+            <p>9.1. Ginsengfood có thể sửa đổi điều khoản khi chính sách chương trình hoặc quy định pháp luật thay đổi. Nội dung sửa đổi được thông báo qua email và trong tài khoản ít nhất 07 ngày trước ngày áp dụng.</p>
+            <p>9.2. Việc Cộng tác viên tiếp tục sử dụng link chia sẻ sau ngày áp dụng được xem là đồng ý với điều khoản sửa đổi. Trường hợp không đồng ý, Cộng tác viên có thể chấm dứt tham gia theo khoản 8.3.</p>
+          </div>
+        </section>
+
+        <section class="ctv-section" id="dieu-10" tabindex="-1">
+          <div class="ctv-doc">
+            <h2>Điều 10. Liên hệ</h2>
+            <p>10.1. Mọi thắc mắc về chương trình, số liệu hoa hồng hoặc link chia sẻ, vui lòng liên hệ Ginsengfood qua <a href="#">Zalo</a> hoặc tổng đài <a href="#">1900 1234</a>.</p>
+          </div>
+        </section>
+      </div>
+
+      <!-- Chế độ tệp PDF: thẻ mở/tải hợp đồng (máy tính nhúng khung PDF nếu trình duyệt có trình xem) -->
+      <section class="ctv-pdf" data-collaborator-embed="card" data-content="pdf" hidden>
+        <div class="ctv-pdf-card" data-collaborator-pdf-card="true">
+          <span aria-hidden="true" class="ctv-pdf-card__icon">PDF</span>
+          <div class="ctv-pdf-card__body">
+            <h2 class="ctv-pdf-card__title">Điều khoản dạng tệp PDF</h2>
+            <p class="ctv-pdf-card__meta">Phiên bản 1.0&nbsp;· Hiệu lực từ ngày 01/09/2026&nbsp;· Dung lượng 2 MB</p>
+            <p class="ctv-pdf-card__hint">Tệp PDF mở toàn màn hình ở tab riêng để bạn đọc dễ hơn. Đọc xong, quay lại trang này để xác nhận.</p>
+          </div>
+          <div class="ctv-pdf__acts">
+            <a class="ctv-btn ctv-btn--primary" href="#" rel="noopener" aria-label="Đọc điều khoản (PDF), mở ở tab mới">Đọc điều khoản (PDF)</a>
+            <a class="ctv-btn ctv-btn--outline" href="#" download aria-label="Tải xuống tệp PDF điều khoản (2 MB)">Tải xuống</a>
+          </div>
+        </div>
+      </section>
+
+      <p class="ctv-paper__end">Điều khoản chương trình Cộng tác viên · Phiên bản 1.0 · Hiệu lực từ ngày 01/09/2026</p>
+
+      <!-- Khu xác nhận: khách chỉ có "Để sau"; người đã là cộng tác viên không có khu này -->
+      <section class="ctv-confirm" id="xac-nhan" aria-labelledby="ctv-confirm-title" data-collaborator-confirm="apply" data-only="apply terminated reaccept">
+        <div id="agreeForm">
+          <h2 class="ctv-confirm__title" id="ctv-confirm-title">Xác nhận của cộng tác viên</h2>
+          <p class="ctv-confirm__lead">Bằng việc đánh dấu các mục dưới đây, tôi xác nhận:</p>
+          <ul class="ctv-checks">
+            <li><label class="ctv-check" id="checkTerms"><input type="checkbox" id="agTerms"><span>Tôi đã đọc, hiểu và đồng ý với toàn bộ Điều khoản chương trình Cộng tác viên, phiên bản 1.0.</span></label></li>
+            <li><label class="ctv-check" id="checkHonest"><input type="checkbox" id="agHonest"><span>Tôi cam kết quảng bá trung thực và không đưa thông tin sai về công dụng sản phẩm.</span></label></li>
+          </ul>
+          <div class="ctv-confirm__foot">
+            <p class="ctv-hint" id="agHint" aria-live="polite">Còn 2 mục cần đánh dấu để tiếp tục.</p>
+            <div class="ctv-acts">
+              <a class="ctv-btn ctv-btn--outline" href="trang-chu.html">Để sau</a>
+              <button type="button" class="ctv-btn ctv-btn--outline" id="agDecline" data-only="apply terminated">Không đồng ý</button>
+              <button type="button" class="ctv-btn ctv-btn--primary" id="agSubmit" aria-disabled="true" aria-describedby="agHint"><span data-only="apply terminated">Đồng ý và đăng ký</span><span data-only="reaccept" hidden>Đồng ý</span></button>
+            </div>
+          </div>
+          <p class="ctv-alert" id="agNotice" role="status" hidden></p>
+        </div>
+      </section>
+      <section class="ctv-confirm" data-collaborator-confirm="guest" data-only="guest" hidden>
+        <div class="ctv-acts">
+          <a class="ctv-btn ctv-btn--outline" href="trang-chu.html">Để sau</a>
+        </div>
+      </section>
+    </article>
+  </div>
+</main>
+
+<!-- gf-shell:footer:begin -->
+<div class="gf-site-footer">
+<footer class="home-footer">
+<div aria-hidden="true" class="home-footer__rule"></div>
+<div class="home-frame">
+<div class="home-footer__grid">
+<div class="home-footer__brand">
+<a aria-label="Ginsengfood – Trang chủ" class="home-footer__logo" href="trang-chu.html">
+<img alt="Ginsengfood · Y thực đồng nguyên" decoding="async" loading="lazy" src="../../public/home-webp-v1/logo-header-v2.w360.webp" srcset="../../public/home-webp-v1/logo-header-v2.w120.webp 120w, ../../public/home-webp-v1/logo-header-v2.w240.webp 240w, ../../public/home-webp-v1/logo-header-v2.w360.webp 360w">
+</a>
+<p class="home-footer__slogan"><b>Ngon như Mẹ nấu</b><i>– thương ngay từ vị đầu tiên</i><span aria-hidden="true" class="home-story__rule"></span></p>
+<p class="home-footer__phil">Y thực đồng nguyên – hiện đại trong từng bữa ăn. Tinh hoa Sâm vùng cát biển Việt Nam.</p>
+<address class="home-footer__addr">
+<span>SSAVIGROUP / Ginsengfood</span>
+<span>Vùng trồng: Thạnh Phú · Nhà máy: Vĩnh Long</span>
+<span>Điện thoại: <a href="tel:0888098686">0888 098 686</a></span>
+<span>Email: <a href="mailto:info@ssavigroup.com">info@ssavigroup.com</a></span>
+</address>
+</div>
+<nav aria-label="Chính sách" class="home-footer__col">
+<p class="home-footer__col-title">Chính sách</p>
+<ul class="home-footer__links">
+<li><span class="home-footer__links-plain">Chính sách bảo mật</span></li>
+<li><span class="home-footer__links-plain">Tuyên bố miễn trừ</span></li>
+<li><span class="home-footer__links-plain">Hình thức thanh toán</span></li>
+<li><span class="home-footer__links-plain">Chính sách vận chuyển</span></li>
+<li><span class="home-footer__links-plain">Chính sách mua hàng</span></li>
+<li><span class="home-footer__links-plain">Chính sách đổi trả</span></li>
+<li><span class="home-footer__links-plain">Các điều khoản</span></li>
+</ul>
+</nav>
+<nav aria-label="Niềm tin" class="home-footer__col">
+<p class="home-footer__col-title">Niềm tin</p>
+<ul class="home-footer__links">
+<li><a href="trang-chu.html#cau-chuyen">Nguồn gốc và truy xuất</a></li>
+<li><a href="dai-ly-nha-phan-phoi.html">Hợp tác nhà phân phối</a></li>
+<li><span class="home-footer__links-plain">Vùng trồng Thạnh Phú</span></li>
+<li><span class="home-footer__links-plain">Công nghệ sấy thăng hoa</span></li>
+<li><span class="home-footer__links-plain">Chứng nhận và kiểm nghiệm</span></li>
+</ul>
+</nav>
+<nav aria-label="Thành viên và quyền lợi" class="home-footer__col">
+<p class="home-footer__col-title">Thành viên và quyền lợi</p>
+<ul class="home-footer__links">
+<li><a href="trang-chu.html#quyen-loi">Thành viên Ginsengfood</a></li>
+<li><a href="trang-chu.html#gio-vang">Giờ Vàng Tri Ân</a></li>
+<li><a href="dieu-khoan-cong-tac-vien.html">Khởi nghiệp cùng Ginsengfood</a></li>
+<li><a href="dai-ly-nha-phan-phoi.html#hinh-thuc">Đại lý nhà phân phối</a></li>
+</ul>
+</nav>
+<div class="home-footer__col home-footer__col--contact">
+<p class="home-footer__col-title" id="home-footer-contact-title">Liên hệ</p>
+<ul aria-labelledby="home-footer-contact-title" class="home-footer__social">
+<li><span aria-label="YouTube (sắp mở)" class="home-footer__social-btn" data-channel="youtube" data-disabled="true" role="img" title="YouTube (sắp mở)"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" fill="#FF0000"/><path d="M9.545 15.568V8.432L15.818 12l-6.273 3.568Z" fill="#FFFFFF"/></svg></span></li>
+<li><span aria-label="Facebook (sắp mở)" class="home-footer__social-btn" data-channel="facebook" data-disabled="true" role="img" title="Facebook (sắp mở)"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><circle cx="12" cy="12" fill="#FFFFFF" r="11.5"/><path d="M9.101 23.691v-7.98H6.627v-3.667h2.474v-1.58c0-4.085 1.848-5.978 5.858-5.978.401 0 .955.042 1.468.103a8.68 8.68 0 0 1 1.141.195v3.325a8.623 8.623 0 0 0-.653-.036 26.805 26.805 0 0 0-.733-.009c-.707 0-1.259.096-1.675.309a1.686 1.686 0 0 0-.679.622c-.258.42-.374.995-.374 1.752v1.297h3.919l-.386 2.103-.287 1.564h-3.246v8.245C19.396 23.238 24 18.179 24 12.044c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.628 3.874 10.35 9.101 11.647Z" fill="#0866FF"/></svg></span></li>
+<li><span aria-label="Zalo (sắp mở)" class="home-footer__social-btn" data-channel="zalo" data-disabled="true" role="img" title="Zalo (sắp mở)"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><rect fill="#0068FF" height="24" rx="5.5" width="24"/><path d="M12.49 10.2722v-.4496h1.3467v6.3218h-.7704a.576.576 0 01-.5763-.5729l-.0006.0005a3.273 3.273 0 01-1.9372.6321c-1.8138 0-3.2844-1.4697-3.2844-3.2823 0-1.8125 1.4706-3.2822 3.2844-3.2822a3.273 3.273 0 011.9372.6321l.0006.0005zM6.9188 7.7896v.205c0 .3823-.051.6944-.2995 1.0605l-.03.0343c-.0542.0615-.1815.206-.2421.2843L2.024 14.8h4.8948v.7682a.5764.5764 0 01-.5767.5761H0v-.3622c0-.4436.1102-.6414.2495-.8476L4.8582 9.23H.1922V7.7896h6.7266zm8.5513 8.3548a.4805.4805 0 01-.4803-.4798v-7.875h1.4416v8.3548H15.47zM20.6934 9.6C22.52 9.6 24 11.0807 24 12.9044c0 1.8252-1.4801 3.306-3.3066 3.306-1.8264 0-3.3066-1.4808-3.3066-3.306 0-1.8237 1.4802-3.3044 3.3066-3.3044zm-10.1412 5.253c1.0675 0 1.9324-.8645 1.9324-1.9312 0-1.065-.865-1.9295-1.9324-1.9295s-1.9324.8644-1.9324 1.9295c0 1.0667.865 1.9312 1.9324 1.9312zm10.1412-.0033c1.0737 0 1.945-.8707 1.945-1.9453 0-1.073-.8713-1.9436-1.945-1.9436-1.0753 0-1.945.8706-1.945 1.9436 0 1.0746.8697 1.9453 1.945 1.9453z" fill="#FFFFFF" transform="translate(12 12) scale(0.8) translate(-12 -12)"/></svg></span></li>
+</ul>
+</div>
+</div>
+<div aria-hidden="true" class="home-footer__line"></div>
+<div class="home-footer__legal">
+<p class="home-footer__legal-name">CÔNG TY CỔ PHẦN TẬP ĐOÀN SSAVIGROUP</p>
+<p class="home-footer__legal-line">Số giấy phép kinh doanh: 1301015435 · Ngày cấp: 06/09/2016</p>
+</div>
+</div>
+</footer>
+</div>
+<!-- gf-shell:footer:end -->
+<!-- gf-contact-rail:begin -->
+<aside class="reference-social-shell" aria-label="Kênh liên hệ nhanh">
+<input class="rs-state" id="rsState" type="checkbox" aria-label="Ẩn hoặc hiện kênh liên hệ nhanh" aria-controls="reference-social-rail">
+<label class="reference-social-toggle-input" for="rsState" title="Ẩn hoặc hiện kênh liên hệ nhanh" aria-hidden="true"></label>
+<div class="reference-social-mask">
+<div class="reference-social-rail" id="reference-social-rail" aria-label="Kênh liên hệ nhanh">
+<a class="social-pill" href="trang-chu.html#gio-vang" aria-label="Livestream" title="Livestream"><span class="social-dot live">LIVE</span><span class="social-label">Livestream</span></a>
+<a class="social-pill" href="trang-chu.html#cau-chuyen" aria-label="YouTube" title="YouTube"><span class="social-dot youtube"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" fill="#FF0000"/><path d="M9.545 15.568V8.432L15.818 12l-6.273 3.568Z" fill="#FFFFFF"/></svg></span><span class="social-label">YouTube</span></a>
+<a class="social-pill" href="trang-chu.html#about-us" aria-label="Facebook" title="Facebook"><span class="social-dot facebook"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><circle cx="12" cy="12" fill="#FFFFFF" r="11.5"/><path d="M9.101 23.691v-7.98H6.627v-3.667h2.474v-1.58c0-4.085 1.848-5.978 5.858-5.978.401 0 .955.042 1.468.103a8.68 8.68 0 0 1 1.141.195v3.325a8.623 8.623 0 0 0-.653-.036 26.805 26.805 0 0 0-.733-.009c-.707 0-1.259.096-1.675.309a1.686 1.686 0 0 0-.679.622c-.258.42-.374.995-.374 1.752v1.297h3.919l-.386 2.103-.287 1.564h-3.246v8.245C19.396 23.238 24 18.179 24 12.044c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.628 3.874 10.35 9.101 11.647Z" fill="#0866FF"/></svg></span><span class="social-label">Facebook</span></a>
+<a class="social-pill" href="trang-chu.html#about-us" aria-label="Zalo" title="Zalo"><span class="social-dot zalo"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><rect fill="#0068FF" height="24" rx="5.5" width="24"/><path d="M12.49 10.2722v-.4496h1.3467v6.3218h-.7704a.576.576 0 01-.5763-.5729l-.0006.0005a3.273 3.273 0 01-1.9372.6321c-1.8138 0-3.2844-1.4697-3.2844-3.2823 0-1.8125 1.4706-3.2822 3.2844-3.2822a3.273 3.273 0 011.9372.6321l.0006.0005zM6.9188 7.7896v.205c0 .3823-.051.6944-.2995 1.0605l-.03.0343c-.0542.0615-.1815.206-.2421.2843L2.024 14.8h4.8948v.7682a.5764.5764 0 01-.5767.5761H0v-.3622c0-.4436.1102-.6414.2495-.8476L4.8582 9.23H.1922V7.7896h6.7266zm8.5513 8.3548a.4805.4805 0 01-.4803-.4798v-7.875h1.4416v8.3548H15.47zM20.6934 9.6C22.52 9.6 24 11.0807 24 12.9044c0 1.8252-1.4801 3.306-3.3066 3.306-1.8264 0-3.3066-1.4808-3.3066-3.306 0-1.8237 1.4802-3.3044 3.3066-3.3044zm-10.1412 5.253c1.0675 0 1.9324-.8645 1.9324-1.9312 0-1.065-.865-1.9295-1.9324-1.9295s-1.9324.8644-1.9324 1.9295c0 1.0667.865 1.9312 1.9324 1.9312zm10.1412-.0033c1.0737 0 1.945-.8707 1.945-1.9453 0-1.073-.8713-1.9436-1.945-1.9436-1.0753 0-1.945.8706-1.945 1.9436 0 1.0746.8697 1.9453 1.945 1.9453z" fill="#FFFFFF" transform="translate(12 12) scale(0.8) translate(-12 -12)"/></svg></span><span class="social-label">Zalo</span></a>
+<a class="social-pill" href="trang-chu.html#about-us" aria-label="Chat" title="Chat"><span class="social-dot chat"><span class="material-symbols-outlined" aria-hidden="true">chat</span></span><span class="social-label">Chat</span></a>
+<a class="social-pill" href="trang-chu.html#about-us" aria-label="Điện thoại" title="Điện thoại"><span class="social-dot phone"><span class="material-symbols-outlined" aria-hidden="true">call</span></span><span class="social-label">Điện thoại</span></a>
+</div>
+</div>
+</aside>
+<!-- gf-contact-rail:end -->
+<!-- gf-shell:float:begin -->
+<button type="button" class="to-top" id="toTop" aria-label="Lên đầu trang" title="Lên đầu trang"><span class="material-symbols-outlined" aria-hidden="true">arrow_upward</span><span class="gf-scroll-top__tip">Lên đầu trang</span></button>
+<div class="gf-cw">
+<input type="checkbox" id="gfCwToggle" class="gf-cw__toggle" aria-label="Mở chat tư vấn" aria-controls="consultation-chat-panel">
+<div class="gf-cw__dock"><label for="gfCwToggle" class="gf-cw__launcher" title="Mở chat tư vấn"><span aria-hidden="true" class="gf-cw__label">Mở chat tư vấn</span><span aria-hidden="true" class="gf-cw__icon"><svg aria-hidden="true" fill="none" focusable="false" viewBox="0 0 48 48"><path d="M9 26c0-9.4 6.7-17 15-17s15 7.6 15 17" stroke="currentColor" stroke-linecap="round" stroke-width="3"/><rect fill="currentColor" height="13" rx="3.5" width="7" x="4.5" y="22"/><rect fill="currentColor" height="13" rx="3.5" width="7" x="36.5" y="22"/><path d="M40 34.5v1c0 3.3-2.9 5-6.5 5H29.5" stroke="currentColor" stroke-linecap="round" stroke-width="2.6"/><circle cx="27" cy="40.5" fill="currentColor" r="2.7"/><path d="M24 15.5c5.2 0 9.2 3.6 9.2 8.3S29.2 32 24 32c-1 0-2-.1-2.9-.4L16.5 35l1.1-4.6c-1.6-1.5-2.5-3.5-2.5-5.7 0-4.7 4-8.3 9.2-8.3Z" fill="currentColor"/><circle cx="19.6" cy="23.8" fill="#C69A2B" r="1.7"/><circle cx="24" cy="23.8" fill="#C69A2B" r="1.7"/><circle cx="28.4" cy="23.8" fill="#C69A2B" r="1.7"/></svg></span></label></div>
+<div class="gf-cw__panel" id="consultation-chat-panel" role="dialog" aria-modal="false" aria-label="Khung chat tư vấn Ginsengfood">
+<div class="gf-cw__head"><div class="gf-cw__who"><div class="gf-cw__avatar"><svg aria-hidden="true" fill="none" focusable="false" viewBox="0 0 48 48"><path d="M9 26c0-9.4 6.7-17 15-17s15 7.6 15 17" stroke="currentColor" stroke-linecap="round" stroke-width="3"/><rect fill="currentColor" height="13" rx="3.5" width="7" x="4.5" y="22"/><rect fill="currentColor" height="13" rx="3.5" width="7" x="36.5" y="22"/><path d="M40 34.5v1c0 3.3-2.9 5-6.5 5H29.5" stroke="currentColor" stroke-linecap="round" stroke-width="2.6"/><circle cx="27" cy="40.5" fill="currentColor" r="2.7"/><path d="M24 15.5c5.2 0 9.2 3.6 9.2 8.3S29.2 32 24 32c-1 0-2-.1-2.9-.4L16.5 35l1.1-4.6c-1.6-1.5-2.5-3.5-2.5-5.7 0-4.7 4-8.3 9.2-8.3Z" fill="currentColor"/><circle cx="19.6" cy="23.8" fill="#C69A2B" r="1.7"/><circle cx="24" cy="23.8" fill="#C69A2B" r="1.7"/><circle cx="28.4" cy="23.8" fill="#C69A2B" r="1.7"/></svg></div><div><h4 class="gf-cw__title">Tư vấn viên</h4><p class="gf-cw__sub">Tư vấn chọn sản phẩm nhân sâm</p></div></div><div class="gf-cw__actions"><span class="gf-cw__action" title="Xóa cuộc trò chuyện" aria-hidden="true"><span class="material-symbols-outlined" aria-hidden="true">delete</span></span><label for="gfCwToggle" class="gf-cw__action" aria-label="Đóng chat" title="Đóng chat"><span class="material-symbols-outlined" aria-hidden="true">close</span></label></div></div>
+<div class="gf-cw__list"><div class="gf-cw__msg"><div class="gf-cw__bubble"><p>Dạ em chào anh/chị 👋 Em là trợ lí tư vấn của Ginsengfood.</p><p>Em có thể hỗ trợ chọn sản phẩm theo nhu cầu, tìm hiểu nguồn gốc sản phẩm hoặc ghi nhận thông tin để CSKH tư vấn kỹ hơn ạ.</p></div><span class="gf-cw__time">09:00</span></div></div>
+<div class="gf-cw__composer"><span class="gf-cw__lead">Để lại thông tin tư vấn</span><div class="gf-cw__chips" aria-label="Gợi ý câu hỏi nhanh"><div class="gf-cw__chiplist"><span class="gf-cw__chip">Tôi cần món ăn sáng nhẹ bụng</span><span class="gf-cw__chip">Tôi muốn mua làm quà biếu</span></div><span class="gf-cw__chipsoff" aria-hidden="true"><span class="material-symbols-outlined" aria-hidden="true">close</span></span></div><div class="gf-cw__row"><textarea class="gf-cw__input" placeholder="Nhập câu hỏi của anh/chị..." rows="1" aria-label="Nhập câu hỏi"></textarea><span class="gf-cw__send" aria-hidden="true"><span class="material-symbols-outlined" aria-hidden="true">send</span></span></div></div>
+</div>
+</div>
+<!-- gf-shell:float:end -->
+
+<script>
+  (function () {
+    var readBar = document.getElementById('readBar');
+    var toTop = document.getElementById('toTop');
+
+    /* Tiến độ đọc + nút lên đầu trang */
+    var ticking = false;
+    function update() {
+      ticking = false;
+      var max = document.documentElement.scrollHeight - window.innerHeight;
+      var y = window.scrollY;
+      readBar.style.transform = 'scaleX(' + (max > 0 ? Math.min(1, y / max) : 0) + ')';
+      toTop.classList.toggle('is-on', y > 600);
+    }
+    function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    update();
+
+    toTop.addEventListener('click', function () { window.scrollTo({ top: 0 }); });
+    document.getElementById('printBtn').addEventListener('click', function () { window.print(); });
+
+    /* Trình diễn các trạng thái giao diện của trang chính; không ghi quyết định vào phiên hay máy chủ. */
+    var boxes = [document.getElementById('agTerms'), document.getElementById('agHonest')];
+    var submit = document.getElementById('agSubmit'), hint = document.getElementById('agHint');
+    var form = document.getElementById('agreeForm'), done = document.getElementById('agreeDone');
+    var decline = document.getElementById('agDecline'), notice = document.getElementById('agNotice');
+    function missing() { return boxes.filter(function (b) { return !b.checked; }); }
+    function sync() {
+      var n = missing().length;
+      submit.setAttribute('aria-disabled', n ? 'true' : 'false');
+      hint.classList.remove('is-error');
+      hint.classList.toggle('is-ready', !n);
+      hint.textContent = n ? 'Còn ' + n + ' mục cần đánh dấu để tiếp tục.' : 'Đã đánh dấu đủ, bấm để tiếp tục.';
+    }
+    boxes.forEach(function (b) {
+      b.addEventListener('change', function () { if (b.checked) b.closest('.ctv-check').classList.remove('is-invalid'); sync(); });
+    });
+    decline.addEventListener('click', function () {
+      notice.textContent = 'Đã ghi nhận bạn không đồng ý. Bạn có thể quay lại đăng ký bất cứ lúc nào.';
+      notice.hidden = false;
+    });
+    submit.addEventListener('click', function () {
+      if (submit.getAttribute('aria-busy') === 'true') return;
+      var miss = missing();
+      if (miss.length) {
+        miss.forEach(function (b) { b.closest('.ctv-check').classList.add('is-invalid'); });
+        hint.classList.remove('is-ready'); hint.classList.add('is-error');
+        hint.textContent = miss.length > 1 ? 'Vui lòng đánh dấu đủ các mục còn thiếu trước khi đăng ký.' : 'Vui lòng đánh dấu mục còn thiếu trước khi đăng ký.';
+        miss[0].focus();
+        return;
+      }
+      submit.setAttribute('aria-busy', 'true'); submit.textContent = 'Đang ghi nhận…';
+      setTimeout(function () {
+        /* Như storefront: khu xác nhận và khối điều kiện biến mất, khối "Bạn đã là cộng tác viên" hiện phía trên tài liệu */
+        form.hidden = true; document.getElementById('xac-nhan').hidden = true; document.getElementById('dkConditions').hidden = true; done.hidden = false;
+        done.scrollIntoView({ block: 'start' });
+        done.focus({ preventScroll: true });
+      }, 500);
+    });
+
+    /* Chế độ xem (bản mẫu, như storefront): ?che-do=khach | da-dang-ky | can-dong-y-lai | da-cham-dut và &noi-dung=pdf.
+       Chỉ ẩn/hiện các khối tĩnh có data-only / data-content, không đổi dữ liệu. */
+    var params = new URLSearchParams(window.location.search);
+    var kind = { 'khach': 'guest', 'da-dang-ky': 'registered', 'can-dong-y-lai': 'reaccept', 'da-cham-dut': 'terminated' }[params.get('che-do')] || 'apply';
+    var content = params.get('noi-dung') === 'pdf' ? 'pdf' : 'text';
+    [].forEach.call(document.querySelectorAll('[data-only]'), function (el) { el.hidden = el.getAttribute('data-only').split(' ').indexOf(kind) < 0; });
+    [].forEach.call(document.querySelectorAll('[data-content]'), function (el) { el.hidden = el.getAttribute('data-content') !== content; });
+
+    document.addEventListener('click', function (e) { var a = e.target.closest('a[href="#"]'); if (a) e.preventDefault(); });
+  })();
+</script>
+</body>
+</html>
