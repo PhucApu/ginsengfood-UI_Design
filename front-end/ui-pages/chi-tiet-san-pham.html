@@ -2456,8 +2456,9 @@ body.is-nav-open { overflow: hidden; }
 </a>
 <nav class="desktop-nav" aria-label="Điều hướng chính">
 <a href="trang-chu-theo-doi-tuong/trang-chu.html">Trang chủ</a>
-<a href="ve-chung-toi.html">Về chúng tôi</a>
-<a href="tin-tuc.html">Tin tức</a>
+<!-- <a href="ve-chung-toi.html">Về chúng tôi</a> -->
+<!-- <a href="tin-tuc.html">Tin tức</a> -->
+<!-- <a href="tin-tuc.html">Cộng đồng</a> -->
 <a href="tra-cuu-don-hang.html">Tra cứu đơn hàng</a>
 <a href="trang-chu-theo-doi-tuong/dai-ly-nha-phan-phoi.html">Đại lý nhà phân phối</a>
 </nav>
@@ -2500,6 +2501,7 @@ body.is-nav-open { overflow: hidden; }
 <a href="trang-chu-theo-doi-tuong/trang-chu.html">Trang chủ</a>
 <a href="ve-chung-toi.html">Về chúng tôi</a>
 <a href="tin-tuc.html">Tin tức</a>
+<a href="tin-tuc.html">Cộng đồng</a>
 <a href="tra-cuu-don-hang.html">Tra cứu đơn hàng</a>
 <a href="trang-chu-theo-doi-tuong/dai-ly-nha-phan-phoi.html">Đại lý nhà phân phối</a>
 </nav>
@@ -2518,9 +2520,9 @@ body.is-nav-open { overflow: hidden; }
       <span class="catbar__toggle-value" id="topicCurrent">Chọn chủ đề</span>
       <svg class="icon" aria-hidden="true"><use href="#i-chev-down"/></svg>
     </button>
-    <span class="catbar__label" aria-hidden="true">Chủ đề:</span>
+    <span class="catbar__label" aria-hidden="true" style="font-weight: bold">Siêu trí tuệ tri thức y dược học:</span>
     <nav class="catbar__tabs" id="catNav" aria-label="Chủ đề">
-      <a href="tin-tuc.html?categorySlug=cong-dong">Siêu trí tuệ tri thức y dược học</a>
+      <!-- <a href="tin-tuc.html?categorySlug=cong-dong">Siêu trí tuệ tri thức y dược học</a> -->
       <a href="tin-tuc.html?categorySlug=nghien-cuu-khoa-hoc">Nghiên cứu khoa học</a>
       <a href="tin-tuc.html?categorySlug=bai-thuoc-co">Bài thuốc cổ</a>
       <a href="tin-tuc.html?categorySlug=thuoc-dan-gian">Thuốc dân gian</a>
@@ -2541,9 +2543,12 @@ body.is-nav-open { overflow: hidden; }
     </button>
     <p class="groupbar__label">Nhóm sản phẩm:</p>
     <nav class="groupbar__tabs" id="groupNav" aria-label="Nhóm sản phẩm">
-      <a href="#col-seasonal" data-hue="0">Cháo Sâm Theo Mùa</a>
-      <a href="#col-functional" data-hue="1">Cháo Sâm Chức Năng</a>
-      <a href="#col-nourishing" data-hue="2">Cháo Sâm Bổ Dưỡng</a>
+      <a href="#col-seasonal" data-hue="0">Thực phẩm</a>
+      <a href="#col-functional" data-hue="1">Thực phẩm chức năng</a>
+      <a href="#col-nourishing" data-hue="2">Thuốc y học cổ truyền</a>
+	  <a href="#col-nourishing" data-hue="2">Thuốc dược liệu thế hệ mới</a>
+	  <a href="#col-nourishing" data-hue="2">Mỹ phẩm</a>
+	  <a href="#col-nourishing" data-hue="2">Cao chuẩn hoá</a>
     </nav>
   </div>
 </section>
@@ -2555,10 +2560,12 @@ body.is-nav-open { overflow: hidden; }
   <div class="container">
     <nav aria-label="Đường dẫn">
       <ol class="crumb">
-        <li><a href="trang-chu-theo-doi-tuong/trang-chu.html">Trang chủ</a></li>
-        <li><a href="trang-chu-theo-doi-tuong/trang-chu.html#collections">Sản phẩm</a></li>
-        <li><a href="trang-chu-theo-doi-tuong/trang-chu.html#collections">Cháo Sâm Theo Mùa</a></li>
-        <li><span aria-current="page">Cháo Sâm Mùa Hạ – Cá Basa</span></li>
+        <li><a href="trang-chu-theo-doi-tuong/trang-chu.html" style="font-weight: bold;">Thực phẩm</a></li>
+        <li><a href="trang-chu-theo-doi-tuong/trang-chu.html#collections">Cháo sâm theo mùa</a></li>
+        <li><a href="trang-chu-theo-doi-tuong/trang-chu.html#collections">Cháo Sâm theo yêu cầu</a></li>
+		     <li><a href="trang-chu-theo-doi-tuong/trang-chu.html#collections">Cháo sâm bổ dưỡng</a></li>
+			      <li><a href="trang-chu-theo-doi-tuong/trang-chu.html#collections">Cháo Sâm thuần chay</a></li>
+        <!-- <li><span aria-current="page">Cháo Sâm Mùa Hạ – Cá Basa</span></li> -->
       </ol>
     </nav>
   </div>
@@ -2733,7 +2740,7 @@ body.is-nav-open { overflow: hidden; }
     <div class="container">
         <div class="card-block card-block--ivory">
           <div class="card-block__head">
-            <h2 class="card-block__title" id="detailTitle">Bằng chứng có thể kiểm tra</h2>
+            <h2 class="card-block__title" id="detailTitle">Vùng trồng và quy trình sản xuất</h2>
             <span class="card-block__hint">Bấm vào từng mục để xem hồ sơ gốc</span>
           </div>
           <div class="proofs">
