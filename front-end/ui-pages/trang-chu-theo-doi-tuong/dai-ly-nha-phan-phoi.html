@@ -1140,8 +1140,217 @@ body.is-nav-open { overflow: hidden; }
 :root { --header-h: 83px; }
 @media (max-width: 1439px) { :root { --header-h: 79px; } }
 @media (max-width: 767px) { :root { --header-h: 65px; } }
+
+/*
+ * Header nền navy đậm + viền vàng (chủ dự án chốt phương án A, 2026-10-17: sếp chê header trắng quá; bản mẫu đồng bộ với storefront, đợt mười sáu). Nền là navy đậm của chân
+ * trang (--gf-navy-dark), viền dưới và gạch chân mục đang chọn là vàng, chữ và icon màu ngà, mục đang chọn hoặc rê chuột là vàng
+ * nhạt. Nút tròn trong mờ viền vàng, rê hoặc nhấn thì tô vàng đặc với icon navy. Logo là bản chữ ngà dành cho nền tối. Vòng tiêu
+ * điểm đổi từ xanh (chỉ 3,1:1 trên navy) sang vàng nhạt (9:1). Các bảng nổi (menu tài khoản, menu ngôn ngữ, gợi ý tìm kiếm, menu
+ * điện thoại) giữ nền sáng chữ navy. Ô đại diện theo hạng (chữ cái, ảnh, huy hiệu) là chip sáng có viền riêng nên giữ nguyên: khối
+ * này chỉ chọn nút tròn nằm trực tiếp trong hàng header, không chạm tới ô đại diện hay menu điện thoại.
+ */
+.storefront-reference-shell {
+  --storefront-header-surface: var(--gf-navy-dark, #072A4E);
+  --storefront-header-ink: var(--gf-ivory, #FFF8EA);
+  --storefront-header-accent: var(--gf-gold, #C69A2B);
+  --storefront-header-accent-soft: var(--gf-gold-soft, #E8C979);
+}
+
+.storefront-reference-shell .storefront-header {
+  border-bottom-color: var(--storefront-header-accent);
+  background: var(--storefront-header-surface);
+  box-shadow: 0 10px 30px rgba(7, 42, 78, 0.3);
+}
+
+.storefront-reference-shell .desktop-nav > a {
+  color: var(--storefront-header-ink);
+}
+
+.storefront-reference-shell .desktop-nav > a:hover,
+.storefront-reference-shell .desktop-nav > a:focus-visible,
+.storefront-reference-shell .desktop-nav > a[aria-current="page"] {
+  color: var(--storefront-header-accent-soft);
+}
+
+.storefront-reference-shell .desktop-nav > a::after {
+  background: var(--storefront-header-accent);
+}
+
+.storefront-reference-shell .desktop-nav .header-nav-disabled:disabled {
+  color: rgba(255, 248, 234, 0.55);
+}
+
+.storefront-reference-shell .header-grid > .icon-btn,
+.storefront-reference-shell .header-actions > .icon-btn,
+.storefront-reference-shell .header-actions .locale-pill {
+  border-color: rgba(198, 154, 43, 0.65);
+  background: rgba(255, 248, 234, 0.06);
+  color: var(--storefront-header-ink);
+  box-shadow: none;
+}
+
+.storefront-reference-shell .header-grid > .icon-btn:hover,
+.storefront-reference-shell .header-grid > .icon-btn:focus-visible,
+.storefront-reference-shell .header-grid > .icon-btn[aria-expanded="true"],
+.storefront-reference-shell .header-actions > .icon-btn:hover,
+.storefront-reference-shell .header-actions > .icon-btn:focus-visible,
+.storefront-reference-shell .header-actions > .icon-btn[aria-expanded="true"],
+.storefront-reference-shell .header-actions .locale-pill:hover,
+.storefront-reference-shell .header-actions .locale-pill:focus-visible,
+.storefront-reference-shell .header-actions .locale-pill[aria-expanded="true"] {
+  border-color: var(--storefront-header-accent-soft);
+  background: var(--storefront-header-accent);
+  color: var(--storefront-header-surface);
+  box-shadow: none;
+}
+
+.storefront-reference-shell .desktop-nav a:focus-visible,
+.storefront-reference-shell .header-grid > .icon-btn:focus-visible,
+.storefront-reference-shell .header-actions > .icon-btn:focus-visible,
+.storefront-reference-shell .header-actions .locale-pill:focus-visible,
+.storefront-reference-shell .header-actions > .header-account-slot .diamond-member-btn:focus-visible,
+.storefront-reference-shell .reference-cart-link:focus-visible {
+  outline-color: var(--storefront-header-accent-soft);
+}
+
+.storefront-reference-shell .locale-pill .locale-flag {
+  border-color: rgba(255, 248, 234, 0.4);
+  box-shadow: none;
+}
+
+.storefront-reference-shell .locale-pill .locale-flag.is-active {
+  border-color: var(--storefront-header-accent-soft);
+  box-shadow: 0 0 0 1px rgba(232, 201, 121, 0.35);
+}
+
+.storefront-reference-shell .reference-cart-link {
+  color: var(--storefront-header-ink);
+}
+
+.storefront-reference-shell .reference-cart-link:hover {
+  color: var(--storefront-header-accent-soft);
+}
+
+.storefront-reference-shell .reference-cart-badge {
+  background: var(--storefront-header-accent);
+  color: var(--storefront-header-surface);
+}
+
+.storefront-reference-shell .header-actions > .header-account-slot .diamond-member-btn.header-member-btn {
+  color: var(--storefront-header-ink);
+}
+
+.storefront-reference-shell .header-actions > .header-account-slot .diamond-member-btn.header-member-btn:hover,
+.storefront-reference-shell .header-actions > .header-account-slot .diamond-member-btn.header-member-btn:focus-visible {
+  background: rgba(232, 201, 121, 0.14);
+  color: var(--storefront-header-accent-soft);
+}
+
+.storefront-reference-shell .search-box {
+  border-color: rgba(198, 154, 43, 0.55);
+  background: rgba(255, 248, 234, 0.08);
+  color: var(--storefront-header-accent-soft);
+}
+
+.storefront-reference-shell .search-box:focus-within {
+  border-color: var(--storefront-header-accent-soft);
+  box-shadow: 0 0 0 3px rgba(232, 201, 121, 0.22);
+}
+
+.storefront-reference-shell .search-box input {
+  color: var(--storefront-header-ink);
+}
+
+.storefront-reference-shell .search-box input::placeholder {
+  color: rgba(255, 248, 234, 0.7);
+}
+
+.storefront-reference-shell .search-box input::-webkit-search-cancel-button {
+  filter: invert(1);
+}
+
+@media (max-width: 1439px) {
+  .storefront-reference-shell .search-region {
+    border-top-color: rgba(198, 154, 43, 0.4);
+    background: var(--storefront-header-surface);
+    box-shadow: 0 18px 32px rgba(7, 42, 78, 0.3);
+  }
+}
+
+/* Bản mẫu mở menu ngôn ngữ bằng :focus-within (storefront dùng aria-expanded): cùng màu vàng đặc. */
+.storefront-reference-shell .locale-dropdown:focus-within .locale-pill {
+  border-color: var(--storefront-header-accent-soft);
+  background: var(--storefront-header-accent);
+  color: var(--storefront-header-surface);
+  box-shadow: none;
+}
 </style>
 <!-- gf-shell:css:end -->
+<style id="home-nav-motion">
+/* Menu di động (nút ☰, dưới 1280px). Trước đây chỉ đổi display none ↔ block nên menu hiện ra trong đúng một khung hình, và khoá cuộn làm thanh
+   cuộn biến mất nên cả header nhảy ngang (Windows có thanh cuộn thật). Bây giờ:
+   · khung menu trôi xuống nhẹ + hiện dần (opacity 260ms, transform 340ms, cùng đường cong --ease-entrance với thanh tìm kiếm); đóng thì nhanh hơn (120–180ms);
+   · từng mục trôi xuống + hiện dần, so le 22ms (chỉ lúc mở; đóng thì cả khung mờ đi một lượt);
+   · chỉ dùng transform/opacity (chạy trên GPU), không đổi chiều cao nên không kéo bố cục; luôn display:block, ẩn bằng visibility
+     (đóng xong thì các mục trong menu không còn nhận phím Tab, như khi display:none);
+   · html giữ chỗ thanh cuộn (scrollbar-gutter) để khoá cuộn không làm trang nhảy ngang;
+   · bật "giảm chuyển động" thì hiện/ẩn tức thì như cũ. Từ 1280px trở lên nút ☰ ẩn, menu này không dùng nên giữ display:none. */
+html { scrollbar-gutter: stable; }
+@media (max-width: 1279px) {
+  .storefront-reference-shell .mobile-nav {
+    display: block;
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(-10px) scale(0.985);
+    transform-origin: top center;
+    pointer-events: none;
+    transition: opacity var(--motion-fast, 120ms) var(--ease-standard, cubic-bezier(.2, 0, 0, 1)), transform var(--motion-base, 180ms) var(--ease-standard, cubic-bezier(.2, 0, 0, 1)), visibility 0s linear var(--motion-base, 180ms);
+  }
+  .storefront-reference-shell .mobile-nav.is-open,
+  .storefront-reference-shell .mobile-nav.open {
+    visibility: visible;
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+    transition: opacity var(--motion-medium, 260ms) var(--ease-standard, cubic-bezier(.2, 0, 0, 1)), transform 340ms var(--ease-entrance, cubic-bezier(.16, 1, .3, 1)), visibility 0s;
+  }
+  /* "backwards": chỉ giữ trạng thái đầu trong lúc chờ trễ, xong là trả quyền cho kiểu rê chuột/tiêu điểm của từng mục */
+  .storefront-reference-shell .mobile-nav.is-open > *,
+  .storefront-reference-shell .mobile-nav.open > * { animation: gfNavItemIn 320ms var(--ease-entrance, cubic-bezier(.16, 1, .3, 1)) 282ms backwards; }
+  .storefront-reference-shell .mobile-nav.is-open > :nth-child(1),
+  .storefront-reference-shell .mobile-nav.open > :nth-child(1) { animation-delay: 40ms; }
+  .storefront-reference-shell .mobile-nav.is-open > :nth-child(2),
+  .storefront-reference-shell .mobile-nav.open > :nth-child(2) { animation-delay: 62ms; }
+  .storefront-reference-shell .mobile-nav.is-open > :nth-child(3),
+  .storefront-reference-shell .mobile-nav.open > :nth-child(3) { animation-delay: 84ms; }
+  .storefront-reference-shell .mobile-nav.is-open > :nth-child(4),
+  .storefront-reference-shell .mobile-nav.open > :nth-child(4) { animation-delay: 106ms; }
+  .storefront-reference-shell .mobile-nav.is-open > :nth-child(5),
+  .storefront-reference-shell .mobile-nav.open > :nth-child(5) { animation-delay: 128ms; }
+  .storefront-reference-shell .mobile-nav.is-open > :nth-child(6),
+  .storefront-reference-shell .mobile-nav.open > :nth-child(6) { animation-delay: 150ms; }
+  .storefront-reference-shell .mobile-nav.is-open > :nth-child(7),
+  .storefront-reference-shell .mobile-nav.open > :nth-child(7) { animation-delay: 172ms; }
+  .storefront-reference-shell .mobile-nav.is-open > :nth-child(8),
+  .storefront-reference-shell .mobile-nav.open > :nth-child(8) { animation-delay: 194ms; }
+  .storefront-reference-shell .mobile-nav.is-open > :nth-child(9),
+  .storefront-reference-shell .mobile-nav.open > :nth-child(9) { animation-delay: 216ms; }
+  .storefront-reference-shell .mobile-nav.is-open > :nth-child(10),
+  .storefront-reference-shell .mobile-nav.open > :nth-child(10) { animation-delay: 238ms; }
+  .storefront-reference-shell .mobile-nav.is-open > :nth-child(11),
+  .storefront-reference-shell .mobile-nav.open > :nth-child(11) { animation-delay: 260ms; }
+  .storefront-reference-shell .mobile-nav.is-open > :nth-child(12),
+  .storefront-reference-shell .mobile-nav.open > :nth-child(12) { animation-delay: 282ms; }
+}
+@keyframes gfNavItemIn {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .storefront-reference-shell .mobile-nav { transition: none !important; }
+  .storefront-reference-shell .mobile-nav > * { animation: none !important; }
+}
+</style>
 <!-- gf-contact-rail:css:begin -->
 <style id="gf-contact-rail-css">
 /* Thanh liên hệ nhanh của trang chủ storefront (ReferenceFooter → .reference-social-shell). Chép từ
@@ -1435,6 +1644,463 @@ body.is-nav-open { overflow: hidden; }
 }
 </style>
 <!-- gf-contact-rail:css:end -->
+<style id="gf-nav-sub">
+/* Menu con của "Về chúng tôi" gồm "Về chúng tôi" và "Về sản phẩm". Máy tính: bảng thả dưới mục (script gf-nav-sub đặt vị trí và trạng thái mở);
+   điện thoại: mục con thụt vào ngay dưới "Về chúng tôi". Mũi tên thêm ~14px vào bề rộng mục; trang chủ và trang link giới thiệu (6 mục) khít nên thu khe ở 1280–1299px. */
+.storefront-reference-shell .desktop-nav { position: relative; }
+.storefront-reference-shell .desktop-nav > a.nav-has-sub { gap: 4px; }
+.storefront-reference-shell .nav-caret { width: 10px; height: 10px; flex: 0 0 auto; fill: none; stroke: currentColor; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; transition: transform 180ms cubic-bezier(.2, 0, 0, 1); }
+.storefront-reference-shell .desktop-nav > a.nav-has-sub[aria-expanded="true"] .nav-caret { transform: rotate(180deg); }
+.storefront-reference-shell .desktop-nav > a.nav-has-sub[aria-current="true"] { color: var(--storefront-header-accent-soft, #E8C979); }
+.storefront-reference-shell .desktop-nav > a.nav-has-sub[aria-current="true"]::after { transform: scaleX(1); }
+.storefront-reference-shell .nav-sub { position: absolute; top: 100%; left: 0; z-index: 140; min-width: 288px; padding: 8px; border: 1px solid rgba(16, 48, 95, 0.16); border-radius: 12px; background: #fff; box-shadow: 0 18px 48px rgba(8, 27, 56, 0.28); opacity: 0; visibility: hidden; transform: translateY(-4px); transition: opacity 160ms cubic-bezier(.2, 0, 0, 1), transform 160ms cubic-bezier(.2, 0, 0, 1), visibility 0s linear 160ms; }
+.storefront-reference-shell .nav-sub::before { content: ""; position: absolute; right: 0; bottom: 100%; left: 0; height: var(--sub-bridge, 12px); }
+.storefront-reference-shell .nav-sub.is-open { opacity: 1; visibility: visible; transform: none; transition-delay: 0s; }
+.storefront-reference-shell .desktop-nav .nav-sub a { display: block; padding: 10px 14px; border-radius: 8px; color: var(--storefront-header-navy, #10305F); transition: background-color 120ms; }
+.storefront-reference-shell .desktop-nav .nav-sub a:hover { background: rgba(16, 48, 95, 0.07); }
+.storefront-reference-shell .desktop-nav .nav-sub a[aria-current="page"] { background: #FFF8EA; box-shadow: inset 3px 0 0 #C69A2B; }
+.storefront-reference-shell .desktop-nav .nav-sub a:focus-visible { outline: 2px solid var(--storefront-header-blue, #1B79C0); outline-offset: -2px; }
+.storefront-reference-shell .nav-sub__title { display: block; font-size: 15px; font-weight: 700; line-height: 1.35; }
+.storefront-reference-shell .nav-sub__note { display: block; margin-top: 2px; font-size: 13px; font-weight: 500; line-height: 1.4; color: #667085; }
+.storefront-reference-shell .mobile-nav > a.mobile-sub { min-height: 44px; padding-left: 36px; font-size: 15px; font-weight: 500; }
+.storefront-reference-shell .mobile-nav > a.mobile-sub::before { content: ""; position: absolute; top: 50%; left: 16px; width: 10px; height: 2px; border-radius: 999px; background: var(--storefront-header-gold, #C9A227); transform: translateY(-50%); }
+</style>
+<!-- Menu ☰ phương án A (chủ dự án chọn 2026-10-23, chép từ storefrontHeaderMobileMenuCss.ts của web chính; phần cuối là bổ sung riêng của bản mẫu). Đặt cuối <head> để thắng cùng độ ưu tiên với khối gf-shell:css. -->
+<style id="gf-mobile-menu-a">
+  @media (max-width: 1279px) {
+    .storefront-reference-shell .mobile-nav,
+    .storefront-reference-shell .mobile-nav.open {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      align-content: start;
+      inset-inline: 12px;
+      top: calc(100% + 6px);
+      padding: 10px;
+      border: 1px solid #E2CB8C;
+      border-radius: 18px;
+      background: #FFFFFF;
+      box-shadow: 0 24px 60px rgba(7, 42, 78, 0.28);
+    }
+
+    /* Khối tài khoản chiếm cả hàng; không còn hàng riêng có vạch kẻ như bản cũ (khách vẫn giữ một vạch mảnh dưới nút Đăng ký). */
+    .storefront-reference-shell .mobile-nav-actions {
+      display: block;
+      grid-column: 1 / -1;
+      margin: 0 0 8px;
+      padding: 0;
+      border-bottom: 0;
+    }
+
+    .storefront-reference-shell .mobile-nav-actions:has(.header-guest-btn) {
+      margin-bottom: 6px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #EFE5C8;
+    }
+
+    .storefront-reference-shell .mobile-nav-actions .header-account-slot {
+      flex: none;
+      min-width: 0;
+    }
+
+    .storefront-reference-shell .mobile-nav-actions .header-member-menu {
+      display: block;
+      width: 100%;
+    }
+
+    /* Thẻ tài khoản của hội viên: chính là nút mở/đóng lưới lối vào bên dưới. */
+    .storefront-reference-shell .mobile-nav-actions .header-member-card-trigger {
+      position: relative;
+      display: flex;
+      width: 100%;
+      min-height: 72px;
+      align-items: center;
+      gap: 12px;
+      overflow: hidden;
+      border: 0;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #143A70 0%, #072A4E 100%);
+      color: #FFFFFF;
+      cursor: pointer;
+      padding: 12px 10px 12px 12px;
+      text-align: left;
+    }
+
+    .storefront-reference-shell .mobile-nav-actions .header-member-card-trigger::after {
+      content: "";
+      position: absolute;
+      right: -34px;
+      bottom: -46px;
+      width: 130px;
+      height: 130px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(198, 154, 43, 0.38), transparent 70%);
+      pointer-events: none;
+    }
+
+    .storefront-reference-shell .mobile-nav-actions .header-member-card-trigger:focus-visible {
+      outline: 3px solid #E8C979;
+      outline-offset: 2px;
+    }
+
+    .storefront-reference-shell .header-member-card__avatar {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      flex: 0 0 46px;
+      width: 46px;
+      height: 46px;
+      place-items: center;
+      overflow: hidden;
+      border-radius: 50%;
+      background: #FFF3C9;
+      box-shadow: 0 0 0 2px #C69A2B;
+      color: #6B4A00;
+      font-size: 16px;
+      font-weight: 800;
+      line-height: 1;
+    }
+
+    .storefront-reference-shell .header-member-card__avatar img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .storefront-reference-shell .header-member-card__text {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      min-width: 0;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .storefront-reference-shell .header-member-card__name {
+      overflow: hidden;
+      color: #FFFFFF;
+      font-size: 16.5px;
+      font-weight: 700;
+      line-height: 1.15;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .storefront-reference-shell .header-member-card__meta {
+      color: rgba(255, 255, 255, 0.84);
+      font-size: 13px;
+      font-weight: 500;
+      line-height: 1.25;
+    }
+
+    .storefront-reference-shell .header-member-card__chevron {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      flex: 0 0 44px;
+      width: 44px;
+      height: 44px;
+      margin-left: auto;
+      place-items: center;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.12);
+      color: #FFFFFF;
+      font-size: 22px;
+      transition: transform 200ms ease, background-color 200ms ease;
+    }
+
+    .storefront-reference-shell .header-member-card-trigger[aria-expanded="true"] .header-member-card__chevron {
+      background: rgba(255, 255, 255, 0.22);
+      transform: rotate(180deg);
+    }
+
+    /* Lưới lối vào tài khoản: nằm trong dòng chảy của menu, mở sẵn; hai cột ở điện thoại, ba cột từ 768px. */
+    .storefront-reference-shell .mobile-nav-actions .header-member-dropdown {
+      position: static;
+      flex: none;
+      width: 100%;
+      max-width: none;
+      margin: 8px 0 0;
+      overflow: visible;
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+      box-shadow: none;
+    }
+
+    .storefront-reference-shell .mobile-nav-actions .header-member-dropdown__body {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 6px;
+      padding: 0;
+    }
+
+    .storefront-reference-shell .mobile-nav-actions .header-member-menu-item {
+      min-height: 52px;
+      gap: 8px;
+      padding: 6px 10px;
+      border: 1px solid #EADFBF;
+      border-radius: 12px;
+      background: #FFFBEF;
+      color: #10305F;
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 1.2;
+    }
+
+    .storefront-reference-shell .mobile-nav-actions .header-member-menu-item:hover,
+    .storefront-reference-shell .mobile-nav-actions .header-member-menu-item:focus-visible {
+      background: #FFF3D6;
+      color: #072A4E;
+      transform: none;
+    }
+
+    .storefront-reference-shell .mobile-nav-actions .header-member-menu-item .material-symbols-outlined {
+      flex: none;
+      color: #8A6A17;
+      font-size: 20px;
+    }
+
+    .storefront-reference-shell .mobile-nav-actions .header-member-menu-item.is-danger,
+    .storefront-reference-shell .mobile-nav-actions .header-member-menu-item.is-danger .material-symbols-outlined {
+      color: #A11A1A;
+    }
+
+    /* Danh sách mục: biểu tượng bên trái, mục đang xem tô vàng nhạt có vạch vàng, bỏ gạch chân đỏ chạy hết hàng của bản cũ. */
+    .storefront-reference-shell .mobile-nav > a {
+      position: relative;
+      display: flex;
+      width: 100%;
+      min-height: 52px;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 14px;
+      border: 0;
+      border-radius: 12px;
+      background-color: transparent;
+      background-image: none;
+      color: #10305F;
+      font-size: 16px;
+      font-weight: 600;
+      padding: 0 14px;
+      text-shadow: none;
+    }
+
+    .storefront-reference-shell .mobile-nav > a::after {
+      display: none;
+    }
+
+    .storefront-reference-shell .mobile-nav > a .material-symbols-outlined {
+      flex: none;
+      font-size: 22px;
+    }
+
+    .storefront-reference-shell .mobile-nav > a:not(.nav-feature) .material-symbols-outlined {
+      color: #8A6A17;
+    }
+
+    .storefront-reference-shell .mobile-nav > a:not(.nav-feature)::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 14px;
+      left: 50px;
+      height: 1px;
+      background: #EFE5C8;
+    }
+
+    .storefront-reference-shell .mobile-nav > a:first-of-type::before,
+    .storefront-reference-shell .mobile-nav > a[aria-current="page"]::before,
+    .storefront-reference-shell .mobile-nav > a[aria-current="page"] + a::before {
+      display: none;
+    }
+
+    .storefront-reference-shell .mobile-nav > a:hover,
+    .storefront-reference-shell .mobile-nav > a:focus-visible {
+      background-color: #FBF3DE;
+      color: #072A4E;
+    }
+
+    .storefront-reference-shell .mobile-nav > a[aria-current="page"] {
+      background-color: #FFF6DD;
+      box-shadow: inset 3px 0 0 #C69A2B;
+      color: #072A4E;
+      font-weight: 700;
+    }
+
+    /* Dòng vàng "Trung tâm nhà khởi nghiệp" của cộng tác viên (chủ dự án chốt 2026-10-23): thay viên vàng ở cuối menu, nằm ĐẦU lưới lối vào, rộng hết hàng,
+       cùng nền vàng, chữ navy đậm, tên lửa và quầng sáng như viên vàng của menu máy tính. Đứng trước các dòng khác cả trong DOM nên thứ tự Tab trùng thứ tự nhìn. */
+    .storefront-reference-shell .mobile-nav-actions .header-member-menu-item.header-member-menu-item--feature {
+      position: relative;
+      isolation: isolate;
+      grid-column: 1 / -1;
+      justify-content: center;
+      gap: 10px;
+      min-height: 52px;
+      padding: 6px 22px;
+      border: 0;
+      border-radius: 999px;
+      background: linear-gradient(180deg, #F6E3A5 0%, #E8C979 46%, #CDA130 100%);
+      background-color: #E8C979;
+      color: #072A4E;
+      font-size: 16px;
+      font-weight: 800;
+      letter-spacing: 0.01em;
+      text-shadow: 0 1px 0 rgba(255, 255, 255, 0.42);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.7),
+        inset 0 -2px 0 rgba(139, 98, 12, 0.26),
+        0 0 0 1px rgba(198, 154, 43, 0.4),
+        0 8px 16px -8px rgba(198, 154, 43, 0.85);
+    }
+
+    .storefront-reference-shell .mobile-nav-actions .header-member-menu-item.header-member-menu-item--feature:hover,
+    .storefront-reference-shell .mobile-nav-actions .header-member-menu-item.header-member-menu-item--feature:focus-visible {
+      background: linear-gradient(180deg, #F6E3A5 0%, #E8C979 46%, #CDA130 100%);
+      background-color: #E8C979;
+      color: #072A4E;
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.8),
+        inset 0 -2px 0 rgba(139, 98, 12, 0.24),
+        0 0 0 1px rgba(198, 154, 43, 0.55),
+        0 10px 18px -8px rgba(198, 154, 43, 0.95);
+    }
+
+    .storefront-reference-shell .mobile-nav-actions .header-member-menu-item.header-member-menu-item--feature:focus-visible {
+      outline: 3px solid #072A4E;
+      outline-offset: 2px;
+    }
+
+    .storefront-reference-shell .mobile-nav-actions .header-member-menu-item.header-member-menu-item--feature .material-symbols-outlined {
+      color: #072A4E;
+      font-size: 22px;
+    }
+
+    /* Có dòng vàng thì còn năm dòng thường: Đăng xuất chiếm hai ô cuối nên lưới (hai hoặc ba cột) không bỏ ô trống. */
+    .storefront-reference-shell .mobile-nav-actions .header-member-menu-item--feature ~ .header-member-menu-item.is-danger {
+      grid-column: span 2;
+    }
+  }
+
+  @media (max-width: 1279px) and (min-width: 768px) {
+    .storefront-reference-shell .mobile-nav,
+    .storefront-reference-shell .mobile-nav.open {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      column-gap: 12px;
+      inset-inline: 24px;
+    }
+
+    .storefront-reference-shell .mobile-nav-actions .header-member-dropdown__body {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .storefront-reference-shell .mobile-nav > a:not(.nav-feature) {
+      margin-top: 6px;
+      border: 1px solid #F0E6CC;
+    }
+
+    .storefront-reference-shell .mobile-nav > a:not(.nav-feature)::before {
+      display: none;
+    }
+  }
+
+  /* Vệt sáng chéo lướt qua dòng vàng mỗi 6 giây, cùng khung hình navFeatureShine của viên vàng menu máy tính (khai báo ở lớp CSS thứ hai); tắt khi giảm chuyển động. */
+  @media (max-width: 1279px) and (prefers-reduced-motion: no-preference) {
+    .storefront-reference-shell .mobile-nav-actions .header-member-menu-item--feature::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      border-radius: inherit;
+      pointer-events: none;
+      background: linear-gradient(105deg, rgba(255, 255, 255, 0) 42%, rgba(255, 255, 255, 0.85) 50%, rgba(255, 255, 255, 0) 58%) 0 0 / 300% 100% no-repeat;
+      animation: navFeatureShine 6s ease-in-out 0.9s infinite;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .storefront-reference-shell .header-member-card__chevron {
+      transition: none;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .storefront-reference-shell .mobile-nav-actions .header-member-card-trigger {
+      border: 1px solid ButtonText;
+      background: ButtonFace;
+      color: ButtonText;
+    }
+
+    .storefront-reference-shell .mobile-nav-actions .header-member-card-trigger::after {
+      display: none;
+    }
+
+    .storefront-reference-shell .header-member-card__name,
+    .storefront-reference-shell .header-member-card__meta,
+    .storefront-reference-shell .header-member-card__chevron {
+      color: ButtonText;
+    }
+
+    .storefront-reference-shell .mobile-nav > a[aria-current="page"] {
+      outline: 2px solid Highlight;
+      outline-offset: -2px;
+    }
+
+    .storefront-reference-shell .mobile-nav-actions .header-member-menu-item.header-member-menu-item--feature {
+      border: 1px solid ButtonText;
+      background: ButtonFace;
+      color: ButtonText;
+      box-shadow: none;
+    }
+
+    .storefront-reference-shell .mobile-nav-actions .header-member-menu-item.header-member-menu-item--feature .material-symbols-outlined {
+      color: ButtonText;
+    }
+  }
+
+  /* ---- Bổ sung riêng cho bản mẫu HTML (không có React) ---- */
+  @keyframes navFeatureShine {
+    0% { background-position: 0% 0; }
+    22%, 100% { background-position: 100% 0; }
+  }
+
+  @media (max-width: 1279px) {
+    /* Bản mẫu mở menu bằng lớp is-open (web dùng open): khối cũ đặt display:block ở độ ưu tiên (0,3,0) nên phải đặt lại grid ở cả hai trạng thái. */
+    .storefront-reference-shell .mobile-nav.is-open,
+    .storefront-reference-shell .mobile-nav[data-nav-hidden-mode]:not([hidden]) { display: grid; }
+  }
+
+  @media (max-width: 1279px) {
+    /* Lưới lối vào tài khoản mở sẵn dưới thẻ; bấm thẻ (script gf-mobile-menu-a-js) thêm data-collapsed để thu lại. */
+    .storefront-reference-shell .mobile-nav-actions .header-member-dropdown { display: block; }
+    .storefront-reference-shell .mobile-nav-actions .header-member-menu[data-collapsed] .header-member-dropdown { display: none; }
+
+    /* Đăng xuất lấp hết ô còn lại ở hàng cuối (web tự có nhờ số dòng cố định; bản mẫu gắn lớp theo từng trang). */
+    .storefront-reference-shell .mobile-nav-actions .header-member-menu-item.is-danger.is-span-2 { grid-column: span 2; }
+    .storefront-reference-shell .mobile-nav-actions .header-member-menu-item.is-danger.is-natural { grid-column: auto; }
+
+    /* Mục con "Về sản phẩm" (chỉ có ở bản mẫu): thụt vào thẳng chữ của "Về chúng tôi", gạch vàng nhỏ thay biểu tượng, không vạch kẻ. */
+    .storefront-reference-shell .mobile-nav > a.mobile-sub { min-height: 44px; padding-left: 50px; font-size: 15px; font-weight: 500; }
+    .storefront-reference-shell .mobile-nav > a.mobile-sub::before {
+      content: "";
+      display: block;
+      position: absolute;
+      top: 50%;
+      right: auto;
+      left: 20px;
+      width: 10px;
+      height: 2px;
+      border-radius: 999px;
+      background: #C69A2B;
+      transform: translateY(-50%);
+    }
+  }
+
+  @media (max-width: 1279px) and (min-width: 768px) {
+    .storefront-reference-shell .mobile-nav > a.mobile-sub { grid-column: 1 / -1; }
+    .storefront-reference-shell .mobile-nav-actions .header-member-menu-item.is-danger.is-full-md { grid-column: 1 / -1; }
+  }
+</style>
 </head>
 
 <body>
@@ -1479,11 +2145,15 @@ body.is-nav-open { overflow: hidden; }
 <div class="header-grid">
 <button id="navToggle" class="icon-btn menu-trigger" type="button" aria-label="Mở menu điều hướng" aria-controls="mobileNav" aria-expanded="false"><span class="material-symbols-outlined" aria-hidden="true">menu</span><svg class="gf-js-icon" aria-hidden="true" focusable="false"><use href="#i-menu"/></svg></button>
 <a class="brand-logo header__logo" aria-label="Về trang chủ Ginsengfood" href="trang-chu.html">
-<img src="../../public/home-webp-v1/logo-header-light.w372.webp" srcset="../../public/home-webp-v1/logo-header-light.w186.webp 186w, ../../public/home-webp-v1/logo-header-light.w372.webp 372w, ../../public/home-webp-v1/logo-header-light.w558.webp 558w" sizes="(max-width: 767px) 136px, 176px" alt="Biểu trưng Ginsengfood" width="186" height="67" decoding="async">
+<img src="../../public/home-webp-v1/logo-header-v2.w360.webp" srcset="../../public/home-webp-v1/logo-header-v2.w120.webp 120w, ../../public/home-webp-v1/logo-header-v2.w240.webp 240w, ../../public/home-webp-v1/logo-header-v2.w360.webp 360w" sizes="(max-width: 767px) 136px, 176px" alt="Biểu trưng Ginsengfood" width="186" height="67" decoding="async">
 </a>
 <nav class="desktop-nav" aria-label="Điều hướng chính">
 <a href="trang-chu.html">Trang chủ</a>
-<a href="../ve-chung-toi.html">Về chúng tôi</a>
+<a class="nav-has-sub" aria-haspopup="true" aria-expanded="false" aria-controls="gfNavSub" href="../ve-chung-toi.html">Về chúng tôi<svg class="nav-caret" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 9l6 6 6-6"/></svg></a>
+<div class="nav-sub" id="gfNavSub" role="group" aria-label="Menu Về chúng tôi">
+<a href="../ve-chung-toi.html"><span class="nav-sub__title">Về chúng tôi</span><span class="nav-sub__note">Câu chuyện SSAVIGROUP</span></a>
+<a href="../ve-san-pham.html"><span class="nav-sub__title">Về sản phẩm</span><span class="nav-sub__note">Sáu nhóm sản phẩm</span></a>
+</div>
 <a href="../tin-tuc.html">Tin tức</a>
 <a href="../tra-cuu-don-hang.html">Tra cứu đơn hàng</a>
 <a aria-current="page" href="dai-ly-nha-phan-phoi.html">Đại lý nhà phân phối</a>
@@ -1524,11 +2194,12 @@ body.is-nav-open { overflow: hidden; }
 <a class="diamond-member-btn header-member-btn header-guest-btn" aria-label="Đăng ký" title="Đăng ký" href="../dang-nhap.html"><span class="material-symbols-outlined" aria-hidden="true">person</span><span class="header-member-label">Đăng ký</span></a>
 </div>
 </div>
-<a href="trang-chu.html">Trang chủ</a>
-<a href="../ve-chung-toi.html">Về chúng tôi</a>
-<a href="../tin-tuc.html">Tin tức</a>
-<a href="../tra-cuu-don-hang.html">Tra cứu đơn hàng</a>
-<a aria-current="page" href="dai-ly-nha-phan-phoi.html">Đại lý nhà phân phối</a>
+<a href="trang-chu.html"><span class="material-symbols-outlined" aria-hidden="true">home</span>Trang chủ</a>
+<a href="../ve-chung-toi.html"><span class="material-symbols-outlined" aria-hidden="true">info</span>Về chúng tôi</a>
+<a class="mobile-sub" href="../ve-san-pham.html">Về sản phẩm</a>
+<a href="../tin-tuc.html"><span class="material-symbols-outlined" aria-hidden="true">newspaper</span>Tin tức</a>
+<a href="../tra-cuu-don-hang.html"><span class="material-symbols-outlined" aria-hidden="true">receipt_long</span>Tra cứu đơn hàng</a>
+<a aria-current="page" href="dai-ly-nha-phan-phoi.html"><span class="material-symbols-outlined" aria-hidden="true">storefront</span>Đại lý nhà phân phối</a>
 </nav>
 </div>
 <button type="button" id="searchCancel" class="gf-js-hook" hidden tabindex="-1" aria-hidden="true">Hủy</button>
@@ -2032,6 +2703,69 @@ body.is-nav-open { overflow: hidden; }
   supportBtn.addEventListener('click', function () { var open = supportMenu.hidden; supportMenu.hidden = !open; supportBtn.setAttribute('aria-expanded', String(open)); });
   document.addEventListener('click', function (e) { if (!supportMenu.hidden && !e.target.closest('#support')) { supportMenu.hidden = true; supportBtn.setAttribute('aria-expanded', 'false'); } });
 
+})();
+</script>
+<script id="gf-nav-sub-js">
+/* Menu con "Về chúng tôi" ở header máy tính: đặt vị trí bảng thả dưới mục, mở khi rê chuột / Tab / chạm lần đầu (thiết bị cảm ứng), Esc để đóng. */
+(function () {
+  'use strict';
+  var link = document.querySelector('.desktop-nav > a.nav-has-sub');
+  var sub = document.getElementById('gfNavSub');
+  var header = document.getElementById('header');
+  if (!link || !sub || !header) return;
+  var nav = link.parentNode, timer = 0, quiet = false;
+  var noHover = window.matchMedia('(hover: none)');
+  function place() {
+    if (!nav.offsetParent) return;
+    var top = header.getBoundingClientRect().bottom - nav.getBoundingClientRect().top;
+    sub.style.left = link.offsetLeft + 'px';
+    sub.style.top = top + 'px';
+    sub.style.setProperty('--sub-bridge', Math.max(0, top - link.offsetTop - link.offsetHeight) + 'px');
+  }
+  function isOpen() { return sub.classList.contains('is-open'); }
+  function setOpen(open) {
+    if (open) place();
+    sub.classList.toggle('is-open', open);
+    link.setAttribute('aria-expanded', String(open));
+  }
+  function open() { clearTimeout(timer); setOpen(true); }
+  function focusLink() { quiet = true; link.focus(); quiet = false; }
+  function closeSoon() { clearTimeout(timer); timer = setTimeout(function () { setOpen(false); }, 160); }
+  [link, sub].forEach(function (el) {
+    el.addEventListener('mouseenter', function () { if (!noHover.matches) open(); });
+    el.addEventListener('mouseleave', function () { if (!noHover.matches) closeSoon(); });
+    el.addEventListener('focusin', function (e) { if (!quiet && e.target.matches(':focus-visible')) open(); });
+    el.addEventListener('focusout', function (e) { if (e.relatedTarget !== link && !sub.contains(e.relatedTarget)) closeSoon(); });
+  });
+  link.addEventListener('click', function (e) { if (noHover.matches && !isOpen()) { e.preventDefault(); open(); } });
+  document.addEventListener('click', function (e) { if (noHover.matches && isOpen() && !nav.contains(e.target)) setOpen(false); });
+  link.addEventListener('keydown', function (e) { if (e.key === 'ArrowDown') { e.preventDefault(); open(); sub.querySelector('a').focus(); } });
+  sub.addEventListener('keydown', function (e) {
+    var items = Array.prototype.slice.call(sub.querySelectorAll('a')), i = items.indexOf(document.activeElement);
+    if (e.key === 'ArrowDown') { e.preventDefault(); items[(i + 1) % items.length].focus(); }
+    else if (e.key === 'ArrowUp') { e.preventDefault(); if (i <= 0) focusLink(); else items[i - 1].focus(); }
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== 'Escape' || !isOpen()) return;
+    var inside = sub.contains(document.activeElement);
+    setOpen(false);
+    if (inside) focusLink();
+  });
+  window.addEventListener('resize', function () { if (isOpen()) { if (nav.offsetParent) place(); else setOpen(false); } });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { if (isOpen()) place(); });
+})();
+</script>
+<script id="gf-mobile-menu-a-js">
+(function () {
+  /* Thẻ tài khoản trong menu ☰ (dưới 1280px): bấm để thu/mở lưới lối vào bên dưới; mở sẵn khi vào trang (như web chính). */
+  var trigger = document.querySelector('#mobileNav .header-member-card-trigger');
+  if (!trigger) return;
+  var menu = trigger.closest('.header-member-menu');
+  trigger.addEventListener('click', function () {
+    var open = trigger.getAttribute('aria-expanded') === 'true';
+    trigger.setAttribute('aria-expanded', String(!open));
+    if (open) menu.setAttribute('data-collapsed', ''); else menu.removeAttribute('data-collapsed');
+  });
 })();
 </script>
 </body>

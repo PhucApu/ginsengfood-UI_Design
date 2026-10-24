@@ -1197,6 +1197,98 @@
       transition-duration: 0.01ms !important;
     }
   }
+
+/*
+ * Header gọn (trang một việc: đăng nhập, đăng ký, thanh toán, tài khoản...) cũng nền navy đậm + viền vàng như header chung (chủ dự án chốt
+ * phương án A, 2026-10-17: sếp chê header trắng quá; bản mẫu đồng bộ với storefront, đợt mười sáu). Nền là navy đậm của chân trang, viền dưới
+ * vàng, link và chữ màu ngà, nút ngôn ngữ trong mờ viền vàng (rê hoặc mở thì tô vàng đặc icon navy), vòng tiêu điểm vàng nhạt. Chip tài khoản
+ * in tên màu ngà và dòng hạng bằng kim loại của hạng (chỉ đặt được trên nền tối). Logo là bản chữ ngà dành cho nền tối.
+ */
+.focus-header {
+  border-bottom: 1px solid var(--gf-gold, #C69A2B);
+  background: var(--gf-navy-dark, #072A4E);
+  box-shadow: 0 10px 30px rgba(7, 42, 78, 0.3);
+}
+
+.focus-header :focus-visible {
+  box-shadow: 0 0 0 3px rgba(232, 201, 121, 0.55);
+}
+
+.focus-header .focus-header__back {
+  color: var(--gf-ivory, #FFF8EA);
+}
+
+.focus-header .focus-header__back:hover {
+  color: var(--gf-gold-soft, #E8C979);
+}
+
+.focus-header [data-tier="silver"] {
+  --tier-on-dark: var(--storefront-tier-silver, #B9BFC7);
+}
+
+.focus-header [data-tier="gold"] {
+  --tier-on-dark: var(--storefront-tier-gold, #D4AF37);
+}
+
+.focus-header [data-tier="platinum"] {
+  --tier-on-dark: var(--storefront-tier-platinum, #E5EAF0);
+}
+
+.focus-header [data-tier="diamond"] {
+  --tier-on-dark: var(--storefront-tier-diamond, #EAF6FF);
+}
+
+.focus-header [data-tier="none"] {
+  --tier-on-dark: rgba(255, 248, 234, 0.72);
+}
+
+.focus-header .who {
+  border-left-color: rgba(255, 248, 234, 0.28);
+}
+
+.focus-header .who__name {
+  color: var(--gf-ivory, #FFF8EA);
+}
+
+.focus-header .who__tier {
+  color: var(--tier-on-dark);
+}
+
+.focus-header .who__dot {
+  box-shadow: 0 0 0 3px rgba(255, 248, 234, 0.18);
+}
+
+.focus-header .locale-pill {
+  border-color: rgba(198, 154, 43, 0.65);
+  background: rgba(255, 248, 234, 0.06);
+  color: var(--gf-ivory, #FFF8EA);
+  box-shadow: none;
+}
+
+.focus-header .locale-pill:hover,
+.focus-header .locale-pill:focus-visible,
+.focus-header .locale-pill[aria-expanded="true"],
+.focus-header .locale-dropdown:focus-within .locale-pill {
+  border-color: var(--gf-gold-soft, #E8C979);
+  background: var(--gf-gold, #C69A2B);
+  color: var(--gf-navy-dark, #072A4E);
+  box-shadow: none;
+}
+
+.focus-header .locale-pill:focus-visible {
+  outline: 3px solid var(--gf-gold-soft, #E8C979);
+  outline-offset: 4px;
+}
+
+.focus-header .locale-pill .locale-flag {
+  border-color: rgba(255, 248, 234, 0.4);
+  box-shadow: none;
+}
+
+.focus-header .locale-pill .locale-flag.is-active {
+  border-color: var(--gf-gold-soft, #E8C979);
+  box-shadow: 0 0 0 1px rgba(232, 201, 121, 0.35);
+}
 </style>
 <!-- gf-shell:css:end -->
 <!-- gf-contact-rail:css:begin -->
@@ -1526,7 +1618,7 @@
 <header class="focus-header">
 <div class="focus-header__inner">
 <a class="focus-header__logo" aria-label="Ginsengfood – Trang chủ" href="trang-chu-theo-doi-tuong/trang-chu-silver-v2.html">
-<img src="../public/home-webp-v1/logo-header-light.w558.webp" srcset="../public/home-webp-v1/logo-header-light.w186.webp 186w, ../public/home-webp-v1/logo-header-light.w372.webp 372w, ../public/home-webp-v1/logo-header-light.w558.webp 558w" sizes="(max-width: 767px) 128px, 150px" alt="Ginsengfood · Y thực đồng nguyên" width="186" height="67" decoding="async">
+<img src="../public/home-webp-v1/logo-header-v2.w360.webp" srcset="../public/home-webp-v1/logo-header-v2.w120.webp 120w, ../public/home-webp-v1/logo-header-v2.w240.webp 240w, ../public/home-webp-v1/logo-header-v2.w360.webp 360w" sizes="(max-width: 767px) 128px, 150px" alt="Ginsengfood · Y thực đồng nguyên" width="186" height="67" decoding="async">
 </a>
 <div class="focus-header__actions" data-long-back-label="true">
 <nav id="localeDropdown" class="locale-dropdown" aria-label="Chọn ngôn ngữ">

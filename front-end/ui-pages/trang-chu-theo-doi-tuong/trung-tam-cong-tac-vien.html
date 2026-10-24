@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="description" content="Ginsengfood – Trung tâm cộng tác viên: tổng quan kỳ đối soát, link chia sẻ, đơn từ link, hoa hồng và chi trả, tài nguyên quảng bá.">
+  <meta name="description" content="Ginsengfood – Trung tâm cộng tác viên: tổng quan kỳ đối soát, link chia sẻ, đơn từ link, hoa hồng và chi trả, kho tài nguyên quảng bá.">
   <meta name="theme-color" content="#072A4E">
   <title>Ginsengfood – Trung tâm cộng tác viên</title>
 
@@ -20,18 +20,25 @@
       bản thật đọc từ Runtime, frontend không tự tính hoa hồng. Số liệu đơn, doanh số, hoa hồng, ngày chi trả là dữ liệu mẫu (đã cộng khớp nhau).
     - Mã giới thiệu ngẫu nhiên, link không chứa họ tên / email / số điện thoại; bảng đơn chỉ có mã rút gọn, không có thông tin người mua (điều khoản 7.1).
     - Mã QR dùng thư viện qrcode-generator (cdnjs), chỉ tải khi khối Link chia sẻ hiện ra.
+    - Biểu đồ ở khối Tổng quan (cột theo tháng + đường luỹ kế của tháng trong danh sách đơn) do script vẽ từ chính bảng Hoa hồng và danh sách Đơn từ link, không có số liệu nhập riêng; không vẽ phần hoa hồng của đơn chờ xác nhận.
   -->
 
   <!--
     GHI CHÚ 2026-09-30 (CTV2-00, Gate 0 đợt 2 `APPROVED_2026-09-30`): đây là mock tĩnh. Khi port sang /{locale}/collaborator KHÔNG làm theo
     (từ 2026-10-12 bản mẫu này đã đồng bộ với storefront nên các mục dưới đây đã được bỏ/đổi trong HTML, chỉ còn lại như ghi chú lý do):
     - Link cửa hàng và mã giới thiệu riêng (K7Q2MX9P): bỏ, chỉ link sản phẩm (ODR-CTV2-03; AFF-007/015). Nút "Chia sẻ link cửa hàng" đổi thành "Chia sẻ link sản phẩm" (chọn sản phẩm rồi tạo).
+    - (CẬP NHẬT 2026-10-22, chủ dự án: ĐẢO LẠI theo CTV-STORE-B03/P02/P03. Cộng tác viên chỉ có MỘT link giới thiệu cho cả cửa hàng; không chọn sản phẩm, không nút "Tạo link", không bảng "Link của tôi". Sản phẩm nào được tính hoa hồng do admin thiết lập. Bản mẫu đã bỏ ô tìm/chọn sản phẩm, nút Tạo link và bảng Link của tôi.)
     - Chip hạng "Gold" / "Hạng Gold": bỏ (ODR-CTV2-12).
     - Cột "Khấu trừ thuế", "Chi trả", "Ngày chi trả", ô "Tài khoản nhận hoa hồng" và nút "Đổi tài khoản nhận tiền": bỏ; hệ thống chưa có chi trả (ODR-CTV2-06, CTV-F02).
     - Thanh cộng tác viên dưới header (trang-chu-cong-tac-vien.html): không làm; lối vào là mục menu người dùng + thẻ ở /account (ODR-CTV2-02, hoãn CTV2-F08).
     - "Kỳ đối soát tháng MM/YYYY" đổi thành "Tháng MM/YYYY" (theo ngày đặt đơn); "Hoa hồng đã xác nhận" đổi thành "Hoa hồng đã ghi nhận" (ODR-CTV2-07, FR2-D01).
     Chi tiết: docs/docs-ginsengfood-project/to-do-list/phase-requirement-reviews/collaborator-center-phase-2-requirement-review.md
   -->
+
+  <script>
+    /* Trạng thái thu gọn thanh menu trái nhớ ở trình duyệt; đặt sớm ở <head> để trang không nháy từ rộng sang hẹp khi tải. */
+    try { if (localStorage.getItem('ctrSideCollapsed') === '1') document.documentElement.setAttribute('data-ctr-side', 'collapsed'); } catch (e) {}
+  </script>
 
   <!-- Manrope: phông của nhãn ô nhập/ô chọn trong storefront (FormField, DropdownSelect) -->
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600&display=swap" rel="stylesheet">
@@ -127,9 +134,9 @@
     [data-collaborator-center] .ctr-lead { margin: 4px 0 0; color: var(--gf-muted); font-size: 14.5px; }
     /* Khối trạng thái (đang tải, lỗi, chưa đăng nhập, không dùng được). */
     [data-collaborator-center] .ctr-state { max-width: 860px; margin: 0 auto; padding: 28px 28px 26px; border: 1px solid var(--gf-border); border-top: 3px solid var(--gf-navy); border-radius: 6px; background: var(--gf-white); box-shadow: 0 1px 2px rgba(16, 48, 95, 0.05), 0 14px 36px -22px rgba(16, 48, 95, 0.35); }
-    /* Thẻ cộng tác viên (bản mẫu .ctvid). */
-    [data-collaborator-center] .ctr-id { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); overflow: hidden; border: 1px solid var(--gf-border); border-radius: var(--gf-radius-xl); background: var(--gf-white); box-shadow: var(--gf-shadow-card); }
-    [data-collaborator-center] .ctr-id__me { display: flex; min-width: 0; flex-direction: column; gap: 12px; padding: 20px 22px; background: var(--gf-navy); color: var(--gf-white); }
+    /* Thẻ cộng tác viên (bản mẫu .ctvid). Bố cục chủ dự án chọn 2026-10-21 (phương án A): dải navy ở trên (avatar, tên, ngày tham gia và trạng thái cùng một hàng), các thẻ tỷ lệ hoa hồng nằm ngay bên dưới. */
+    [data-collaborator-center] .ctr-id { display: grid; grid-template-columns: minmax(0, 1fr); overflow: hidden; border: 1px solid var(--gf-border); border-radius: var(--gf-radius-xl); background: var(--gf-white); box-shadow: var(--gf-shadow-card); }
+    [data-collaborator-center] .ctr-id__me { display: flex; min-width: 0; flex-flow: row wrap; align-items: center; justify-content: space-between; gap: 10px 14px; padding: 16px 22px; background: var(--gf-navy); color: var(--gf-white); }
     [data-collaborator-center] .ctr-id__top { display: flex; min-width: 0; align-items: center; gap: 12px; }
     [data-collaborator-center] .ctr-avatar { display: grid; width: 48px; height: 48px; flex: 0 0 auto; place-items: center; border: 1.5px solid var(--gf-gold); border-radius: 999px; background: #FFF3CC; color: var(--gf-gold-text); font-size: 16px; font-weight: 700; }
     [data-collaborator-center] .ctr-id__name { margin: 0; color: var(--gf-white); font-size: 17px; font-weight: 700; overflow-wrap: anywhere; }
@@ -142,7 +149,7 @@
     [data-collaborator-center] .ctr-pill[data-status="suspended"]::before { background: #F5B949; }
     [data-collaborator-center] .ctr-pill[data-status="terms-required"]::before { background: #F5B949; }
     [data-collaborator-center] .ctr-pill[data-status="terminated"] { border-color: rgba(255, 255, 255, 0.25); background: rgba(255, 255, 255, 0.08); color: #C9D3E0; }
-    [data-collaborator-center] .ctr-id__rates { display: flex; min-width: 0; flex-direction: column; gap: 12px; padding: 20px 22px; }
+    [data-collaborator-center] .ctr-id__rates { display: flex; min-width: 0; flex-direction: column; gap: 12px; padding: 18px 22px 20px; }
     [data-collaborator-center] .ctr-label { margin: 0; color: var(--gf-muted); font-size: 13px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; }
     [data-collaborator-center] .ctr-rates { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
     [data-collaborator-center] .ctr-rate { padding: 12px 14px; border: 1px solid var(--gf-border); border-radius: var(--gf-radius-md); background: var(--gf-cream); }
@@ -272,20 +279,107 @@
     [data-collaborator-center] .ctr-pager__page[aria-current="page"] { color: var(--gf-navy); font-weight: 700; text-decoration-color: var(--gf-navy); }
     [data-collaborator-center] .ctr-pager__arrow:focus-visible, [data-collaborator-center] .ctr-pager__page:focus-visible { outline: none; box-shadow: var(--gf-focus-ring); }
     [data-collaborator-center] .ctr-pager__gap { width: 22px; color: var(--gf-muted); font-size: 14px; text-align: center; user-select: none; }
-    @media (max-width: 1199px) {
+    /* Thanh menu trái thu gọn được (từ 1024px; dưới đó menu là dải tab ngang nên nút ẩn). Trạng thái ở html[data-ctr-side="collapsed"], nhớ bằng localStorage. */
+    /* --ctr-title-offset = chiều cao khối tiêu đề (h1 30px × 1.2 + lead 4px + 14.5px × 1.55) + khoảng cách 18px của cột nội dung: hạ thanh menu để mép trên ngang card cộng tác viên. Đổi cỡ chữ ở .ctr-title / .ctr-lead thì đổi cả ở đây. */
+    [data-collaborator-center] .ctr__inner { --ctr-title-offset: calc(30px * 1.2 + 4px + 14.5px * 1.55 + 18px); transition: grid-template-columns 200ms var(--gf-ease-standard); }
+    [data-collaborator-center] .ctr-side__head { display: flex; align-items: center; justify-content: flex-end; padding: 0 2px 8px; }
+    [data-collaborator-center] .ctr-side__toggle { display: inline-grid; flex: 0 0 auto; width: 36px; height: 36px; place-items: center; margin: 0; padding: 0; border: 0; border-radius: var(--gf-radius-md); background: transparent; color: var(--gf-muted); cursor: pointer; }
+    [data-collaborator-center] .ctr-side__toggle:hover { background: var(--gf-cream); color: var(--gf-navy); }
+    [data-collaborator-center] .ctr-side__toggle:focus-visible { outline: none; box-shadow: var(--gf-focus-ring); }
+    [data-collaborator-center] .ctr-side__toggle .ctr-icon { width: 20px; height: 20px; transition: transform var(--gf-motion-base) var(--gf-ease-standard); }
+    @media (min-width: 1024px) {
+      [data-collaborator-center] .ctr__side { z-index: 30; margin-top: var(--ctr-title-offset); }
+      html[data-ctr-side="collapsed"] [data-collaborator-center] .ctr__inner { grid-template-columns: 76px minmax(0, 1fr); }
+      html[data-ctr-side="collapsed"] [data-collaborator-center] .ctr-side { padding: 12px 8px; }
+      html[data-ctr-side="collapsed"] [data-collaborator-center] .ctr-side__head { justify-content: center; padding: 0 0 6px; }
+      html[data-ctr-side="collapsed"] [data-collaborator-center] .ctr-side__toggle .ctr-icon { transform: rotate(180deg); }
+      html[data-ctr-side="collapsed"] [data-collaborator-center] .ctr-side__link { position: relative; justify-content: center; padding: 0; }
+      html[data-ctr-side="collapsed"] [data-collaborator-center] .ctr-side__link .ctr-icon { width: 21px; height: 21px; }
+      /* Nhãn trở thành ô nhỏ bên phải biểu tượng, chỉ hiện khi trỏ hoặc Tab tới; vẫn nằm trong cây truy cập nên đọc màn hình không mất tên mục. */
+      html[data-ctr-side="collapsed"] [data-collaborator-center] .ctr-side__label { position: absolute; top: 50%; left: calc(100% + 12px); z-index: 40; padding: 6px 10px; border-radius: 8px; background: var(--gf-navy); color: var(--gf-white); font-size: 13px; font-weight: 600; line-height: 1.3; white-space: nowrap; opacity: 0; pointer-events: none; transform: translate(-4px, -50%); transition: opacity 120ms ease, transform 120ms ease; }
+      html[data-ctr-side="collapsed"] [data-collaborator-center] .ctr-side__link:hover .ctr-side__label, html[data-ctr-side="collapsed"] [data-collaborator-center] .ctr-side__link:focus-visible .ctr-side__label { opacity: 1; transform: translate(0, -50%); }
+    }
+    @media (max-width: 1023px) {
+      [data-collaborator-center] .ctr-side__head { display: none; }
+    }    /* Biểu đồ hoa hồng (khối Tổng quan). SVG do script vẽ từ số liệu có sẵn trong trang; mỗi biểu đồ một chuỗi nên chỉ một màu navy, không cần chú giải. */
+    [data-collaborator-center] .ctr-charts { position: relative; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 12px; margin: 0; }
+    [data-collaborator-center] .ctr-chart { position: relative; display: flex; min-width: 0; flex-direction: column; gap: 8px; margin: 0; padding: 14px 16px 12px; border: 1px solid var(--gf-border); border-top: 3px solid var(--gf-gold); border-radius: var(--gf-radius-lg); background: linear-gradient(180deg, var(--gf-ivory) 0%, var(--gf-cream) 45%); }
+    [data-collaborator-center] .ctr-chart__title { margin: 0; color: var(--gf-navy); font-size: 15.5px; font-weight: 700; }
+    [data-collaborator-center] .ctr-chart__sub { margin: 2px 0 0; color: var(--gf-muted); font-size: 13px; line-height: 1.45; }
+    /* Khung gồm cả phần vẽ lẫn dải nhãn trục dưới, để thẻ không sinh thanh cuộn lồng. */
+    [data-collaborator-center] .ctr-chart__frame { position: relative; height: 232px; border-radius: var(--gf-radius-md); touch-action: pan-y; }
+    [data-collaborator-center] .ctr-chart__frame:focus-visible { outline: none; box-shadow: var(--gf-focus-ring); }
+    [data-collaborator-center] .ctr-chart__svg { display: block; overflow: visible; }
+    [data-collaborator-center] .ctr-chart__ruler { position: absolute; width: 0; height: 0; overflow: hidden; visibility: hidden; pointer-events: none; }
+    [data-collaborator-center] .ctr-chart__grid { stroke: var(--gf-border); stroke-width: 1; shape-rendering: crispEdges; }
+    [data-collaborator-center] .ctr-chart__axis { stroke: var(--gf-border-strong); stroke-width: 1; shape-rendering: crispEdges; }
+    [data-collaborator-center] .ctr-chart__tick, [data-collaborator-center] .ctr-chart__annot, [data-collaborator-center] .ctr-chart__cat { fill: var(--gf-muted); font-size: 13px; font-variant-numeric: tabular-nums; }
+    [data-collaborator-center] .ctr-chart__cat { fill: var(--gf-text); font-weight: 500; }
+    [data-collaborator-center] .ctr-chart__cat--sub { fill: var(--gf-muted); font-weight: 400; }
+    [data-collaborator-center] .ctr-chart__val { fill: var(--gf-text); font-size: 13px; font-weight: 650; font-variant-numeric: tabular-nums; }
+    /* Cột: chỉ cột đang đọc giữ nguyên độ đậm, các cột còn lại mờ đi; lúc nghỉ không cột nào bị làm mờ. */
+    [data-collaborator-center] .ctr-chart__col { transition: opacity 140ms ease; }
+    [data-collaborator-center] .ctr-chart__frame[data-reading] .ctr-chart__col:not([data-active]) { opacity: 0.4; }
+    [data-collaborator-center] .ctr-chart__bar { fill: url(#ctrBarFill); }
+    [data-collaborator-center] .ctr-chart__bar[data-open] { fill: url(#ctrBarOpen); }
+    [data-collaborator-center] .ctr-chart__edge { fill: none; stroke: var(--gf-warning); stroke-width: 1.5; stroke-dasharray: 4 3; stroke-linejoin: round; }
+    /* Đường luỹ kế nối thẳng các điểm; vùng nền nhạt là các ngày có đơn chờ xác nhận (chưa tính hoa hồng). */
+    [data-collaborator-center] .ctr-chart__wash { fill: var(--gf-warning); fill-opacity: 0.14; }
+    [data-collaborator-center] .ctr-chart__annot { fill: #8A5A0B; font-weight: 600; }
+    [data-collaborator-center] .ctr-chart__area { fill: url(#ctrAreaFill); stroke: none; }
+    [data-collaborator-center] .ctr-chart__line { fill: none; stroke: var(--gf-navy); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    [data-collaborator-center] .ctr-chart__dot { fill: var(--gf-navy); stroke: var(--gf-cream); stroke-width: 2; }
+    [data-collaborator-center] .ctr-chart__dot--wait { fill: var(--gf-cream); stroke: #9A6212; }
+    [data-collaborator-center] .ctr-chart__cross { stroke: var(--gf-border-strong); stroke-width: 1; shape-rendering: crispEdges; }
+    [data-collaborator-center] .ctr-chart__read { fill: var(--gf-navy); stroke: var(--gf-cream); stroke-width: 2; }
+    /* Cột và điểm đang trỏ nổi lên (đổ bóng nhẹ), ô số liệu nổi phía trên có mũi chỉ vào đúng cột/điểm. */
+    [data-collaborator-center] .ctr-chart__col[data-active] .ctr-chart__bar { filter: drop-shadow(0 5px 6px rgba(16, 48, 95, 0.32)); }
+    [data-collaborator-center] .ctr-chart__read { filter: drop-shadow(0 3px 4px rgba(16, 48, 95, 0.4)); }
+    [data-collaborator-center] .ctr-chart__tip { position: absolute; top: 0; left: 0; z-index: 3; min-width: 150px; max-width: 230px; padding: 8px 11px; border: 1px solid var(--gf-border-strong); border-radius: 10px; background: var(--gf-white); box-shadow: 0 12px 28px rgba(16, 48, 95, 0.22); font-size: 13px; line-height: 1.4; pointer-events: none; transition: transform 130ms var(--gf-ease-standard); }
+    [data-collaborator-center] .ctr-chart__tip::after { content: ""; position: absolute; bottom: -6px; left: var(--tip-arrow, 50%); width: 10px; height: 10px; margin-left: -5px; border: solid var(--gf-border-strong); border-width: 0 1px 1px 0; background: var(--gf-white); transform: rotate(45deg); }
+    [data-collaborator-center] .ctr-chart__tip-cat { margin: 0 0 4px; color: var(--gf-muted); font-weight: 600; }
+    [data-collaborator-center] .ctr-chart__tip-row { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin: 0; color: var(--gf-muted); }
+    [data-collaborator-center] .ctr-chart__tip-key { display: inline-block; width: 12px; height: 3px; margin-right: 7px; border-radius: 2px; background: var(--gf-navy); vertical-align: middle; }
+    [data-collaborator-center] .ctr-chart__tip-key[data-tone="wait"] { background: var(--gf-warning); }
+    [data-collaborator-center] .ctr-chart__tip-val { color: var(--gf-text); font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; }
+    [data-collaborator-center] .ctr-chart__more summary { display: inline-flex; min-height: 44px; align-items: center; color: var(--gf-navy); cursor: pointer; font-size: 14px; font-weight: 600; }
+    [data-collaborator-center] .ctr-chart__more summary:hover { color: var(--gf-navy-700); text-decoration: underline; text-underline-offset: 3px; }
+    [data-collaborator-center] .ctr-chart__more summary:focus-visible { outline: none; border-radius: var(--gf-radius-sm); box-shadow: var(--gf-focus-ring); }
+    [data-collaborator-center] .ctr-chart__more[open] summary { margin-bottom: 4px; }
+    [data-collaborator-center] .ctr-chart__more .ctr-table-wrap { background: var(--gf-white); }
+    [data-collaborator-center] .ctr-chart__sr { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip-path: inset(50%); border: 0; white-space: nowrap; }
+    @media (max-width: 767px) {
+      [data-collaborator-center] .ctr-chart { padding: 12px; }
+    }
+    @media (forced-colors: active) {
+      [data-collaborator-center] .ctr-chart__bar, [data-collaborator-center] .ctr-chart__dot, [data-collaborator-center] .ctr-chart__read { fill: CanvasText; }
+      [data-collaborator-center] .ctr-chart__dot, [data-collaborator-center] .ctr-chart__read { stroke: Canvas; }
+      [data-collaborator-center] .ctr-chart__line, [data-collaborator-center] .ctr-chart__edge, [data-collaborator-center] .ctr-chart__dot--wait { stroke: CanvasText; }
+      [data-collaborator-center] .ctr-chart__dot--wait { fill: Canvas; }
+      [data-collaborator-center] .ctr-chart__area { fill: none; }
+    }    @media (max-width: 1199px) {
       [data-collaborator-center] .ctr-metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
     @media (max-width: 1023px) {
       [data-collaborator-center] .ctr__inner { grid-template-columns: minmax(0, 1fr); gap: 16px; }
-      [data-collaborator-center] .ctr__side { z-index: 20; top: 0; }
-      [data-collaborator-center] .ctr-side { padding: 8px; border-radius: var(--gf-radius-lg); }
+      /* Menu mục (dưới 1024px): dải nổi ở ĐÁY màn hình, biểu tượng ở trên, tên ở dưới (chủ dự án chốt 2026-10-22). Không đủ chỗ thì cuộn ngang trong dải. */
+      [data-collaborator-center] .ctr__side { position: fixed; z-index: 60; top: auto; right: 0; bottom: calc(10px + env(safe-area-inset-bottom)); left: 0; margin: 0; padding-inline: 12px; pointer-events: none; }
+      [data-collaborator-center] .ctr-side { box-sizing: border-box; width: 100%; max-width: 780px; margin-inline: auto; padding: 6px; border: 1px solid #E2CB8C; border-radius: 22px; background: rgba(255, 255, 255, 0.86); box-shadow: 0 12px 32px rgba(16, 48, 95, 0.26); -webkit-backdrop-filter: blur(18px) saturate(160%); backdrop-filter: blur(18px) saturate(160%); pointer-events: auto; }
       [data-collaborator-center] .ctr-side__title, [data-collaborator-center] .ctr-side__sep, [data-collaborator-center] .ctr-side__extra { display: none; }
-      [data-collaborator-center] .ctr-side__list { flex-direction: row; gap: 6px; overflow-x: auto; scrollbar-width: none; }
+      [data-collaborator-center] .ctr-side__list { flex-direction: row; gap: 2px; overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x proximity; scrollbar-width: none; }
       [data-collaborator-center] .ctr-side__list::-webkit-scrollbar { display: none; }
-      [data-collaborator-center] .ctr-side__link { flex: 0 0 auto; font-size: 14px; white-space: nowrap; }
-      [data-collaborator-center] .ctr-side__link.is-active { box-shadow: inset 0 -2px 0 var(--gf-gold); }
-      [data-collaborator-center] .ctr-panel { scroll-margin-top: 72px; }
-      [data-collaborator-center] .ctr-id { grid-template-columns: minmax(0, 1fr); }
+      [data-collaborator-center] .ctr-side__list > li { flex: 1 0 104px; min-width: 0; scroll-snap-align: center; }
+      [data-collaborator-center] .ctr-side__link { box-sizing: border-box; width: 100%; height: 100%; min-height: 64px; flex-direction: column; justify-content: flex-start; align-items: center; gap: 4px; padding: 8px 2px 6px; border-radius: 16px; font-size: 13px; line-height: 1.2; text-align: center; white-space: normal; }
+      [data-collaborator-center] .ctr-side__link .ctr-icon { width: 22px; height: 22px; flex: 0 0 auto; }
+      [data-collaborator-center] .ctr-side__label { overflow-wrap: break-word; text-wrap: balance; }
+      [data-collaborator-center] .ctr-side__link.is-active { background: var(--gf-ivory); box-shadow: inset 0 0 0 1px var(--gf-gold); color: var(--gf-navy); }
+      [data-collaborator-center] .ctr-panel { scroll-margin-top: 16px; }
+      /* Chừa chỗ cho dải: kéo dài nền navy của chân trang, dời các nút nổi và thông báo lên trên dải */
+      .gf-site-footer::after { content: ""; display: block; height: calc(116px + env(safe-area-inset-bottom)); background: #072A4E; }
+      html .toast { bottom: calc(118px + env(safe-area-inset-bottom)); }
+      .reference-social-shell { bottom: calc(116px + env(safe-area-inset-bottom)) !important; }
+      .gf-cw__dock { bottom: calc(6rem + 24px + env(safe-area-inset-bottom)) !important; }
+      .gf-scroll-top, .to-top { bottom: calc(10.5rem + 24px + env(safe-area-inset-bottom)) !important; }
     }
     @media (max-width: 767px) {
       [data-collaborator-center] { padding: 14px 16px 36px; }
@@ -363,7 +457,7 @@
     [data-collaborator-center] .ctr-links .ctr-productcell { display: table-cell; min-width: 220px; }
     /* Nút sao chép nằm dưới tên sản phẩm trong cùng ô, để luôn thấy được khi bảng cuộn ngang ở màn hẹp. */
     [data-collaborator-center] .ctr-linkcopy { margin-top: 8px; white-space: nowrap; }
-    /* Tài nguyên quảng bá. */
+    /* Kho tài nguyên quảng bá. */
     [data-collaborator-center] .ctr-resources { display: flex; min-width: 0; flex-direction: column; gap: 14px; }
     [data-collaborator-center] .ctr-chip[role="tab"][aria-selected="true"] { border-color: var(--gf-navy); background: var(--gf-navy); color: var(--gf-white); }
     [data-collaborator-center] .ctr-resources__panel { display: flex; min-width: 0; flex-direction: column; gap: 16px; }
@@ -422,6 +516,14 @@
       [data-collaborator-center] .ctr-builder { grid-template-columns: minmax(0, 1fr) 200px; }
       [data-collaborator-center] .ctr-qr__box { width: 168px; height: 168px; }
       [data-collaborator-center] .ctr-resgrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    /* Khu "Link chia sẻ" (chủ dự án 2026-10-22): MỘT link giới thiệu cho cả cửa hàng. Cột trái = ô link + ghi chú phạm vi hoa hồng, cột phải = mã QR, hàng dưới (trải hết bề ngang) = tin nhắn gợi ý. */
+    [data-collaborator-center] .ctr-builder__msg { display: flex; min-width: 0; grid-column: 1 / -1; flex-direction: column; gap: 14px; }
+    [data-collaborator-center] .ctr-scope { display: flex; align-items: flex-start; gap: 10px; margin: 0; padding: 12px 14px; border: 1px solid var(--gf-border); border-left: 3px solid var(--gf-gold); border-radius: var(--gf-radius-md); background: var(--gf-ivory); color: var(--gf-text); font-size: 14px; line-height: 1.5; }
+    [data-collaborator-center] .ctr-scope .ctr-icon { flex: 0 0 auto; width: 19px; height: 19px; margin-top: 1px; color: var(--gf-gold-text); }
+    @media (min-width: 768px) {
+      [data-collaborator-center] .ctr-builder__form { align-self: stretch; justify-content: space-between; }
+      [data-collaborator-center] .ctr-qr { align-self: stretch; justify-content: center; }
     }
     @media (max-width: 767px) {
       [data-collaborator-center] .ctr-builder { grid-template-columns: minmax(0, 1fr); }
@@ -1410,6 +1512,98 @@
       transition-duration: 0.01ms !important;
     }
   }
+
+/*
+ * Header gọn (trang một việc: đăng nhập, đăng ký, thanh toán, tài khoản...) cũng nền navy đậm + viền vàng như header chung (chủ dự án chốt
+ * phương án A, 2026-10-17: sếp chê header trắng quá; bản mẫu đồng bộ với storefront, đợt mười sáu). Nền là navy đậm của chân trang, viền dưới
+ * vàng, link và chữ màu ngà, nút ngôn ngữ trong mờ viền vàng (rê hoặc mở thì tô vàng đặc icon navy), vòng tiêu điểm vàng nhạt. Chip tài khoản
+ * in tên màu ngà và dòng hạng bằng kim loại của hạng (chỉ đặt được trên nền tối). Logo là bản chữ ngà dành cho nền tối.
+ */
+.focus-header {
+  border-bottom: 1px solid var(--gf-gold, #C69A2B);
+  background: var(--gf-navy-dark, #072A4E);
+  box-shadow: 0 10px 30px rgba(7, 42, 78, 0.3);
+}
+
+.focus-header :focus-visible {
+  box-shadow: 0 0 0 3px rgba(232, 201, 121, 0.55);
+}
+
+.focus-header .focus-header__back {
+  color: var(--gf-ivory, #FFF8EA);
+}
+
+.focus-header .focus-header__back:hover {
+  color: var(--gf-gold-soft, #E8C979);
+}
+
+.focus-header [data-tier="silver"] {
+  --tier-on-dark: var(--storefront-tier-silver, #B9BFC7);
+}
+
+.focus-header [data-tier="gold"] {
+  --tier-on-dark: var(--storefront-tier-gold, #D4AF37);
+}
+
+.focus-header [data-tier="platinum"] {
+  --tier-on-dark: var(--storefront-tier-platinum, #E5EAF0);
+}
+
+.focus-header [data-tier="diamond"] {
+  --tier-on-dark: var(--storefront-tier-diamond, #EAF6FF);
+}
+
+.focus-header [data-tier="none"] {
+  --tier-on-dark: rgba(255, 248, 234, 0.72);
+}
+
+.focus-header .who {
+  border-left-color: rgba(255, 248, 234, 0.28);
+}
+
+.focus-header .who__name {
+  color: var(--gf-ivory, #FFF8EA);
+}
+
+.focus-header .who__tier {
+  color: var(--tier-on-dark);
+}
+
+.focus-header .who__dot {
+  box-shadow: 0 0 0 3px rgba(255, 248, 234, 0.18);
+}
+
+.focus-header .locale-pill {
+  border-color: rgba(198, 154, 43, 0.65);
+  background: rgba(255, 248, 234, 0.06);
+  color: var(--gf-ivory, #FFF8EA);
+  box-shadow: none;
+}
+
+.focus-header .locale-pill:hover,
+.focus-header .locale-pill:focus-visible,
+.focus-header .locale-pill[aria-expanded="true"],
+.focus-header .locale-dropdown:focus-within .locale-pill {
+  border-color: var(--gf-gold-soft, #E8C979);
+  background: var(--gf-gold, #C69A2B);
+  color: var(--gf-navy-dark, #072A4E);
+  box-shadow: none;
+}
+
+.focus-header .locale-pill:focus-visible {
+  outline: 3px solid var(--gf-gold-soft, #E8C979);
+  outline-offset: 4px;
+}
+
+.focus-header .locale-pill .locale-flag {
+  border-color: rgba(255, 248, 234, 0.4);
+  box-shadow: none;
+}
+
+.focus-header .locale-pill .locale-flag.is-active {
+  border-color: var(--gf-gold-soft, #E8C979);
+  box-shadow: 0 0 0 1px rgba(232, 201, 121, 0.35);
+}
 </style>
 <!-- gf-shell:css:end -->
 <!-- gf-contact-rail:css:begin -->
@@ -1705,6 +1899,46 @@
 }
 </style>
 <!-- gf-contact-rail:css:end -->
+<!-- Lô 2 (chủ dự án duyệt 2026-10-23): menu trái S-A, dải đáy D-A, ô số của link — chép từ web chính (collaboratorCenterCss.ts, collaboratorCenterShareCss.ts, CollaboratorCenterNav.tsx). Đặt cuối <head> để thắng cùng độ ưu tiên. -->
+<style id="gf-ctr-lot2">
+/* S-A: bỏ hàng đầu chỉ có nút «; nút thu gọn là dòng CUỐI, có nhãn "Thu gọn menu" / "Mở rộng menu" (thu gọn thì chỉ còn biểu tượng). Chỉ từ 1024px. */
+[data-collaborator-center] .ctr-side__fold { margin-top: 2px; }
+[data-collaborator-center] .ctr-side__toggle { display: flex; width: 100%; height: auto; min-height: 44px; align-items: center; justify-content: flex-start; gap: 10px; margin: 0; padding: 0 12px; place-items: normal; border: 0; border-radius: var(--gf-radius-md); background: transparent; color: var(--gf-muted); cursor: pointer; font: inherit; font-size: 14.5px; font-weight: 500; text-align: left; }
+[data-collaborator-center] .ctr-side__toggle .ctr-icon { width: 19px; height: 19px; flex: none; }
+@media (min-width: 1024px) {
+  /* Mục đầu sát mép thẻ: đệm 12px như web (mẫu cũ 16px chừa chỗ cho hàng đầu đã bỏ). */
+  [data-collaborator-center] .ctr-side { padding: 12px; }
+  html[data-ctr-side="collapsed"] [data-collaborator-center] .ctr-side__toggle { justify-content: center; padding: 0; }
+  html[data-ctr-side="collapsed"] [data-collaborator-center] .ctr-side__toggle-label { display: none; }
+}
+
+/* Ô số của riêng link này (CTV-STORE-P02): lượt bấm hợp lệ và số đơn. Số trong bản mẫu là số mẫu (36 đơn = 35 đơn hợp lệ/chờ của bốn kỳ + 1 đơn không được tính). */
+[data-collaborator-center] .ctr-mylink__stats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin: 0; }
+[data-collaborator-center] .ctr-mylink__stat { display: flex; min-width: 0; flex-direction: column-reverse; gap: 2px; padding: 12px 14px; border: 1px solid var(--gf-border); border-radius: var(--gf-radius-md); background: var(--gf-cream); }
+[data-collaborator-center] .ctr-mylink__stat dt { color: var(--gf-muted); font-size: 13px; }
+[data-collaborator-center] .ctr-mylink__stat dd { margin: 0; color: var(--gf-navy); font-size: 22px; font-weight: 700; line-height: 1.2; font-variant-numeric: tabular-nums; }
+
+/* D-A: dưới 1024px dải đáy có 4 mục chính + "Thêm" (vừa khít năm chỗ, không cuộn); "Thêm" mở tờ nổi ngay trên dải chứa 3 khu còn lại và hai lối phụ.
+   Tờ là anh em của <nav> trong aside.ctr__side (nav có backdrop-filter nên sẽ nhốt khối position:fixed nếu tờ nằm trong nav). */
+@media (max-width: 1023px) {
+  [data-collaborator-center] .ctr-side__fold { display: none; }
+  [data-collaborator-center] .ctr-side__list > li { flex: 1 1 0; }
+  [data-collaborator-center] button.ctr-side__link { border: 0; background: transparent; cursor: pointer; font-family: inherit; }
+  [data-collaborator-center] .ctr-side__more-trigger[aria-expanded="true"],
+  [data-collaborator-center] button.ctr-side__link.is-active { background: var(--gf-ivory); box-shadow: inset 0 0 0 1px var(--gf-gold); color: var(--gf-navy); }
+  [data-collaborator-center] .ctr-side__sheet { position: absolute; right: 12px; bottom: calc(100% + 8px); left: 12px; box-sizing: border-box; max-width: 780px; margin-inline: auto; padding: 6px; border: 1px solid #E2CB8C; border-radius: 20px; background: rgba(255, 255, 255, 0.94); box-shadow: 0 12px 32px rgba(16, 48, 95, 0.26); -webkit-backdrop-filter: blur(18px) saturate(160%); backdrop-filter: blur(18px) saturate(160%); pointer-events: auto; }
+  [data-collaborator-center] .ctr-side__sheet[hidden] { display: none; }
+  /* Hai lối phụ khi nằm trong tờ phải hiện (CSS dải đáy cũ ẩn .ctr-side__extra). */
+  [data-collaborator-center] .ctr-side__sheet .ctr-side__extra { display: block; }
+  [data-collaborator-center] .ctr-side__sheet ul { display: flex; flex-direction: column; margin: 0; padding: 0; list-style: none; }
+  [data-collaborator-center] .ctr-side__sheet li + li { border-top: 1px solid #F0E6CC; }
+  [data-collaborator-center] .ctr-side__sheet .ctr-side__link { display: flex; min-height: 50px; flex-direction: row; justify-content: flex-start; align-items: center; gap: 14px; padding: 0 14px; border-radius: 14px; font-size: 15px; text-align: left; }
+  [data-collaborator-center] .ctr-side__sheet .ctr-side__link .ctr-icon { width: 21px; height: 21px; }
+  /* Tờ đang mở: cụm liên hệ nhanh và nút tư vấn tạm ẩn để không đè lên tờ. */
+  html[data-ctr-sheet="open"] .reference-social-shell,
+  html[data-ctr-sheet="open"] .gf-cw__dock { visibility: hidden; }
+}
+</style>
 </head>
 <body>
 
@@ -1734,8 +1968,8 @@
 <!-- gf-shell:cfg {"navHiddenMode":false,"initials":"MA","chip":null,"extra":""} -->
 <header class="focus-header">
 <div class="focus-header__inner">
-<a class="focus-header__logo" aria-label="Ginsengfood – Trang chủ" href="trang-chu-cong-tac-vien.html">
-<img src="../../public/home-webp-v1/logo-header-light.w558.webp" srcset="../../public/home-webp-v1/logo-header-light.w186.webp 186w, ../../public/home-webp-v1/logo-header-light.w372.webp 372w, ../../public/home-webp-v1/logo-header-light.w558.webp 558w" sizes="(max-width: 767px) 128px, 150px" alt="Ginsengfood · Y thực đồng nguyên" width="186" height="67" decoding="async">
+<a class="focus-header__logo" aria-label="Ginsengfood – Trang chủ" href="trang-chu-cong-tac-vien-v2.html">
+<img src="../../public/home-webp-v1/logo-header-v2.w360.webp" srcset="../../public/home-webp-v1/logo-header-v2.w120.webp 120w, ../../public/home-webp-v1/logo-header-v2.w240.webp 240w, ../../public/home-webp-v1/logo-header-v2.w360.webp 360w" sizes="(max-width: 767px) 128px, 150px" alt="Ginsengfood · Y thực đồng nguyên" width="186" height="67" decoding="async">
 </a>
 <div class="focus-header__actions">
 <nav id="localeDropdown" class="locale-dropdown" aria-label="Chọn ngôn ngữ">
@@ -1745,7 +1979,7 @@
 <a class="locale-option" role="menuitemradio" aria-checked="false" aria-label="English" href="#"><span class="locale-flag" role="img" aria-label="English" title="English"><svg viewBox="0 0 28 20" aria-hidden="true" focusable="false"><rect width="28" height="20" fill="#012169"/><path d="M0 0 28 20M28 0 0 20" stroke="#fff" stroke-width="4"/><path d="M0 0 28 20M28 0 0 20" stroke="#c8102e" stroke-width="2"/><path d="M14 0v20M0 10h28" stroke="#fff" stroke-width="7"/><path d="M14 0v20M0 10h28" stroke="#c8102e" stroke-width="4"/></svg></span></a>
 </div>
 </nav>
-<a class="focus-header__back" aria-label="Về trang chủ" href="trang-chu-cong-tac-vien.html"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 6.5L8.5 12l5.5 5.5"/></svg><span class="focus-header__back-label">Về trang chủ</span></a>
+<a class="focus-header__back" aria-label="Về trang chủ" href="trang-chu-cong-tac-vien-v2.html"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 6.5L8.5 12l5.5 5.5"/></svg><span class="focus-header__back-label">Về trang chủ</span></a>
 </div>
 </div>
 </header>
@@ -1755,6 +1989,8 @@
   <!-- Đồng bộ UI với storefront /vi/collaborator (2026-10-12): cùng khung, chữ, thứ tự khối và kiểu dáng; dữ liệu mẫu giữ nguyên. -->
   <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
     <symbol id="c-chart" viewBox="0 0 24 24"><path d="M4.5 19.5h15"/><path d="M7.5 16v-5M12 16V7M16.5 16v-8"/></symbol>
+    <symbol id="c-collapse" viewBox="0 0 24 24"><path d="M12 7l-5 5 5 5"/><path d="M18 7l-5 5 5 5"/></symbol>
+<symbol id="c-more" viewBox="0 0 24 24"><circle cx="6.5" cy="12" r="1.5" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.5" fill="currentColor" stroke="none"/><circle cx="17.5" cy="12" r="1.5" fill="currentColor" stroke="none"/></symbol>
     <symbol id="c-link" viewBox="0 0 24 24"><path d="M10 14a4 4 0 005.7 0l3-3a4 4 0 00-5.7-5.7l-1.2 1.2"/><path d="M14 10a4 4 0 00-5.7 0l-3 3a4 4 0 005.7 5.7l1.2-1.2"/></symbol>
     <symbol id="c-box" viewBox="0 0 24 24"><path d="M3.5 7.5L12 3.5l8.5 4v9L12 20.5l-8.5-4z"/><path d="M3.5 7.5L12 11.5l8.5-4M12 11.5v9"/></symbol>
     <symbol id="c-coins" viewBox="0 0 24 24"><ellipse cx="9.5" cy="7" rx="5.5" ry="2.5"/><path d="M4 7v4c0 1.4 2.5 2.5 5.5 2.5S15 12.4 15 11V7"/><path d="M4 11v4c0 1.4 2.5 2.5 5.5 2.5 1 0 1.9-.1 2.7-.3"/><path d="M13 15.5c0-1.4 2.5-2.5 5.5-2.5M13 15.5v3c0 1.1 1.6 2 3.5 2s3.5-.9 3.5-2v-3c0-1.1-1.6-2-3.5-2s-3.5.9-3.5 2z"/></symbol>
@@ -1782,18 +2018,18 @@
     <!-- Menu trung tâm: bấm để cuộn tới từng khối; khối đang xem được tô sáng -->
     <aside class="ctr__side">
       <nav class="ctr-side" aria-label="Trung tâm cộng tác viên">
-        <p class="ctr-side__title">Trung tâm cộng tác viên</p>
-        <ul class="ctr-side__list">
-          <li><a class="ctr-side__link is-active" href="#tong-quan" aria-current="true" data-section="tong-quan"><svg class="ctr-icon" aria-hidden="true" focusable="false"><use href="#c-chart"/></svg>Tổng quan</a></li>
-          <li><a class="ctr-side__link" href="#link-chia-se" data-section="link-chia-se"><svg class="ctr-icon" aria-hidden="true" focusable="false"><use href="#c-link"/></svg>Link chia sẻ</a></li>
-          <li><a class="ctr-side__link" href="#don-hang" data-section="don-hang"><svg class="ctr-icon" aria-hidden="true" focusable="false"><use href="#c-box"/></svg>Đơn từ link</a></li>
-          <li><a class="ctr-side__link" href="#hoa-hong" data-section="hoa-hong"><svg class="ctr-icon" aria-hidden="true" focusable="false"><use href="#c-coins"/></svg>Hoa hồng</a></li>
-          <li><a class="ctr-side__link" href="#tai-nguyen" data-section="tai-nguyen"><svg class="ctr-icon" aria-hidden="true" focusable="false"><use href="#c-image"/></svg>Tài nguyên quảng bá</a></li>
-          <li><a class="ctr-side__link" href="#huong-dan" data-section="huong-dan"><svg class="ctr-icon" aria-hidden="true" focusable="false"><use href="#c-book"/></svg>Hướng dẫn &amp; quy tắc</a></li>
-          <li><a class="ctr-side__link" href="#tu-cach" data-section="tu-cach"><svg class="ctr-icon" aria-hidden="true" focusable="false"><use href="#c-shield"/></svg>Tư cách cộng tác viên</a></li>
+        <ul class="ctr-side__list" id="ctrSideList">
+          <li><a class="ctr-side__link is-active" href="#tong-quan" aria-current="true" data-section="tong-quan"><svg class="ctr-icon" aria-hidden="true" focusable="false"><use href="#c-chart"/></svg><span class="ctr-side__label">Tổng quan</span></a></li>
+          <li><a class="ctr-side__link" href="#hoa-hong" data-section="hoa-hong"><svg class="ctr-icon" aria-hidden="true" focusable="false"><use href="#c-coins"/></svg><span class="ctr-side__label">Hoa hồng</span></a></li>
+          <li><a class="ctr-side__link" href="#link-chia-se" data-section="link-chia-se"><svg class="ctr-icon" aria-hidden="true" focusable="false"><use href="#c-link"/></svg><span class="ctr-side__label">Link chia sẻ</span></a></li>
+          <li><a class="ctr-side__link" href="#don-hang" data-section="don-hang"><svg class="ctr-icon" aria-hidden="true" focusable="false"><use href="#c-box"/></svg><span class="ctr-side__label">Đơn từ link</span></a></li>
+          <li><a class="ctr-side__link" href="#tai-nguyen" data-section="tai-nguyen"><svg class="ctr-icon" aria-hidden="true" focusable="false"><use href="#c-image"/></svg><span class="ctr-side__label">Kho tài nguyên quảng bá</span></a></li>
+          <li><a class="ctr-side__link" href="#huong-dan" data-section="huong-dan"><svg class="ctr-icon" aria-hidden="true" focusable="false"><use href="#c-book"/></svg><span class="ctr-side__label">Hướng dẫn &amp; quy tắc</span></a></li>
+          <li><a class="ctr-side__link" href="#tu-cach" data-section="tu-cach"><svg class="ctr-icon" aria-hidden="true" focusable="false"><use href="#c-shield"/></svg><span class="ctr-side__label">Tư cách cộng tác viên</span></a></li>
           <li class="ctr-side__sep" aria-hidden="true"></li>
-          <li class="ctr-side__extra"><a class="ctr-side__link" href="dieu-khoan-cong-tac-vien.html"><svg class="ctr-icon" aria-hidden="true" focusable="false"><use href="#c-doc"/></svg>Điều khoản cộng tác viên</a></li>
-          <li class="ctr-side__extra"><a class="ctr-side__link" href="../tai-khoan.html"><svg class="ctr-icon" aria-hidden="true" focusable="false"><use href="#c-user"/></svg>Tài khoản của tôi</a></li>
+          <li class="ctr-side__extra"><a class="ctr-side__link" href="dieu-khoan-cong-tac-vien.html"><svg class="ctr-icon" aria-hidden="true" focusable="false"><use href="#c-doc"/></svg><span class="ctr-side__label">Điều khoản cộng tác viên</span></a></li>
+          <li class="ctr-side__extra"><a class="ctr-side__link" href="../tai-khoan.html"><svg class="ctr-icon" aria-hidden="true" focusable="false"><use href="#c-user"/></svg><span class="ctr-side__label">Tài khoản của tôi</span></a></li>
+          <li class="ctr-side__fold"><button class="ctr-side__toggle" id="sideToggle" type="button" aria-expanded="true" aria-controls="ctrSideList" aria-label="Thu gọn menu" title="Thu gọn menu"><svg class="ctr-icon" aria-hidden="true" focusable="false"><use href="#c-collapse"/></svg><span class="ctr-side__toggle-label">Thu gọn menu</span></button></li>
         </ul>
       </nav>
     </aside>
@@ -1876,7 +2112,36 @@
           <div class="ctr-metric"><dt>Doanh số giới thiệu hợp lệ</dt><dd class="ctr-metric__value" data-m="revenue">2.167.120đ</dd><dd class="ctr-metric__note">Không tính vào doanh số hạng của bạn</dd></div>
           <div class="ctr-metric" data-tone="ok"><dt>Hoa hồng đã ghi nhận</dt><dd class="ctr-metric__value" data-m="confirmedComm">304.360đ</dd><dd class="ctr-metric__note">Từ các đơn hợp lệ trong tháng</dd></div>
         </dl>
-        <div class="ctr-overview__foot">
+        <!-- Biểu đồ (khối Tổng quan): script vẽ từ cột "Hoa hồng đã ghi nhận" của bảng ở mục Hoa hồng ngay bên dưới và từ danh sách "Đơn từ link"; không có số liệu nhập riêng. Chưa có script thì khối này ẩn, bảng vẫn đủ. -->
+        <div class="ctr-charts" id="commCharts" hidden>
+          <figure class="ctr-chart" id="barChart">
+            <figcaption>
+              <h3 class="ctr-chart__title">Hoa hồng đã ghi nhận theo tháng</h3>
+              <p class="ctr-chart__sub">Đơn vị: đồng. Khớp cột “Hoa hồng đã ghi nhận” của bảng ở mục Hoa hồng bên dưới.</p>
+            </figcaption>
+            <div class="ctr-chart__frame" id="barFrame" tabindex="0" role="group" aria-label="Biểu đồ cột hoa hồng đã ghi nhận theo tháng. Dùng phím mũi tên trái, phải để xem từng tháng; số liệu đầy đủ ở bảng Hoa hồng bên dưới."></div>
+            <p class="ctr-note" id="barNote"></p>
+            <p class="ctr-chart__sr" id="barStatus" role="status"></p>
+          </figure>
+          <figure class="ctr-chart" id="lineChart">
+            <figcaption>
+              <h3 class="ctr-chart__title" id="lineTitle">Hoa hồng luỹ kế trong tháng</h3>
+              <p class="ctr-chart__sub" id="lineSub">Theo ngày đặt đơn, chỉ tính đơn hợp lệ.</p>
+            </figcaption>
+            <div class="ctr-chart__frame" id="lineFrame" tabindex="0" role="group" aria-label="Biểu đồ đường hoa hồng luỹ kế trong tháng. Dùng phím mũi tên trái, phải để xem từng ngày có đơn; số liệu đầy đủ ở mục Xem dạng bảng."></div>
+            <p class="ctr-note" id="lineNote"></p>
+            <details class="ctr-chart__more">
+              <summary>Xem dạng bảng</summary>
+              <div class="ctr-table-wrap">
+                <table class="ctr-table" id="cumTable" aria-label="Hoa hồng luỹ kế trong tháng theo ngày đặt đơn">
+                  <thead><tr><th scope="col">Ngày đặt</th><th class="ctr-num" scope="col">Ghi nhận thêm</th><th class="ctr-num" scope="col">Luỹ kế</th></tr></thead>
+                  <tbody id="cumRows"></tbody>
+                </table>
+              </div>
+            </details>
+            <p class="ctr-chart__sr" id="lineStatus" role="status"></p>
+          </figure>
+        </div>        <div class="ctr-overview__foot">
           <span class="ctr-overview__updated">Cập nhật lúc 08:00, 17/09/2026</span>
           <div class="ctr-overview__acts">
             <button class="ctr-linkbtn" type="button"><svg class="ctr-icon" aria-hidden="true" focusable="false"><use href="#c-refresh"/></svg>Làm mới dữ liệu</button>
@@ -1885,12 +2150,40 @@
         </div>
       </section>
 
-      <!-- 2. Link chia sẻ: chọn một sản phẩm, tạo link sản phẩm, tin nhắn gợi ý, mã QR, danh sách link của tôi -->
+      <!-- Hoa hồng (đặt ngay dưới Tổng quan theo yêu cầu 20/10, trước là mục số 4): số đã ghi nhận theo tháng đặt đơn (chi trả ngoài hệ thống, không có thuế/ngày chi trả/tài khoản nhận) -->
+      <section class="ctr-panel" id="hoa-hong" aria-labelledby="ctr-section-hoa-hong-title" tabindex="-1" data-testid="collaborator-center-section-hoa-hong">
+        <div class="ctr-panel__head">
+          <div>
+            <h2 class="ctr-panel__title" id="ctr-section-hoa-hong-title"><svg class="ctr-icon" aria-hidden="true" focusable="false"><use href="#c-coins"/></svg>Hoa hồng</h2>
+            <p class="ctr-panel__desc">Hoa hồng đã ghi nhận theo tháng đặt đơn.</p>
+          </div>
+        </div>
+        <div class="ctr-table-wrap">
+          <table class="ctr-table ctr-commissions">
+            <thead>
+              <tr><th scope="col">Tháng</th><th class="ctr-num" scope="col">Hoa hồng đã ghi nhận</th><th class="ctr-num" scope="col">Đã điều chỉnh</th><th class="ctr-num" scope="col">Đã trừ lại</th><th class="ctr-num" scope="col">Còn lại</th></tr>
+            </thead>
+            <tbody>
+              <tr data-month-open="true"><th scope="row">09/2026</th><td class="ctr-num" data-value="304360">304.360đ</td><td class="ctr-num">0đ</td><td class="ctr-num">0đ</td><td class="ctr-num ctr-comm">304.360đ</td></tr>
+              <tr><th scope="row">08/2026</th><td class="ctr-num" data-value="549760">549.760đ</td><td class="ctr-num">0đ</td><td class="ctr-num">0đ</td><td class="ctr-num ctr-comm">549.760đ</td></tr>
+              <tr><th scope="row">07/2026</th><td class="ctr-num" data-value="389984">389.984đ</td><td class="ctr-num">0đ</td><td class="ctr-num">0đ</td><td class="ctr-num ctr-comm">389.984đ</td></tr>
+              <tr><th scope="row">06/2026</th><td class="ctr-num" data-value="179328">179.328đ</td><td class="ctr-num">0đ</td><td class="ctr-num">0đ</td><td class="ctr-num ctr-comm">179.328đ</td></tr>
+            </tbody>
+            <tfoot>
+              <tr data-collaborator-commission-total="true"><th colspan="4" scope="row">Tổng đã ghi nhận từ khi tham gia</th><td class="ctr-num ctr-comm">1.423.432đ</td></tr>
+            </tfoot>
+          </table>
+        </div>
+        <p class="ctr-note">Còn lại = Hoa hồng đã ghi nhận − Đã điều chỉnh − Đã trừ lại.</p>
+        <p class="ctr-note" data-collaborator-payout-note="true">Hoa hồng được Ginsengfood chi trả ngoài hệ thống này. Bảng chỉ cho biết số hoa hồng đã ghi nhận theo tháng đặt đơn, chưa có thông tin thuế, ngày chi trả hay tài khoản nhận tiền.</p>
+      </section>
+
+      <!-- 2. Link chia sẻ: MỘT link giới thiệu cho cả cửa hàng (không chọn sản phẩm, không "Tạo link"; sản phẩm nào được tính hoa hồng do admin thiết lập), mã QR, tin nhắn gợi ý -->
       <section class="ctr-panel" id="link-chia-se" aria-labelledby="ctr-section-link-chia-se-title" tabindex="-1" data-testid="collaborator-center-section-link-chia-se">
         <div class="ctr-panel__head">
           <div>
             <h2 class="ctr-panel__title" id="ctr-section-link-chia-se-title"><svg class="ctr-icon" aria-hidden="true" focusable="false"><use href="#c-link"/></svg>Link chia sẻ</h2>
-            <p class="ctr-panel__desc">Tạo link cho từng sản phẩm, gửi kèm tin nhắn gợi ý hoặc cho khách quét mã QR.</p>
+            <p class="ctr-panel__desc">Một link cho cả cửa hàng: khách bấm vào rồi mua món nào cũng được. Gửi kèm tin nhắn gợi ý hoặc cho khách quét mã QR.</p>
           </div>
         </div>
         <div class="ctr-locked" data-collaborator-locked="suspended" data-variant="panel" data-only="suspended" role="note" hidden>
@@ -1907,44 +2200,27 @@
         </div>
         <div class="ctr-builder" data-only="full">
           <div class="ctr-builder__form">
-            <div class="ctr-pick" data-collaborator-product-picker="true">
-              <div class="ctr-pick__search" role="search" aria-label="Tìm sản phẩm để tạo link">
-                <div class="ctr-filter">
-                  <div class="ctr-filter__row">
-                    <div class="ctr-filter__grid">
-                      <div class="ctr-formfield ctr-span-2 ctr-span-4">
-                        <label for="productSearch">Tìm theo tên sản phẩm</label>
-                        <input class="ctr-input" id="productSearch" type="search" autocomplete="off" maxlength="200" placeholder="Nhập tên sản phẩm" aria-describedby="productSearch-hint">
-                      </div>
-                    </div>
-                    <div class="ctr-filter__acts">
-                      <button class="ctr-btn ctr-btn--primary ctr-btn--sm" type="button"><svg class="ctr-icon" aria-hidden="true" focusable="false"><use href="#c-search"/></svg>Tìm kiếm</button>
-                      <button class="ctr-btn ctr-btn--outline ctr-btn--sm" type="button"><svg class="ctr-icon" aria-hidden="true" focusable="false"><use href="#c-reset"/></svg>Làm mới</button>
-                    </div>
-                  </div>
-                  <div class="ctr-filter__hint"><p id="productSearch-hint">Gõ một phần tên rồi bấm “Tìm kiếm” hoặc nhấn Enter. Để trống rồi tìm kiếm để xem lại toàn bộ danh sách.</p></div>
-                </div>
-              </div>
-              <div class="ctr-formfield" id="productField">
-                <label for="productSelect">Chọn sản phẩm</label>
-                <select class="ctr-select" id="productSelect"></select>
-              </div>
-              <div class="ctr-foot"><p class="ctr-foot__count" aria-live="polite">Hiển thị 1–19 trong 19 sản phẩm</p></div>
-            </div>
-            <div class="ctr-builder__create">
-              <button class="ctr-btn ctr-btn--primary" type="button">Tạo link</button>
-            </div>
-
             <div class="ctr-field">
-              <label class="ctr-field__label" for="refLink" id="refLinkLabel">Link sản phẩm của bạn</label>
+              <label class="ctr-field__label" for="refLink" id="refLinkLabel">Link giới thiệu của bạn</label>
               <div class="ctr-linkbox">
-                <input id="refLink" type="text" readonly placeholder="Chọn sản phẩm rồi bấm “Tạo link”">
+                <input id="refLink" type="text" readonly>
                 <button type="button" class="ctr-btn ctr-btn--primary" id="copyLink"><svg class="ctr-icon" aria-hidden="true" focusable="false"><use href="#c-copy"/></svg><span>Sao chép</span></button>
               </div>
-              <p class="ctr-ready" role="status"><svg class="ctr-icon" aria-hidden="true" focusable="false"><use href="#c-check"/></svg><span>Link sản phẩm đã sẵn sàng</span></p>
-              <p class="ctr-hint">Link có mã giới thiệu riêng cho sản phẩm này, không chứa họ tên, email hay số điện thoại của bạn.</p>
+              <p class="ctr-ready" role="status"><svg class="ctr-icon" aria-hidden="true" focusable="false"><use href="#c-check"/></svg><span>Link giới thiệu đã sẵn sàng</span></p>
+              <p class="ctr-hint">Một link dùng cho cả cửa hàng, có mã giới thiệu riêng của bạn. Link không chứa họ tên, email hay số điện thoại của bạn.</p>
             </div>
-
+            <dl class="ctr-mylink__stats" aria-label="Số liệu của link giới thiệu"><div class="ctr-mylink__stat"><dt>Lượt bấm hợp lệ</dt><dd data-stat="clicks">1.284</dd></div><div class="ctr-mylink__stat"><dt>Số đơn</dt><dd data-stat="orders">36</dd></div></dl>
+            <p class="ctr-hint">Chỉ tính cho link này. Đơn và hoa hồng chi tiết xem ở mục Đơn từ link và Hoa hồng.</p>
+            <p class="ctr-scope" role="note"><svg class="ctr-icon" aria-hidden="true" focusable="false"><use href="#c-shield"/></svg><span>Bạn không cần chọn sản phẩm: khách bấm vào link rồi mua món nào cũng được. Sản phẩm nào được tính hoa hồng do Ginsengfood thiết lập; tỷ lệ hiện hành xem ở đầu trang.</span></p>
+          </div>
+          <div class="ctr-qr">
+            <div class="ctr-qr__box" id="qrBox"><p class="ctr-qr__note">Đang tạo mã…</p></div>
+            <div>
+              <p class="ctr-qr__title">Mã QR của link</p>
+              <p class="ctr-qr__text">Cho khách quét bằng camera điện thoại khi giới thiệu trực tiếp.</p>
+            </div>
+          </div>
+          <div class="ctr-builder__msg">
             <div class="ctr-field">
               <span class="ctr-field__label" id="refMsgLabel">Tin nhắn gợi ý</span>
               <div class="ctr-chips" role="group" aria-label="Chọn mẫu tin nhắn">
@@ -1955,50 +2231,11 @@
               <textarea class="ctr-textarea" id="refMsg" rows="5" readonly aria-labelledby="refMsgLabel"></textarea>
               <p class="ctr-hint">Khi sao chép, {link} được thay bằng link của bạn. Không thêm nội dung về công dụng chữa bệnh.</p>
             </div>
-
             <div class="ctr-builder__acts">
               <button type="button" class="ctr-btn ctr-btn--outline ctr-btn--sm" id="copyMsg"><svg class="ctr-icon" aria-hidden="true" focusable="false"><use href="#c-copy"/></svg><span>Sao chép tin nhắn</span></button>
               <button type="button" class="ctr-btn ctr-btn--outline ctr-btn--sm" id="nativeShare" hidden><svg class="ctr-icon" aria-hidden="true" focusable="false"><use href="#c-share"/></svg>Chia sẻ qua ứng dụng khác</button>
             </div>
           </div>
-          <div class="ctr-qr">
-            <div class="ctr-qr__box" id="qrBox"><p class="ctr-qr__note">Đang tạo mã…</p></div>
-            <div>
-              <p class="ctr-qr__title">Mã QR của link</p>
-              <p class="ctr-qr__text">Cho khách quét bằng camera điện thoại khi giới thiệu trực tiếp.</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="ctr-mylinks" data-collaborator-links="true">
-          <h3 class="ctr-subtitle">Link của tôi</h3>
-          <div class="ctr-table-wrap">
-            <table class="ctr-table ctr-links" aria-label="Danh sách link đã tạo">
-              <thead>
-                <tr>
-                  <th scope="col">Sản phẩm</th>
-                  <th scope="col" aria-sort="descending"><button type="button" class="ctr-sort" data-direction="desc" aria-label="Sắp xếp theo Ngày tạo (giảm dần)">Ngày tạo<svg class="ctr-sort__icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path class="ctr-sort__up" d="M12 5.5l4 5h-8z"/><path class="ctr-sort__down" d="M12 18.5l-4-5h8z"/></svg></button></th>
-                  <th scope="col" class="ctr-num" aria-sort="none"><button type="button" class="ctr-sort" aria-label="Sắp xếp theo Lượt bấm hợp lệ">Lượt bấm hợp lệ<svg class="ctr-sort__icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path class="ctr-sort__up" d="M12 5.5l4 5h-8z"/><path class="ctr-sort__down" d="M12 18.5l-4-5h8z"/></svg></button></th>
-                  <th scope="col" class="ctr-num" aria-sort="none"><button type="button" class="ctr-sort" aria-label="Sắp xếp theo Số đơn">Số đơn<svg class="ctr-sort__icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path class="ctr-sort__up" d="M12 5.5l4 5h-8z"/><path class="ctr-sort__down" d="M12 18.5l-4-5h8z"/></svg></button></th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td class="ctr-productcell"><span class="ctr-product">Cháo Sâm Mùa Hạ – Cá Basa</span><button type="button" class="ctr-btn ctr-btn--outline ctr-btn--sm ctr-linkcopy" aria-label="Sao chép link Cháo Sâm Mùa Hạ – Cá Basa" data-copy-text="chi-tiet-san-pham.html?sku=A2-CS-BASA&amp;ref=K7Q2MX9P" data-copy-msg="Đã sao chép link."><svg class="ctr-icon" aria-hidden="true" focusable="false"><use href="#c-copy"/></svg><span>Sao chép</span></button></td>
-                  <td><time datetime="2026-09-20">20/09/2026</time></td>
-                  <td class="ctr-num">18</td>
-                  <td class="ctr-num">3</td>
-                </tr>
-                <tr>
-                  <td class="ctr-productcell"><span class="ctr-product">Cháo Sâm – Bào ngư</span><button type="button" class="ctr-btn ctr-btn--outline ctr-btn--sm ctr-linkcopy" aria-label="Sao chép link Cháo Sâm – Bào ngư" data-copy-text="chi-tiet-san-pham.html?sku=C1-CS-BAONGU&amp;ref=H4N8TZ2Q" data-copy-msg="Đã sao chép link."><svg class="ctr-icon" aria-hidden="true" focusable="false"><use href="#c-copy"/></svg><span>Sao chép</span></button></td>
-                  <td><time datetime="2026-09-25">25/09/2026</time></td>
-                  <td class="ctr-num">5</td>
-                  <td class="ctr-num">0</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <div class="ctr-foot"><p class="ctr-foot__count" data-collaborator-count="links">Hiển thị 1–2 trong 2 link</p></div>
         </div>
       </section>
 
@@ -2050,39 +2287,11 @@
         <p class="ctr-note">Bạn chỉ thấy mã đơn rút gọn và trạng thái, không thấy họ tên, số điện thoại hay địa chỉ người mua (Điều 7.1). Đơn tự đặt qua link của chính mình không được tính.</p>
       </section>
 
-      <!-- 4. Hoa hồng: số đã ghi nhận theo tháng đặt đơn (chi trả ngoài hệ thống, không có thuế/ngày chi trả/tài khoản nhận) -->
-      <section class="ctr-panel" id="hoa-hong" aria-labelledby="ctr-section-hoa-hong-title" tabindex="-1" data-testid="collaborator-center-section-hoa-hong">
-        <div class="ctr-panel__head">
-          <div>
-            <h2 class="ctr-panel__title" id="ctr-section-hoa-hong-title"><svg class="ctr-icon" aria-hidden="true" focusable="false"><use href="#c-coins"/></svg>Hoa hồng</h2>
-            <p class="ctr-panel__desc">Hoa hồng đã ghi nhận theo tháng đặt đơn.</p>
-          </div>
-        </div>
-        <div class="ctr-table-wrap">
-          <table class="ctr-table ctr-commissions">
-            <thead>
-              <tr><th scope="col">Tháng</th><th class="ctr-num" scope="col">Tạm ghi nhận</th><th class="ctr-num" scope="col">Đã điều chỉnh</th><th class="ctr-num" scope="col">Đã trừ lại</th><th class="ctr-num" scope="col">Còn lại</th></tr>
-            </thead>
-            <tbody>
-              <tr><th scope="row">09/2026</th><td class="ctr-num">304.360đ</td><td class="ctr-num">0đ</td><td class="ctr-num">0đ</td><td class="ctr-num ctr-comm">304.360đ</td></tr>
-              <tr><th scope="row">08/2026</th><td class="ctr-num">549.760đ</td><td class="ctr-num">0đ</td><td class="ctr-num">0đ</td><td class="ctr-num ctr-comm">549.760đ</td></tr>
-              <tr><th scope="row">07/2026</th><td class="ctr-num">389.984đ</td><td class="ctr-num">0đ</td><td class="ctr-num">0đ</td><td class="ctr-num ctr-comm">389.984đ</td></tr>
-              <tr><th scope="row">06/2026</th><td class="ctr-num">179.328đ</td><td class="ctr-num">0đ</td><td class="ctr-num">0đ</td><td class="ctr-num ctr-comm">179.328đ</td></tr>
-            </tbody>
-            <tfoot>
-              <tr data-collaborator-commission-total="true"><th colspan="4" scope="row">Tổng đã ghi nhận từ khi tham gia</th><td class="ctr-num ctr-comm">1.423.432đ</td></tr>
-            </tfoot>
-          </table>
-        </div>
-        <p class="ctr-note">Còn lại = Tạm ghi nhận − Đã điều chỉnh − Đã trừ lại.</p>
-        <p class="ctr-note" data-collaborator-payout-note="true">Hoa hồng được Ginsengfood chi trả ngoài hệ thống này. Bảng chỉ cho biết số hoa hồng đã ghi nhận theo tháng đặt đơn, chưa có thông tin thuế, ngày chi trả hay tài khoản nhận tiền.</p>
-      </section>
-
-      <!-- 5. Tài nguyên quảng bá: bốn thẻ theo loại nội dung -->
+      <!-- 5. Kho tài nguyên quảng bá: năm thẻ theo loại nội dung (chủ dự án 2026-10-21: Kho video bán hàng, Kho hình ảnh, Kho bài viết, Video hướng dẫn kinh doanh, Giấy chứng nhận) -->
       <section class="ctr-panel" id="tai-nguyen" aria-labelledby="ctr-section-tai-nguyen-title" tabindex="-1" data-testid="collaborator-center-section-tai-nguyen">
         <div class="ctr-panel__head">
           <div>
-            <h2 class="ctr-panel__title" id="ctr-section-tai-nguyen-title"><svg class="ctr-icon" aria-hidden="true" focusable="false"><use href="#c-image"/></svg>Tài nguyên quảng bá</h2>
+            <h2 class="ctr-panel__title" id="ctr-section-tai-nguyen-title"><svg class="ctr-icon" aria-hidden="true" focusable="false"><use href="#c-image"/></svg>Kho tài nguyên quảng bá</h2>
             <p class="ctr-panel__desc">Hình ảnh, video và nội dung đã được Ginsengfood duyệt. Dùng đúng như bản gốc, không chỉnh sửa logo hay thông tin sản phẩm.</p>
           </div>
         </div>
@@ -2100,15 +2309,23 @@
         </div>
         <div class="ctr-resources" data-collaborator-resources="true" data-only="full">
           <div class="ctr-chips" role="tablist" aria-label="Loại tài nguyên">
-            <button type="button" class="ctr-chip" role="tab" id="tab-hinh-anh" aria-controls="pane-hinh-anh" aria-selected="true">Hình ảnh sản phẩm</button>
-            <button type="button" class="ctr-chip" role="tab" id="tab-video" aria-controls="pane-video" aria-selected="false" tabindex="-1">Video ngắn</button>
-            <button type="button" class="ctr-chip" role="tab" id="tab-bai-viet" aria-controls="pane-bai-viet" aria-selected="false" tabindex="-1">Bài viết mẫu</button>
-            <button type="button" class="ctr-chip" role="tab" id="tab-nhan-dien" aria-controls="pane-nhan-dien" aria-selected="false" tabindex="-1">Nhận diện thương hiệu</button>
+            <button type="button" class="ctr-chip" role="tab" id="tab-video" aria-controls="pane-video" aria-selected="false" tabindex="-1">Kho video bán hàng</button>
+            <button type="button" class="ctr-chip" role="tab" id="tab-hinh-anh" aria-controls="pane-hinh-anh" aria-selected="true">Kho hình ảnh</button>
+            <button type="button" class="ctr-chip" role="tab" id="tab-bai-viet" aria-controls="pane-bai-viet" aria-selected="false" tabindex="-1">Kho bài viết</button>
+            <button type="button" class="ctr-chip" role="tab" id="tab-video-huong-dan" aria-controls="pane-video-huong-dan" aria-selected="false" tabindex="-1">Video hướng dẫn kinh doanh</button>
+            <button type="button" class="ctr-chip" role="tab" id="tab-giay-chung-nhan" aria-controls="pane-giay-chung-nhan" aria-selected="false" tabindex="-1">Giấy chứng nhận</button>
+          </div>
+
+          <div class="ctr-resources__panel" role="tabpanel" id="pane-video" aria-labelledby="tab-video" hidden>
+            <div class="ctr-comingsoon" data-collaborator-coming-soon="true">
+              <span class="ctr-comingsoon__tag">Sắp có</span>
+              <p>Kho video bán hàng sẽ được bổ sung. Khi có, bạn sẽ xem và tải được tại đây.</p>
+            </div>
           </div>
 
           <div class="ctr-resources__panel" role="tabpanel" id="pane-hinh-anh" aria-labelledby="tab-hinh-anh">
-            <section class="ctr-resgroup" aria-label="Hình ảnh sản phẩm">
-              <header class="ctr-resgroup__head"><h3 class="ctr-subtitle">Hình ảnh sản phẩm</h3><span class="ctr-resgroup__count">6 tệp</span></header>
+            <section class="ctr-resgroup" aria-label="Kho hình ảnh">
+              <header class="ctr-resgroup__head"><h3 class="ctr-subtitle">Kho hình ảnh</h3><span class="ctr-resgroup__count">6 tệp</span></header>
               <p class="ctr-resgroup__desc">Hình ảnh đã được Ginsengfood duyệt, dùng đúng như bản gốc.</p>
               <div class="ctr-resgrid">
                 <article class="ctr-asset" data-collaborator-resource-file="image">
@@ -2145,16 +2362,9 @@
             </section>
           </div>
 
-          <div class="ctr-resources__panel" role="tabpanel" id="pane-video" aria-labelledby="tab-video" hidden>
-            <div class="ctr-comingsoon" data-collaborator-coming-soon="true">
-              <span class="ctr-comingsoon__tag">Sắp có</span>
-              <p>Video ngắn sẽ được bổ sung. Khi có, bạn sẽ xem và tải được tại đây.</p>
-            </div>
-          </div>
-
           <div class="ctr-resources__panel" role="tabpanel" id="pane-bai-viet" aria-labelledby="tab-bai-viet" hidden>
-            <section class="ctr-resgroup" aria-label="Bài viết mẫu">
-              <header class="ctr-resgroup__head"><h3 class="ctr-subtitle">Bài viết mẫu</h3><span class="ctr-resgroup__count">2 tệp</span></header>
+            <section class="ctr-resgroup" aria-label="Kho bài viết">
+              <header class="ctr-resgroup__head"><h3 class="ctr-subtitle">Kho bài viết</h3><span class="ctr-resgroup__count">2 tệp</span></header>
               <p class="ctr-resgroup__desc">Bài viết đã duyệt, dùng nguyên văn.</p>
               <div class="ctr-resgrid">
                 <article class="ctr-asset" data-collaborator-resource-file="pdf">
@@ -2171,32 +2381,17 @@
             </section>
           </div>
 
-          <div class="ctr-resources__panel" role="tabpanel" id="pane-nhan-dien" aria-labelledby="tab-nhan-dien" hidden>
-            <div class="ctr-brand" data-collaborator-brand="true">
-              <div class="ctr-brand__logo">
-                <div class="ctr-brand__logo-img"><img src="../../public/home-webp-v1/logo-header-light.w372.webp" width="186" height="67" loading="lazy" decoding="async" alt="Logo Ginsengfood · Y thực đồng nguyên"></div>
-                <p class="ctr-asset__name">Logo Ginsengfood</p>
-                <p class="ctr-asset__meta">Dùng trên nền sáng, giữ nguyên tỷ lệ và màu sắc.</p>
-                <div class="ctr-asset__acts">
-                  <a class="ctr-btn ctr-btn--outline ctr-btn--sm" href="../../public/home-webp-v1/logo-header-light.w558.webp" download="ginsengfood-logo.webp"><svg class="ctr-icon" aria-hidden="true" focusable="false"><use href="#c-download"/></svg>Tải WEBP</a>
-                  <a class="ctr-btn ctr-btn--outline ctr-btn--sm" href="../../public/logo-header-light.png" download="ginsengfood-logo.png"><svg class="ctr-icon" aria-hidden="true" focusable="false"><use href="#c-download"/></svg>Tải PNG</a>
-                </div>
-              </div>
-              <div class="ctr-brand__rules">
-                <p class="ctr-label">Màu thương hiệu</p>
-                <div class="ctr-swatches">
-                  <button type="button" class="ctr-swatch" aria-label="Sao chép mã màu Xanh navy #10305F" data-copy-text="#10305F" data-copy-msg="Đã sao chép mã màu #10305F."><span class="ctr-swatch__color" aria-hidden="true" style="background:#10305F"></span><span><span class="ctr-swatch__name">Xanh navy</span><span class="ctr-swatch__hex">#10305F</span></span></button>
-                  <button type="button" class="ctr-swatch" aria-label="Sao chép mã màu Vàng #C69A2B" data-copy-text="#C69A2B" data-copy-msg="Đã sao chép mã màu #C69A2B."><span class="ctr-swatch__color" aria-hidden="true" style="background:#C69A2B"></span><span><span class="ctr-swatch__name">Vàng</span><span class="ctr-swatch__hex">#C69A2B</span></span></button>
-                  <button type="button" class="ctr-swatch" aria-label="Sao chép mã màu Kem #FBF8F1" data-copy-text="#FBF8F1" data-copy-msg="Đã sao chép mã màu #FBF8F1."><span class="ctr-swatch__color" aria-hidden="true" style="background:#FBF8F1"></span><span><span class="ctr-swatch__name">Kem</span><span class="ctr-swatch__hex">#FBF8F1</span></span></button>
-                  <button type="button" class="ctr-swatch" aria-label="Sao chép mã màu Đỏ trầm #8D1B12" data-copy-text="#8D1B12" data-copy-msg="Đã sao chép mã màu #8D1B12."><span class="ctr-swatch__color" aria-hidden="true" style="background:#8D1B12"></span><span><span class="ctr-swatch__name">Đỏ trầm</span><span class="ctr-swatch__hex">#8D1B12</span></span></button>
-                </div>
-                <p class="ctr-hint" role="status" aria-live="polite"></p>
-                <p class="ctr-label">Phông chữ</p>
-                <div class="ctr-brand__fonts">
-                  <span><span class="ctr-brand__serif">Noto Serif</span> · tiêu đề</span>
-                  <span><b>Inter</b> · nội dung</span>
-                </div>
-              </div>
+          <div class="ctr-resources__panel" role="tabpanel" id="pane-video-huong-dan" aria-labelledby="tab-video-huong-dan" hidden>
+            <div class="ctr-comingsoon" data-collaborator-coming-soon="true">
+              <span class="ctr-comingsoon__tag">Sắp có</span>
+              <p>Video hướng dẫn kinh doanh sẽ được bổ sung. Khi có, bạn sẽ xem được tại đây.</p>
+            </div>
+          </div>
+
+          <div class="ctr-resources__panel" role="tabpanel" id="pane-giay-chung-nhan" aria-labelledby="tab-giay-chung-nhan" hidden>
+            <div class="ctr-comingsoon" data-collaborator-coming-soon="true">
+              <span class="ctr-comingsoon__tag">Sắp có</span>
+              <p>Giấy chứng nhận sẽ được bổ sung. Khi có, bạn sẽ xem và tải được tại đây.</p>
             </div>
           </div>
         </div>
@@ -2213,7 +2408,7 @@
         </div>
         <div class="ctr-guide" data-collaborator-guide="true">
           <ol class="ctr-steps">
-            <li class="ctr-step"><span class="ctr-step__no" aria-hidden="true">1</span><b>Chọn link</b><p>Chọn sản phẩm bạn muốn giới thiệu rồi tạo link sản phẩm.</p></li>
+            <li class="ctr-step"><span class="ctr-step__no" aria-hidden="true">1</span><b>Lấy link</b><p>Sao chép link giới thiệu của bạn, dùng được cho cả cửa hàng. Không cần chọn sản phẩm.</p></li>
             <li class="ctr-step"><span class="ctr-step__no" aria-hidden="true">2</span><b>Gửi cho khách</b><p>Sao chép link kèm tin nhắn gợi ý, hoặc cho khách quét mã QR khi gặp trực tiếp.</p></li>
             <li class="ctr-step"><span class="ctr-step__no" aria-hidden="true">3</span><b>Theo dõi đơn</b><p>Đơn khách đặt qua link hiện ở mục Đơn từ link; hoa hồng xác nhận khi đơn hợp lệ.</p></li>
           </ol>
@@ -2290,7 +2485,7 @@
 <div class="home-frame">
 <div class="home-footer__grid">
 <div class="home-footer__brand">
-<a aria-label="Ginsengfood – Trang chủ" class="home-footer__logo" href="trang-chu-cong-tac-vien.html">
+<a aria-label="Ginsengfood – Trang chủ" class="home-footer__logo" href="trang-chu-cong-tac-vien-v2.html">
 <img alt="Ginsengfood · Y thực đồng nguyên" decoding="async" loading="lazy" src="../../public/home-webp-v1/logo-header-v2.w360.webp" srcset="../../public/home-webp-v1/logo-header-v2.w120.webp 120w, ../../public/home-webp-v1/logo-header-v2.w240.webp 240w, ../../public/home-webp-v1/logo-header-v2.w360.webp 360w">
 </a>
 <p class="home-footer__slogan"><b>Ngon như Mẹ nấu</b><i>– thương ngay từ vị đầu tiên</i><span aria-hidden="true" class="home-story__rule"></span></p>
@@ -2313,7 +2508,7 @@
 <nav aria-label="Thành viên và quyền lợi" class="home-footer__col">
 <p class="home-footer__col-title">Thành viên và quyền lợi</p>
 <ul class="home-footer__links">
-<li><a href="trang-chu-cong-tac-vien.html#quyen-loi">Chương trình thành viên</a></li>
+<li><a href="trang-chu-cong-tac-vien-v2.html#quyen-loi">Chương trình thành viên</a></li>
 <li><a href="dieu-khoan-cong-tac-vien.html">Chương trình khởi nghiệp</a></li>
 <li><a href="dai-ly-nha-phan-phoi.html#hinh-thuc">Hệ thống Đại lý nhà phân phối</a></li>
 </ul>
@@ -2344,12 +2539,12 @@
 <label class="reference-social-toggle-input" for="rsState" title="Ẩn hoặc hiện kênh liên hệ nhanh" aria-hidden="true"></label>
 <div class="reference-social-mask">
 <div class="reference-social-rail" id="reference-social-rail" aria-label="Kênh liên hệ nhanh">
-<a class="social-pill" href="trang-chu-cong-tac-vien.html#gio-vang" aria-label="Livestream" title="Livestream"><span class="social-dot live">LIVE</span><span class="social-label">Livestream</span></a>
-<a class="social-pill" href="trang-chu-cong-tac-vien.html#cau-chuyen" aria-label="YouTube" title="YouTube"><span class="social-dot youtube"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" fill="#FF0000"/><path d="M9.545 15.568V8.432L15.818 12l-6.273 3.568Z" fill="#FFFFFF"/></svg></span><span class="social-label">YouTube</span></a>
-<a class="social-pill" href="trang-chu-cong-tac-vien.html#about-us" aria-label="Facebook" title="Facebook"><span class="social-dot facebook"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><circle cx="12" cy="12" fill="#FFFFFF" r="11.5"/><path d="M9.101 23.691v-7.98H6.627v-3.667h2.474v-1.58c0-4.085 1.848-5.978 5.858-5.978.401 0 .955.042 1.468.103a8.68 8.68 0 0 1 1.141.195v3.325a8.623 8.623 0 0 0-.653-.036 26.805 26.805 0 0 0-.733-.009c-.707 0-1.259.096-1.675.309a1.686 1.686 0 0 0-.679.622c-.258.42-.374.995-.374 1.752v1.297h3.919l-.386 2.103-.287 1.564h-3.246v8.245C19.396 23.238 24 18.179 24 12.044c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.628 3.874 10.35 9.101 11.647Z" fill="#0866FF"/></svg></span><span class="social-label">Facebook</span></a>
-<a class="social-pill" href="trang-chu-cong-tac-vien.html#about-us" aria-label="Zalo" title="Zalo"><span class="social-dot zalo"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><rect fill="#0068FF" height="24" rx="5.5" width="24"/><path d="M12.49 10.2722v-.4496h1.3467v6.3218h-.7704a.576.576 0 01-.5763-.5729l-.0006.0005a3.273 3.273 0 01-1.9372.6321c-1.8138 0-3.2844-1.4697-3.2844-3.2823 0-1.8125 1.4706-3.2822 3.2844-3.2822a3.273 3.273 0 011.9372.6321l.0006.0005zM6.9188 7.7896v.205c0 .3823-.051.6944-.2995 1.0605l-.03.0343c-.0542.0615-.1815.206-.2421.2843L2.024 14.8h4.8948v.7682a.5764.5764 0 01-.5767.5761H0v-.3622c0-.4436.1102-.6414.2495-.8476L4.8582 9.23H.1922V7.7896h6.7266zm8.5513 8.3548a.4805.4805 0 01-.4803-.4798v-7.875h1.4416v8.3548H15.47zM20.6934 9.6C22.52 9.6 24 11.0807 24 12.9044c0 1.8252-1.4801 3.306-3.3066 3.306-1.8264 0-3.3066-1.4808-3.3066-3.306 0-1.8237 1.4802-3.3044 3.3066-3.3044zm-10.1412 5.253c1.0675 0 1.9324-.8645 1.9324-1.9312 0-1.065-.865-1.9295-1.9324-1.9295s-1.9324.8644-1.9324 1.9295c0 1.0667.865 1.9312 1.9324 1.9312zm10.1412-.0033c1.0737 0 1.945-.8707 1.945-1.9453 0-1.073-.8713-1.9436-1.945-1.9436-1.0753 0-1.945.8706-1.945 1.9436 0 1.0746.8697 1.9453 1.945 1.9453z" fill="#FFFFFF" transform="translate(12 12) scale(0.8) translate(-12 -12)"/></svg></span><span class="social-label">Zalo</span></a>
-<a class="social-pill" href="trang-chu-cong-tac-vien.html#about-us" aria-label="Chat" title="Chat"><span class="social-dot chat"><span class="material-symbols-outlined" aria-hidden="true">chat</span></span><span class="social-label">Chat</span></a>
-<a class="social-pill" href="trang-chu-cong-tac-vien.html#about-us" aria-label="Điện thoại" title="Điện thoại"><span class="social-dot phone"><span class="material-symbols-outlined" aria-hidden="true">call</span></span><span class="social-label">Điện thoại</span></a>
+<a class="social-pill" href="trang-chu-cong-tac-vien-v2.html#gio-vang" aria-label="Livestream" title="Livestream"><span class="social-dot live">LIVE</span><span class="social-label">Livestream</span></a>
+<a class="social-pill" href="trang-chu-cong-tac-vien-v2.html#cau-chuyen" aria-label="YouTube" title="YouTube"><span class="social-dot youtube"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" fill="#FF0000"/><path d="M9.545 15.568V8.432L15.818 12l-6.273 3.568Z" fill="#FFFFFF"/></svg></span><span class="social-label">YouTube</span></a>
+<a class="social-pill" href="trang-chu-cong-tac-vien-v2.html#about-us" aria-label="Facebook" title="Facebook"><span class="social-dot facebook"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><circle cx="12" cy="12" fill="#FFFFFF" r="11.5"/><path d="M9.101 23.691v-7.98H6.627v-3.667h2.474v-1.58c0-4.085 1.848-5.978 5.858-5.978.401 0 .955.042 1.468.103a8.68 8.68 0 0 1 1.141.195v3.325a8.623 8.623 0 0 0-.653-.036 26.805 26.805 0 0 0-.733-.009c-.707 0-1.259.096-1.675.309a1.686 1.686 0 0 0-.679.622c-.258.42-.374.995-.374 1.752v1.297h3.919l-.386 2.103-.287 1.564h-3.246v8.245C19.396 23.238 24 18.179 24 12.044c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.628 3.874 10.35 9.101 11.647Z" fill="#0866FF"/></svg></span><span class="social-label">Facebook</span></a>
+<a class="social-pill" href="trang-chu-cong-tac-vien-v2.html#about-us" aria-label="Zalo" title="Zalo"><span class="social-dot zalo"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><rect fill="#0068FF" height="24" rx="5.5" width="24"/><path d="M12.49 10.2722v-.4496h1.3467v6.3218h-.7704a.576.576 0 01-.5763-.5729l-.0006.0005a3.273 3.273 0 01-1.9372.6321c-1.8138 0-3.2844-1.4697-3.2844-3.2823 0-1.8125 1.4706-3.2822 3.2844-3.2822a3.273 3.273 0 011.9372.6321l.0006.0005zM6.9188 7.7896v.205c0 .3823-.051.6944-.2995 1.0605l-.03.0343c-.0542.0615-.1815.206-.2421.2843L2.024 14.8h4.8948v.7682a.5764.5764 0 01-.5767.5761H0v-.3622c0-.4436.1102-.6414.2495-.8476L4.8582 9.23H.1922V7.7896h6.7266zm8.5513 8.3548a.4805.4805 0 01-.4803-.4798v-7.875h1.4416v8.3548H15.47zM20.6934 9.6C22.52 9.6 24 11.0807 24 12.9044c0 1.8252-1.4801 3.306-3.3066 3.306-1.8264 0-3.3066-1.4808-3.3066-3.306 0-1.8237 1.4802-3.3044 3.3066-3.3044zm-10.1412 5.253c1.0675 0 1.9324-.8645 1.9324-1.9312 0-1.065-.865-1.9295-1.9324-1.9295s-1.9324.8644-1.9324 1.9295c0 1.0667.865 1.9312 1.9324 1.9312zm10.1412-.0033c1.0737 0 1.945-.8707 1.945-1.9453 0-1.073-.8713-1.9436-1.945-1.9436-1.0753 0-1.945.8706-1.945 1.9436 0 1.0746.8697 1.9453 1.945 1.9453z" fill="#FFFFFF" transform="translate(12 12) scale(0.8) translate(-12 -12)"/></svg></span><span class="social-label">Zalo</span></a>
+<a class="social-pill" href="trang-chu-cong-tac-vien-v2.html#about-us" aria-label="Chat" title="Chat"><span class="social-dot chat"><span class="material-symbols-outlined" aria-hidden="true">chat</span></span><span class="social-label">Chat</span></a>
+<a class="social-pill" href="trang-chu-cong-tac-vien-v2.html#about-us" aria-label="Điện thoại" title="Điện thoại"><span class="social-dot phone"><span class="material-symbols-outlined" aria-hidden="true">call</span></span><span class="social-label">Điện thoại</span></a>
 </div>
 </div>
 </aside>
@@ -2448,27 +2643,6 @@
     });
 
     /* ---- 2. Link chia sẻ ---- */
-    var PRODUCTS = [
-      ['Cháo Sâm Theo Mùa', 'A1/CS/DM/HS', 'Cháo Sâm Mùa Xuân – Diêm mạch & Hạt sen', '260.480đ'],
-      ['Cháo Sâm Theo Mùa', 'A2/CS/BASA', 'Cháo Sâm Mùa Hạ – Cá Basa', '295.680đ'],
-      ['Cháo Sâm Theo Mùa', 'A3/CS/LUON', 'Cháo Sâm Mùa Thu – Lươn đồng', '327.360đ'],
-      ['Cháo Sâm Theo Mùa', 'A4/CS/CUU', 'Cháo Sâm Mùa Đông – Thịt cừu & Táo tàu', '341.440đ'],
-      ['Cháo Sâm Chức Năng', 'B1/CS/RM/ĐX', 'Cháo Sâm – Rau má & Đậu xanh', '253.440đ'],
-      ['Cháo Sâm Chức Năng', 'B2/CS/DHA', 'Cháo Sâm – DHA Não bộ', '274.560đ'],
-      ['Cháo Sâm Chức Năng', 'B3/CS/CACOM', 'Cháo Sâm – Cá cơm & Vừng', '256.960đ'],
-      ['Cháo Sâm Chức Năng', 'B4/CS/COLAGEN', 'Cháo Sâm – Thịt heo & Da heo', '288.640đ'],
-      ['Cháo Sâm Chức Năng', 'B5/CS/SINHLUC', 'Cháo Sâm – Hàu biển', '411.840đ'],
-      ['Cháo Sâm Chức Năng', 'B6/CS/GAAC', 'Cháo Sâm – Gà ác', '464.640đ'],
-      ['Cháo Sâm Bổ Dưỡng', 'C1/CS/BAONGU', 'Cháo Sâm – Bào ngư', '517.440đ'],
-      ['Cháo Sâm Bổ Dưỡng', 'C2/CS/DONGTRUNG', 'Cháo Sâm – Đông trùng hạ thảo', '485.760đ'],
-      ['Cháo Sâm Bổ Dưỡng', 'C3/CS/NAMDONGCO', 'Cháo Sâm – Nấm đông cô', '267.520đ'],
-      ['Cháo Sâm Bổ Dưỡng', 'C4/CS/CUABIEN', 'Cháo Sâm – Cua biển', '438.240đ'],
-      ['Cháo Sâm Bổ Dưỡng', 'C5/CS/CANGU', 'Cháo Sâm – Cá ngừ', '313.280đ'],
-      ['Cháo Sâm Bổ Dưỡng', 'C6/CS/TOM/RONGBIEN', 'Cháo Sâm – Tôm & Rong biển', '320.320đ'],
-      ['Cháo Sâm Bổ Dưỡng', 'C7/CS/THITGA', 'Cháo Sâm – Thịt gà', '278.080đ'],
-      ['Cháo Sâm Bổ Dưỡng', 'C8/CS/THITHEO', 'Cháo Sâm – Thịt heo', '271.040đ'],
-      ['Cháo Sâm Bổ Dưỡng', 'C9/CS/THITBO', 'Cháo Sâm – Thịt bò', '348.480đ']
-    ];
     function refUrl(page, params) {
       var u = new URL(page, window.location.href);
       u.search = ''; u.hash = '';
@@ -2476,24 +2650,16 @@
       u.searchParams.set('ref', REF);
       return u.href;
     }
-    var select = document.getElementById('productSelect');
     var linkInput = document.getElementById('refLink'), msgInput = document.getElementById('refMsg');
-    var groups = {};
-    PRODUCTS.forEach(function (p, i) {
-      if (!groups[p[0]]) { groups[p[0]] = document.createElement('optgroup'); groups[p[0]].label = p[0]; select.appendChild(groups[p[0]]); }
-      var o = document.createElement('option'); o.value = String(i); o.textContent = p[2]; groups[p[0]].appendChild(o);
-    });
-    select.value = '1';
-    /* Tin nhắn gợi ý: ba mẫu như storefront; {link} được thay bằng link sản phẩm đang chọn */
+    /* Tin nhắn gợi ý: ba mẫu như storefront; {link} được thay bằng link giới thiệu của bạn */
     var MESSAGES = {
       'quick': 'Dạo này mình hay dùng Cháo Sâm của Ginsengfood cho bữa sáng: sấy thăng hoa, pha nước sôi 3 phút là dùng được, mỗi lô đều tra cứu được hồ sơ sản xuất. Bạn muốn thử thì xem ở đây nhé: {link}\n(Mình là cộng tác viên của Ginsengfood.)',
-      'season': 'Cháo Sâm Mùa Hạ – Cá Basa vị thanh, dễ dùng những ngày nóng. Hộp 4 gói, mỗi gói một bữa, chỉ cần pha nước sôi 3 phút. Xem chi tiết và đặt hàng: {link}\n(Mình là cộng tác viên của Ginsengfood.)',
+      'season': 'Mùa Hạ này Ginsengfood có Cháo Sâm Mùa Hạ – Cá Basa vị thanh, dễ dùng những ngày nóng. Hộp 4 gói, mỗi gói một bữa, chỉ cần pha nước sôi 3 phút. Xem và đặt hàng ở cửa hàng: {link}\n(Mình là cộng tác viên của Ginsengfood.)',
       'golden-hour': 'Tối nay Ginsengfood có phiên Giờ Vàng Tri Ân, số lượng có hạn. Mình để link ở đây để bạn vào xem đúng giờ: {link}\n(Mình là cộng tác viên của Ginsengfood.)'
     };
     var messageId = 'quick';
     function renderLink() {
-      var p = PRODUCTS[+select.value];
-      var url = refUrl('../chi-tiet-san-pham.html', { sku: p[1].replace(/\//g, '-') });
+      var url = refUrl('trang-chu.html');
       linkInput.value = url;
       msgInput.value = MESSAGES[messageId].split('{link}').join(url);
       renderQr(url);
@@ -2506,8 +2672,7 @@
         renderLink();
       });
     });
-    select.addEventListener('change', renderLink);
-    document.getElementById('copyLink').addEventListener('click', function () { copyWithFeedback(linkInput.value, this, 'Đã sao chép link sản phẩm.'); });
+    document.getElementById('copyLink').addEventListener('click', function () { copyWithFeedback(linkInput.value, this, 'Đã sao chép link giới thiệu.'); });
     document.getElementById('copyMsg').addEventListener('click', function () { copyWithFeedback(msgInput.value, this, 'Đã sao chép tin nhắn kèm link.'); });
     var nativeBtn = document.getElementById('nativeShare');
     nativeBtn.hidden = typeof navigator.share !== 'function';
@@ -2595,6 +2760,302 @@
       });
     });
 
+    /* ---- Biểu đồ hoa hồng (khối Tổng quan) ----
+       Mọi số đều lấy từ dữ liệu có sẵn trong trang, không số nhập riêng:
+       (a) cột "Hoa hồng đã ghi nhận" của bảng ở mục Hoa hồng (ngay dưới Tổng quan); (b) hoa hồng luỹ kế của tháng trong danh sách ORDERS (chỉ đơn hợp lệ, theo ngày đặt).
+       Đơn chờ xác nhận không có hoa hồng ("Chưa tính") nên chỉ đánh dấu ngày đặt, không vẽ thành tiền. Chưa chạy script thì khối này ẩn, bảng vẫn đủ. */
+    (function () {
+      var host = document.getElementById('commCharts');
+      if (!host) return;
+      var SVGNS = 'http://www.w3.org/2000/svg', HT = 232;
+
+      function svgEl(name, attrs, parent) {
+        var n = document.createElementNS(SVGNS, name);
+        Object.keys(attrs || {}).forEach(function (k) { n.setAttribute(k, attrs[k]); });
+        if (parent) parent.appendChild(n);
+        return n;
+      }
+      function money(n) { return String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, '.') + 'đ'; }
+      function compact(n) { return n === 0 ? '0' : Math.round(n / 1000) + 'k'; }
+      function digits(t) { return Number(String(t).replace(/\D/g, '')); }
+      function pad2(n) { return (n < 10 ? '0' : '') + n; }
+      /* Thang chia tròn số: tối đa 4 khoảng, bước 1 / 2 / 2,5 / 5 × 10^k. */
+      function niceScale(max) {
+        var base = Math.pow(10, Math.floor(Math.log(Math.max(max, 1) / 4) / Math.LN10)), mult = [1, 2, 2.5, 5, 10, 20, 50], step = base, i;
+        for (i = 0; i < mult.length; i++) { step = mult[i] * base; if (Math.ceil(max / step) <= 4) break; }
+        return { step: step, top: Math.max(1, Math.ceil(max / step)) * step };
+      }
+      /* Thước đo chữ: đo trước khi đặt nhãn, nhãn không vừa thì rút gọn chứ không để bị cắt. */
+      var ruler = svgEl('svg', { 'class': 'ctr-chart__ruler', 'aria-hidden': 'true' }, host), rulerText = svgEl('text', {}, ruler);
+      function textW(str, cls) { rulerText.setAttribute('class', cls); rulerText.textContent = str; return rulerText.getComputedTextLength(); }
+
+      /* Ô số liệu nổi: hiện phía trên cột/điểm đang trỏ, có mũi chỉ vào đúng cột/điểm. Luôn kèm bảng và nhãn trực tiếp nên không bắt buộc dùng. Chữ đưa vào bằng textContent. */
+      function makeTip(frame) {
+        var t = document.createElement('div');
+        t.className = 'ctr-chart__tip'; t.hidden = true; t.setAttribute('aria-hidden', 'true');
+        frame.appendChild(t);
+        return t;
+      }
+      function fillTip(tip, cat, lines) {
+        tip.textContent = '';
+        var c = document.createElement('p'); c.className = 'ctr-chart__tip-cat'; c.textContent = cat; tip.appendChild(c);
+        lines.forEach(function (l) {
+          var r = document.createElement('p'), x = document.createElement('span'), k = document.createElement('i'), y = document.createElement('span');
+          r.className = 'ctr-chart__tip-row'; y.className = 'ctr-chart__tip-val'; k.className = 'ctr-chart__tip-key';
+          if (l[2]) k.setAttribute('data-tone', l[2]);
+          x.appendChild(k); x.appendChild(document.createTextNode(l[0])); y.textContent = l[1];
+          r.appendChild(x); r.appendChild(y); tip.appendChild(r);
+        });
+      }
+      /* ay = mép trên của thứ được chỉ vào; ô nằm ngay phía trên (có thể đè tiêu đề thẻ trong lúc đang trỏ), kéo ngang vào trong khung nếu sát mép, mũi vẫn chỉ đúng điểm. */
+      function placeTip(tip, frame, ax, ay) {
+        var wasHidden = tip.hidden;
+        tip.hidden = false;
+        var w = tip.offsetWidth, h = tip.offsetHeight, x = Math.max(0, Math.min(frame.clientWidth - w, ax - w / 2)), y = ay - h - 8;
+        tip.style.setProperty('--tip-arrow', Math.round(Math.max(12, Math.min(w - 12, ax - x))) + 'px');
+        if (wasHidden) tip.style.transition = 'none';
+        tip.style.transform = 'translate(' + Math.round(x) + 'px,' + Math.round(y) + 'px)';
+        if (wasHidden) { void tip.offsetWidth; tip.style.transition = ''; }
+      }
+      /* Một điểm dừng Tab cho cả biểu đồ; phím mũi tên đổi điểm đọc, Esc bỏ chọn. Con trỏ và bàn phím cùng gọi một hàm hiển thị. */
+      function wire(frame, count, indexAt, render) {
+        var cur = -1;
+        function show(i) { cur = i; render(i); }
+        function at(e) { show(indexAt(e.clientX - frame.getBoundingClientRect().left)); }
+        frame.addEventListener('pointermove', at);
+        frame.addEventListener('pointerdown', at);
+        frame.addEventListener('pointerleave', function (e) { if (e.pointerType === 'mouse') show(-1); });
+        document.addEventListener('pointerdown', function (e) { if (!frame.contains(e.target)) show(-1); });
+        frame.addEventListener('blur', function () { show(-1); });
+        frame.addEventListener('keydown', function (e) {
+          var n = count(), i;
+          if (e.key === 'Escape') { show(-1); return; }
+          if (e.key === 'Home') i = 0;
+          else if (e.key === 'End') i = n - 1;
+          else if (e.key === 'ArrowRight') i = cur < 0 ? 0 : Math.min(n - 1, cur + 1);
+          else if (e.key === 'ArrowLeft') i = cur < 0 ? n - 1 : Math.max(0, cur - 1);
+          else return;
+          e.preventDefault(); show(i);
+        });
+        return show;
+      }
+      function resetSvg(frame, W) {
+        var old = frame.querySelector('svg');
+        if (old) frame.removeChild(old);
+        var svg = svgEl('svg', { 'class': 'ctr-chart__svg', width: W, height: HT, viewBox: '0 0 ' + W + ' ' + HT, 'aria-hidden': 'true', focusable: 'false' });
+        frame.appendChild(svg);
+        return svg;
+      }
+      function drawGrid(svg, sc, m, W, Y) {
+        for (var k = 0; k <= Math.round(sc.top / sc.step); k++) {
+          var v = k * sc.step;
+          svgEl('line', { 'class': v === 0 ? 'ctr-chart__axis' : 'ctr-chart__grid', x1: m.l, x2: W - m.r, y1: Y(v), y2: Y(v) }, svg);
+          var t = svgEl('text', { 'class': 'ctr-chart__tick', x: m.l - 8, y: Y(v), dy: '0.32em', 'text-anchor': 'end' }, svg);
+          t.textContent = compact(v);
+        }
+      }
+
+      /* Dải màu đứng cho cột và vùng dưới đường; id riêng cho từng biểu đồ để hai SVG không giành nhau. Chỉ tô điểm, không mã hoá số liệu. */
+      function addGrad(svg, id, stops) {
+        var defs = svgEl('defs', {}, svg), g = svgEl('linearGradient', { id: id, x1: 0, y1: 0, x2: 0, y2: 1 }, defs);
+        stops.forEach(function (st) { svgEl('stop', { offset: st[0], style: 'stop-color:' + st[1] + ';stop-opacity:' + (st[2] === undefined ? 1 : st[2]) }, g); });
+      }
+
+      /* Ngày cập nhật lấy từ dòng "Cập nhật lúc …" của khối Tổng quan. */
+      var asOfEl = document.querySelector('.ctr-overview__updated'), am = asOfEl ? /(\d{2})\/(\d{2})\/(\d{4})/.exec(asOfEl.textContent) : null;
+      var asOf = am ? { d: +am[1], m: +am[2], y: +am[3] } : null, asOfFull = am ? am[0] : 'hiện tại', asOfShort = am ? am[1] + '/' + am[2] : '';
+
+      /* ---- (a) Cột: hoa hồng đã ghi nhận theo tháng, đọc từ bảng ở mục Hoa hồng ---- */
+      var months = [].slice.call(document.querySelectorAll('.ctr-commissions tbody tr')).map(function (tr) {
+        var cell = tr.querySelector('td[data-value]') || tr.children[1], parts = tr.firstElementChild.textContent.trim().split('/');
+        return { label: parts.join('/'), key: parts[1] + parts[0], value: cell.hasAttribute('data-value') ? Number(cell.getAttribute('data-value')) : digits(cell.textContent), open: tr.getAttribute('data-month-open') === 'true' };
+      }).sort(function (a, b) { return a.key < b.key ? -1 : 1; });
+      var barFrame = document.getElementById('barFrame'), barStatus = document.getElementById('barStatus'), barNote = document.getElementById('barNote');
+      var barTip = makeTip(barFrame), barGeo = null;
+      var barShow = wire(barFrame, function () { return months.length; }, function (x) {
+        if (!barGeo) return -1;
+        var i = Math.floor((x - barGeo.left) / barGeo.slot);
+        return i >= 0 && i < months.length ? i : -1;
+      }, function (i) {
+        if (!barGeo) return;
+        barGeo.cols.forEach(function (c, k) { if (k === i) c.setAttribute('data-active', ''); else c.removeAttribute('data-active'); });
+        if (i < 0) { barFrame.removeAttribute('data-reading'); barTip.hidden = true; return; }
+        var r = months[i], lines = [['Hoa hồng đã ghi nhận', money(r.value)]];
+        if (r.open) lines.push(['Tháng chưa trọn', 'đến ' + asOfShort, 'wait']);
+        barFrame.setAttribute('data-reading', '');
+        fillTip(barTip, 'Tháng ' + r.label, lines);
+        placeTip(barTip, barFrame, barGeo.cx[i], barGeo.top[i] - 22);
+        barStatus.textContent = 'Tháng ' + r.label + ': hoa hồng đã ghi nhận ' + money(r.value) + (r.open ? '. Tháng chưa trọn, số liệu đến ' + asOfFull + '.' : '.');
+      });
+      var openMonth = months.filter(function (r) { return r.open; })[0];
+      barNote.textContent = openMonth ? 'Cột vàng nhạt, nét đứt: tháng ' + openMonth.label + ' chưa trọn, số liệu đến ' + asOfFull + '. Không so trực tiếp với các tháng đã chốt.' : '';
+      barNote.hidden = !barNote.textContent;
+
+      function barDraw() {
+        var W = barFrame.clientWidth;
+        if (W < 120 || !months.length) return;
+        var m = { t: 24, r: 8, b: 50, l: 40 }, iw = W - m.l - m.r, ih = HT - m.t - m.b, slot = iw / months.length;
+        var sc = niceScale(months.reduce(function (a, r) { return Math.max(a, r.value); }, 0));
+        function Y(v) { return m.t + ih - v / sc.top * ih; }
+        var svg = resetSvg(barFrame, W), base = Y(0), bw = Math.min(24, slot * 0.5), cols = [], cx = [], top = [];
+        addGrad(svg, 'ctrBarFill', [['0%', 'var(--gf-navy-700)'], ['100%', 'var(--gf-navy)']]);
+        addGrad(svg, 'ctrBarOpen', [['0%', '#FBE6AE'], ['100%', '#F1BF55']]);
+        drawGrid(svg, sc, m, W, Y);
+        months.forEach(function (r, k) {
+          var c = m.l + slot * (k + 0.5), y = Y(r.value), h = base - y, g = svgEl('g', { 'class': 'ctr-chart__col' }, svg);
+          if (h > 0) {
+            /* Vuông ở chân cột, bo 4px ở đầu cột. */
+            var rad = Math.min(4, h / 2), x0 = c - bw / 2, x1 = c + bw / 2;
+            var body = 'M' + x0 + ',' + base + 'V' + (y + rad) + 'Q' + x0 + ',' + y + ' ' + (x0 + rad) + ',' + y + 'H' + (x1 - rad) + 'Q' + x1 + ',' + y + ' ' + x1 + ',' + (y + rad) + 'V' + base;
+            var bar = svgEl('path', { 'class': 'ctr-chart__bar', d: body + 'Z' }, g);
+            if (r.open) { bar.setAttribute('data-open', ''); svgEl('path', { 'class': 'ctr-chart__edge', d: body }, g); }
+          }
+          var full = money(r.value), lab = svgEl('text', { 'class': 'ctr-chart__val', x: c, y: y - 8, 'text-anchor': 'middle' }, g);
+          lab.textContent = textW(full, 'ctr-chart__val') <= slot - 6 ? full : compact(r.value);
+          var cat = svgEl('text', { 'class': 'ctr-chart__cat', x: c, y: base + 20, 'text-anchor': 'middle' }, g);
+          cat.textContent = textW(r.label, 'ctr-chart__cat') <= slot - 4 ? r.label : r.label.replace(/\/\d{2}(\d{2})$/, '/$1');
+          if (r.open && asOfShort) {
+            var sub = svgEl('text', { 'class': 'ctr-chart__cat ctr-chart__cat--sub', x: c, y: base + 37, 'text-anchor': 'middle' }, g);
+            sub.textContent = 'đến ' + asOfShort;
+          }
+          cols.push(g); cx.push(c); top.push(y);
+        });
+        barGeo = { left: m.l, slot: slot, bw: bw, cols: cols, cx: cx, top: top };
+        barShow(-1);
+      }
+
+      /* ---- (b) Đường: hoa hồng luỹ kế của tháng, theo ngày đặt của đơn hợp lệ ---- */
+      var days = {}, waitDates = [];
+      ORDERS.forEach(function (o) {
+        if (o[5] !== 'ok' && o[5] !== 'wait') return;
+        var d = +o[1].slice(0, 2), k = days[d] || (days[d] = { d: d, add: 0, pend: 0 });
+        if (o[5] === 'ok') k.add += digits(o[6]); else { k.pend += 1; waitDates.push(o[1].slice(0, 5)); }
+      });
+      waitDates.sort();
+      var pts = Object.keys(days).map(function (k) { return days[k]; }).sort(function (a, b) { return a.d - b.d; }), total = 0;
+      pts.forEach(function (p) { total += p.add; p.cum = total; });
+      var lineFig = document.getElementById('lineChart'), lineFrame = document.getElementById('lineFrame'), lineStatus = document.getElementById('lineStatus');
+      var lineTip = makeTip(lineFrame), lineGeo = null;
+      if (!pts.length) lineFig.hidden = true;
+      var monthLabel = pts.length ? ORDERS[0][1].slice(3) : '', monthNo = +monthLabel.slice(0, 2), yearNo = +monthLabel.slice(3);
+      var asOfDay = pts.length ? Math.max(pts[pts.length - 1].d, asOf && asOf.m === monthNo && asOf.y === yearNo ? asOf.d : 0) : 1;
+      var key = yearNo + '-' + pad2(monthNo);
+      /* Đối chiếu với ô "Hoa hồng đã ghi nhận" của kỳ: lệch là dữ liệu mẫu đã bị sửa không khớp. */
+      if (pts.length && PERIODS[key] && total !== digits(PERIODS[key].confirmedComm)) console.warn('Biểu đồ luỹ kế lệch số liệu tổng quan:', total, PERIODS[key].confirmedComm);
+
+      var lineShow = wire(lineFrame, function () { return pts.length; }, function (x) {
+        if (!lineGeo) return -1;
+        var best = -1, dist = Infinity;
+        lineGeo.xs.forEach(function (px, k) { var dd = Math.abs(px - x); if (dd < dist) { dist = dd; best = k; } });
+        return dist <= 24 ? best : -1;
+      }, function (i) {
+        var g = lineGeo;
+        if (!g) return;
+        if (i < 0) { g.cross.setAttribute('visibility', 'hidden'); g.read.setAttribute('visibility', 'hidden'); lineTip.hidden = true; return; }
+        var p = pts[i], when = pad2(p.d) + '/' + monthLabel, lines = [];
+        if (p.add > 0) lines.push(['Ghi nhận thêm', '+' + money(p.add)]);
+        if (p.pend > 0) lines.push(['Chờ xác nhận', p.pend + ' đơn, chưa tính', 'wait']);
+        lines.push(['Luỹ kế', money(p.cum)]);
+        g.cross.setAttribute('x1', g.xs[i]); g.cross.setAttribute('x2', g.xs[i]); g.cross.setAttribute('visibility', 'visible');
+        g.read.setAttribute('cx', g.xs[i]); g.read.setAttribute('cy', g.ys[i]); g.read.setAttribute('visibility', 'visible');
+        fillTip(lineTip, 'Ngày ' + when, lines);
+        placeTip(lineTip, lineFrame, g.xs[i], g.ys[i] - 8);
+        lineStatus.textContent = 'Ngày ' + when + ': ' + (p.add > 0 ? 'ghi nhận thêm ' + money(p.add) + ', ' : '') + (p.pend > 0 ? p.pend + ' đơn chờ xác nhận chưa tính hoa hồng, ' : '') + 'luỹ kế ' + money(p.cum) + '.';
+      });
+
+      function lineDraw() {
+        var W = lineFrame.clientWidth;
+        if (W < 120 || !pts.length) return;
+        var m = { t: 28, r: 12, b: 36, l: 40 }, inset = 10, iw = W - m.l - m.r - inset * 2, ih = HT - m.t - m.b;
+        var sc = niceScale(total), span = Math.max(1, asOfDay - 1);
+        function X(d) { return m.l + inset + (d - 1) / span * iw; }
+        function Y(v) { return m.t + ih - v / sc.top * ih; }
+        var svg = resetSvg(lineFrame, W), base = Y(0);
+        addGrad(svg, 'ctrAreaFill', [['0%', 'var(--gf-navy)', 0.26], ['100%', 'var(--gf-navy)', 0.02]]);
+        drawGrid(svg, sc, m, W, Y);
+        /* Vùng nền nhạt: từ ngày có đơn chờ đầu tiên đến ngày cập nhật. */
+        var firstWait = pts.filter(function (p) { return p.pend > 0; })[0];
+        if (firstWait) {
+          var wx = X(firstWait.d) - 8, ww = X(asOfDay) + 8 - wx, wl = waitDates.length + ' đơn chờ';
+          svgEl('rect', { 'class': 'ctr-chart__wash', x: wx, y: m.t, width: ww, height: ih }, svg);
+          if (textW(wl, 'ctr-chart__annot') <= ww - 6) {
+            var wt = svgEl('text', { 'class': 'ctr-chart__annot', x: wx + ww / 2, y: base - 14, 'text-anchor': 'middle' }, svg);
+            wt.textContent = wl;
+          }
+        }
+        /* Trục ngày: 2 đến 5 mốc đều nhau, chừa chỗ cho chữ. */
+        var nt = Math.max(2, Math.min(5, Math.floor(iw / 64) + 1)), q, dd;
+        for (q = 0; q < nt; q++) {
+          dd = 1 + Math.round(span * q / (nt - 1));
+          if (dd > asOfDay) continue;
+          var tl = svgEl('text', { 'class': 'ctr-chart__tick', x: X(dd), y: base + 20, 'text-anchor': 'middle' }, svg);
+          tl.textContent = pad2(dd) + '/' + pad2(monthNo);
+        }
+        var cross = svgEl('line', { 'class': 'ctr-chart__cross', y1: m.t, y2: base, visibility: 'hidden' }, svg);
+        /* Đường thẳng nối các điểm có đơn hợp lệ, rồi đi ngang tới ngày cập nhật (luỹ kế giữ nguyên vì chưa có đơn hợp lệ mới). */
+        var path = '';
+        pts.forEach(function (p) { if (p.add > 0) path += (path ? 'L' : 'M') + X(p.d) + ',' + Y(p.cum); });
+        if (path) {
+          var firstOk = pts.filter(function (p) { return p.add > 0; })[0], lineD = path + 'L' + X(asOfDay) + ',' + Y(total);
+          svgEl('path', { 'class': 'ctr-chart__area', d: lineD + 'L' + X(asOfDay) + ',' + base + 'L' + X(firstOk.d) + ',' + base + 'Z' }, svg);
+          svgEl('path', { 'class': 'ctr-chart__line', d: lineD }, svg);
+        }
+        var xs = [], ys = [];
+        pts.forEach(function (p) {
+          xs.push(X(p.d)); ys.push(p.add > 0 ? Y(p.cum) : base);
+          if (p.add > 0) svgEl('circle', { 'class': 'ctr-chart__dot', cx: X(p.d), cy: Y(p.cum), r: 4 }, svg);
+          if (p.pend > 0) svgEl('circle', { 'class': 'ctr-chart__dot ctr-chart__dot--wait', cx: X(p.d), cy: base, r: 4 }, svg);
+        });
+        var end = svgEl('text', { 'class': 'ctr-chart__val', x: X(asOfDay), y: Y(total) - 10, 'text-anchor': 'end' }, svg);
+        end.textContent = money(total);
+        var read = svgEl('circle', { 'class': 'ctr-chart__read', r: 6, visibility: 'hidden' }, svg);
+        lineGeo = { xs: xs, ys: ys, cross: cross, read: read };
+        lineShow(-1);
+      }
+
+      if (pts.length) {
+        document.getElementById('lineTitle').textContent = 'Hoa hồng luỹ kế tháng ' + monthLabel;
+        document.getElementById('lineSub').textContent = 'Theo ngày đặt đơn, chỉ tính đơn hợp lệ. Số liệu đến ' + asOfFull + '.';
+        lineFrame.setAttribute('aria-label', 'Biểu đồ đường hoa hồng luỹ kế tháng ' + monthLabel + ' theo ngày đặt đơn. Dùng phím mũi tên trái, phải để xem từng ngày có đơn; số liệu đầy đủ ở mục Xem dạng bảng.');
+        document.getElementById('cumTable').setAttribute('aria-label', 'Hoa hồng luỹ kế tháng ' + monthLabel + ' theo ngày đặt đơn');
+        var lineNote = document.getElementById('lineNote');
+        lineNote.textContent = waitDates.length ? waitDates.length + ' đơn chờ xác nhận (' + waitDates.join(', ') + ') chưa được tính hoa hồng nên chưa có trên đường này.' : '';
+        lineNote.hidden = !lineNote.textContent;
+        var cumRows = document.getElementById('cumRows');
+        pts.forEach(function (p) {
+          var tr = document.createElement('tr'), th = document.createElement('th');
+          th.scope = 'row'; th.textContent = pad2(p.d) + '/' + monthLabel; tr.appendChild(th);
+          [p.add > 0 ? '+' + money(p.add) : 'Chưa tính', money(p.cum)].forEach(function (t) {
+            var td = document.createElement('td'); td.className = 'ctr-num'; td.textContent = t; tr.appendChild(td);
+          });
+          cumRows.appendChild(tr);
+        });
+      }
+
+      host.hidden = false;
+      function drawAll() { barDraw(); lineDraw(); }
+      drawAll();
+      if ('ResizeObserver' in window) { var ro = new ResizeObserver(drawAll); ro.observe(barFrame); ro.observe(lineFrame); }
+      else window.addEventListener('resize', drawAll);
+      if (document.fonts && document.fonts.ready) document.fonts.ready.then(drawAll);
+    })();
+    /* ---- Menu trái: thu gọn / mở rộng (chỉ từ 1024px; dưới đó menu là dải tab ngang nên nút ẩn) ----
+       Trạng thái nằm ở thuộc tính data-ctr-side của <html> (đặt sớm trong <head> để trang không nháy) và nhớ bằng localStorage; bộ nhớ lỗi thì vẫn dùng được trong phiên. */
+    (function () {
+      var root = document.documentElement, btn = document.getElementById('sideToggle');
+      if (!btn) return;
+      function sync() {
+        var collapsed = root.getAttribute('data-ctr-side') === 'collapsed', label = collapsed ? 'Mở rộng thanh menu' : 'Thu gọn thanh menu';
+        btn.setAttribute('aria-expanded', String(!collapsed)); btn.setAttribute('aria-label', label); btn.title = label;
+      }
+      sync();
+      btn.addEventListener('click', function () {
+        var collapse = root.getAttribute('data-ctr-side') !== 'collapsed';
+        if (collapse) root.setAttribute('data-ctr-side', 'collapsed'); else root.removeAttribute('data-ctr-side');
+        try { localStorage.setItem('ctrSideCollapsed', collapse ? '1' : '0'); } catch (e) {}
+        sync();
+      });
+    })();
     /* ---- 5. Tài nguyên: thẻ chuyển loại (phím ← → cũng chuyển) ---- */
     var tabs = [].slice.call(document.querySelectorAll('[role="tab"]'));
     function selectTab(tab, focus) {
@@ -2613,7 +3074,7 @@
         e.preventDefault(); selectTab(tabs[(i + n + tabs.length) % tabs.length], true);
       });
     });
-    /* Mở đúng loại tài nguyên khi đến từ menu Tài nguyên ở trang chủ: ?tn=hinh-anh|video|bai-viet|nhan-dien */
+    /* Mở đúng loại tài nguyên khi đến từ menu Tài nguyên ở trang chủ: ?tn=video|hinh-anh|bai-viet|video-huong-dan|giay-chung-nhan */
     var tn = new URLSearchParams(window.location.search).get('tn');
     if (tn && document.getElementById('tab-' + tn)) selectTab(document.getElementById('tab-' + tn), false);
 
@@ -2631,6 +3092,65 @@
     /* Mock: liên kết "#" không điều hướng; nút "Tải video" chưa có tệp */
     document.addEventListener('click', function (e) { var a = e.target.closest('a[href="#"]'); if (a) e.preventDefault(); });
   })();
+</script>
+<script id="gf-ctr-lot2-js">
+(function () {
+  /* Lô 2 — menu Trung tâm: dải đáy 4 mục + "Thêm" (D-A) và nhãn chữ của nút thu gọn (S-A), như web chính.
+     Mỗi liên kết chỉ có MỘT bản trong cây truy cập: dưới 1024px script chuyển (không nhân đôi) ba khu cuối và hai lối phụ vào tờ "Thêm", từ 1024px chuyển trở lại. */
+  var root = document.documentElement, nav = document.querySelector('.ctr-side'), list = document.getElementById('ctrSideList');
+  if (!nav || !list) return;
+  var aside = nav.parentNode, items = [].slice.call(list.children);
+  var moreSecs = ['tai-nguyen', 'huong-dan', 'tu-cach'].map(function (id) {
+    return items.filter(function (li) { return li.querySelector('[data-section="' + id + '"]'); })[0];
+  }).filter(Boolean);
+  var sep = list.querySelector('.ctr-side__sep'), fold = list.querySelector('.ctr-side__fold');
+  var extras = [].slice.call(list.querySelectorAll('.ctr-side__extra'));
+
+  var moreLi = document.createElement('li');
+  moreLi.className = 'ctr-side__more';
+  moreLi.innerHTML = '<button type="button" class="ctr-side__link ctr-side__more-trigger" aria-expanded="false" aria-controls="ctrSideSheet" aria-label="Thêm các mục khác"><svg class="ctr-icon" aria-hidden="true" focusable="false"><use href="#c-more"/></svg><span class="ctr-side__label">Thêm</span></button>';
+  var moreBtn = moreLi.firstChild;
+  var sheet = document.createElement('div');
+  sheet.className = 'ctr-side__sheet'; sheet.id = 'ctrSideSheet'; sheet.setAttribute('role', 'group');
+  sheet.setAttribute('aria-label', 'Các mục khác của Trung tâm'); sheet.hidden = true;
+  var sheetList = document.createElement('ul'); sheet.appendChild(sheetList); aside.appendChild(sheet);
+  var mq = window.matchMedia('(max-width: 1023px)');
+
+  function setOpen(open, focusBack) {
+    sheet.hidden = !open; moreBtn.setAttribute('aria-expanded', String(open));
+    if (open) root.setAttribute('data-ctr-sheet', 'open'); else root.removeAttribute('data-ctr-sheet');
+    if (!open && focusBack) moreBtn.focus();
+  }
+  /* Khu đang xem nằm trong tờ "Thêm": nút "Thêm" được tô như một mục đang xem. */
+  function syncActive() { moreBtn.classList.toggle('is-active', !!sheet.querySelector('.ctr-side__link.is-active')); }
+  function layout() {
+    if (mq.matches) {
+      moreSecs.concat(extras).forEach(function (li) { sheetList.appendChild(li); });
+      list.insertBefore(moreLi, sep);
+    } else {
+      setOpen(false);
+      moreSecs.forEach(function (li) { list.insertBefore(li, sep); });
+      extras.forEach(function (li) { list.insertBefore(li, fold); });
+      if (moreLi.parentNode) moreLi.parentNode.removeChild(moreLi);
+    }
+    syncActive();
+  }
+  moreBtn.addEventListener('click', function () { setOpen(sheet.hidden); });
+  sheet.addEventListener('click', function (e) { if (e.target.closest('a')) setOpen(false); });
+  document.addEventListener('pointerdown', function (e) { if (!sheet.hidden && !nav.contains(e.target) && !sheet.contains(e.target)) setOpen(false); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !sheet.hidden) setOpen(false, true); });
+  if ('MutationObserver' in window) new MutationObserver(syncActive).observe(sheet, { subtree: true, attributes: true, attributeFilter: ['class'] });
+  if (mq.addEventListener) mq.addEventListener('change', layout); else mq.addListener(layout);
+  layout();
+
+  /* S-A: nhãn chữ của nút thu gọn đổi theo trạng thái (đứng sau trình xử lý bấm có sẵn nên đọc đúng trạng thái mới). */
+  var tgl = document.getElementById('sideToggle'), tlab = tgl && tgl.querySelector('.ctr-side__toggle-label');
+  function syncToggle() {
+    var text = root.getAttribute('data-ctr-side') === 'collapsed' ? 'Mở rộng menu' : 'Thu gọn menu';
+    tgl.setAttribute('aria-label', text); tgl.title = text; if (tlab) tlab.textContent = text;
+  }
+  if (tgl) { tgl.addEventListener('click', syncToggle); syncToggle(); }
+})();
 </script>
 </body>
 </html>

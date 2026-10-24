@@ -44,7 +44,8 @@ vẫn có thể nhắc tên cũ: dùng bảng này để tra.
 | `home-page-gold-v2.html` | `trang-chu-gold-v2.html` | Trang chủ hạng Gold |
 | `home-page-platinum-v2.html` | `trang-chu-platinum-v2.html` | Trang chủ hạng Platinum |
 | `home-page-diamond-v2.html` | `trang-chu-diamond-v2.html` | Trang chủ hạng Diamond |
-| `home-page-collaborator.html` | `trang-chu-cong-tac-vien.html` | Trang chủ của cộng tác viên |
+| `home-page-collaborator.html` | `trang-chu-cong-tac-vien.html` | Trang chủ của cộng tác viên, **bản cũ** (có thanh "Hướng dẫn kinh doanh", thiết kế đang hoãn) |
+| (mới) | `trang-chu-cong-tac-vien-v2.html` | Trang chủ của cộng tác viên, **bản hiện hành** (Trung tâm cộng tác viên trỏ về trang này) |
 | `home-page-referral.html` | `trang-chu-link-gioi-thieu.html` | Trang chủ khi khách mua qua link giới thiệu |
 | `about-page.html` | `ve-chung-toi.html` | Về chúng tôi |
 | `business-page.html` | `dai-ly-nha-phan-phoi.html` | Đại lý nhà phân phối (hợp tác doanh nghiệp) |
@@ -522,3 +523,22 @@ Theo yêu cầu của chủ dự án, chân trang dùng chung đổi như sau; s
 **Cần biết:** logo là **hình**; website chưa thông báo với cơ quan nhà nước (QĐ-CH-06), nên bản mẫu để logo không bấm được. Khi có xác nhận, logo phải trỏ về trang xác nhận của chính website (storefront đã có biến `NEXT_PUBLIC_MOIT_NOTIFICATION_URL` cho việc này); bản mẫu tĩnh không có biến môi trường nên giữ dạng hình.
 
 **Đã kiểm:** mở bằng Chromium 26 file ở 1920, 1440, 1280, 1100, 768, 390 và 320px (182 lượt): 0 lỗi JavaScript, 0 tràn ngang, đúng hai cột liên kết với đúng ba mục mỗi cột, bốn biểu tượng 48px cùng một hàng, logo nằm ngay dưới và trong cột, ảnh logo nạp được và không méo (420:129, cao 50px), mọi liên kết `.html` trong chân trang đều trỏ tới tệp có thật. Với 7 trang chủ đo thêm khoảng hở giữa cụm nút nổi và biểu tượng/logo ở 1280, 1320, 1366, 1400, 1431, 1440 và 1920px: từ 18px trở lên (số đo trùng storefront). So từng dòng với bản trước đợt này: +14 −20 dòng ở mỗi trang khác, +15 −20 ở mỗi trang chủ. Chưa phải bằng chứng tích hợp backend thật; chưa kiểm trên trình duyệt khác ngoài Chromium.
+
+### Header đổi từ nền trắng sang navy đậm + viền vàng (17/10/2026, đợt mười sáu)
+
+Theo yêu cầu của chủ dự án (sếp chê header trắng quá; chủ dự án chốt **phương án A**: navy đậm + viền vàng): header dùng chung đổi từ nền trắng sang **navy đậm của chân trang**. Storefront đổi trước (`StorefrontHeader` và header gọn `StorefrontFocusHeader`), rồi đồng bộ sang **26 file**: 16 trang có header đầy đủ (gồm 7 trang chủ) và 10 trang dùng header gọn (đăng nhập, đăng ký, đăng xuất, thanh toán, kết quả thanh toán, tài khoản, hai trang chi tiết đơn hàng, điều khoản và trung tâm cộng tác viên). Chỉ CSS và ảnh logo, không đụng `<script>`.
+
+| Phần | Thay đổi |
+|---|---|
+| Nền và viền | Nền `--gf-navy-dark` `#072A4E` (đúng màu chân trang), viền dưới 1px vàng `--gf-gold` `#C69A2B`, bóng `0 10px 30px` navy 30%. Chiều cao header giữ nguyên (83px ở 1440px, 65px ở điện thoại; header gọn 74px và 64px). |
+| Chữ và menu | Chữ và icon màu ngà `#FFF8EA` (tương phản 13,7:1); mục đang chọn hoặc rê chuột vàng nhạt `#E8C979` (9,0:1) kèm gạch chân vàng mọc từ giữa. |
+| Nút tròn (menu, tìm kiếm, ngôn ngữ) và ô tìm | Nền ngà 6% trong mờ, viền vàng 65%, icon ngà; rê chuột, tiêu điểm bàn phím hoặc đang mở thì tô vàng đặc với icon navy. Ô tìm: nền ngà 8%, viền vàng 55%, chữ và gợi ý màu ngà. Ngăn kéo tìm kiếm dưới 1440px nền navy. |
+| Giỏ hàng và nút khách | Icon giỏ màu ngà (rê chuột vàng nhạt), huy hiệu số vàng chữ navy. Nút "Đăng ký" ở thanh header chữ ngà, còn trong bảng menu điện thoại (bảng sáng) vẫn chữ navy. |
+| Vòng tiêu điểm | Vàng nhạt thay cho xanh (xanh chỉ đạt 3,1:1 trên navy). |
+| Logo | Thẻ logo của khối `gf-shell:header` đổi từ `logo-header-light` (chữ navy) sang `logo-header-v2` (chữ ngà và sâm vàng, cùng bản với chân trang), srcset 120/240/360w; không chép thêm ảnh vì các tệp đã có trong `public/home-webp-v1/`. Logo `logo-header-light` ở nơi khác trong trang (nền sáng) giữ nguyên. |
+| Header gọn (10 trang) | Cùng nền, viền và nút ngôn ngữ; link "Về trang chủ" / "Tiếp tục mua sắm" chữ ngà (rê chuột vàng nhạt). Chip tài khoản in tên màu ngà và dòng hạng bằng kim loại của hạng, chỉ đặt được trên nền tối (Silver `#B9BFC7`, Gold `#D4AF37`, Platinum `#E5EAF0`, Diamond `#EAF6FF`). |
+| Giữ nguyên | Các bảng nổi (menu ngôn ngữ, menu tài khoản, gợi ý tìm kiếm, menu điện thoại) vẫn nền sáng chữ navy; ô đại diện theo hạng (chip sáng có viền riêng); thanh "Chủ đề" màu kem dưới header trang chủ; kích thước và khoảng cách của header. |
+
+**Cách làm:** thêm một khối CSS ở cuối `<style id="gf-shell-css">` của mỗi trang, cùng văn bản với khối cuối của `StorefrontHeader` (header đầy đủ) hoặc khối ghi đè `.focus-header` (header gọn); riêng bản mẫu có thêm luật `.locale-dropdown:focus-within .locale-pill` vì bản mẫu mở menu ngôn ngữ bằng `:focus-within` (storefront dùng `aria-expanded`).
+
+**Đã kiểm:** mở bằng Chromium 26 file ở 1920, 1440, 1280, 1100, 768, 390 và 320px (182 lượt): nền header `rgb(7, 42, 78)`, viền dưới 1px `rgb(198, 154, 43)`, logo bản chữ ngà nạp được, màu nút tròn, menu, giỏ, nút khách và link "về trang chủ" đúng như trên, 0 tràn ngang, 0 lỗi JavaScript, 0 tệp cục bộ lỗi. Chụp thêm các trạng thái: menu ngôn ngữ đang mở (nút vàng đặc), menu điện thoại mở (nút menu vàng đặc, bảng sáng chữ navy), ngăn kéo tìm kiếm ở 1100px, chip hạng Silver ở trang chủ hạng, header gọn ở trang tài khoản (tên và dòng hạng đọc được) và trang thanh toán. So từng dòng với bản trước đợt này: +145 −1 dòng ở mỗi trang có header đầy đủ, +93 −1 ở mỗi trang có header gọn (dòng bị thay là thẻ logo). Chưa phải bằng chứng tích hợp backend thật; chưa kiểm trên trình duyệt khác ngoài Chromium.

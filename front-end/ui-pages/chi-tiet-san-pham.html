@@ -63,7 +63,8 @@
       --gutter: 40px;
       --header-h: 82px;
       --sticky-h: 70px;
-      --catbar-h: 55px; /* giá trị gần đúng cho lần vẽ đầu; JS đo chiều cao thật của dải nhãn rồi ghi đè */
+      --gf-champagne: #F4E8C9; --gf-champagne-line: #E2CB8C; --gf-champagne-chip: #FFFBF0; --gf-champagne-chip-line: #D8BB6A;
+  --catbar-h: 55px; /* giá trị gần đúng cho lần vẽ đầu; JS đo chiều cao thật của dải nhãn rồi ghi đè */
     }
     /* Trang này thuộc nhóm A · seasonal (mục 4.3) */
     [data-collection="seasonal"]   { --cat-accent: #3E7149; --cat-surface: #F2F7EF; }
@@ -481,16 +482,6 @@
     @media (max-width: 767px) { .ingr__card { padding: 12px; } }
 
     /* =====================================================================
-       9. QUYỀN LỢI THÀNH VIÊN — cùng mẫu với trang-chu.html (số liệu Bảng 61 spec §15.1)
-       CẢNH BÁO CHO BẢN CHẠY THẬT: spec cấm sao các mốc này thành hằng số frontend.
-       benefitPercent, earlyAccessMinutes, nextTierTarget, maintenanceTarget MUST đọc từ Runtime Core.
-       Đây là mock tĩnh nên số nằm thẳng trong HTML.
-       Khác trang chủ: mục này nằm giữa trang nên không ép cao trọn khung nhìn, bỏ nút cuộn xuống,
-       và bỏ hiệu ứng làm sáng thẻ hạng (chỉ có nghĩa khi tới từ dòng hạng ở hero trang chủ).
-       ===================================================================== */
-    #he-mo-rong.section { padding-bottom: 44px; }
-
-    /* =====================================================================
        10. GIỜ VÀNG TRI ÂN (mục 15.7, 15.8) — cùng mẫu banner với trang-chu.html
        Khác trang chủ ở hai điểm: mục này nằm giữa trang nên không ép cao trọn khung nhìn,
        và bỏ nút cuộn xuống (ở trang chủ nó dẫn sang màn Quyền lợi).
@@ -503,7 +494,6 @@
        ===================================================================== */
     .book-section__eyebrow { justify-content: center; font-size: 14px; letter-spacing: .14em; gap: 12px; }
     .book-section__eyebrow .eyebrow__rule { width: 34px; }
-    .collection__nav .link-more { font-size: 14px; text-decoration: underline; text-underline-offset: 3px; }
 
     /* Bốn nhóm sắp ra mắt: khối pháp lý, card giới thiệu, chân preview, khối rỗng — giữ nguyên thông số của trang-chu.html */
     .legalgate {
@@ -549,8 +539,8 @@
     .empty__body { font-size: 15px; line-height: 1.65; }
     .empty__actions { display: flex; flex-wrap: wrap; gap: 12px; }
     .cards {
-      display: flex; gap: 24px; overflow-x: auto; scroll-snap-type: x mandatory;
-      scrollbar-width: none; padding: 4px; margin: 0 -4px; scroll-padding: 4px; cursor: grab;
+      margin-top: 20px; display: flex; gap: 24px; overflow-x: auto; scroll-snap-type: x mandatory;
+      scrollbar-width: none; padding: 4px; margin-left: -4px; margin-right: -4px; scroll-padding: 4px; cursor: grab;
     }
     .cards::-webkit-scrollbar { display: none; }
     .cards.is-dragging { cursor: grabbing; scroll-snap-type: none; user-select: none; }
@@ -596,7 +586,6 @@
       /* Một cột: khối tên/giá rộng đủ cột như ảnh chính và bảng thông tin (trước bị chặn 620px, dồn trái 84px ở iPad Mini);
          dãy ảnh nhỏ căn giữa dưới ảnh chính (trước dồn trái, hở 322px bên phải) */
       .gallery__thumbs { justify-content: center; }
-      #he-mo-rong.section { padding-bottom: 28px; }
       .empty { grid-template-columns: minmax(0, 1fr); gap: 20px; padding: 22px; }
       .previewfoot { flex-wrap: wrap; }
       .previewfoot .btn { margin-left: 0; }
@@ -666,106 +655,49 @@
       html { scroll-behavior: auto; }
       *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
     }
-    /* header-fit: Doanh nghiệp — từ 1440px khung header không rộng thêm (container 1240px nội dung). Thêm mục "Doanh nghiệp" làm cụm nút bên phải
-       vượt mép khung 63–102px (chip hạng Platinum/Diamond dài nhất) → logo 186 → 176px, khe menu 20 → 16px, ô tìm kiếm 288 → 208px */
 
     /* =====================================================================
-       ĐỒNG BỘ VỚI STOREFRONT (14/10/2026) — trang chi tiết dùng lại các khu của trang chủ (thanh Chủ đề + thanh Nhóm sản phẩm, Quyền lợi thành viên,
-       Giờ Vàng Tri Ân, thẻ nhóm và thẻ sản phẩm). Luật CSS dưới đây là bản của trang-chu-theo-doi-tuong/trang-chu.html (cùng một nguồn), thay cho các luật cũ cùng họ.
-       Thẻ giá và nút giỏ chỉ áp trong .card / .gh-card / .collection__nav để không đụng hộp mua hàng (.buybox).
+       3. (VỊ TRÍ 1 — Top promo ticker, mục 6.1/5.6: đã bỏ theo quyết định chủ dự án; header nằm sát đỉnh trang)
        ===================================================================== */
-    .header[data-stuck="true"] + .catbar { box-shadow: 0 10px 30px rgba(16,48,95,.10); }
+
+    /* =====================================================================
+       4. VỊ TRÍ 2 — MAIN HEADER (mục 6.2)
+       ===================================================================== */
+    /* Header dính cùng dải nhãn nhóm ngay bên dưới → bóng đổ chuyển xuống mép dưới dải nhãn, không in đè lên dải */
+    .header[data-stuck="true"] + .catbar { box-shadow: 0 10px 30px rgba(120,90,20,.14); } /* bóng ấm theo nền vàng kem của dải */
+    /* Dải nhãn nhóm sản phẩm ngay dưới header (quyết định chủ dự án): chữ "Nhóm sản phẩm:" + 7 nhãn cùng kiểu .tabs của nhom-san-pham.html.
+       Dính ngay dưới header suốt trang, thay dải chip dính cũ trong khối Sản phẩm. Cao cố định bằng --catbar-h (hai hàng):
+       hero trừ phần này, các màn cao đúng một khung nhìn và scroll-margin-top của các mục đều cộng thêm để không bị dải che.
+       Nhãn đang xem (aria-current, JS) tô navy như nhom-san-pham.html. Điện thoại (≤767px) thu thành nút mở bảng nhãn. */
     .catbar {
-          position: sticky; top: var(--header-h); z-index: 80;
-          padding: 6px 0; display: flex; align-items: center; background: var(--gf-cream); border-bottom: 1px solid var(--gf-border); /* cao theo số dòng nhãn; JS ghi chiều cao thật vào --catbar-h */
-          transition: box-shadow var(--motion-base) var(--ease-standard);
-        }
-    .catbar__inner { display: flex; align-items: flex-start; gap: 8px; width: 100%; min-width: 0; }
-    .catbar__toggle { display: none; }
+      /* Màu dải "Chủ đề": vàng kem ấm (champagne), chủ dự án chọn phương án B ngày 2026-10-17, thay nền kem trùng nền trang (#FBF8F1).
+         Chip (2026-10-19): nhiều màu theo bảng màu data-hue của thanh Nhóm sản phẩm (xem .catbar__tabs a[data-hue]);
+         --catbar-chip-* chỉ còn cho nút gập ở điện thoại (ngà viền vàng) và chip không có data-hue. */
+      --catbar-bg: var(--gf-champagne); --catbar-line: var(--gf-champagne-line); --catbar-chip-bg: var(--gf-champagne-chip); --catbar-chip-line: var(--gf-champagne-chip-line);
+      position: sticky; top: var(--header-h); z-index: 80;
+      padding: 6px 0; display: flex; align-items: center; background: var(--catbar-bg); border-bottom: 1px solid var(--catbar-line); /* cao theo số dòng nhãn; JS ghi chiều cao thật vào --catbar-h */
+      transition: box-shadow var(--motion-base) var(--ease-standard);
+    }
+    .catbar__inner { display: flex; align-items: flex-start; gap: 8px; width: 100%; min-width: 0; } /* width: 100% để .container trong flex không co về fit-content rồi bị căn giữa */
+    .catbar__toggle { display: none; } /* nút mở bảng nhãn chỉ dùng trên điện thoại, xem ≤767px */
+    /* Chữ "Nhóm sản phẩm:" lùi vào 24px so với mép container (chủ dự án chỉnh: dịch phải thêm so với mép logo).
+       Nhãn giữ bề rộng theo chữ, nối tiếp sau chữ đó; thiếu chỗ thì xuống dòng, dòng dưới bắt đầu thẳng nhãn đầu tiên. */
     .catbar__label { flex: 0 0 auto; margin-left: 24px; display: flex; align-items: center; min-height: 36px; font-size: 13.5px; font-weight: 600; color: var(--gf-muted); white-space: nowrap; }
-    .catbar__tabs { flex: 1 1 auto; min-width: 0; display: flex; flex-wrap: wrap; gap: 6px 5px; }
+    .catbar__title { font-size: 14.5px; font-weight: 700; color: var(--gf-navy); } /* chủ dự án 2026-10-17: tiêu đề thanh thay nhãn "Chủ đề:", đậm màu navy, không dấu hai chấm */
+    .catbar__tabs { flex: 1 1 auto; min-width: 0; display: flex; flex-wrap: wrap; gap: 6px 5px; } /* khe ngang 5px: bảy nhãn vẫn một dòng ở 1280px */
     .catbar__tabs a {
-          flex: 0 0 auto; display: inline-flex; align-items: center; min-height: 36px; padding: 0 10px; /* 10px: dải vẫn một dòng ở 1280px sau khi chữ đầu dải lùi 24px */
-          font-size: 13px; font-weight: 600; white-space: nowrap; color: var(--gf-text); /* rộng theo chữ như trước, không kéo giãn */
-          border-radius: var(--radius-pill); background: #fff; border: 1px solid var(--gf-border);
-          transition: background var(--motion-base) var(--ease-standard), border-color var(--motion-base) var(--ease-standard), color var(--motion-base) var(--ease-standard);
-        }
-    .catbar__tabs a:hover { border-color: var(--gf-navy-700); color: var(--gf-text); }
+      flex: 0 0 auto; display: inline-flex; align-items: center; min-height: 36px; padding: 0 10px; /* 10px: dải vẫn một dòng ở 1280px sau khi chữ đầu dải lùi 24px */
+      font-size: 13px; font-weight: 600; white-space: nowrap; color: var(--gf-navy); /* rộng theo chữ như trước, không kéo giãn */
+      border-radius: var(--radius-pill); background: var(--catbar-chip-bg); border: 1px solid var(--catbar-chip-line);
+      transition: background var(--motion-base) var(--ease-standard), border-color var(--motion-base) var(--ease-standard), color var(--motion-base) var(--ease-standard);
+    }
+    .catbar__tabs a:not([data-hue]):hover { background: #fff; border-color: var(--gf-gold); color: var(--gf-navy); } /* chip không có màu riêng (data-hue) */
     .catbar__tabs a[aria-current="true"], .catbar__tabs a:active { background: var(--gf-navy); border-color: var(--gf-navy); color: #fff; }
+    /* Chip nhiều màu (chủ dự án 2026-10-19): cùng bảng màu và cùng kiểu rê chuột / đang xem với badge của thanh Nhóm sản phẩm (xem .groupbar__tabs a[data-hue]). */
+    .catbar__tabs a[data-hue] { border-color: var(--chip-border); background: var(--chip-bg); color: var(--chip-ink); }
+    @media (hover: hover) { .catbar__tabs a[data-hue]:hover { border-color: var(--chip-ink); box-shadow: 0 3px 10px -4px var(--chip-ink); } }
+    .catbar__tabs a[data-hue][aria-current="true"] { border-color: var(--chip-ink); background: var(--chip-ink); color: #fff; }
     .catbar__tabs a:focus-visible { border-radius: var(--radius-pill); }
-    @media (max-width: 767px) {
-    .catbar { height: 48px; padding: 0; }
-    .catbar__toggle {
-            display: flex; align-items: center; gap: 8px; width: 100%; min-height: 36px; padding: 0 12px 0 14px;
-            border: 1px solid var(--gf-border); border-radius: var(--radius-pill); background: #fff; color: var(--gf-text); text-align: left;
-          }
-    .catbar__toggle-label { flex: 0 0 auto; font-size: 12.5px; font-weight: 600; color: var(--gf-muted); }
-    .catbar__toggle-value { flex: 1 1 auto; min-width: 0; font-size: 13px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .catbar__toggle .icon { width: 18px; height: 18px; color: var(--gf-navy); transition: transform var(--motion-base) var(--ease-standard); }
-    .catbar.is-open .catbar__toggle .icon { transform: rotate(180deg); }
-    .catbar__toggle:focus-visible { border-radius: var(--radius-pill); }
-    .catbar__label { display: none; }
-    .catbar__tabs {
-            position: absolute; left: 0; right: 0; top: 100%; display: none; flex-wrap: wrap; justify-content: flex-start; gap: 8px;
-            padding: 10px var(--gutter) 14px; background: var(--gf-cream); border-bottom: 1px solid var(--gf-border); box-shadow: 0 16px 28px -18px rgba(16, 48, 95, .35);
-          }
-    .catbar.is-open .catbar__tabs { display: flex; }
-    .catbar__tabs a { min-height: 38px; padding: 0 12px; } }
-    .catbar { z-index: 82; font-family: var(--font-sans); line-height: 1.55; color: var(--gf-text); }
-    .groupbar {
-          position: relative; display: flex; align-items: center; padding: 6px 0; border: 1px solid var(--gf-border); border-radius: 16px; background: #fff;
-          font-family: var(--font-sans); line-height: 1.55; color: var(--gf-text);
-        }
-    .groupbar__inner { display: flex; align-items: flex-start; gap: 8px; width: 100%; min-width: 0; padding-inline: 14px; }
-    .groupbar__toggle { display: none; }
-    .groupbar__label { flex: 0 0 auto; margin: 0; display: flex; align-items: center; min-height: 36px; font-size: 13.5px; font-weight: 600; color: var(--gf-muted); white-space: nowrap; }
-    .groupbar__tabs { flex: 1 1 auto; min-width: 0; display: flex; flex-wrap: wrap; gap: 6px 5px; }
-    .groupbar__tabs a, .catbar__tabs a { transition: background-color 140ms var(--ease-standard), border-color 140ms var(--ease-standard), box-shadow 140ms var(--ease-standard), color 140ms var(--ease-standard); }
-    .groupbar__tabs a {
-          flex: 0 0 auto; display: inline-flex; align-items: center; min-height: 36px; padding: 0 10px;
-          font-size: 13px; font-weight: 600; white-space: nowrap; color: var(--gf-text);
-          border-radius: var(--radius-pill); background: #fff; border: 1px solid var(--gf-border);
-        }
-    .groupbar__tabs a:focus-visible { border-radius: var(--radius-pill); }
-    .groupbar__tabs a[data-hue] { border-color: var(--chip-border); background: var(--chip-bg); color: var(--chip-ink); }
-    @media (hover: hover) {
-    .groupbar__tabs a[data-hue]:hover { border-color: var(--chip-ink); box-shadow: 0 3px 10px -4px var(--chip-ink); } }
-    .groupbar__tabs a[data-hue][aria-current="true"] { border-color: var(--chip-ink); background: var(--chip-ink); color: #fff; }
-    .groupbar__tabs a[data-hue="0"] { --chip-bg: #E8EEF8; --chip-border: #A9BEDC; --chip-ink: #10305F; }
-    .groupbar__tabs a[data-hue="1"] { --chip-bg: #E6F3EA; --chip-border: #9FCBAB; --chip-ink: #1F5030; }
-    .groupbar__tabs a[data-hue="2"] { --chip-bg: #F8EAE3; --chip-border: #E1B8A5; --chip-ink: #7A3A22; }
-    .groupbar__tabs a[data-hue="3"] { --chip-bg: #FFF1CC; --chip-border: #E8CE7E; --chip-ink: #6B4A0F; }
-    .groupbar__tabs a[data-hue="4"] { --chip-bg: #E0F2F2; --chip-border: #8CCACD; --chip-ink: #135057; }
-    .groupbar__tabs a[data-hue="5"] { --chip-bg: #F2E8F6; --chip-border: #CBA7D8; --chip-ink: #55296A; }
-    .groupbar__tabs a[data-hue="6"] { --chip-bg: #FBE8EE; --chip-border: #E5AABE; --chip-ink: #7E2C49; }
-    .groupbar__tabs a[data-hue="7"] { --chip-bg: #F0F3DA; --chip-border: #C6CE86; --chip-ink: #4E5616; }
-    @media (prefers-reduced-motion: reduce) {
-    .groupbar__tabs a, .catbar__tabs a { transition: none; } }
-    @media (max-width: 767px) {
-    .catbar__tabs, .groupbar__tabs {
-            flex-direction: column; flex-wrap: nowrap; gap: 6px; max-height: 60vh; overflow-y: auto;
-            padding: 12px 16px; box-shadow: 0 12px 24px rgba(16, 48, 95, .12); z-index: 81;
-          }
-    .catbar__tabs a { min-height: 36px; padding: 0 10px; }
-    .groupbar { height: 48px; padding: 0; }
-    .groupbar__inner { padding-inline: 14px; }
-    .groupbar__toggle {
-            display: flex; align-items: center; gap: 8px; width: 100%; min-height: 36px; padding: 0 12px 0 14px;
-            border: 1px solid var(--gf-border); border-radius: var(--radius-pill); background: #fff; color: var(--gf-text); text-align: left;
-          }
-    .groupbar__toggle-label { flex: 0 0 auto; font-size: 12.5px; font-weight: 600; color: var(--gf-muted); }
-    .groupbar__toggle-value { flex: 1 1 auto; min-width: 0; font-size: 13px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .groupbar__toggle .icon { width: 18px; height: 18px; color: var(--gf-navy); transition: transform var(--motion-base) var(--ease-standard); }
-    .groupbar.is-open .groupbar__toggle .icon { transform: rotate(180deg); }
-    .groupbar__toggle:focus-visible { border-radius: var(--radius-pill); }
-    .groupbar__label { display: none; }
-    .groupbar__tabs { position: absolute; left: 0; right: 0; top: 100%; display: none; background: var(--gf-cream); border-bottom: 1px solid var(--gf-border); }
-    .groupbar.is-open .groupbar__tabs { display: flex; } }
-    @media (min-width: 768px) {
-    .catbar__inner, .groupbar__inner { justify-content: center; }
-    .catbar__label, .groupbar[data-docked="true"] .groupbar__label { margin-left: 0; }
-    .catbar__tabs, .groupbar__tabs { flex: 0 1 auto; justify-content: center; } }
-    .catbar, .groupbar { line-height: 1.55; }
     .tiers {
           position: relative; scroll-margin-top: calc(var(--header-h) + var(--catbar-h) + var(--groupbar-h, 49px));
           display: grid; align-items: center; padding: 24px 0 40px;
@@ -942,7 +874,7 @@
           background: #fff; border: 1px solid var(--gf-navy); color: var(--gf-navy);
         }
     .card .iconbtn .icon, .collection__nav .iconbtn .icon { width: 18px; height: 18px; }
-    .card .iconbtn:disabled, .collection__nav .iconbtn:disabled { opacity: unset; border-color: var(--gf-border); color: #B9A87E; cursor: default; }
+    .card .iconbtn:disabled, .collection__nav .iconbtn:disabled { opacity: unset; cursor: default; }
     .card__actions .iconbtn.is-added { background: var(--gf-navy); border-color: var(--gf-navy); color: #fff; }
     .eco.is-dragging { cursor: grabbing; scroll-snap-type: none; user-select: none; }
     .eco.is-settling { scroll-snap-type: none; }
@@ -1023,6 +955,61 @@
     .eco__mode { font-size: 10px; padding: 0; border: 0; background: transparent; letter-spacing: .06em; }
     .eco__name { font-size: 14px; }
     }
+
+    /* =====================================================================
+       THANH "CHỦ ĐỀ" (dính ngay dưới header) và THANH "NHÓM SẢN PHẨM" (đáy khu Sản phẩm, cuộn qua thì gắn dưới thanh Chủ đề)
+       — đồng bộ HomeTopicBar / HomeProductGroupBar / HomeChipStrip của storefront (chủ dự án chốt 2026-10-12).
+       Thanh Chủ đề dùng lại .catbar; thanh Nhóm sản phẩm là .groupbar, cùng ruột (nhãn đầu thanh + dãy badge; điện thoại thu thành nút mở bảng).
+       Thứ tự lớp: header 100 > thanh Chủ đề 82 > thanh Nhóm sản phẩm (đang gắn) 81 > bản đồ trang.
+       ===================================================================== */
+    .catbar { z-index: 82; font-family: var(--font-sans); line-height: 1.55; color: var(--gf-text); }
+    .groupbar-slot { min-height: 49px; margin-top: 0; transition: none; } /* trang chi tiết: thanh nằm sát dưới thanh Chủ đề (trang chủ: 26px dưới mô tả khu 24/7); min-height giữ chỗ cho lần vẽ đầu, JS ghi chiều cao thật */
+    .groupbar[data-docked="true"] { animation: none; } /* trang chi tiết: thanh gắn sẵn từ lúc nạp nên không chạy hiệu ứng trượt vào */
+    @media (max-width: 767px) { .groupbar-slot { min-height: 48px; } } /* dưới dòng mô tả của khu Chương trình bán hàng 24/7: 26px như khối "Bốn hạng". transition: none vì JS đổi chiều cao chỗ giữ này rồi cuộn ngay; luật giảm chuyển động của trang đặt chuyển tiếp .01ms cho mọi phần tử nên chiều cao đọc ra trễ một khung hình và nhóm đầu đáp lệch */
+    .groupbar {
+      /* Màu thanh "Nhóm sản phẩm" (chủ dự án chọn phương án C ngày 2026-10-19): xanh navy nhạt, thay thẻ trắng khi nằm trong trang và dải kem khi dính.
+         Khác tông với thanh Chủ đề có chủ ý (vàng kem ấm ở trên, xanh navy nhạt ở dưới) nên KHÔNG dùng token --gf-champagne* của thanh đó. */
+      --groupbar-bg: #E5EDF8; --groupbar-line: #BFD0E8; --groupbar-toggle-bg: #F6F9FD; --groupbar-toggle-line: #A9BEDC;
+      position: relative; display: flex; align-items: center; padding: 6px 0; border: 1px solid var(--groupbar-line); border-radius: 16px; background: var(--groupbar-bg);
+      font-family: var(--font-sans); line-height: 1.55; color: var(--gf-text);
+    }
+    .groupbar[data-hidden-slot="true"] { visibility: hidden; }
+    .groupbar__inner { display: flex; align-items: flex-start; gap: 8px; width: 100%; min-width: 0; padding-inline: 14px; }
+    .groupbar__toggle { display: none; } /* nút mở bảng nhóm chỉ dùng trên điện thoại */
+    .groupbar__label { flex: 0 0 auto; margin: 0; display: flex; align-items: center; min-height: 36px; font-size: 13.5px; font-weight: 700; color: var(--gf-navy); white-space: nowrap; }
+    .groupbar__tabs { flex: 1 1 auto; min-width: 0; display: flex; flex-wrap: wrap; gap: 6px 5px; }
+    .groupbar__tabs a, .catbar__tabs a { transition: background-color 140ms var(--ease-standard), border-color 140ms var(--ease-standard), box-shadow 140ms var(--ease-standard), color 140ms var(--ease-standard); }
+    .groupbar__tabs a {
+      flex: 0 0 auto; display: inline-flex; align-items: center; min-height: 36px; padding: 0 10px;
+      font-size: 13px; font-weight: 600; white-space: nowrap; color: var(--gf-text);
+      border-radius: var(--radius-pill); background: #fff; border: 1px solid var(--gf-border);
+    }
+    .groupbar__tabs a:focus-visible { border-radius: var(--radius-pill); }
+    /* Mỗi badge nhóm một màu: nền nhạt, viền vừa, chữ đậm cùng sắc; badge đang xem đổi sang nền đặc chữ trắng. Màu gán riêng cho từng badge bằng data-hue (0–7), không theo thứ tự badge. Chip của thanh "Chủ đề" (.catbar__tabs) dùng chung bảng màu này (hue 0, 1, 2, 4, 5). */
+    .groupbar__tabs a[data-hue] { border-color: var(--chip-border); background: var(--chip-bg); color: var(--chip-ink); }
+    @media (hover: hover) { .groupbar__tabs a[data-hue]:hover { border-color: var(--chip-ink); box-shadow: 0 3px 10px -4px var(--chip-ink); } }
+    .groupbar__tabs a[data-hue][aria-current="true"] { border-color: var(--chip-ink); background: var(--chip-ink); color: #fff; }
+    .groupbar__tabs a[data-hue="0"], .catbar__tabs a[data-hue="0"], .groupbar__item[data-hue="0"] { --chip-bg: #E8EEF8; --chip-border: #A9BEDC; --chip-ink: #10305F; }
+    .groupbar__tabs a[data-hue="1"], .catbar__tabs a[data-hue="1"], .groupbar__item[data-hue="1"] { --chip-bg: #E6F3EA; --chip-border: #9FCBAB; --chip-ink: #1F5030; }
+    .groupbar__tabs a[data-hue="2"], .catbar__tabs a[data-hue="2"], .groupbar__item[data-hue="2"] { --chip-bg: #F8EAE3; --chip-border: #E1B8A5; --chip-ink: #7A3A22; }
+    .groupbar__tabs a[data-hue="3"], .catbar__tabs a[data-hue="3"], .groupbar__item[data-hue="3"] { --chip-bg: #FFF1CC; --chip-border: #E8CE7E; --chip-ink: #6B4A0F; }
+    .groupbar__tabs a[data-hue="4"], .catbar__tabs a[data-hue="4"], .groupbar__item[data-hue="4"] { --chip-bg: #E0F2F2; --chip-border: #8CCACD; --chip-ink: #135057; }
+    .groupbar__tabs a[data-hue="5"], .catbar__tabs a[data-hue="5"], .groupbar__item[data-hue="5"] { --chip-bg: #F2E8F6; --chip-border: #CBA7D8; --chip-ink: #55296A; }
+    .groupbar__tabs a[data-hue="6"], .catbar__tabs a[data-hue="6"], .groupbar__item[data-hue="6"] { --chip-bg: #FBE8EE; --chip-border: #E5AABE; --chip-ink: #7E2C49; }
+    .groupbar__tabs a[data-hue="7"], .catbar__tabs a[data-hue="7"], .groupbar__item[data-hue="7"] { --chip-bg: #F0F3DA; --chip-border: #C6CE86; --chip-ink: #4E5616; }
+    /* Đang gắn dưới thanh Chủ đề: dải ngang rộng hết màn, nền xanh navy nhạt (khác tông với thanh Chủ đề phía trên). Chỗ gốc giữ nguyên chiều cao (slot) nên trang không giật. */
+    .groupbar[data-docked="true"] {
+      position: fixed; z-index: 81; top: calc(var(--header-h) + var(--catbar-h)); right: 0; left: 0;
+      padding: 6px 0; border: 0; border-bottom: 1px solid var(--groupbar-line); border-radius: 0; background: var(--groupbar-bg);
+      box-shadow: 0 10px 30px rgba(16, 48, 95, .12); animation: groupbarDock 220ms var(--ease-standard);
+    }
+    .groupbar[data-docked="true"] .groupbar__inner { max-width: calc(var(--container) + var(--gutter) * 2); margin-inline: auto; padding-inline: var(--gutter); }
+    .groupbar[data-docked="true"] .groupbar__label { margin-left: 24px; }
+    @keyframes groupbarDock { from { opacity: .6; transform: translateY(-100%); } to { opacity: 1; transform: translateY(0); } }
+    @media (prefers-reduced-motion: reduce) {
+      .groupbar[data-docked="true"] { animation: none; }
+      .groupbar__tabs a, .catbar__tabs a { transition: none; }
+    }
     .collection { scroll-margin-top: calc(var(--header-h) + var(--catbar-h) + var(--groupbar-h, 49px) + 16px); }
     .eco__heading { gap: 10px; letter-spacing: .12em; }
     .eco__heading .eyebrow__rule { width: 26px; }
@@ -1049,13 +1036,113 @@
     .fb-arrow:hover:not(:disabled) { background: var(--gf-cream); }
     .fb-arrow .icon { width: 15px; height: 15px; }
     .fb-arrow:disabled { border-color: var(--gf-border); color: #B9A87E; cursor: default; }
+
+    /* Thanh Chủ đề trên điện thoại (chép từ khối @media lẫn của trang chủ): nút gập mang tên tiêu đề, bảng thả xuống khi mở. */
+    @media (max-width: 767px) {
+      .catbar { height: 48px; padding: 0; }
+      .catbar__toggle { display: flex; align-items: center; gap: 8px; width: 100%; min-height: 36px; padding: 0 12px 0 14px; border: 1px solid var(--catbar-chip-line); border-radius: var(--radius-pill); background: var(--catbar-chip-bg); color: var(--gf-text); text-align: left; }
+      .catbar__toggle-label { flex: 1 1 auto; min-width: 0; font-size: 13.5px; font-weight: 700; color: var(--gf-navy); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+      .catbar__toggle-value { flex: 1 1 auto; min-width: 0; font-size: 13px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+      .catbar__toggle .icon { width: 18px; height: 18px; color: var(--gf-navy); transition: transform var(--motion-base) var(--ease-standard); }
+      .catbar.is-open .catbar__toggle .icon { transform: rotate(180deg); }
+      .catbar__toggle:focus-visible { border-radius: var(--radius-pill); }
+      .catbar__label { display: none; }
+      .catbar__tabs { position: absolute; left: 0; right: 0; top: 100%; display: none; flex-wrap: wrap; justify-content: flex-start; gap: 8px; padding: 10px var(--gutter) 14px; background: var(--catbar-bg); border-bottom: 1px solid var(--catbar-line); box-shadow: 0 16px 28px -18px rgba(16, 48, 95, .35); }
+      .catbar.is-open .catbar__tabs { display: flex; }
+      .catbar__tabs a { min-height: 38px; padding: 0 12px; }
+    }
+
+    @media (max-width: 767px) {
+      /* Điện thoại: bảng thả xuống là danh sách dọc, mỗi badge một dòng rộng hết bảng (như storefront). */
+      .catbar__tabs, .groupbar__tabs {
+        flex-direction: column; flex-wrap: nowrap; gap: 6px; max-height: 60vh; overflow-y: auto;
+        padding: 12px 16px; box-shadow: 0 12px 24px rgba(16, 48, 95, .12); z-index: 81;
+      }
+      .catbar__tabs { box-shadow: 0 16px 28px -18px rgba(120, 90, 20, .4); } /* bóng ấm theo nền vàng kem; luật chung ở trên đặt bóng xanh cho cả hai dải */
+      .catbar__tabs a { min-height: 36px; padding: 0 10px; }
+      .groupbar { height: 48px; padding: 0; }
+      .groupbar__inner { padding-inline: 14px; }
+      .groupbar__toggle {
+        display: flex; align-items: center; gap: 8px; width: 100%; min-height: 36px; padding: 0 12px 0 14px;
+        border: 1px solid var(--groupbar-toggle-line); border-radius: var(--radius-pill); background: var(--groupbar-toggle-bg); color: var(--gf-text); text-align: left;
+      }
+      .groupbar__toggle-label { flex: 0 0 auto; font-size: 12.5px; font-weight: 600; color: var(--gf-navy); }
+      .groupbar__toggle-value { flex: 1 1 auto; min-width: 0; font-size: 13px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+      .groupbar__toggle .icon { width: 18px; height: 18px; color: var(--gf-navy); transition: transform var(--motion-base) var(--ease-standard); }
+      .groupbar.is-open .groupbar__toggle .icon { transform: rotate(180deg); }
+      .groupbar__toggle:focus-visible { border-radius: var(--radius-pill); }
+      .groupbar__label { display: none; }
+      .groupbar__tabs { position: absolute; left: 0; right: 0; top: 100%; display: none; background: var(--groupbar-bg); border-bottom: 1px solid var(--groupbar-line); }
+      .groupbar.is-open .groupbar__tabs { display: flex; }
+      .groupbar[data-docked="true"] { height: 48px; }
+      .groupbar[data-docked="true"] .groupbar__inner { padding-inline: 16px; }
+    }
+
+    /* Từ 768px nhãn đầu thanh và dãy badge của hai thanh "Chủ đề" và "Nhóm sản phẩm" căn giữa theo chiều ngang (đồng bộ HomeChipStrip của storefront, chủ dự án yêu cầu 14/10/2026):
+       dãy badge không còn giãn hết thanh, hàng xuống dòng cũng căn giữa, nhãn bỏ phần lùi 24px. Dưới 768px giữ nguyên nút gập một nút. */
+    @media (min-width: 768px) {
+      .catbar__inner, .groupbar__inner { justify-content: center; }
+      .catbar__label, .groupbar[data-docked="true"] .groupbar__label { margin-left: 0; }
+      .catbar__tabs, .groupbar__tabs { flex: 0 1 auto; justify-content: center; }
+    }
+
+    /* THANH THỨ HAI ÔM QUANH BADGE CHA (chủ dự án chọn phương án A "liền mềm" ngày 2026-10-20, rồi cùng ngày đổi cuống nối thành thanh dưới ôm quanh badge cha; thay hàng con nằm chung thanh 2026-10-20 và drop-list 2026-10-19):
+       badge có mục con ("Thực phẩm", "Thực phẩm chức năng") được bọc trong .groupbar__item cùng màu (data-hue). Khi badge cha đang được chọn (.is-open do JS đặt theo lựa chọn), mục con hiện ở MỘT THANH RIÊNG treo ngay dưới đáy thanh trên:
+       nền nhạt theo màu badge cha, hai đầu loe mềm vào đáy thanh trên (góc lõm bán kính 16px) rồi bo tròn hết cỡ ở phía dưới, và phần nền nhạt đó dâng lên ÔM QUANH badge cha (vành 3px, đỉnh bo tròn đồng tâm với hai đầu badge, hai chân nối xuống thanh dưới bằng góc lõm 5px).
+       Hình liền khối (thân thanh + hai góc lõm + vành ôm) là MỘT ảnh SVG do JS vẽ (placeSub → shapeSub → --shape) làm nền của ul::before, vì viền 1px phải chạy liên tục theo đường cong. Từ 768px .groupbar__item là display: contents và ul là phần tử định vị tuyệt đối
+       so với .groupbar (JS đặt left theo badge cha và giữ chỗ bằng padding-bottom của chỗ gốc); badge cha đang mở nổi lên trên ul (z-index 4) để vành ôm nằm sau nó. Điện thoại: mục con nằm ngay dưới badge cha trong bảng nhóm, xuống dòng khi hết chỗ. Mục con không có href là mục chưa có khu sản phẩm. */
+    .groupbar__item { display: block; }
+    .groupbar__sub { display: none; flex-wrap: wrap; gap: 6px 5px; margin: 0; padding: 0; list-style: none; }
+    .groupbar__item.is-open:not(.is-collapsed) > .groupbar__sub { display: flex; }
+    .groupbar__sub li { display: flex; }
+    /* MŨI TÊN ĐÓNG/MỞ ở badge cha có mục con (chủ dự án 2026-10-20): vùng bấm riêng ở đầu phải badge (vạch ngăn mờ + mũi tên 16px). Bấm = đóng/mở thanh mục con của badge đó mà không đổi bộ lọc;
+       mũi tên hướng xuống khi đóng, hướng lên khi mở (.is-collapsed trên .groupbar__item = đang thu gọn). Badge chưa chọn thì bấm mũi tên = chọn và mở. */
+    .groupbar__chev { position: relative; display: inline-flex; align-items: center; justify-content: center; align-self: stretch; }
+    .groupbar__chev::before { content: ""; position: absolute; left: 0; top: 8px; bottom: 8px; width: 1px; background: currentColor; opacity: .28; pointer-events: none; }
+    .groupbar__chev .icon { width: 16px; height: 16px; transition: transform 160ms var(--ease-standard); }
+    .groupbar__item.is-open:not(.is-collapsed) .groupbar__chev .icon { transform: rotate(180deg); }
+    @media (hover: hover) { .groupbar__chev:hover { background: rgba(16, 48, 95, .08); } .groupbar__tabs a[aria-current="true"] .groupbar__chev:hover { background: rgba(255, 255, 255, .2); } }
+    @media (prefers-reduced-motion: reduce) { .groupbar__chev .icon { transition: none; } }
+    .groupbar__tabs .groupbar__sub a { border-color: var(--chip-border); background: var(--chip-bg); color: var(--chip-ink); }
+    @media (hover: hover) { .groupbar__tabs .groupbar__sub a[href]:hover { border-color: var(--chip-ink); box-shadow: 0 3px 10px -4px var(--chip-ink); } }
+    .groupbar__tabs .groupbar__sub a[aria-current="true"] { border-color: var(--chip-ink); background: var(--chip-ink); color: #fff; box-shadow: 0 6px 14px -8px var(--chip-ink); }
+    .groupbar__tabs .groupbar__sub a:not([href]) { cursor: default; }
+    .groupbar__sub.is-entering { animation: groupSubIn 240ms var(--ease-standard) both; }
+    @keyframes groupSubIn { from { opacity: 0; } to { opacity: 1; } } /* chỉ hiện dần, không trượt: vành ôm cách viền trên của thanh trên chỉ ~3px nên trượt lên sẽ đè vạch viền */
+    @media (prefers-reduced-motion: reduce) { .groupbar__sub.is-entering { animation: none; } }
+    @media (min-width: 768px) {
+      .groupbar__item { display: contents; }
+      .groupbar__sub { position: absolute; z-index: 3; top: 100%; left: 0; width: max-content; max-width: calc(100% - 44px); justify-content: center; padding: 12px 14px 10px; } /* top: 100% = mép trên của viền dưới thanh trên (cả lúc tại chỗ lẫn lúc gắn): nền thanh dưới che đúng vạch viền đó nên hai thanh liền nhau */
+      .groupbar__sub::before { content: ""; position: absolute; z-index: -1; left: var(--shape-l, 0px); top: var(--shape-t, 0px); width: var(--shape-w, 100%); height: var(--shape-h, 100%); background: var(--shape, none) 0 0 / 100% 100% no-repeat; pointer-events: none; }
+      .groupbar__sub::after { content: ""; position: absolute; z-index: -2; left: 0; right: 0; top: 0; bottom: 0; border-radius: 0 0 24px 24px; box-shadow: 0 7px 9px -4px rgba(16, 48, 95, .12); pointer-events: none; } /* bóng chỉ rơi dưới thân thanh, không rơi quanh vành ôm */
+      .groupbar__tabs .groupbar__sub a { min-height: 34px; background: #fff; }
+      .groupbar__item.is-open > a { position: relative; z-index: 4; }
+      .groupbar__item > a { padding-right: 0; }
+      .groupbar__chev { width: 28px; margin-left: 6px; border-radius: 0 999px 999px 0; } /* vùng bấm 28px sát mép phải badge: bỏ đệm phải của badge để hai đầu bo tròn khớp nhau */
+    }
+    @media (max-width: 767px) {
+      .groupbar__item { width: 100%; }
+      .groupbar__item > a { display: flex; width: 100%; }
+      .groupbar__sub { gap: 6px; margin: 6px 0 0; padding-left: 6px; } /* lùi nhẹ để thấy là con của badge ngay trên; lùi nhiều hơn thì ở 390px hai badge dài không còn vừa một dòng */
+      .groupbar__tabs .groupbar__sub a { padding: 0 8px; }
+      .groupbar__chev { width: 40px; margin: 0 -10px 0 auto; border-radius: 0 999px 999px 0; } /* điện thoại: mũi tên ở mép phải dòng badge, vùng bấm 40px */
+    }
+
+    /* LỌC NHÓM (chủ dự án 2026-10-19): bấm badge thì badge sáng lên (aria-current) và bên dưới chỉ còn các nhóm của badge đó; nhóm khác ẩn bằng thuộc tính hidden.
+       Badge vừa chọn "nảy" nhẹ, nhóm vừa hiện trượt lên và hiện dần; giảm chuyển động thì bỏ cả hai. Không bật JS (noscript) thì hiện đủ mọi nhóm. */
+    .collection[hidden] { display: none !important; }
+    .groupbar__tabs a[data-hue][aria-current="true"] { box-shadow: 0 6px 14px -8px var(--chip-ink); }
+    .groupbar__tabs a.is-activating { animation: chipActivate 280ms var(--ease-standard); }
+    @keyframes chipActivate { 0% { transform: scale(.93); } 55% { transform: scale(1.06); } 100% { transform: scale(1); } }
+    .collection.is-entering > * { animation: collectionIn 260ms var(--ease-standard) both; } /* chạy trên phần tử con, không chạy trên chính .collection: scrollIntoView căn theo hộp đã dịch 10px nên nhóm đáp lệch 10px */
+    @keyframes collectionIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+    @media (prefers-reduced-motion: reduce) { .groupbar__tabs a.is-activating, .collection.is-entering > * { animation: none; } }
     .golden-section {
           position: relative; display: grid; grid-template-columns: minmax(0, 1fr); align-items: center;
           scroll-margin-top: calc(var(--header-h) + var(--catbar-h) + var(--groupbar-h, 49px));
           padding-block: 40px 48px; background: var(--gf-cream);
         }
     .golden-section__inner { width: 100%; max-width: calc(var(--container) + var(--gutter) * 2); margin: 0 auto; padding: 0 var(--gutter); min-width: 0; }
-    .golden-section .book-section__eyebrow { display: flex; margin: 0 0 14px; line-height: 1.35; }
     .golden {
           position: relative; isolation: isolate; display: grid; grid-template-columns: minmax(0, 1.45fr) auto minmax(0, 1fr); align-items: stretch;
           border-radius: 20px; overflow: hidden; color: var(--gf-gold-soft);
@@ -1091,31 +1178,68 @@
     .golden__label { width: 0; min-width: 100%; justify-content: center; }
     .golden__label-rule { flex: 0 1 26px; min-width: 0; }
     .golden .countdown { display: flex; gap: 12px; }
+    /* Ô đếm ngược nổi khối 3D, đồng bộ storefront (`.home-golden__cell`, chủ dự án 2026-10-19): khung vàng vát cạnh (viền 2px trong suốt + lớp nền thứ ba cắt theo border-box),
+       mặt đỏ có điểm sáng vòm ở góc trên trái, cạnh dày 5px bằng năm bóng cứng, bóng mờ dưới đáy. Kích thước ô giữ nguyên (78 / 70 / 68px), không chuyển động. */
     .golden .countdown__cell {
-          display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; width: 78px; height: 78px; border-radius: 14px;
-          background: linear-gradient(180deg, #B22A1D 0%, #7C150F 100%); border: 1px solid rgba(232,201,121,.6); box-shadow: inset 0 1px 0 rgba(255,255,255,.12);
-        }
-    .golden .countdown__cell b { font-size: 34px; line-height: 1; color: #FFF3DC; font-variant-numeric: tabular-nums; }
-    .golden .countdown__cell span { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--gf-gold-soft); }
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; width: 78px; height: 78px; border-radius: 14px;
+      border: 2px solid transparent;
+      background:
+        radial-gradient(ellipse 70% 55% at 24% 0%, rgba(255,255,255,.2) 0%, rgba(255,255,255,0) 100%) padding-box,
+        linear-gradient(180deg, #C63A2A 0%, #A12218 46%, #861810 100%) padding-box,
+        linear-gradient(145deg, #FFF0B8 0%, #E8C979 26%, #B98A2B 60%, #7A5516 100%) border-box;
+      box-shadow:
+        inset 0 2px 0 rgba(255,255,255,.3), inset 0 -10px 12px -6px rgba(0,0,0,.35),
+        0 1px 0 #6F130C, 0 2px 0 #650F09, 0 3px 0 #5A0D08, 0 4px 0 #4F0B07, 0 5px 0 #440906,
+        0 12px 14px -4px rgba(0,0,0,.55);
+    }
+    .golden .countdown__cell b { font-size: 34px; line-height: 1; color: #FFF3DC; font-variant-numeric: tabular-nums; text-shadow: 0 2px 0 rgba(60,8,4,.55), 0 4px 6px rgba(0,0,0,.35); } /* số nổi khỏi mặt ô */
+    .golden .countdown__cell span { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--gf-gold-soft); text-shadow: 0 1px 0 rgba(40,6,3,.5); }
     .golden__cta { padding: 30px 18px 0; display: flex; flex-direction: column; align-items: flex-end; justify-content: center; }
     .golden__cta-stack { display: flex; flex-direction: column; align-items: stretch; gap: 8px; }
     .golden__btn {
-          display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 44px; padding: 0 12px; border: 1.5px solid var(--gf-gold-soft); border-radius: var(--radius-pill); cursor: pointer;
-          background: linear-gradient(180deg, #9A2016 0%, #8D1B12 100%); color: var(--gf-gold-soft); font-weight: 700; font-size: 13.5px; white-space: nowrap;
-          box-shadow: 0 8px 18px -8px rgba(40,6,4,.75), 0 0 0 4px rgba(232,201,121,.12), inset 0 1px 0 rgba(255,255,255,.16);
-          transition: background var(--motion-base) var(--ease-standard), color var(--motion-base) var(--ease-standard), box-shadow var(--motion-base) var(--ease-standard);
-        }
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 44px; padding: 0 12px; border: 1.5px solid var(--gf-gold-soft); border-radius: var(--radius-pill); cursor: pointer;
+      background: linear-gradient(180deg, #9A2016 0%, #8D1B12 100%); color: var(--gf-gold-soft); font-weight: 700; font-size: 13.5px; white-space: nowrap;
+      box-shadow: 0 8px 18px -8px rgba(40,6,4,.75), 0 0 0 4px rgba(232,201,121,.12), inset 0 1px 0 rgba(255,255,255,.16);
+      transition: background var(--motion-base) var(--ease-standard), color var(--motion-base) var(--ease-standard), box-shadow var(--motion-base) var(--ease-standard), transform var(--motion-base) var(--ease-standard);
+    }
     .golden__btn:not(:disabled):hover { background: linear-gradient(180deg, #A8261B 0%, #94201A 100%); color: #F3D98A; border-color: #F3D98A; box-shadow: 0 10px 22px -8px rgba(40,6,4,.8), 0 0 0 5px rgba(232,201,121,.18), inset 0 1px 0 rgba(255,255,255,.2); }
     .golden__btn:disabled { cursor: not-allowed; }
     .golden__btn-icon { flex: 0 0 auto; display: grid; place-items: center; height: 100%; padding: 0 10px 0 0; border-right: 1px solid rgba(232,201,121,.45); }
     .golden__btn-icon .icon { width: 17px; height: 17px; }
     .golden__btn-text { flex: 1 1 auto; text-align: center; }
     .golden__btn-soon { flex: 0 0 auto; padding: 2px 8px; border-radius: 999px; background: #FFF3DC; color: #7B5614; font-size: 13px; font-weight: 700; line-height: 1.4; }
-    .golden__btn.golden__btn--member { height: auto; min-height: 44px; padding: 4px 16px; line-height: 1.2; text-decoration: none; white-space: normal; }
+    /* Khách chưa đăng nhập: liên kết mời trở thành thành viên; chữ dài nên cho xuống dòng thay vì nowrap, chiều cao tự giãn. */
+    .golden__btn.golden__btn--member { height: auto; min-height: 44px; padding: 3.5px 16px; line-height: 1.2; text-decoration: none; white-space: normal; }
     .golden__btn--member .golden__btn-text { text-wrap: balance; }
-    .golden__btn.golden__btn--member { border-color: #FFF3DC; background: linear-gradient(180deg, #F8E3A0 0%, #E8C979 55%, #D2A43C 100%); color: #6E110C; box-shadow: 0 8px 18px -8px rgba(40,6,4,.75), 0 0 0 4px rgba(232,201,121,.3), inset 0 1px 0 rgba(255,255,255,.6); }
+    /* Nút mời trở thành thành viên là nút bấm thật: nền vàng (cùng dải màu chữ "-38% đến -42%") và chữ đỏ rượu vang để nổi hẳn khỏi nền card đỏ và khác ô đồng hồ (đồng bộ storefront, chủ dự án chọn 14/10/2026).
+       Nút "Gửi thông báo cho tôi" đang khoá giữ kiểu tối. Viền focus trắng riêng vì viền focus chung (quầng xanh 28%) không thấy được trên nền đỏ và vàng, và còn ép góc về vuông. */
+    /* Nút mời nổi khối 3D như ba ô đồng hồ (storefront `.home-golden__btn--member`, chủ dự án 2026-10-19): giữ dải mặt vàng đã chọn, thêm khung vát cạnh, điểm sáng vòm, cạnh dày 5px bằng năm bóng cứng vàng đồng,
+       quầng sáng vàng mờ. Rê chuột nhấc 1px, nhấn lún 3px. */
+    .golden__btn.golden__btn--member {
+      border: 2px solid transparent;
+      background:
+        radial-gradient(ellipse 55% 90% at 16% 0%, rgba(255,255,255,.5) 0%, rgba(255,255,255,0) 100%) padding-box,
+        linear-gradient(180deg, #F8E3A0 0%, #E8C979 55%, #D2A43C 100%) padding-box,
+        linear-gradient(145deg, #FFFFFF 0%, #FFF3DC 22%, #E6C26A 55%, #A9781D 100%) border-box;
+      box-shadow:
+        inset 0 2px 0 rgba(255,255,255,.7), inset 0 -8px 10px -6px rgba(122,85,22,.45),
+        0 1px 0 #C09330, 0 2px 0 #B1862A, 0 3px 0 #A07623, 0 4px 0 #8F671D, 0 5px 0 #7D5817,
+        0 12px 14px -4px rgba(40,6,4,.7), 0 0 24px rgba(248,227,160,.3);
+      color: #6E110C; text-shadow: 0 1px 0 rgba(255,246,214,.7);
+    }
     .golden__btn--member .golden__btn-icon { border-right-color: rgba(110,17,12,.35); }
-    .golden__btn.golden__btn--member:not(:disabled):hover { border-color: #FFFFFF; background: linear-gradient(180deg, #FFF0BF 0%, #F3D98A 55%, #E0B44A 100%); color: #5A0D09; box-shadow: 0 10px 22px -8px rgba(40,6,4,.8), 0 0 0 5px rgba(232,201,121,.4), inset 0 1px 0 rgba(255,255,255,.6); }
+    .golden__btn.golden__btn--member:not(:disabled):hover {
+      border-color: transparent; /* luật rê chuột chung của nút đặt viền vàng nhạt và sẽ che khung vát cạnh */
+      background:
+        radial-gradient(ellipse 55% 90% at 16% 0%, rgba(255,255,255,.55) 0%, rgba(255,255,255,0) 100%) padding-box,
+        linear-gradient(180deg, #FFF0BF 0%, #F3D98A 55%, #E0B44A 100%) padding-box,
+        linear-gradient(145deg, #FFFFFF 0%, #FFFFFF 20%, #F3D98A 55%, #B98A2B 100%) border-box;
+      box-shadow:
+        inset 0 2px 0 rgba(255,255,255,.8), inset 0 -8px 10px -6px rgba(122,85,22,.4),
+        0 1px 0 #C09330, 0 2px 0 #B1862A, 0 3px 0 #A07623, 0 4px 0 #8F671D, 0 5px 0 #7D5817, 0 6px 0 #6B4912,
+        0 16px 18px -4px rgba(40,6,4,.75), 0 0 30px rgba(248,227,160,.4);
+      color: #5A0D09; transform: translateY(-1px);
+    }
     .golden__btn.golden__btn--member:focus-visible { outline: 3px solid #FFFFFF; outline-offset: 3px; border-radius: var(--radius-pill); }
     .gh-slider { position: relative; margin-top: 16px; }
     .gh-cards { display: flex; gap: 24px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; padding: 4px; margin: 0 -4px; scroll-padding: 4px; cursor: grab; }
@@ -1147,7 +1271,7 @@
     .golden__cta { padding: 28px 14px 0; }
     .golden__btn { height: 42px; gap: 6px; padding: 0 12px; font-size: 13.5px; }
     .golden__btn-icon { padding: 0 8px 0 0; }
-    .golden__btn.golden__btn--member { min-height: 42px; padding: 3px 12px; }
+    .golden__btn.golden__btn--member { min-height: 42px; padding: 2.5px 12px; }
     .golden__deco--lantern { right: 18px; width: 36px; }
     }
     @media (max-width: 1023px) {
@@ -1195,10 +1319,7 @@
     @media (prefers-reduced-motion: reduce) {
     .golden__btn, .gh-slider__btn { transition: none; }
     }
-    @media (max-width: 767px) {
-    .golden-section .book-section__eyebrow { font-size: 14px; }
-    .golden-section .book-section__eyebrow .eyebrow__rule { width: 34px; }
-    }
+    .catbar, .groupbar { line-height: 1.55; }
     @supports ((-webkit-background-clip: text) or (background-clip: text)) {
     .golden__brand, .golden__offer { background: none; }
     }
@@ -1210,25 +1331,6 @@
     @media (max-width: 767px) {
     .gh-card article { gap: 10px; }
     }
-
-    /* Thanh "Nhóm sản phẩm" của trang chi tiết (đồng bộ ProductDetailGroupStickyBar của storefront, 14/10/2026): luôn ở dạng đã gắn của thanh nhóm ở trang chủ,
-       dính ngay dưới thanh Chủ đề (.catbar). Ruột (nhãn, badge nhiều màu, nút gập ở điện thoại) dùng chung quy tắc .groupbar__* ở trên.
-       Thứ tự lớp: header 100 > thanh Chủ đề 82 > thanh Nhóm sản phẩm 81. */
-    .groupbar--sticky {
-      position: sticky; z-index: 81; top: calc(var(--header-h) + var(--catbar-h)); display: flex; align-items: center;
-      padding: 6px 0; border: 0; border-bottom: 1px solid var(--gf-border); border-radius: 0; background: var(--gf-cream);
-      font-family: var(--font-sans); line-height: 1.55; color: var(--gf-text);
-      transition: box-shadow var(--motion-base) var(--ease-standard);
-    }
-    .header[data-stuck="true"] ~ .groupbar--sticky { box-shadow: 0 10px 30px rgba(16, 48, 95, .1); }
-    .groupbar--sticky .groupbar__inner { max-width: calc(var(--container) + var(--gutter) * 2); margin-inline: auto; padding-inline: var(--gutter); }
-    .groupbar--sticky .groupbar__label { margin-left: 24px; }
-    @media (min-width: 768px) { .groupbar--sticky .groupbar__label { margin-left: 0; } }
-    @media (max-width: 767px) {
-      .groupbar--sticky { height: 48px; padding: 0; }
-      .groupbar--sticky .groupbar__inner { padding-inline: 16px; }
-    }
-    @media (prefers-reduced-motion: reduce) { .groupbar--sticky { transition: none; } }
 
     /* Sóng sáng chạy từng chữ trong tiêu đề; phần trăm phóng sáng cùng một nhịp. */
     .golden__brand { --flare-cycle: 3.6s; --flare-lead: .2s; --flare-step: .14s; }
@@ -1282,14 +1384,13 @@
     /* Riêng trang chi tiết sản phẩm (đồng bộ storefront, 14/10/2026):
        - mọi neo trong trang đậu dưới cả ba phần dính (header, thanh Chủ đề, thanh Nhóm sản phẩm) cộng một khoảng nhỏ;
        - điện thoại: nhãn nhóm "· N sản phẩm" làm gãy dòng đầu nhóm nên ẩn, đầu nhóm xếp dọc. */
+    .tiers, .golden-section, #he-mo-rong, #collections { line-height: 1.5; } /* giãn dòng 1.5 của các khu Quyền lợi, Giờ Vàng, Chương trình bán hàng 24/7 và Sản phẩm như trang chủ (ở trang chủ do main#noi-dung đặt 1.5); chỉ áp cho các khu này, phần còn lại của trang chi tiết giữ 1.55 của thân trang */
     .section:has(+ .tiers) { padding-bottom: 0; } /* khoảng giữa phần Thành phần và khu Quyền lợi là phần đệm trên của khu Quyền lợi (24px, như storefront) */
     #mua-hang, #thong-tin, #cach-dung, #thanh-phan { scroll-margin-top: calc(var(--header-h) + var(--catbar-h) + var(--groupbar-h, 49px) + 16px); }
     #quyen-loi, #gio-vang-tri-an, #he-mo-rong, #collections { scroll-margin-top: calc(var(--header-h) + var(--catbar-h) + var(--groupbar-h, 49px) + 14px); }
     .section { scroll-margin-top: calc(var(--header-h) + var(--catbar-h) + var(--groupbar-h, 49px)); }
     @media (max-width: 767px) {
-      .tiers__head .book-section__eyebrow, .golden-section .book-section__eyebrow { gap: 12px; }
-      .collection__count { display: none; }
-      .collection__head { flex-direction: column; align-items: flex-start; gap: 8px; }
+      .tiers__head .book-section__eyebrow { gap: 12px; }
     }
 </style>
   <link rel="stylesheet" href="mobile-account.css">
@@ -2105,8 +2206,745 @@ body.is-nav-open { overflow: hidden; }
 :root { --header-h: 83px; }
 @media (max-width: 1439px) { :root { --header-h: 79px; } }
 @media (max-width: 767px) { :root { --header-h: 65px; } }
+
+/*
+ * Header nền navy đậm + viền vàng (chủ dự án chốt phương án A, 2026-10-17: sếp chê header trắng quá; bản mẫu đồng bộ với storefront, đợt mười sáu). Nền là navy đậm của chân
+ * trang (--gf-navy-dark), viền dưới và gạch chân mục đang chọn là vàng, chữ và icon màu ngà, mục đang chọn hoặc rê chuột là vàng
+ * nhạt. Nút tròn trong mờ viền vàng, rê hoặc nhấn thì tô vàng đặc với icon navy. Logo là bản chữ ngà dành cho nền tối. Vòng tiêu
+ * điểm đổi từ xanh (chỉ 3,1:1 trên navy) sang vàng nhạt (9:1). Các bảng nổi (menu tài khoản, menu ngôn ngữ, gợi ý tìm kiếm, menu
+ * điện thoại) giữ nền sáng chữ navy. Ô đại diện theo hạng (chữ cái, ảnh, huy hiệu) là chip sáng có viền riêng nên giữ nguyên: khối
+ * này chỉ chọn nút tròn nằm trực tiếp trong hàng header, không chạm tới ô đại diện hay menu điện thoại.
+ */
+.storefront-reference-shell {
+  --storefront-header-surface: var(--gf-navy-dark, #072A4E);
+  --storefront-header-ink: var(--gf-ivory, #FFF8EA);
+  --storefront-header-accent: var(--gf-gold, #C69A2B);
+  --storefront-header-accent-soft: var(--gf-gold-soft, #E8C979);
+}
+
+.storefront-reference-shell .storefront-header {
+  border-bottom-color: var(--storefront-header-accent);
+  background: var(--storefront-header-surface);
+  box-shadow: 0 10px 30px rgba(7, 42, 78, 0.3);
+}
+
+.storefront-reference-shell .desktop-nav > a {
+  color: var(--storefront-header-ink);
+}
+
+.storefront-reference-shell .desktop-nav > a:hover,
+.storefront-reference-shell .desktop-nav > a:focus-visible,
+.storefront-reference-shell .desktop-nav > a[aria-current="page"] {
+  color: var(--storefront-header-accent-soft);
+}
+
+.storefront-reference-shell .desktop-nav > a::after {
+  background: var(--storefront-header-accent);
+}
+
+.storefront-reference-shell .desktop-nav .header-nav-disabled:disabled {
+  color: rgba(255, 248, 234, 0.55);
+}
+
+.storefront-reference-shell .header-grid > .icon-btn,
+.storefront-reference-shell .header-actions > .icon-btn,
+.storefront-reference-shell .header-actions .locale-pill {
+  border-color: rgba(198, 154, 43, 0.65);
+  background: rgba(255, 248, 234, 0.06);
+  color: var(--storefront-header-ink);
+  box-shadow: none;
+}
+
+.storefront-reference-shell .header-grid > .icon-btn:hover,
+.storefront-reference-shell .header-grid > .icon-btn:focus-visible,
+.storefront-reference-shell .header-grid > .icon-btn[aria-expanded="true"],
+.storefront-reference-shell .header-actions > .icon-btn:hover,
+.storefront-reference-shell .header-actions > .icon-btn:focus-visible,
+.storefront-reference-shell .header-actions > .icon-btn[aria-expanded="true"],
+.storefront-reference-shell .header-actions .locale-pill:hover,
+.storefront-reference-shell .header-actions .locale-pill:focus-visible,
+.storefront-reference-shell .header-actions .locale-pill[aria-expanded="true"] {
+  border-color: var(--storefront-header-accent-soft);
+  background: var(--storefront-header-accent);
+  color: var(--storefront-header-surface);
+  box-shadow: none;
+}
+
+.storefront-reference-shell .desktop-nav a:focus-visible,
+.storefront-reference-shell .header-grid > .icon-btn:focus-visible,
+.storefront-reference-shell .header-actions > .icon-btn:focus-visible,
+.storefront-reference-shell .header-actions .locale-pill:focus-visible,
+.storefront-reference-shell .header-actions > .header-account-slot .diamond-member-btn:focus-visible,
+.storefront-reference-shell .reference-cart-link:focus-visible {
+  outline-color: var(--storefront-header-accent-soft);
+}
+
+.storefront-reference-shell .locale-pill .locale-flag {
+  border-color: rgba(255, 248, 234, 0.4);
+  box-shadow: none;
+}
+
+.storefront-reference-shell .locale-pill .locale-flag.is-active {
+  border-color: var(--storefront-header-accent-soft);
+  box-shadow: 0 0 0 1px rgba(232, 201, 121, 0.35);
+}
+
+.storefront-reference-shell .reference-cart-link {
+  color: var(--storefront-header-ink);
+}
+
+.storefront-reference-shell .reference-cart-link:hover {
+  color: var(--storefront-header-accent-soft);
+}
+
+.storefront-reference-shell .reference-cart-badge {
+  background: var(--storefront-header-accent);
+  color: var(--storefront-header-surface);
+}
+
+.storefront-reference-shell .header-actions > .header-account-slot .diamond-member-btn.header-member-btn {
+  color: var(--storefront-header-ink);
+}
+
+.storefront-reference-shell .header-actions > .header-account-slot .diamond-member-btn.header-member-btn:hover,
+.storefront-reference-shell .header-actions > .header-account-slot .diamond-member-btn.header-member-btn:focus-visible {
+  background: rgba(232, 201, 121, 0.14);
+  color: var(--storefront-header-accent-soft);
+}
+
+.storefront-reference-shell .search-box {
+  border-color: rgba(198, 154, 43, 0.55);
+  background: rgba(255, 248, 234, 0.08);
+  color: var(--storefront-header-accent-soft);
+}
+
+.storefront-reference-shell .search-box:focus-within {
+  border-color: var(--storefront-header-accent-soft);
+  box-shadow: 0 0 0 3px rgba(232, 201, 121, 0.22);
+}
+
+.storefront-reference-shell .search-box input {
+  color: var(--storefront-header-ink);
+}
+
+.storefront-reference-shell .search-box input::placeholder {
+  color: rgba(255, 248, 234, 0.7);
+}
+
+.storefront-reference-shell .search-box input::-webkit-search-cancel-button {
+  filter: invert(1);
+}
+
+@media (max-width: 1439px) {
+  .storefront-reference-shell .search-region {
+    border-top-color: rgba(198, 154, 43, 0.4);
+    background: var(--storefront-header-surface);
+    box-shadow: 0 18px 32px rgba(7, 42, 78, 0.3);
+  }
+}
+
+/* Bản mẫu mở menu ngôn ngữ bằng :focus-within (storefront dùng aria-expanded): cùng màu vàng đặc. */
+.storefront-reference-shell .locale-dropdown:focus-within .locale-pill {
+  border-color: var(--storefront-header-accent-soft);
+  background: var(--storefront-header-accent);
+  color: var(--storefront-header-surface);
+  box-shadow: none;
+}
 </style>
 <!-- gf-shell:css:end -->
+<style id="home-nav-motion">
+/* Menu di động (nút ☰, dưới 1280px). Trước đây chỉ đổi display none ↔ block nên menu hiện ra trong đúng một khung hình, và khoá cuộn làm thanh
+   cuộn biến mất nên cả header nhảy ngang (Windows có thanh cuộn thật). Bây giờ:
+   · khung menu trôi xuống nhẹ + hiện dần (opacity 260ms, transform 340ms, cùng đường cong --ease-entrance với thanh tìm kiếm); đóng thì nhanh hơn (120–180ms);
+   · từng mục trôi xuống + hiện dần, so le 22ms (chỉ lúc mở; đóng thì cả khung mờ đi một lượt);
+   · chỉ dùng transform/opacity (chạy trên GPU), không đổi chiều cao nên không kéo bố cục; luôn display:block, ẩn bằng visibility
+     (đóng xong thì các mục trong menu không còn nhận phím Tab, như khi display:none);
+   · html giữ chỗ thanh cuộn (scrollbar-gutter) để khoá cuộn không làm trang nhảy ngang;
+   · bật "giảm chuyển động" thì hiện/ẩn tức thì như cũ. Từ 1280px trở lên nút ☰ ẩn, menu này không dùng nên giữ display:none. */
+html { scrollbar-gutter: stable; }
+@media (max-width: 1279px) {
+  .storefront-reference-shell .mobile-nav {
+    display: block;
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(-10px) scale(0.985);
+    transform-origin: top center;
+    pointer-events: none;
+    transition: opacity var(--motion-fast, 120ms) var(--ease-standard, cubic-bezier(.2, 0, 0, 1)), transform var(--motion-base, 180ms) var(--ease-standard, cubic-bezier(.2, 0, 0, 1)), visibility 0s linear var(--motion-base, 180ms);
+  }
+  .storefront-reference-shell .mobile-nav.is-open,
+  .storefront-reference-shell .mobile-nav.open {
+    visibility: visible;
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+    transition: opacity var(--motion-medium, 260ms) var(--ease-standard, cubic-bezier(.2, 0, 0, 1)), transform 340ms var(--ease-entrance, cubic-bezier(.16, 1, .3, 1)), visibility 0s;
+  }
+  /* "backwards": chỉ giữ trạng thái đầu trong lúc chờ trễ, xong là trả quyền cho kiểu rê chuột/tiêu điểm của từng mục */
+  .storefront-reference-shell .mobile-nav.is-open > *,
+  .storefront-reference-shell .mobile-nav.open > * { animation: gfNavItemIn 320ms var(--ease-entrance, cubic-bezier(.16, 1, .3, 1)) 282ms backwards; }
+  .storefront-reference-shell .mobile-nav.is-open > :nth-child(1),
+  .storefront-reference-shell .mobile-nav.open > :nth-child(1) { animation-delay: 40ms; }
+  .storefront-reference-shell .mobile-nav.is-open > :nth-child(2),
+  .storefront-reference-shell .mobile-nav.open > :nth-child(2) { animation-delay: 62ms; }
+  .storefront-reference-shell .mobile-nav.is-open > :nth-child(3),
+  .storefront-reference-shell .mobile-nav.open > :nth-child(3) { animation-delay: 84ms; }
+  .storefront-reference-shell .mobile-nav.is-open > :nth-child(4),
+  .storefront-reference-shell .mobile-nav.open > :nth-child(4) { animation-delay: 106ms; }
+  .storefront-reference-shell .mobile-nav.is-open > :nth-child(5),
+  .storefront-reference-shell .mobile-nav.open > :nth-child(5) { animation-delay: 128ms; }
+  .storefront-reference-shell .mobile-nav.is-open > :nth-child(6),
+  .storefront-reference-shell .mobile-nav.open > :nth-child(6) { animation-delay: 150ms; }
+  .storefront-reference-shell .mobile-nav.is-open > :nth-child(7),
+  .storefront-reference-shell .mobile-nav.open > :nth-child(7) { animation-delay: 172ms; }
+  .storefront-reference-shell .mobile-nav.is-open > :nth-child(8),
+  .storefront-reference-shell .mobile-nav.open > :nth-child(8) { animation-delay: 194ms; }
+  .storefront-reference-shell .mobile-nav.is-open > :nth-child(9),
+  .storefront-reference-shell .mobile-nav.open > :nth-child(9) { animation-delay: 216ms; }
+  .storefront-reference-shell .mobile-nav.is-open > :nth-child(10),
+  .storefront-reference-shell .mobile-nav.open > :nth-child(10) { animation-delay: 238ms; }
+  .storefront-reference-shell .mobile-nav.is-open > :nth-child(11),
+  .storefront-reference-shell .mobile-nav.open > :nth-child(11) { animation-delay: 260ms; }
+  .storefront-reference-shell .mobile-nav.is-open > :nth-child(12),
+  .storefront-reference-shell .mobile-nav.open > :nth-child(12) { animation-delay: 282ms; }
+}
+@keyframes gfNavItemIn {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .storefront-reference-shell .mobile-nav { transition: none !important; }
+  .storefront-reference-shell .mobile-nav > * { animation: none !important; }
+}
+</style>
+<!-- header-fit: menu sáu mục như header trang chủ khách (chép từ trang-chu.html, 2026-10-21), đặt NGOÀI khối gf-shell:css để văn bản lớp vỏ dùng chung giữ nguyên -->
+<style id="home-header-fit">
+/* Thêm mục "Khởi nghiệp cùng Ssavigroup" làm menu có sáu mục, rộng 773px (chữ 15px, khe 16px). Khung header từ 1280px trở lên chỉ có
+   1240px nội dung nên menu đè lên cụm nút bên phải: 21px ở 1280px, 159px từ 1440px (khi ô tìm kiếm 208px nằm ngang).
+   Từ 1280px: chữ menu 15 → 14px, khe 16 → 12px (menu còn 707px, chừa tối thiểu 45px so với cụm nút bên phải).
+   Từ 1440px: ô tìm kiếm quay về nút kính lúp + bảng thả như dải 1280–1439px (dùng lại đúng mã #searchToggle có sẵn). */
+@media (min-width: 1280px) {
+  .storefront-reference-shell .desktop-nav { gap: 12px; }
+  .storefront-reference-shell .desktop-nav > a { font-size: 14px; }
+}
+@media (min-width: 1440px) {
+  .storefront-reference-shell .search-region,
+  .storefront-reference-shell .search-region.open,
+  .storefront-reference-shell .search-region.is-open {
+    position: absolute;
+    right: 0;
+    left: 0;
+    width: auto;
+    flex: 0 1 auto;
+  }
+  .storefront-reference-shell .search-inner { display: grid; padding: 12px 40px 16px; }
+  .storefront-reference-shell .search-box { height: auto; min-height: 44px; }
+  .storefront-reference-shell .search-box input { font-size: 15px; }
+  .storefront-reference-shell .reference-search-dropdown { right: 0; left: 0; width: auto; }
+  .storefront-reference-shell #searchToggle { display: flex; }
+}
+</style>
+<!-- search-motion: hiệu ứng mở/đóng thanh tìm kiếm như trang chủ khách (chép từ trang-chu.html, 2026-10-21), đặt NGOÀI khối gf-shell:css để lớp vỏ dùng chung giữ nguyên -->
+<style id="home-search-motion">
+/* Trước đây bảng tìm kiếm chỉ đổi display none → block nên hiện ra trong đúng một khung hình (kèm cả ô gợi ý), và khoá cuộn làm thanh
+   cuộn biến mất nên cả header nhảy ngang ~8px (Windows có thanh cuộn thật). Bây giờ:
+   · nền navy trải xuống từ mép dưới header (scaleY, 260ms + --ease-entrance có sẵn của trang), bóng đổ hiện dần;
+   · ô tìm kiếm trôi xuống nhẹ + hiện dần (trễ 60ms), khung gợi ý hiện sau cùng (trễ 120ms); đóng thì nhanh hơn và không so le;
+   · chỉ dùng transform/opacity (chạy trên GPU), không đổi chiều cao nên không kéo bố cục;
+   · html giữ chỗ thanh cuộn (scrollbar-gutter) để khoá cuộn không làm trang nhảy ngang;
+   · bật "giảm chuyển động" thì hiện/ẩn tức thì như cũ. Luôn display:block, ẩn bằng visibility để chuyển động được. */
+html { scrollbar-gutter: stable; }
+
+.storefront-reference-shell .search-region,
+.storefront-reference-shell .search-region.open,
+.storefront-reference-shell .search-region.is-open {
+  display: block;
+  border-top: 1px solid transparent;
+  background: none;
+  box-shadow: none;
+}
+.storefront-reference-shell .search-region {
+  visibility: hidden;
+  pointer-events: none;
+  transition: visibility 0s linear 240ms;
+}
+.storefront-reference-shell .search-region.open,
+.storefront-reference-shell .search-region.is-open {
+  visibility: visible;
+  pointer-events: auto;
+  transition-delay: 0s;
+}
+
+/* Nền navy + vạch vàng mảnh (::before) trải xuống từ mép header; bóng đổ (::after) hiện dần riêng để không bị cắt cứng. */
+.storefront-reference-shell .search-region::before,
+.storefront-reference-shell .search-region::after {
+  content: "";
+  position: absolute;
+  top: -1px;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  pointer-events: none;
+}
+.storefront-reference-shell .search-region::before {
+  z-index: -1;
+  border-top: 1px solid rgba(198, 154, 43, 0.4);
+  background: var(--storefront-header-surface);
+  transform: scaleY(0);
+  transform-origin: top center;
+  transition: transform var(--motion-base) var(--ease-standard) 40ms;
+}
+.storefront-reference-shell .search-region::after {
+  z-index: -2;
+  box-shadow: 0 18px 32px rgba(7, 42, 78, 0.3);
+  opacity: 0;
+  transition: opacity var(--motion-base) var(--ease-standard);
+}
+.storefront-reference-shell .search-region.open::before,
+.storefront-reference-shell .search-region.is-open::before {
+  transform: none;
+  transition: transform var(--motion-medium) var(--ease-entrance);
+}
+.storefront-reference-shell .search-region.open::after,
+.storefront-reference-shell .search-region.is-open::after {
+  opacity: 1;
+  transition: opacity var(--motion-medium) var(--ease-standard) 60ms;
+}
+
+/* Ô tìm kiếm: trôi xuống nhẹ + hiện dần, trễ 60ms sau nền. */
+.storefront-reference-shell .search-inner {
+  opacity: 0;
+  transform: translateY(-8px);
+  transition: opacity var(--motion-fast) var(--ease-standard), transform var(--motion-base) var(--ease-standard);
+}
+.storefront-reference-shell .search-region.open .search-inner,
+.storefront-reference-shell .search-region.is-open .search-inner {
+  opacity: 1;
+  transform: none;
+  transition: opacity var(--motion-medium) var(--ease-standard) 60ms, transform 320ms var(--ease-entrance) 60ms;
+}
+
+/* Khung gợi ý (hiện khi ô nhập có tiêu điểm): hiện sau cùng. */
+.storefront-reference-shell .reference-search-dropdown {
+  display: block;
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(-6px);
+  pointer-events: none;
+  transition: opacity var(--motion-fast) var(--ease-standard), transform var(--motion-base) var(--ease-standard), visibility 0s linear var(--motion-base);
+}
+.storefront-reference-shell .reference-search-form:focus-within .reference-search-dropdown {
+  visibility: inherit;
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+  transition: opacity var(--motion-medium) var(--ease-standard) 120ms, transform 320ms var(--ease-entrance) 120ms, visibility 0s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .storefront-reference-shell .search-region,
+  .storefront-reference-shell .search-region::before,
+  .storefront-reference-shell .search-region::after,
+  .storefront-reference-shell .search-inner,
+  .storefront-reference-shell .reference-search-dropdown { transition: none !important; }
+}
+</style>
+<!-- guest-cta: nút "Đăng ký" của khách ở header như trang chủ khách (chép từ trang-chu.html, 2026-10-21), đặt NGOÀI khối gf-shell:css để lớp vỏ dùng chung giữ nguyên -->
+<style id="home-guest-cta">
+/* Nút "Đăng ký" của khách ở header (chủ dự án yêu cầu 2026-10-20: gộp icon người và chữ "Đăng ký" thành MỘT nút, làm nổi bật hơn).
+   Trước đây nút trong suốt, chỉ có icon + chữ màu ngà nên đọc ra như hai thứ rời nhau và chìm giữa các nút tròn viền vàng. Bây giờ:
+   · một viên thuốc vàng đặc, icon người và chữ nằm chung trong nút, cùng màu navy #072A4E (tương phản từ 6:1 trên phần vàng đậm nhất của nút, #CDA130);
+   · nổi lên nhờ quầng sáng vàng quanh nút; cứ 6 giây một lượt: vệt sáng chéo lướt qua nút rồi một vòng viền vàng mảnh lan ra mờ dần;
+   · rê chuột hoặc dùng bàn phím: nút nâng nhẹ, sáng hơn, quầng sáng đậm hơn, icon nhích lên; nhấn: nhún xuống;
+   · bật "giảm chuyển động": chỉ còn nút tĩnh, không vệt sáng, không vòng viền, không nâng khi rê;
+   · dưới 1280px nút nằm trong menu mở ra (bảng nền sáng): cùng kiểu, rộng hết bảng (tối đa 360px), cao 48px, chữ 16px.
+   Không đổi mã HTML của lớp vỏ: chỉ ghi đè style của .header-guest-btn (cả hai bản: hàng header và menu điện thoại). */
+.storefront-reference-shell .storefront-header .header-account-slot .diamond-member-btn.header-member-btn.header-guest-btn {
+  --guest-cta-ring: rgba(240, 214, 138, 0.95);
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-height: 42px;
+  padding: 0 17px 0 13px;
+  border: 0;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #F6E3A5 0%, #E8C979 46%, #CDA130 100%);
+  background-color: #E8C979;
+  color: #072A4E;
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: 0.01em;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.42);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.7),
+    inset 0 -2px 0 rgba(139, 98, 12, 0.26),
+    0 7px 16px -6px rgba(198, 154, 43, 0.8),
+    0 0 22px rgba(232, 201, 121, 0.3);
+  filter: none;
+  transition: transform 180ms cubic-bezier(0.2, 0.74, 0.18, 1), box-shadow 180ms cubic-bezier(0.2, 0.74, 0.18, 1), filter 180ms cubic-bezier(0.2, 0.74, 0.18, 1);
+}
+.storefront-reference-shell .storefront-header .header-account-slot .diamond-member-btn.header-member-btn.header-guest-btn:hover,
+.storefront-reference-shell .storefront-header .header-account-slot .diamond-member-btn.header-member-btn.header-guest-btn:focus-visible {
+  background: linear-gradient(180deg, #F6E3A5 0%, #E8C979 46%, #CDA130 100%);
+  background-color: #E8C979;
+  color: #072A4E;
+  transform: translateY(-1px);
+  filter: brightness(1.07) saturate(1.05);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.8),
+    inset 0 -2px 0 rgba(139, 98, 12, 0.24),
+    0 10px 20px -6px rgba(198, 154, 43, 0.9),
+    0 0 30px rgba(232, 201, 121, 0.45);
+}
+.storefront-reference-shell .storefront-header .header-account-slot .diamond-member-btn.header-member-btn.header-guest-btn:active {
+  transform: translateY(0) scale(0.97);
+}
+
+/* Icon người: bỏ ô tròn viền navy của menu điện thoại, đặt thẳng trên nền vàng, nét đặc cho dễ đọc. */
+.storefront-reference-shell .storefront-header .header-account-slot .diamond-member-btn.header-member-btn.header-guest-btn .material-symbols-outlined {
+  display: inline-flex;
+  flex: 0 0 auto;
+  width: auto;
+  height: auto;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  color: currentcolor;
+  filter: none;
+  font-size: 20px;
+  font-variation-settings: "FILL" 1, "wght" 600, "GRAD" 0, "opsz" 20;
+  transition: transform 180ms cubic-bezier(0.2, 0.74, 0.18, 1);
+}
+.storefront-reference-shell .storefront-header .header-account-slot .diamond-member-btn.header-member-btn.header-guest-btn:hover .material-symbols-outlined,
+.storefront-reference-shell .storefront-header .header-account-slot .diamond-member-btn.header-member-btn.header-guest-btn:focus-visible .material-symbols-outlined {
+  transform: translateY(-1px) scale(1.1);
+}
+.storefront-reference-shell .storefront-header .header-account-slot .diamond-member-btn.header-member-btn.header-guest-btn .header-member-label {
+  font: inherit;
+  letter-spacing: inherit;
+}
+
+/* Vệt sáng chéo (::before) và vòng viền lan ra (::after); đứng yên khi chưa bật chuyển động. */
+.storefront-reference-shell .storefront-header .header-account-slot .diamond-member-btn.header-member-btn.header-guest-btn::before {
+  content: "";
+  display: block;
+  position: absolute;
+  inset: 0;
+  width: auto;
+  height: auto;
+  border-radius: inherit;
+  pointer-events: none;
+  transform: none;
+  background: linear-gradient(105deg, rgba(255, 255, 255, 0) 42%, rgba(255, 255, 255, 0.85) 50%, rgba(255, 255, 255, 0) 58%) 0 0 / 300% 100% no-repeat;
+  animation: none;
+}
+.storefront-reference-shell .storefront-header .header-account-slot .diamond-member-btn.header-member-btn.header-guest-btn::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  outline: 2px solid transparent;
+  outline-offset: 0;
+}
+@keyframes guestCtaShine {
+  0% { background-position: 0% 0; }
+  22%, 100% { background-position: 100% 0; }
+}
+@keyframes guestCtaPulse {
+  0%, 18% { outline-color: transparent; outline-offset: 0; }
+  20% { outline-color: var(--guest-cta-ring); outline-offset: 0; }
+  46%, 100% { outline-color: transparent; outline-offset: 12px; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .storefront-reference-shell .storefront-header .header-account-slot .diamond-member-btn.header-member-btn.header-guest-btn::before { animation: guestCtaShine 6s ease-in-out 0.9s infinite; }
+  .storefront-reference-shell .storefront-header .header-account-slot .diamond-member-btn.header-member-btn.header-guest-btn::after { animation: guestCtaPulse 6s ease-out 0.9s infinite; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .storefront-reference-shell .storefront-header .header-account-slot .diamond-member-btn.header-member-btn.header-guest-btn:hover,
+  .storefront-reference-shell .storefront-header .header-account-slot .diamond-member-btn.header-member-btn.header-guest-btn:focus-visible,
+  .storefront-reference-shell .storefront-header .header-account-slot .diamond-member-btn.header-member-btn.header-guest-btn:active { transform: none; }
+  .storefront-reference-shell .storefront-header .header-account-slot .diamond-member-btn.header-member-btn.header-guest-btn:hover .material-symbols-outlined,
+  .storefront-reference-shell .storefront-header .header-account-slot .diamond-member-btn.header-member-btn.header-guest-btn:focus-visible .material-symbols-outlined { transform: none; }
+}
+
+/* 1280–1439px: menu chính chiếm nhiều chỗ hơn nên thu đệm nút để còn khe thở giữa menu và cụm nút bên phải. */
+@media (min-width: 1280px) and (max-width: 1439px) {
+  .storefront-reference-shell .storefront-header .header-account-slot .diamond-member-btn.header-member-btn.header-guest-btn {
+    gap: 6px;
+    padding: 0 14px 0 11px;
+  }
+}
+
+/* Dưới 1280px: nút nằm trong menu mở ra (nền sáng) nên bỏ quầng sáng, vòng viền đậm hơn, nút rộng hết bảng và cao 48px. */
+@media (max-width: 1279px) {
+  .storefront-reference-shell .storefront-header .mobile-nav-actions .header-account-slot .diamond-member-btn.header-member-btn.header-guest-btn {
+    --guest-cta-ring: rgba(198, 154, 43, 0.9);
+    width: 100%;
+    max-width: 360px;
+    min-height: 48px;
+    gap: 10px;
+    padding: 0 22px;
+    font-size: 16px;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.7),
+      inset 0 -2px 0 rgba(139, 98, 12, 0.26),
+      0 0 0 1px rgba(198, 154, 43, 0.4),
+      0 8px 16px -8px rgba(198, 154, 43, 0.85);
+  }
+  .storefront-reference-shell .storefront-header .mobile-nav-actions .header-account-slot .diamond-member-btn.header-member-btn.header-guest-btn:hover,
+  .storefront-reference-shell .storefront-header .mobile-nav-actions .header-account-slot .diamond-member-btn.header-member-btn.header-guest-btn:focus-visible {
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.8),
+      inset 0 -2px 0 rgba(139, 98, 12, 0.24),
+      0 0 0 1px rgba(198, 154, 43, 0.55),
+      0 10px 18px -8px rgba(198, 154, 43, 0.95);
+  }
+  .storefront-reference-shell .storefront-header .mobile-nav-actions .header-account-slot .diamond-member-btn.header-member-btn.header-guest-btn:focus-visible { outline-color: #072A4E; }
+  .storefront-reference-shell .storefront-header .mobile-nav-actions .header-account-slot .diamond-member-btn.header-member-btn.header-guest-btn .material-symbols-outlined { font-size: 22px; }
+}
+
+/* Chế độ tương phản cao: bỏ nền gradient và hiệu ứng, dùng màu hệ thống để chữ luôn đọc được. */
+@media (forced-colors: active) {
+  .storefront-reference-shell .storefront-header .header-account-slot .diamond-member-btn.header-member-btn.header-guest-btn {
+    border: 1px solid ButtonText;
+    background: ButtonFace;
+    color: ButtonText;
+    box-shadow: none;
+    text-shadow: none;
+  }
+  .storefront-reference-shell .storefront-header .header-account-slot .diamond-member-btn.header-member-btn.header-guest-btn::before,
+  .storefront-reference-shell .storefront-header .header-account-slot .diamond-member-btn.header-member-btn.header-guest-btn::after { display: none; }
+}
+</style>
+<!-- invite-cta: card lời mời + nút "Đăng ký thành viên" (khu Quyền lợi thành viên) — chỉ trang này -->
+<style id="home-invite-cta">
+/* Card "Tham gia ngay, mỗi đơn hàng đều đưa bạn tiến gần hạng mới" và nút "Đăng ký thành viên" của nó (chủ dự án yêu cầu 2026-10-20).
+   Diễn tiến cùng ngày: (1) làm nổi bật nút: navy viền vàng; chủ dự án thấy chưa đủ nổi → (2) nút vàng y như nút "Đăng ký" ở header →
+   (3) đổi màu cả card cho nổi hơn: nền navy (cùng navy của header và chân trang), nút vàng nổi lên như ở header.
+   CARD (.tiers__foot, trước đây nền kem viền vàng nhạt, chìm vào nền trang):
+   · nền gradient navy #10305F → #072A4E, thêm một vệt sáng mờ ở góc trên trái; vạch vàng đặc 4px mép trái giữ nguyên, các cạnh còn lại viền vàng mờ;
+     bóng đổ navy để card tách khỏi nền kem của trang;
+   · tiêu đề và chữ ba ý màu ngà #FFF8EA (tương phản từ 11:1), icon vàng nhạt #E8C979, dòng ghi chú ngà 70% (từ 6:1);
+   · chỉ đổi màu: cỡ chữ, đệm, độ dày viền, khoảng cách giữ nguyên nên bố cục không xê dịch.
+   NÚT (a.btn--primary trong .tiers__actions): viên thuốc vàng đặc cùng dải màu và hiệu ứng với nút "Đăng ký" ở header:
+   · cao 46px, chữ navy #072A4E (tương phản từ 6:1 trên phần vàng đậm nhất, #CDA130); mũi tên nằm trong chấm tròn navy; quầng sáng vàng quanh nút như ở header;
+   · bề rộng giữ ≤196px như nút cũ để hàng ba ý của card vẫn vừa một dòng ở cửa sổ 1280px;
+   · cứ 6 giây một lượt: vệt sáng chéo quét qua nút rồi vòng viền vàng lan ra mờ dần (cùng nhịp với nút ở header);
+   · rê chuột hoặc dùng bàn phím: nút nâng nhẹ, sáng hơn, chấm mũi tên trượt sang phải; nhấn: nhún xuống;
+   · bật "giảm chuyển động": chỉ còn nút tĩnh; điện thoại: nút rộng hết khung như trước, cao 48px.
+   Chỉ đổi kiểu dáng, không đổi chữ hay liên kết. */
+.tiers .tiers__foot {
+  background:
+    radial-gradient(520px 190px at 0% 0%, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0) 70%),
+    linear-gradient(100deg, #10305F 0%, #072A4E 100%);
+  border-color: rgba(232, 201, 121, 0.45) rgba(232, 201, 121, 0.45) rgba(232, 201, 121, 0.45) #C69A2B;
+  box-shadow:
+    inset 0 1px 0 rgba(232, 201, 121, 0.28),
+    0 18px 36px -20px rgba(7, 42, 78, 0.65);
+}
+.tiers .tiers__foot .tiers__invite-title { color: #FFF8EA; }
+.tiers .tiers__foot .tiers__perks { color: rgba(255, 248, 234, 0.92); }
+.tiers .tiers__foot .tiers__perks .icon { color: #E8C979; }
+.tiers .tiers__foot .tiers__perks b { color: #FFF8EA; }
+.tiers .tiers__foot .tiers__note { color: rgba(255, 248, 234, 0.7); }
+
+.tiers .tiers__foot .tiers__actions .btn.btn--primary {
+  --invite-cta-ring: rgba(240, 214, 138, 0.95);
+  position: relative;
+  isolation: isolate;
+  height: 46px;
+  padding: 0 8px 0 16px;
+  gap: 8px;
+  border: 1px solid #E0BA5A;
+  background: linear-gradient(180deg, #F6E3A5 0%, #E8C979 46%, #CDA130 100%);
+  background-color: #E8C979;
+  color: #072A4E;
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.42);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.7),
+    inset 0 -2px 0 rgba(139, 98, 12, 0.26),
+    0 0 0 4px rgba(232, 201, 121, 0.14),
+    0 7px 16px -6px rgba(198, 154, 43, 0.8),
+    0 0 22px rgba(232, 201, 121, 0.3);
+  filter: none;
+  transition: transform var(--motion-base) var(--ease-standard), box-shadow var(--motion-base) var(--ease-standard), filter var(--motion-base) var(--ease-standard);
+}
+.tiers .tiers__foot .tiers__actions .btn.btn--primary:hover,
+.tiers .tiers__foot .tiers__actions .btn.btn--primary:focus-visible {
+  background: linear-gradient(180deg, #F6E3A5 0%, #E8C979 46%, #CDA130 100%);
+  background-color: #E8C979;
+  color: #072A4E;
+  transform: translateY(-2px);
+  filter: brightness(1.07) saturate(1.05);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.8),
+    inset 0 -2px 0 rgba(139, 98, 12, 0.24),
+    0 0 0 5px rgba(232, 201, 121, 0.22),
+    0 10px 20px -6px rgba(198, 154, 43, 0.9),
+    0 0 30px rgba(232, 201, 121, 0.45);
+}
+.tiers .tiers__foot .tiers__actions .btn.btn--primary:focus-visible {
+  outline: 3px solid #FFF8EA;
+  outline-offset: 6px;
+}
+.tiers .tiers__foot .tiers__actions .btn.btn--primary:active {
+  transform: translateY(0) scale(0.98);
+}
+
+/* Mũi tên: chấm tròn navy, mũi tên vàng nhạt nét đậm; rê chuột thì trượt sang phải. */
+.tiers .tiers__foot .tiers__actions .btn.btn--primary .icon {
+  box-sizing: content-box;
+  width: 16px;
+  height: 16px;
+  padding: 5px;
+  border-radius: 50%;
+  background: #10305F;
+  color: #F6E3A5;
+  stroke-width: 2.4;
+  transition: transform var(--motion-base) var(--ease-standard);
+}
+.tiers .tiers__foot .tiers__actions .btn.btn--primary:hover .icon,
+.tiers .tiers__foot .tiers__actions .btn.btn--primary:focus-visible .icon {
+  transform: translateX(3px);
+}
+
+/* Vệt sáng chéo (::before) và vòng viền lan ra (::after) nằm dưới chữ nhờ isolation + z-index âm; đứng yên khi chưa bật chuyển động. */
+.tiers .tiers__foot .tiers__actions .btn.btn--primary::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: linear-gradient(105deg, rgba(255, 255, 255, 0) 42%, rgba(255, 255, 255, 0.85) 50%, rgba(255, 255, 255, 0) 58%) 0 0 / 300% 100% no-repeat;
+}
+.tiers .tiers__foot .tiers__actions .btn.btn--primary::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: -1px;
+  border-radius: inherit;
+  pointer-events: none;
+  outline: 2px solid transparent;
+  outline-offset: 0;
+}
+@keyframes inviteCtaShine {
+  0% { background-position: 0% 0; }
+  22%, 100% { background-position: 100% 0; }
+}
+@keyframes inviteCtaPulse {
+  0%, 18% { outline-color: transparent; outline-offset: 0; }
+  20% { outline-color: var(--invite-cta-ring); outline-offset: 0; }
+  46%, 100% { outline-color: transparent; outline-offset: 12px; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .tiers .tiers__foot .tiers__actions .btn.btn--primary::before { animation: inviteCtaShine 6s ease-in-out 1.5s infinite; }
+  .tiers .tiers__foot .tiers__actions .btn.btn--primary::after { animation: inviteCtaPulse 6s ease-out 1.5s infinite; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .tiers .tiers__foot .tiers__actions .btn.btn--primary:hover,
+  .tiers .tiers__foot .tiers__actions .btn.btn--primary:focus-visible,
+  .tiers .tiers__foot .tiers__actions .btn.btn--primary:active { transform: none; }
+  .tiers .tiers__foot .tiers__actions .btn.btn--primary:hover .icon,
+  .tiers .tiers__foot .tiers__actions .btn.btn--primary:focus-visible .icon { transform: none; }
+}
+
+/* Điện thoại: nút vẫn rộng hết khung (đã có từ trước), cao 48px, chữ + chấm mũi tên nằm giữa. */
+@media (max-width: 767px) {
+  .tiers .tiers__foot .tiers__actions .btn.btn--primary {
+    height: 48px;
+    padding: 0 12px;
+    justify-content: center;
+    font-size: 15px;
+  }
+}
+
+/* Chế độ tương phản cao: bỏ nền gradient và hiệu ứng, dùng màu hệ thống để chữ luôn đọc được (chữ ngà trên nền navy sẽ bị ép màu hệ thống nên phải bỏ nền navy). */
+@media (forced-colors: active) {
+  .tiers .tiers__foot {
+    background: Canvas;
+    border-color: CanvasText;
+    box-shadow: none;
+  }
+  .tiers .tiers__foot .tiers__actions .btn.btn--primary {
+    border: 1px solid ButtonText;
+    background: ButtonFace;
+    color: ButtonText;
+    box-shadow: none;
+    text-shadow: none;
+  }
+  .tiers .tiers__foot .tiers__actions .btn.btn--primary .icon {
+    background: none;
+    color: ButtonText;
+  }
+  .tiers .tiers__foot .tiers__actions .btn.btn--primary::before,
+  .tiers .tiers__foot .tiers__actions .btn.btn--primary::after { display: none; }
+}
+</style>
+<!-- golden-sync: phần bổ sung cho card Giờ Vàng (đồng bộ trang chủ, chủ dự án 2026-10-21); các luật thay thế nằm tại chỗ ở khối <style> đầu trang -->
+<style id="home-golden-sync">
+@media (min-width: 1320px) {
+  .golden { grid-template-columns: minmax(0, 2.1fr) auto minmax(0, 1fr); }
+  .golden__main { padding-right: 10px; }
+  .golden__timer { padding-inline: 18px; }
+}
+
+/* Nhấn: đặt SAU luật rê chuột để thắng khi vừa rê vừa nhấn; cạnh co còn 2px, nút lún 3px. */
+.golden__btn.golden__btn--member:not(:disabled):active {
+      box-shadow:
+        inset 0 2px 0 rgba(255,255,255,.6), inset 0 -6px 8px -6px rgba(122,85,22,.45),
+        0 1px 0 #C09330, 0 2px 0 #B1862A, 0 5px 8px -3px rgba(40,6,4,.6);
+      transform: translateY(3px);
+    }
+
+/* Tiêu đề "Số lượng có hạn" (chủ dự án 2026-10-19): đề mục căn giữa cùng kiểu các đề mục khác của trang (chữ hoa, hai gạch vàng), nằm dưới card Giờ Vàng và trên dải card sản phẩm. */
+.gh-limited { display: flex; margin: 30px 0 0; gap: 10px; font-family: var(--font-sans); letter-spacing: .12em; line-height: 1.35; }
+.gh-limited .eyebrow__rule { width: 26px; }
+.gh-limited + .gh-slider { margin-top: 18px; }
+@media (max-width: 767px) {
+  .gh-limited { margin-top: 22px; }
+  .gh-limited .eyebrow__rule { width: 18px; }
+  .gh-limited + .gh-slider { margin-top: 14px; }
+}
+
+/* Viền thẻ đậm một nấc (#D9C79C thay #E8DDC3) như trang chủ (phương án D 2026-10-19). Biến này ở trang chi tiết trước đây chỉ có trong phạm vi vỏ trang nên ngoài đó rỗng; chưa nơi nào khác của trang chi tiết dùng nó. */
+:root { --gf-border-strong: #D9C79C; }
+
+/* Card sản phẩm Giờ Vàng: vạch đỏ 4px cạnh trên (như trang chủ). */
+.gh-card article { border-color: var(--gf-border-strong); box-shadow: inset 0 4px 0 0 #C63A2A, 0 10px 24px -18px rgba(16, 48, 95, .45); }
+
+/* Chế độ tương phản cao: ô đồng hồ và nút mời dùng màu hệ thống (như trang chủ). */
+@media (forced-colors: active) {
+  .golden .countdown__cell { border-color: CanvasText; }
+  .golden__btn.golden__btn--member, .golden__btn.golden__btn--member:not(:disabled):hover { border-color: LinkText; }
+}
+</style>
+<!-- collections-sync: khu Chương trình bán hàng 24/7 + khu Sản phẩm (đồng bộ trang chủ, chủ dự án 2026-10-21) -->
+<style id="home-collections-sync">
+/* Khu "Chương trình bán hàng 24/7": khoảng đệm trên/dưới, tiêu đề và dòng mô tả (như trang chủ). Trang chủ còn chứa thanh nhóm trong khu này; trang chi tiết thì thanh luôn gắn ở đầu trang. */
+#he-mo-rong { padding-top: 46px; }
+#he-mo-rong { padding-bottom: 36px; }
+@media (max-width: 767px) {
+  #he-mo-rong { padding-top: 26px; }
+  #he-mo-rong { padding-top: 32px; padding-bottom: 30px; }
+}
+.section__title.eco__title { margin: 0; text-align: center; font-size: 32px; line-height: 1.2; }
+@media (max-width: 767px) {
+  .section__title.eco__title { font-size: 24px; }
+}
+.eco__lead { text-align: center; }
+
+/* Thẻ trắng nhấn cạnh (phương án D 2026-10-19, như trang chủ): viền đậm một nấc + vạch màu nhóm 4px cạnh trên của thẻ sản phẩm, thẻ xem trước và khối rỗng. */
+.collection .card article { border-color: var(--gf-border-strong); box-shadow: inset 0 4px 0 0 var(--cat-accent, var(--gf-gold)), var(--shadow-card); }
+.collection .preview-card, .collection .empty { border-color: var(--gf-border-strong); box-shadow: inset 0 4px 0 0 var(--cat-accent, var(--gf-gold)); }
+</style>
 <!-- gf-contact-rail:css:begin -->
 <style id="gf-contact-rail-css">
 /* Thanh liên hệ nhanh của trang chủ storefront (ReferenceFooter → .reference-social-shell). Chép từ
@@ -2400,6 +3238,465 @@ body.is-nav-open { overflow: hidden; }
 }
 </style>
 <!-- gf-contact-rail:css:end -->
+<noscript><style>.collection[hidden] { display: block !important; } .groupbar__sub { display: none !important; }</style></noscript>
+<style id="gf-nav-sub">
+/* Menu con của "Về chúng tôi" gồm "Về chúng tôi" và "Về sản phẩm". Máy tính: bảng thả dưới mục (script gf-nav-sub đặt vị trí và trạng thái mở);
+   điện thoại: mục con thụt vào ngay dưới "Về chúng tôi". Mũi tên thêm ~14px vào bề rộng mục; trang chủ và trang link giới thiệu (6 mục) khít nên thu khe ở 1280–1299px. */
+.storefront-reference-shell .desktop-nav { position: relative; }
+.storefront-reference-shell .desktop-nav > a.nav-has-sub { gap: 4px; }
+.storefront-reference-shell .nav-caret { width: 10px; height: 10px; flex: 0 0 auto; fill: none; stroke: currentColor; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; transition: transform 180ms cubic-bezier(.2, 0, 0, 1); }
+.storefront-reference-shell .desktop-nav > a.nav-has-sub[aria-expanded="true"] .nav-caret { transform: rotate(180deg); }
+.storefront-reference-shell .desktop-nav > a.nav-has-sub[aria-current="true"] { color: var(--storefront-header-accent-soft, #E8C979); }
+.storefront-reference-shell .desktop-nav > a.nav-has-sub[aria-current="true"]::after { transform: scaleX(1); }
+.storefront-reference-shell .nav-sub { position: absolute; top: 100%; left: 0; z-index: 140; min-width: 288px; padding: 8px; border: 1px solid rgba(16, 48, 95, 0.16); border-radius: 12px; background: #fff; box-shadow: 0 18px 48px rgba(8, 27, 56, 0.28); opacity: 0; visibility: hidden; transform: translateY(-4px); transition: opacity 160ms cubic-bezier(.2, 0, 0, 1), transform 160ms cubic-bezier(.2, 0, 0, 1), visibility 0s linear 160ms; }
+.storefront-reference-shell .nav-sub::before { content: ""; position: absolute; right: 0; bottom: 100%; left: 0; height: var(--sub-bridge, 12px); }
+.storefront-reference-shell .nav-sub.is-open { opacity: 1; visibility: visible; transform: none; transition-delay: 0s; }
+.storefront-reference-shell .desktop-nav .nav-sub a { display: block; padding: 10px 14px; border-radius: 8px; color: var(--storefront-header-navy, #10305F); transition: background-color 120ms; }
+.storefront-reference-shell .desktop-nav .nav-sub a:hover { background: rgba(16, 48, 95, 0.07); }
+.storefront-reference-shell .desktop-nav .nav-sub a[aria-current="page"] { background: #FFF8EA; box-shadow: inset 3px 0 0 #C69A2B; }
+.storefront-reference-shell .desktop-nav .nav-sub a:focus-visible { outline: 2px solid var(--storefront-header-blue, #1B79C0); outline-offset: -2px; }
+.storefront-reference-shell .nav-sub__title { display: block; font-size: 15px; font-weight: 700; line-height: 1.35; }
+.storefront-reference-shell .nav-sub__note { display: block; margin-top: 2px; font-size: 13px; font-weight: 500; line-height: 1.4; color: #667085; }
+.storefront-reference-shell .mobile-nav > a.mobile-sub { min-height: 44px; padding-left: 36px; font-size: 15px; font-weight: 500; }
+.storefront-reference-shell .mobile-nav > a.mobile-sub::before { content: ""; position: absolute; top: 50%; left: 16px; width: 10px; height: 2px; border-radius: 999px; background: var(--storefront-header-gold, #C9A227); transform: translateY(-50%); }
+@media (min-width: 1280px) and (max-width: 1299px) { .storefront-reference-shell .desktop-nav { gap: 9px; } }
+</style>
+<!-- Menu ☰ phương án A (chủ dự án chọn 2026-10-23, chép từ storefrontHeaderMobileMenuCss.ts của web chính; phần cuối là bổ sung riêng của bản mẫu). Đặt cuối <head> để thắng cùng độ ưu tiên với khối gf-shell:css. -->
+<style id="gf-mobile-menu-a">
+  @media (max-width: 1279px) {
+    .storefront-reference-shell .mobile-nav,
+    .storefront-reference-shell .mobile-nav.open {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      align-content: start;
+      inset-inline: 12px;
+      top: calc(100% + 6px);
+      padding: 10px;
+      border: 1px solid #E2CB8C;
+      border-radius: 18px;
+      background: #FFFFFF;
+      box-shadow: 0 24px 60px rgba(7, 42, 78, 0.28);
+    }
+
+    /* Khối tài khoản chiếm cả hàng; không còn hàng riêng có vạch kẻ như bản cũ (khách vẫn giữ một vạch mảnh dưới nút Đăng ký). */
+    .storefront-reference-shell .mobile-nav-actions {
+      display: block;
+      grid-column: 1 / -1;
+      margin: 0 0 8px;
+      padding: 0;
+      border-bottom: 0;
+    }
+
+    .storefront-reference-shell .mobile-nav-actions:has(.header-guest-btn) {
+      margin-bottom: 6px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #EFE5C8;
+    }
+
+    .storefront-reference-shell .mobile-nav-actions .header-account-slot {
+      flex: none;
+      min-width: 0;
+    }
+
+    .storefront-reference-shell .mobile-nav-actions .header-member-menu {
+      display: block;
+      width: 100%;
+    }
+
+    /* Thẻ tài khoản của hội viên: chính là nút mở/đóng lưới lối vào bên dưới. */
+    .storefront-reference-shell .mobile-nav-actions .header-member-card-trigger {
+      position: relative;
+      display: flex;
+      width: 100%;
+      min-height: 72px;
+      align-items: center;
+      gap: 12px;
+      overflow: hidden;
+      border: 0;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #143A70 0%, #072A4E 100%);
+      color: #FFFFFF;
+      cursor: pointer;
+      padding: 12px 10px 12px 12px;
+      text-align: left;
+    }
+
+    .storefront-reference-shell .mobile-nav-actions .header-member-card-trigger::after {
+      content: "";
+      position: absolute;
+      right: -34px;
+      bottom: -46px;
+      width: 130px;
+      height: 130px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(198, 154, 43, 0.38), transparent 70%);
+      pointer-events: none;
+    }
+
+    .storefront-reference-shell .mobile-nav-actions .header-member-card-trigger:focus-visible {
+      outline: 3px solid #E8C979;
+      outline-offset: 2px;
+    }
+
+    .storefront-reference-shell .header-member-card__avatar {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      flex: 0 0 46px;
+      width: 46px;
+      height: 46px;
+      place-items: center;
+      overflow: hidden;
+      border-radius: 50%;
+      background: #FFF3C9;
+      box-shadow: 0 0 0 2px #C69A2B;
+      color: #6B4A00;
+      font-size: 16px;
+      font-weight: 800;
+      line-height: 1;
+    }
+
+    .storefront-reference-shell .header-member-card__avatar img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .storefront-reference-shell .header-member-card__text {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      min-width: 0;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .storefront-reference-shell .header-member-card__name {
+      overflow: hidden;
+      color: #FFFFFF;
+      font-size: 16.5px;
+      font-weight: 700;
+      line-height: 1.15;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .storefront-reference-shell .header-member-card__meta {
+      color: rgba(255, 255, 255, 0.84);
+      font-size: 13px;
+      font-weight: 500;
+      line-height: 1.25;
+    }
+
+    .storefront-reference-shell .header-member-card__chevron {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      flex: 0 0 44px;
+      width: 44px;
+      height: 44px;
+      margin-left: auto;
+      place-items: center;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.12);
+      color: #FFFFFF;
+      font-size: 22px;
+      transition: transform 200ms ease, background-color 200ms ease;
+    }
+
+    .storefront-reference-shell .header-member-card-trigger[aria-expanded="true"] .header-member-card__chevron {
+      background: rgba(255, 255, 255, 0.22);
+      transform: rotate(180deg);
+    }
+
+    /* Lưới lối vào tài khoản: nằm trong dòng chảy của menu, mở sẵn; hai cột ở điện thoại, ba cột từ 768px. */
+    .storefront-reference-shell .mobile-nav-actions .header-member-dropdown {
+      position: static;
+      flex: none;
+      width: 100%;
+      max-width: none;
+      margin: 8px 0 0;
+      overflow: visible;
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+      box-shadow: none;
+    }
+
+    .storefront-reference-shell .mobile-nav-actions .header-member-dropdown__body {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 6px;
+      padding: 0;
+    }
+
+    .storefront-reference-shell .mobile-nav-actions .header-member-menu-item {
+      min-height: 52px;
+      gap: 8px;
+      padding: 6px 10px;
+      border: 1px solid #EADFBF;
+      border-radius: 12px;
+      background: #FFFBEF;
+      color: #10305F;
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 1.2;
+    }
+
+    .storefront-reference-shell .mobile-nav-actions .header-member-menu-item:hover,
+    .storefront-reference-shell .mobile-nav-actions .header-member-menu-item:focus-visible {
+      background: #FFF3D6;
+      color: #072A4E;
+      transform: none;
+    }
+
+    .storefront-reference-shell .mobile-nav-actions .header-member-menu-item .material-symbols-outlined {
+      flex: none;
+      color: #8A6A17;
+      font-size: 20px;
+    }
+
+    .storefront-reference-shell .mobile-nav-actions .header-member-menu-item.is-danger,
+    .storefront-reference-shell .mobile-nav-actions .header-member-menu-item.is-danger .material-symbols-outlined {
+      color: #A11A1A;
+    }
+
+    /* Danh sách mục: biểu tượng bên trái, mục đang xem tô vàng nhạt có vạch vàng, bỏ gạch chân đỏ chạy hết hàng của bản cũ. */
+    .storefront-reference-shell .mobile-nav > a {
+      position: relative;
+      display: flex;
+      width: 100%;
+      min-height: 52px;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 14px;
+      border: 0;
+      border-radius: 12px;
+      background-color: transparent;
+      background-image: none;
+      color: #10305F;
+      font-size: 16px;
+      font-weight: 600;
+      padding: 0 14px;
+      text-shadow: none;
+    }
+
+    .storefront-reference-shell .mobile-nav > a::after {
+      display: none;
+    }
+
+    .storefront-reference-shell .mobile-nav > a .material-symbols-outlined {
+      flex: none;
+      font-size: 22px;
+    }
+
+    .storefront-reference-shell .mobile-nav > a:not(.nav-feature) .material-symbols-outlined {
+      color: #8A6A17;
+    }
+
+    .storefront-reference-shell .mobile-nav > a:not(.nav-feature)::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 14px;
+      left: 50px;
+      height: 1px;
+      background: #EFE5C8;
+    }
+
+    .storefront-reference-shell .mobile-nav > a:first-of-type::before,
+    .storefront-reference-shell .mobile-nav > a[aria-current="page"]::before,
+    .storefront-reference-shell .mobile-nav > a[aria-current="page"] + a::before {
+      display: none;
+    }
+
+    .storefront-reference-shell .mobile-nav > a:hover,
+    .storefront-reference-shell .mobile-nav > a:focus-visible {
+      background-color: #FBF3DE;
+      color: #072A4E;
+    }
+
+    .storefront-reference-shell .mobile-nav > a[aria-current="page"] {
+      background-color: #FFF6DD;
+      box-shadow: inset 3px 0 0 #C69A2B;
+      color: #072A4E;
+      font-weight: 700;
+    }
+
+    /* Dòng vàng "Trung tâm nhà khởi nghiệp" của cộng tác viên (chủ dự án chốt 2026-10-23): thay viên vàng ở cuối menu, nằm ĐẦU lưới lối vào, rộng hết hàng,
+       cùng nền vàng, chữ navy đậm, tên lửa và quầng sáng như viên vàng của menu máy tính. Đứng trước các dòng khác cả trong DOM nên thứ tự Tab trùng thứ tự nhìn. */
+    .storefront-reference-shell .mobile-nav-actions .header-member-menu-item.header-member-menu-item--feature {
+      position: relative;
+      isolation: isolate;
+      grid-column: 1 / -1;
+      justify-content: center;
+      gap: 10px;
+      min-height: 52px;
+      padding: 6px 22px;
+      border: 0;
+      border-radius: 999px;
+      background: linear-gradient(180deg, #F6E3A5 0%, #E8C979 46%, #CDA130 100%);
+      background-color: #E8C979;
+      color: #072A4E;
+      font-size: 16px;
+      font-weight: 800;
+      letter-spacing: 0.01em;
+      text-shadow: 0 1px 0 rgba(255, 255, 255, 0.42);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.7),
+        inset 0 -2px 0 rgba(139, 98, 12, 0.26),
+        0 0 0 1px rgba(198, 154, 43, 0.4),
+        0 8px 16px -8px rgba(198, 154, 43, 0.85);
+    }
+
+    .storefront-reference-shell .mobile-nav-actions .header-member-menu-item.header-member-menu-item--feature:hover,
+    .storefront-reference-shell .mobile-nav-actions .header-member-menu-item.header-member-menu-item--feature:focus-visible {
+      background: linear-gradient(180deg, #F6E3A5 0%, #E8C979 46%, #CDA130 100%);
+      background-color: #E8C979;
+      color: #072A4E;
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.8),
+        inset 0 -2px 0 rgba(139, 98, 12, 0.24),
+        0 0 0 1px rgba(198, 154, 43, 0.55),
+        0 10px 18px -8px rgba(198, 154, 43, 0.95);
+    }
+
+    .storefront-reference-shell .mobile-nav-actions .header-member-menu-item.header-member-menu-item--feature:focus-visible {
+      outline: 3px solid #072A4E;
+      outline-offset: 2px;
+    }
+
+    .storefront-reference-shell .mobile-nav-actions .header-member-menu-item.header-member-menu-item--feature .material-symbols-outlined {
+      color: #072A4E;
+      font-size: 22px;
+    }
+
+    /* Có dòng vàng thì còn năm dòng thường: Đăng xuất chiếm hai ô cuối nên lưới (hai hoặc ba cột) không bỏ ô trống. */
+    .storefront-reference-shell .mobile-nav-actions .header-member-menu-item--feature ~ .header-member-menu-item.is-danger {
+      grid-column: span 2;
+    }
+  }
+
+  @media (max-width: 1279px) and (min-width: 768px) {
+    .storefront-reference-shell .mobile-nav,
+    .storefront-reference-shell .mobile-nav.open {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      column-gap: 12px;
+      inset-inline: 24px;
+    }
+
+    .storefront-reference-shell .mobile-nav-actions .header-member-dropdown__body {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .storefront-reference-shell .mobile-nav > a:not(.nav-feature) {
+      margin-top: 6px;
+      border: 1px solid #F0E6CC;
+    }
+
+    .storefront-reference-shell .mobile-nav > a:not(.nav-feature)::before {
+      display: none;
+    }
+  }
+
+  /* Vệt sáng chéo lướt qua dòng vàng mỗi 6 giây, cùng khung hình navFeatureShine của viên vàng menu máy tính (khai báo ở lớp CSS thứ hai); tắt khi giảm chuyển động. */
+  @media (max-width: 1279px) and (prefers-reduced-motion: no-preference) {
+    .storefront-reference-shell .mobile-nav-actions .header-member-menu-item--feature::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      border-radius: inherit;
+      pointer-events: none;
+      background: linear-gradient(105deg, rgba(255, 255, 255, 0) 42%, rgba(255, 255, 255, 0.85) 50%, rgba(255, 255, 255, 0) 58%) 0 0 / 300% 100% no-repeat;
+      animation: navFeatureShine 6s ease-in-out 0.9s infinite;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .storefront-reference-shell .header-member-card__chevron {
+      transition: none;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .storefront-reference-shell .mobile-nav-actions .header-member-card-trigger {
+      border: 1px solid ButtonText;
+      background: ButtonFace;
+      color: ButtonText;
+    }
+
+    .storefront-reference-shell .mobile-nav-actions .header-member-card-trigger::after {
+      display: none;
+    }
+
+    .storefront-reference-shell .header-member-card__name,
+    .storefront-reference-shell .header-member-card__meta,
+    .storefront-reference-shell .header-member-card__chevron {
+      color: ButtonText;
+    }
+
+    .storefront-reference-shell .mobile-nav > a[aria-current="page"] {
+      outline: 2px solid Highlight;
+      outline-offset: -2px;
+    }
+
+    .storefront-reference-shell .mobile-nav-actions .header-member-menu-item.header-member-menu-item--feature {
+      border: 1px solid ButtonText;
+      background: ButtonFace;
+      color: ButtonText;
+      box-shadow: none;
+    }
+
+    .storefront-reference-shell .mobile-nav-actions .header-member-menu-item.header-member-menu-item--feature .material-symbols-outlined {
+      color: ButtonText;
+    }
+  }
+
+  /* ---- Bổ sung riêng cho bản mẫu HTML (không có React) ---- */
+  @keyframes navFeatureShine {
+    0% { background-position: 0% 0; }
+    22%, 100% { background-position: 100% 0; }
+  }
+
+  @media (max-width: 1279px) {
+    /* Bản mẫu mở menu bằng lớp is-open (web dùng open): khối cũ đặt display:block ở độ ưu tiên (0,3,0) nên phải đặt lại grid ở cả hai trạng thái. */
+    .storefront-reference-shell .mobile-nav.is-open,
+    .storefront-reference-shell .mobile-nav[data-nav-hidden-mode]:not([hidden]) { display: grid; }
+  }
+
+  @media (max-width: 1279px) {
+    /* Lưới lối vào tài khoản mở sẵn dưới thẻ; bấm thẻ (script gf-mobile-menu-a-js) thêm data-collapsed để thu lại. */
+    .storefront-reference-shell .mobile-nav-actions .header-member-dropdown { display: block; }
+    .storefront-reference-shell .mobile-nav-actions .header-member-menu[data-collapsed] .header-member-dropdown { display: none; }
+
+    /* Đăng xuất lấp hết ô còn lại ở hàng cuối (web tự có nhờ số dòng cố định; bản mẫu gắn lớp theo từng trang). */
+    .storefront-reference-shell .mobile-nav-actions .header-member-menu-item.is-danger.is-span-2 { grid-column: span 2; }
+    .storefront-reference-shell .mobile-nav-actions .header-member-menu-item.is-danger.is-natural { grid-column: auto; }
+
+    /* Mục con "Về sản phẩm" (chỉ có ở bản mẫu): thụt vào thẳng chữ của "Về chúng tôi", gạch vàng nhỏ thay biểu tượng, không vạch kẻ. */
+    .storefront-reference-shell .mobile-nav > a.mobile-sub { min-height: 44px; padding-left: 50px; font-size: 15px; font-weight: 500; }
+    .storefront-reference-shell .mobile-nav > a.mobile-sub::before {
+      content: "";
+      display: block;
+      position: absolute;
+      top: 50%;
+      right: auto;
+      left: 20px;
+      width: 10px;
+      height: 2px;
+      border-radius: 999px;
+      background: #C69A2B;
+      transform: translateY(-50%);
+    }
+  }
+
+  @media (max-width: 1279px) and (min-width: 768px) {
+    .storefront-reference-shell .mobile-nav > a.mobile-sub { grid-column: 1 / -1; }
+    .storefront-reference-shell .mobile-nav-actions .header-member-menu-item.is-danger.is-full-md { grid-column: 1 / -1; }
+  }
+</style>
 </head>
 
 <body data-collection="seasonal">
@@ -2452,14 +3749,18 @@ body.is-nav-open { overflow: hidden; }
 <div class="header-grid">
 <button id="navToggle" class="icon-btn menu-trigger" type="button" aria-label="Mở menu điều hướng" aria-controls="mobileNav" aria-expanded="false"><span class="material-symbols-outlined" aria-hidden="true">menu</span><svg class="gf-js-icon" aria-hidden="true" focusable="false"><use href="#i-menu"/></svg></button>
 <a class="brand-logo header__logo" aria-label="Về trang chủ Ginsengfood" href="trang-chu-theo-doi-tuong/trang-chu.html">
-<img src="../public/home-webp-v1/logo-header-light.w372.webp" srcset="../public/home-webp-v1/logo-header-light.w186.webp 186w, ../public/home-webp-v1/logo-header-light.w372.webp 372w, ../public/home-webp-v1/logo-header-light.w558.webp 558w" sizes="(max-width: 767px) 136px, 176px" alt="Biểu trưng Ginsengfood" width="186" height="67" decoding="async">
+<img src="../public/home-webp-v1/logo-header-v2.w360.webp" srcset="../public/home-webp-v1/logo-header-v2.w120.webp 120w, ../public/home-webp-v1/logo-header-v2.w240.webp 240w, ../public/home-webp-v1/logo-header-v2.w360.webp 360w" sizes="(max-width: 767px) 136px, 176px" alt="Biểu trưng Ginsengfood" width="186" height="67" decoding="async">
 </a>
 <nav class="desktop-nav" aria-label="Điều hướng chính">
 <a href="trang-chu-theo-doi-tuong/trang-chu.html">Trang chủ</a>
-<!-- <a href="ve-chung-toi.html">Về chúng tôi</a> -->
-<!-- <a href="tin-tuc.html">Tin tức</a> -->
-<!-- <a href="tin-tuc.html">Cộng đồng</a> -->
+<a class="nav-has-sub" aria-haspopup="true" aria-expanded="false" aria-controls="gfNavSub" href="ve-chung-toi.html">Về chúng tôi<svg class="nav-caret" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 9l6 6 6-6"/></svg></a>
+<div class="nav-sub" id="gfNavSub" role="group" aria-label="Menu Về chúng tôi">
+<a href="ve-chung-toi.html"><span class="nav-sub__title">Về chúng tôi</span><span class="nav-sub__note">Câu chuyện SSAVIGROUP</span></a>
+<a href="ve-san-pham.html"><span class="nav-sub__title">Về sản phẩm</span><span class="nav-sub__note">Sáu nhóm sản phẩm</span></a>
+</div>
+<a href="tin-tuc.html">Tin tức</a>
 <a href="tra-cuu-don-hang.html">Tra cứu đơn hàng</a>
+<a href="trang-chu-theo-doi-tuong/dieu-khoan-cong-tac-vien.html">Khởi nghiệp cùng Ssavigroup</a>
 <a href="trang-chu-theo-doi-tuong/dai-ly-nha-phan-phoi.html">Đại lý nhà phân phối</a>
 </nav>
 <div class="header-actions">
@@ -2498,12 +3799,13 @@ body.is-nav-open { overflow: hidden; }
 <a class="diamond-member-btn header-member-btn header-guest-btn" aria-label="Đăng ký" title="Đăng ký" href="dang-nhap.html"><span class="material-symbols-outlined" aria-hidden="true">person</span><span class="header-member-label">Đăng ký</span></a>
 </div>
 </div>
-<a href="trang-chu-theo-doi-tuong/trang-chu.html">Trang chủ</a>
-<a href="ve-chung-toi.html">Về chúng tôi</a>
-<a href="tin-tuc.html">Tin tức</a>
-<a href="tin-tuc.html">Cộng đồng</a>
-<a href="tra-cuu-don-hang.html">Tra cứu đơn hàng</a>
-<a href="trang-chu-theo-doi-tuong/dai-ly-nha-phan-phoi.html">Đại lý nhà phân phối</a>
+<a href="trang-chu-theo-doi-tuong/trang-chu.html"><span class="material-symbols-outlined" aria-hidden="true">home</span>Trang chủ</a>
+<a href="ve-chung-toi.html"><span class="material-symbols-outlined" aria-hidden="true">info</span>Về chúng tôi</a>
+<a class="mobile-sub" href="ve-san-pham.html">Về sản phẩm</a>
+<a href="tin-tuc.html"><span class="material-symbols-outlined" aria-hidden="true">newspaper</span>Tin tức</a>
+<a href="tra-cuu-don-hang.html"><span class="material-symbols-outlined" aria-hidden="true">receipt_long</span>Tra cứu đơn hàng</a>
+<a href="trang-chu-theo-doi-tuong/dieu-khoan-cong-tac-vien.html"><span class="material-symbols-outlined" aria-hidden="true">rocket_launch</span>Khởi nghiệp cùng Ssavigroup</a>
+<a href="trang-chu-theo-doi-tuong/dai-ly-nha-phan-phoi.html"><span class="material-symbols-outlined" aria-hidden="true">storefront</span>Đại lý nhà phân phối</a>
 </nav>
 </div>
 <button type="button" id="searchCancel" class="gf-js-hook" hidden tabindex="-1" aria-hidden="true">Hủy</button>
@@ -2511,47 +3813,66 @@ body.is-nav-open { overflow: hidden; }
 <!-- gf-shell:header:end -->
 
 
-<!-- Thanh "Chủ đề" dính ngay dưới header suốt trang (đồng bộ HomeTopicBar của storefront, chủ dự án chốt 2026-10-12): mỗi badge là một chuyên mục của mục Tin tức.
-     Điện thoại: thu thành nút "Chủ đề: Chọn chủ đề", bấm mở bảng thả xuống. -->
+<!-- Thanh "Chủ đề" dính ngay dưới header suốt trang (đồng bộ HomeTopicBar của storefront, chủ dự án chốt 2026-10-12; làm lại theo bản mẫu trang chủ khách 2026-10-21): tiêu đề không liên kết + 5 badge nhiều màu (data-hue), mỗi badge là một chuyên mục của mục Tin tức.
+     Giữ dấu ":" sau chữ "học" như trang hạng thành viên (trang chủ chưa có dấu này). Điện thoại: thu thành nút mang tên tiêu đề, bấm mở bảng thả xuống. -->
 <div class="catbar">
   <div class="container catbar__inner">
     <button type="button" class="catbar__toggle" id="catToggle" aria-expanded="false" aria-controls="catNav" aria-label="Mở bảng chủ đề">
-      <span class="catbar__toggle-label">Chủ đề:</span>
-      <span class="catbar__toggle-value" id="topicCurrent">Chọn chủ đề</span>
+      <span class="catbar__toggle-label">Siêu trí tuệ tri thức y dược học:</span>
       <svg class="icon" aria-hidden="true"><use href="#i-chev-down"/></svg>
     </button>
-    <span class="catbar__label" aria-hidden="true" style="font-weight: bold">Siêu trí tuệ tri thức y dược học:</span>
+    <span class="catbar__label catbar__title">Siêu trí tuệ tri thức y dược học:</span>
     <nav class="catbar__tabs" id="catNav" aria-label="Chủ đề">
-      <!-- <a href="tin-tuc.html?categorySlug=cong-dong">Siêu trí tuệ tri thức y dược học</a> -->
-      <a href="tin-tuc.html?categorySlug=nghien-cuu-khoa-hoc">Nghiên cứu khoa học</a>
-      <a href="tin-tuc.html?categorySlug=bai-thuoc-co">Bài thuốc cổ</a>
-      <a href="tin-tuc.html?categorySlug=thuoc-dan-gian">Thuốc dân gian</a>
-      <a href="tin-tuc.html?categorySlug=y-duoc-hoc">Y dược học</a>
-      <a href="tin-tuc.html?categorySlug=duoc-dien">Dược điển</a>
+      <a href="tin-tuc.html?categorySlug=nghien-cuu-khoa-hoc" data-hue="0">Nghiên cứu khoa học</a>
+      <a href="tin-tuc.html?categorySlug=bai-thuoc-co" data-hue="1">Bài thuốc cổ</a>
+      <a href="tin-tuc.html?categorySlug=thuoc-dan-gian" data-hue="2">Thuốc dân gian</a>
+      <a href="tin-tuc.html?categorySlug=y-duoc-hoc" data-hue="4">Y dược học</a>
+      <a href="tin-tuc.html?categorySlug=duoc-dien" data-hue="5">Dược điển</a>
     </nav>
   </div>
 </div>
-<!-- Thanh "Nhóm sản phẩm" dính ngay dưới thanh Chủ đề suốt trang (đồng bộ ProductDetailGroupStickyBar của storefront, chủ dự án chốt 2026-10-14): cùng kiểu thanh nhóm của trang chủ
-     lúc đã gắn dưới header (nhãn đầu thanh, badge mỗi nhóm một màu theo thứ tự, căn giữa từ 768px). Bấm badge thì cuộn tới nhóm tương ứng ở khối sản phẩm bên dưới;
-     badge của nhóm đang xem được tô đậm. Điện thoại: thu thành nút "Nhóm sản phẩm: <nhóm đang xem>". -->
-<section class="groupbar groupbar--sticky" id="groupBar" aria-label="Nhóm sản phẩm">
-  <div class="groupbar__inner">
-    <button type="button" class="groupbar__toggle" id="groupToggle" aria-expanded="false" aria-controls="groupNav" aria-label="Mở bảng nhóm sản phẩm">
-      <span class="groupbar__toggle-label">Nhóm sản phẩm:</span>
-      <span class="groupbar__toggle-value" id="groupCurrent">Chọn nhóm</span>
-      <svg class="icon" aria-hidden="true"><use href="#i-chev-down"/></svg>
-    </button>
-    <p class="groupbar__label">Nhóm sản phẩm:</p>
-    <nav class="groupbar__tabs" id="groupNav" aria-label="Nhóm sản phẩm">
-      <a href="#col-seasonal" data-hue="0">Thực phẩm</a>
-      <a href="#col-functional" data-hue="1">Thực phẩm chức năng</a>
-      <a href="#col-nourishing" data-hue="2">Thuốc y học cổ truyền</a>
-	  <a href="#col-nourishing" data-hue="2">Thuốc dược liệu thế hệ mới</a>
-	  <a href="#col-nourishing" data-hue="2">Mỹ phẩm</a>
-	  <a href="#col-nourishing" data-hue="2">Cao chuẩn hoá</a>
-    </nav>
-  </div>
-</section>
+<!-- Thanh "Nhóm sản phẩm" dính ngay dưới thanh Chủ đề suốt trang (đồng bộ ProductDetailGroupStickyBar của storefront, chủ dự án chốt 2026-10-14; làm lại theo bản mẫu trang chủ khách 2026-10-21).
+     Khác trang chủ ở đúng một điểm: thanh LUÔN ở dạng đã gắn (data-docked="true"), không có khu 24/7 để gắn/nhả. Logic y trang chủ: sáu badge + thanh mục con là BỘ LỌC bảy nhóm sản phẩm của khu bên dưới (ba nhóm đang bán + bốn nhóm "sắp ra mắt" ẩn sẵn), bấm là lọc rồi cuộn về đầu nhóm đầu tiên đang hiện; #col-… ở nơi khác tự chọn badge. -->
+<div class="groupbar-slot" id="groupBarSlot">
+        <section class="groupbar" id="groupBar" data-docked="true" aria-label="Nhóm sản phẩm">
+          <div class="groupbar__inner">
+            <button type="button" class="groupbar__toggle" id="groupToggle" aria-expanded="false" aria-controls="groupNav" aria-label="Mở bảng nhóm sản phẩm">
+              <span class="groupbar__toggle-label">Nhóm sản phẩm:</span>
+              <span class="groupbar__toggle-value" id="groupCurrent">Thực phẩm</span>
+              <svg class="icon" aria-hidden="true"><use href="#i-chev-down"/></svg>
+            </button>
+            <p class="groupbar__label">Nhóm sản phẩm:</p>
+            <nav class="groupbar__tabs" id="groupNav" aria-label="Nhóm sản phẩm">
+              <!-- Sáu badge theo yêu cầu chủ dự án 2026-10-19 (trước đó bảy badge: ba nhóm Cháo Sâm, Thực phẩm chức năng, Mỹ phẩm, Thuốc Y học cổ truyền, Dược liệu thế hệ mới).
+                   Màu giữ theo tên cũ (data-hue; không dùng hue 0 vì lẫn với nền thanh). "Cao chuẩn hóa" chưa có khu sản phẩm nên chưa có href: bấm chưa cuộn tới đâu.
+                   Thanh thứ hai (chủ dự án chọn phương án A "liền mềm" 2026-10-20, thay hàng con nằm chung thanh và drop-list): "Thực phẩm" và "Thực phẩm chức năng" có mục con (.groupbar__item > .groupbar__sub); khi badge cha đang được chọn, mục con hiện ở một thanh riêng treo dưới đáy thanh trên (hai đầu loe mềm vào thanh trên, bo tròn hết cỡ phía dưới, phần nền nhạt dâng lên ôm quanh badge cha); mũi tên ở đầu phải badge cha (.groupbar__chev) đóng/mở thanh mục con mà không đổi bộ lọc; các badge khác chưa có mục con.
+                   "Thực phẩm" gom ba nhóm Cháo Sâm (data-targets: sáng lên khi đang xem bất kỳ nhóm nào trong ba nhóm). Mục con trỏ về khu sản phẩm đang có: "Cháo sâm theo yêu cầu" tạm trỏ nhóm Chức Năng cũ (#col-functional),
+                   hai mục của Thực phẩm chức năng cùng trỏ khu Thực phẩm chức năng; mục chưa có khu ("Cháo sâm thuần chay") để trống href.
+                   Lọc nhóm (chủ dự án 2026-10-19): bấm badge thì badge sáng (aria-current) và bên dưới chỉ còn các nhóm của badge đó (.collection còn lại ẩn bằng hidden); mục con thu hẹp xuống đúng một nhóm; mặc định "Thực phẩm"; "Cao chuẩn hóa" chưa có nhóm nên không bấm được. -->
+              <div class="groupbar__item is-open" data-hue="1">
+                <a href="#col-seasonal" data-hue="1" data-targets="col-seasonal col-functional col-nourishing" role="button" aria-expanded="true" aria-controls="groupSubFood" aria-current="true">Thực phẩm<span class="groupbar__chev" aria-hidden="true" title="Thu gọn các mục con"><svg class="icon"><use href="#i-chev-down"/></svg></span></a>
+                <ul class="groupbar__sub" id="groupSubFood" aria-label="Thực phẩm">
+                  <li><a href="#col-seasonal">Cháo sâm theo mùa</a></li>
+                  <li><a href="#col-functional">Cháo sâm theo yêu cầu</a></li>
+                  <li><a href="#col-nourishing">Cháo sâm bổ dưỡng</a></li>
+                  <li><a>Cháo sâm thuần chay</a></li>
+                </ul>
+              </div>
+              <div class="groupbar__item" data-hue="3">
+                <a href="#col-functional-food" data-hue="3" role="button" aria-expanded="false" aria-controls="groupSubFunctional">Thực phẩm chức năng<span class="groupbar__chev" aria-hidden="true" title="Mở các mục con"><svg class="icon"><use href="#i-chev-down"/></svg></span></a>
+                <ul class="groupbar__sub" id="groupSubFunctional" aria-label="Thực phẩm chức năng">
+                  <li><a href="#col-functional-food">Nội tiết tố</a></li>
+                  <li><a href="#col-functional-food">Xương khớp hoạt huyết</a></li>
+                </ul>
+              </div>
+              <a href="#col-medicine" data-hue="5">Thuốc y học cổ truyền</a>
+              <a href="#col-newgen" data-hue="6">Thuốc dược liệu thế hệ mới</a>
+              <a href="#col-cosmetics" data-hue="4">Mỹ phẩm</a>
+              <a data-hue="2">Cao chuẩn hóa</a>
+            </nav>
+          </div>
+        </section>
+      </div>
 <!-- Màn che phía sau menu di động và bảng tìm kiếm -->
 <div class="nav-scrim" id="navScrim"></div>
 
@@ -2560,12 +3881,10 @@ body.is-nav-open { overflow: hidden; }
   <div class="container">
     <nav aria-label="Đường dẫn">
       <ol class="crumb">
-        <li><a href="trang-chu-theo-doi-tuong/trang-chu.html" style="font-weight: bold;">Thực phẩm</a></li>
-        <li><a href="trang-chu-theo-doi-tuong/trang-chu.html#collections">Cháo sâm theo mùa</a></li>
-        <li><a href="trang-chu-theo-doi-tuong/trang-chu.html#collections">Cháo Sâm theo yêu cầu</a></li>
-		     <li><a href="trang-chu-theo-doi-tuong/trang-chu.html#collections">Cháo sâm bổ dưỡng</a></li>
-			      <li><a href="trang-chu-theo-doi-tuong/trang-chu.html#collections">Cháo Sâm thuần chay</a></li>
-        <!-- <li><span aria-current="page">Cháo Sâm Mùa Hạ – Cá Basa</span></li> -->
+        <li><a href="trang-chu-theo-doi-tuong/trang-chu.html">Trang chủ</a></li>
+        <li><a href="trang-chu-theo-doi-tuong/trang-chu.html#collections">Thực phẩm</a></li>
+        <li><a href="trang-chu-theo-doi-tuong/trang-chu.html#col-seasonal">Cháo sâm theo mùa</a></li>
+        <li><span aria-current="page">Cháo Sâm Mùa Hạ – Cá Basa</span></li>
       </ol>
     </nav>
   </div>
@@ -2791,7 +4110,7 @@ body.is-nav-open { overflow: hidden; }
   <section class="section" id="cach-dung" aria-labelledby="stepsTitle">
     <div class="container">
       <div class="section__center">
-        <p class="eyebrow eyebrow--center"><span class="eyebrow__rule" aria-hidden="true"></span>Cách dùng<span class="eyebrow__rule" aria-hidden="true"></span></p>
+        <!-- Đề mục "Cách dùng" (dòng căn giữa phía trên tiêu đề, có hai gạch vàng hai bên) đã bỏ (chủ dự án 2026-10-21). -->
         <h2 class="section__title" id="stepsTitle">Ba phút cho một bữa ăn tử tế</h2>
       </div>
       <ol class="steps">
@@ -2831,7 +4150,7 @@ body.is-nav-open { overflow: hidden; }
   <section class="section" id="thanh-phan" aria-labelledby="ingredientsTitle">
     <div class="container">
       <div class="section__center">
-        <p class="eyebrow eyebrow--center"><span class="eyebrow__rule" aria-hidden="true"></span>Thành phần<span class="eyebrow__rule" aria-hidden="true"></span></p>
+        <!-- Đề mục "Thành phần" (dòng căn giữa phía trên tiêu đề, có hai gạch vàng hai bên) đã bỏ (chủ dự án 2026-10-21). -->
         <h2 class="section__title" id="ingredientsTitle">Nguyên liệu có điểm tựa rõ ràng</h2>
       </div>
       <div class="ingr">
@@ -2878,7 +4197,7 @@ body.is-nav-open { overflow: hidden; }
   <section class="tiers" id="quyen-loi" aria-labelledby="tiersTitle">
     <div class="container">
       <div class="tiers__head">
-        <p class="eyebrow book-section__eyebrow"><span class="eyebrow__rule" aria-hidden="true"></span>Quyền lợi thành viên<span class="eyebrow__rule" aria-hidden="true"></span></p>
+        <!-- Đề mục "Quyền lợi thành viên" (dòng căn giữa phía trên tiêu đề, có hai gạch vàng hai bên) đã bỏ (chủ dự án 2026-10-19); nhãn "Quyền lợi thành viên" ở mục lục trái vẫn giữ. -->
         <h2 class="section__title" id="tiersTitle">Bốn hạng, quyền lợi tăng dần theo hành trình</h2>
         <p class="tiers__lead">Thành viên tích lũy doanh số hợp lệ trong chu kỳ 12 tháng. Đạt mốc của hạng nào, bạn nhận quyền lợi và quyền mua sớm Giờ Vàng của hạng đó.</p>
       </div>
@@ -2952,27 +4271,7 @@ body.is-nav-open { overflow: hidden; }
         </div>
       </div>
 
-      <!-- Cộng tác viên: vai trò riêng, chỉ vai trò này có link chia sẻ sản phẩm (thay chương trình giới thiệu Diamond cũ) -->
-      <div class="collab">
-        <div class="collab__text">
-          <h3 class="collab__title">Chương trình đối tác khởi nghiệp làm giàu cùng Ssavigroup</h3>
-          <p class="collab__copy">Đăng ký để trở thành đối tác giới thiệu thương hiệu Ginsengfood; tăng thu nhập và tự chủ tài chính.</p>
-          <!-- Mốc 2.000.000đ chỉ minh họa: ngưỡng áp dụng do quản trị viên cấu hình; không xét hạng thành viên. -->
-          <p class="collab__cond"><svg class="icon" aria-hidden="true"><use href="#i-shield"/></svg><span>Điều kiện đăng ký: doanh số tích lũy từ <b>2.000.000đ</b> trở lên và số điện thoại đã xác minh.</span></p>
-        </div>
-        <a class="btn btn--gold btn--sm" href="trang-chu-theo-doi-tuong/dieu-khoan-cong-tac-vien.html">Đăng ký cộng tác viên<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-      </div>
-
-      <!-- Lời mời hợp tác doanh nghiệp như trang chủ hiện tại; chính sách được tư vấn riêng. -->
-      <div class="home-partner">
-        <span class="home-partner__emblem" aria-hidden="true"><svg class="icon"><use href="#i-store"/></svg></span>
-        <div class="home-partner__text">
-          <h3 class="home-partner__title">Trở thành đại lý, nhà phân phối cùng Ssavigroup</h3>
-          <p class="home-partner__copy">Đưa Cháo Sâm Ginsengfood đến khu vực của bạn với chính sách giá theo sản lượng, hỗ trợ trưng bày, tài liệu bán hàng và đào tạo kiến thức sản phẩm.</p>
-          <p class="home-partner__note"><svg class="icon" aria-hidden="true"><use href="#i-shield"/></svg><span>Chính sách giá, số lượng và lịch giao hàng được tư vấn riêng cho từng đối tác.</span></p>
-        </div>
-        <a class="btn btn--gold btn--sm" href="trang-chu-theo-doi-tuong/dai-ly-nha-phan-phoi.html#hinh-thuc">Tìm hiểu hợp tác <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-      </div>
+      <!-- Hai card "Chương trình đối tác khởi nghiệp làm giàu cùng Ssavigroup" (.collab) và "Trở thành đại lý, nhà phân phối cùng Ssavigroup" (.home-partner) đã bỏ khỏi khu này (chủ dự án 2026-10-19). Menu đầu trang và chân trang vẫn có link "Khởi nghiệp cùng Ssavigroup" và "Đại lý nhà phân phối"; CSS của hai khối còn nguyên nhưng không còn dùng. -->
 
           </div>
   </section>
@@ -2984,8 +4283,7 @@ body.is-nav-open { overflow: hidden; }
   <!-- =================================================================== -->
   <section class="golden-section" id="gio-vang-tri-an" aria-labelledby="gvTitle" data-state="UPCOMING">
     <div class="golden-section__inner">
-      <p class="eyebrow book-section__eyebrow"><span class="eyebrow__rule" aria-hidden="true"></span>Giờ Vàng Tri Ân<span class="eyebrow__rule" aria-hidden="true"></span></p>
-
+      <!-- Đề mục "Giờ Vàng Tri Ân" (dòng căn giữa phía trên card) đã bỏ (chủ dự án 2026-10-21); tiêu đề nằm trong card vẫn giữ. -->
       <div class="golden">
         <!-- Hoạ tiết trang trí theo mẫu: hoa mai vàng góc dưới trái, đèn lồng góc trên phải, sóng mờ góc dưới phải -->
         <svg class="golden__deco golden__deco--blossom" viewBox="0 0 180 120" aria-hidden="true">
@@ -3045,6 +4343,9 @@ body.is-nav-open { overflow: hidden; }
           </div>
         </div>
       </div>
+
+      <!-- Tiêu đề "Số lượng có hạn" (chủ dự án 2026-10-19): nằm dưới card Giờ Vàng và trên dải card sản phẩm. -->
+      <h3 class="eyebrow book-section__eyebrow gh-limited" id="ghLimitedTitle"><span class="eyebrow__rule" aria-hidden="true"></span>Số lượng có hạn<span class="eyebrow__rule" aria-hidden="true"></span></h3>
 
       <!-- Sản phẩm trong phiên: dải trượt ngang, snap từng card, kéo chuột được; giá Giờ Vàng đỏ, niêm yết gạch (mục 15.2) -->
       <div class="gh-slider">
@@ -3262,35 +4563,13 @@ body.is-nav-open { overflow: hidden; }
   <!-- =================================================================== -->
   <section class="section" id="he-mo-rong" aria-labelledby="ecoTitle">
     <div class="container">
-      <h2 class="eyebrow book-section__eyebrow eco__heading" id="ecoTitle"><span class="eyebrow__rule" aria-hidden="true"></span>Nhóm sản phẩm<span class="eyebrow__rule" aria-hidden="true"></span></h2>
-      <!-- Dải card trượt ngang như Giờ Vàng: nút ‹ › hai đầu, kéo chuột được; bấm card → cuộn xuống các nhóm sản phẩm bên dưới -->
-      <div class="eco-slider">
-        <button type="button" class="fb-arrow gh-slider__btn gh-slider__btn--prev" data-scroll="prev" aria-label="Nhóm trước"><svg class="icon" aria-hidden="true"><use href="#i-chev-l"/></svg></button>
-      <ul class="eco">
-        <!-- Ba nhóm đang bán A/B/C, cùng thứ tự và tên với dải nhãn "Nhóm sản phẩm" dưới header. Storefront chỉ hiện các nhóm lấy từ API (ODR-PDP-A5):
-             bốn nhóm "Sắp ra mắt" không còn ở trang này. Bấm card → cuộn tới nhóm bên dưới. -->
+      <!-- Tiêu đề khu đổi từ "Nhóm sản phẩm" thành "Chương trình bán hàng 24/7" (chủ dự án 2026-10-19). Định dạng giống tiêu đề "Bốn hạng, quyền lợi tăng dần theo hành trình" (chữ serif đậm navy, căn giữa, không in hoa, không gạch vàng). Nhãn đầu thanh chip ("Nhóm sản phẩm:") và mục "Nhóm sản phẩm" ở mục lục trái chưa đổi. -->
+      <h2 class="section__title eco__title" id="ecoTitle">Chương trình bán hàng 24/7</h2>
+      <!-- Dòng mô tả dưới tiêu đề (chủ dự án 2026-10-19: thêm cho giống khối "Bốn hạng, quyền lợi tăng dần theo hành trình"); chữ nháp chờ chủ dự án duyệt. -->
+      <p class="tiers__lead eco__lead">Đặt Cháo Sâm Ginsengfood bất cứ lúc nào trong ngày. Giá chương trình 24/7 hiển thị ngay trên từng sản phẩm, thành viên có thêm quyền lợi theo hạng.</p>
 
-        <li><a class="eco__item" href="#col-seasonal" style="--eco-accent: #3E7149; --eco-surface: #F2F7EF; --pos: 84% 50%;">
-          <div class="eco__media"><img src="../public/banner_hero_4.webp" loading="lazy" decoding="async" width="2470" height="637" alt="Hộp Cháo Sâm Mùa Hạ và tô cháo trên bãi biển"></div>
-          <span class="eco__mode">Nhóm A · 4 sản phẩm</span>
-          <span class="eco__name">Cháo Sâm Theo Mùa</span>
-          <span class="eco__note">Diêm mạch &amp; Hạt sen (Xuân) · Cá Basa (Hạ) · Lươn đồng (Thu) · Thịt cừu &amp; Táo tàu (Đông)</span>
-        </a></li>
-        <li><a class="eco__item" href="#col-functional" style="--eco-accent: #C96B22; --eco-surface: #FFF4EA; --pos: 50% 50%;">
-          <div class="eco__media"><img src="../public/home-webp-v1/step5.webp" loading="lazy" decoding="async" width="500" height="500" alt="Tô Cháo Sâm với rau củ"></div>
-          <span class="eco__mode">Nhóm B · 6 sản phẩm</span>
-          <span class="eco__name">Cháo Sâm Chức Năng</span>
-          <span class="eco__note">Rau má &amp; Đậu xanh · DHA Não bộ · Cá cơm &amp; Vừng · Thịt heo &amp; Da heo · Hàu biển · Gà ác</span>
-        </a></li>
-        <li><a class="eco__item" href="#col-nourishing" style="--eco-accent: #315E82; --eco-surface: #EEF6FC; --pos: 47% 50%;">
-          <div class="eco__media"><img src="../public/banner_hero_3.webp" loading="lazy" decoding="async" width="2470" height="637" alt="Tô Cháo Sâm nóng bên củ sâm giữa rừng tuyết"></div>
-          <span class="eco__mode">Nhóm C · 9 sản phẩm</span>
-          <span class="eco__name">Cháo Sâm Bổ Dưỡng</span>
-          <span class="eco__note">Bào ngư · Đông trùng hạ thảo · Nấm đông cô · Cua biển · Cá ngừ · Tôm &amp; Rong biển · Thịt gà · Thịt heo · Thịt bò</span>
-        </a></li>
-      </ul>
-        <button type="button" class="fb-arrow gh-slider__btn gh-slider__btn--next" data-scroll="next" aria-label="Nhóm tiếp theo"><svg class="icon" aria-hidden="true"><use href="#i-chev-r"/></svg></button>
-      </div>
+      <!-- Trang chi tiết: thanh "Nhóm sản phẩm" luôn gắn dưới thanh Chủ đề ở đầu trang (#groupBarSlot, ngay trước <main>) nên khu này không chứa thanh như trang chủ (chủ dự án 2026-10-21). -->
+      <!-- Dải 7 card nhóm sản phẩm (kèm nút ‹ ›) đã bỏ khỏi khu này (chủ dự án 2026-10-19): các nhóm vẫn bấm được ở thanh chip phía trên và nằm ở các khu bên dưới. CSS .eco-slider / .eco* còn nguyên nhưng không còn dùng. -->
     </div>
   </section>
 
@@ -3304,16 +4583,16 @@ body.is-nav-open { overflow: hidden; }
 
       <div class="collections">
 
+        <!-- Dòng nhãn phía trên tên mỗi nhóm ("Nhóm A/B/C · …" kèm số sản phẩm và "Sắp ra mắt · …") đã bỏ (chủ dự án 2026-10-19); CSS .collection__order còn nguyên nhưng không còn dùng. -->
+
         <!-- Nhóm A · seasonal (A. Cháo Sâm Theo Mùa — 4 SKU) -->
         <section class="collection" id="col-seasonal" data-collection="seasonal" aria-labelledby="seasonalTitle">
           <div class="collection__head">
             <div>
-              <p class="collection__order"><span>Nhóm A<span class="collection__count"> · 4 sản phẩm</span></span></p>
               <h3 class="collection__title" id="seasonalTitle">Cháo Sâm Theo Mùa</h3>
-              <p class="collection__goal">Xuân · Hạ · Thu · Đông, ưu tiên mùa đang hiệu lực</p>
+              <p class="collection__goal">Xuân · Hạ · Thu · Đông</p>
             </div>
             <div class="collection__nav">
-              <a class="link-more" href="trang-chu-theo-doi-tuong/trang-chu.html#collections">Xem tất cả</a>
               <button type="button" class="iconbtn" data-scroll="prev" aria-label="Sản phẩm trước"><svg class="icon" aria-hidden="true"><use href="#i-chev-l"/></svg></button>
               <button type="button" class="iconbtn" data-scroll="next" aria-label="Sản phẩm tiếp theo"><svg class="icon" aria-hidden="true"><use href="#i-chev-r"/></svg></button>
             </div>
@@ -3321,7 +4600,7 @@ body.is-nav-open { overflow: hidden; }
           <ul class="cards">
             <li class="card" data-sku="A2/CS/BASA"><article>
               <div class="card__media">
-                <img src="../public/products-image/c%C3%A1%20basa.webp" loading="lazy" decoding="async" width="1448" height="1086" alt="Tô Cháo Sâm Mùa Hạ với cá basa">
+                <img src="../public/home-webp-v1/products-image/c%C3%A1%20basa.w1448.q90.webp" srcset="../public/home-webp-v1/products-image/c%C3%A1%20basa.w480.q90.webp 480w, ../public/home-webp-v1/products-image/c%C3%A1%20basa.w768.q90.webp 768w, ../public/home-webp-v1/products-image/c%C3%A1%20basa.w1152.q90.webp 1152w, ../public/home-webp-v1/products-image/c%C3%A1%20basa.w1448.q90.webp 1448w" sizes="(max-width: 767px) calc(76vw - 30px), (max-width: 1279px) calc((100vw - 96px) / 2 - 30px), (min-width: 1320px) 364.667px, calc((100vw - 136px) / 3 - 30px)" loading="lazy" decoding="async" width="1448" height="1086" alt="Tô Cháo Sâm Mùa Hạ với cá basa">
                 <span class="card__type">Mặn</span>
               </div>
               <h4 class="card__name"><a href="#">Cháo Sâm Mùa Hạ – Cá Basa</a></h4>
@@ -3352,7 +4631,7 @@ body.is-nav-open { overflow: hidden; }
 
             <li class="card" data-sku="A3/CS/LUON"><article>
               <div class="card__media">
-                <img src="../public/products-image/l%C6%B0%C6%A1n%20%C4%91%E1%BB%93ng(2).webp" loading="lazy" decoding="async" width="1448" height="1086" alt="Tô Cháo Sâm Mùa Thu với lươn đồng">
+                <img src="../public/home-webp-v1/products-image/l%C6%B0%C6%A1n%20%C4%91%E1%BB%93ng(2).w1448.q90.webp" srcset="../public/home-webp-v1/products-image/l%C6%B0%C6%A1n%20%C4%91%E1%BB%93ng(2).w480.q90.webp 480w, ../public/home-webp-v1/products-image/l%C6%B0%C6%A1n%20%C4%91%E1%BB%93ng(2).w768.q90.webp 768w, ../public/home-webp-v1/products-image/l%C6%B0%C6%A1n%20%C4%91%E1%BB%93ng(2).w1152.q90.webp 1152w, ../public/home-webp-v1/products-image/l%C6%B0%C6%A1n%20%C4%91%E1%BB%93ng(2).w1448.q90.webp 1448w" sizes="(max-width: 767px) calc(76vw - 30px), (max-width: 1279px) calc((100vw - 96px) / 2 - 30px), (min-width: 1320px) 364.667px, calc((100vw - 136px) / 3 - 30px)" loading="lazy" decoding="async" width="1448" height="1086" alt="Tô Cháo Sâm Mùa Thu với lươn đồng">
                 <span class="card__type">Mặn</span>
               </div>
               <h4 class="card__name"><a href="#">Cháo Sâm Mùa Thu – Lươn đồng</a></h4>
@@ -3383,7 +4662,7 @@ body.is-nav-open { overflow: hidden; }
 
             <li class="card" data-sku="A4/CS/CUU"><article>
               <div class="card__media">
-                <img src="../public/products-image/th%E1%BB%8Bt%20c%E1%BB%ABu%20v%C3%A0%20t%C3%A1o%20t%C3%A0o.webp" loading="lazy" decoding="async" width="1448" height="1086" alt="Tô Cháo Sâm Mùa Đông với thịt cừu và táo tàu">
+                <img src="../public/home-webp-v1/products-image/th%E1%BB%8Bt%20c%E1%BB%ABu%20v%C3%A0%20t%C3%A1o%20t%C3%A0o.w1448.q90.webp" srcset="../public/home-webp-v1/products-image/th%E1%BB%8Bt%20c%E1%BB%ABu%20v%C3%A0%20t%C3%A1o%20t%C3%A0o.w480.q90.webp 480w, ../public/home-webp-v1/products-image/th%E1%BB%8Bt%20c%E1%BB%ABu%20v%C3%A0%20t%C3%A1o%20t%C3%A0o.w768.q90.webp 768w, ../public/home-webp-v1/products-image/th%E1%BB%8Bt%20c%E1%BB%ABu%20v%C3%A0%20t%C3%A1o%20t%C3%A0o.w1152.q90.webp 1152w, ../public/home-webp-v1/products-image/th%E1%BB%8Bt%20c%E1%BB%ABu%20v%C3%A0%20t%C3%A1o%20t%C3%A0o.w1448.q90.webp 1448w" sizes="(max-width: 767px) calc(76vw - 30px), (max-width: 1279px) calc((100vw - 96px) / 2 - 30px), (min-width: 1320px) 364.667px, calc((100vw - 136px) / 3 - 30px)" loading="lazy" decoding="async" width="1448" height="1086" alt="Tô Cháo Sâm Mùa Đông với thịt cừu và táo tàu">
                 <span class="card__type">Mặn</span>
               </div>
               <h4 class="card__name"><a href="#">Cháo Sâm Mùa Đông – Thịt cừu &amp; Táo tàu</a></h4>
@@ -3414,7 +4693,7 @@ body.is-nav-open { overflow: hidden; }
 
             <li class="card" data-sku="A1/CS/DM/HS"><article>
               <div class="card__media">
-                <img src="../public/products-image/di%C3%AAm%20m%E1%BA%A1ch%20h%E1%BA%A1t%20sen.webp" loading="lazy" decoding="async" width="1448" height="1086" alt="Tô Cháo Sâm Mùa Xuân với diêm mạch và hạt sen">
+                <img src="../public/home-webp-v1/products-image/di%C3%AAm%20m%E1%BA%A1ch%20h%E1%BA%A1t%20sen.w1448.q90.webp" srcset="../public/home-webp-v1/products-image/di%C3%AAm%20m%E1%BA%A1ch%20h%E1%BA%A1t%20sen.w480.q90.webp 480w, ../public/home-webp-v1/products-image/di%C3%AAm%20m%E1%BA%A1ch%20h%E1%BA%A1t%20sen.w768.q90.webp 768w, ../public/home-webp-v1/products-image/di%C3%AAm%20m%E1%BA%A1ch%20h%E1%BA%A1t%20sen.w1152.q90.webp 1152w, ../public/home-webp-v1/products-image/di%C3%AAm%20m%E1%BA%A1ch%20h%E1%BA%A1t%20sen.w1448.q90.webp 1448w" sizes="(max-width: 767px) calc(76vw - 30px), (max-width: 1279px) calc((100vw - 96px) / 2 - 30px), (min-width: 1320px) 364.667px, calc((100vw - 136px) / 3 - 30px)" loading="lazy" decoding="async" width="1448" height="1086" alt="Tô Cháo Sâm Mùa Xuân với diêm mạch và hạt sen">
                 <span class="card__type card__type--chay">Thuần chay</span>
               </div>
               <h4 class="card__name"><a href="#">Cháo Sâm Mùa Xuân – Diêm mạch &amp; Hạt sen</a></h4>
@@ -3449,12 +4728,10 @@ body.is-nav-open { overflow: hidden; }
         <section class="collection" id="col-functional" data-collection="functional" aria-labelledby="functionalTitle">
           <div class="collection__head">
             <div>
-              <p class="collection__order"><span>Nhóm B<span class="collection__count"> · 6 sản phẩm</span></span></p>
               <h3 class="collection__title" id="functionalTitle">Cháo Sâm Chức Năng</h3>
-              <p class="collection__goal">Sáu công thức theo công dụng: thanh nhiệt, não bộ, xương khớp, collagen, sinh lực, phục hồi</p>
+              <p class="collection__goal">Thanh nhiệt, Colagen, DHA, canxi, kẽm…</p>
             </div>
             <div class="collection__nav">
-              <a class="link-more" href="trang-chu-theo-doi-tuong/trang-chu.html#collections">Xem tất cả</a>
               <button type="button" class="iconbtn" data-scroll="prev" aria-label="Sản phẩm trước"><svg class="icon" aria-hidden="true"><use href="#i-chev-l"/></svg></button>
               <button type="button" class="iconbtn" data-scroll="next" aria-label="Sản phẩm tiếp theo"><svg class="icon" aria-hidden="true"><use href="#i-chev-r"/></svg></button>
             </div>
@@ -3462,7 +4739,7 @@ body.is-nav-open { overflow: hidden; }
           <ul class="cards">
             <li class="card" data-sku="B1/CS/RM/ĐX"><article>
               <div class="card__media">
-                <img src="../public/products-image/rau%20m%C3%A1%20%C4%91%E1%BA%ADu%20xanh(2).webp" loading="lazy" decoding="async" width="1448" height="1086" alt="Tô Cháo Sâm với rau má và đậu xanh">
+                <img src="../public/home-webp-v1/products-image/rau%20m%C3%A1%20%C4%91%E1%BA%ADu%20xanh(2).w1448.q90.webp" srcset="../public/home-webp-v1/products-image/rau%20m%C3%A1%20%C4%91%E1%BA%ADu%20xanh(2).w480.q90.webp 480w, ../public/home-webp-v1/products-image/rau%20m%C3%A1%20%C4%91%E1%BA%ADu%20xanh(2).w768.q90.webp 768w, ../public/home-webp-v1/products-image/rau%20m%C3%A1%20%C4%91%E1%BA%ADu%20xanh(2).w1152.q90.webp 1152w, ../public/home-webp-v1/products-image/rau%20m%C3%A1%20%C4%91%E1%BA%ADu%20xanh(2).w1448.q90.webp 1448w" sizes="(max-width: 767px) calc(76vw - 30px), (max-width: 1279px) calc((100vw - 96px) / 2 - 30px), (min-width: 1320px) 364.667px, calc((100vw - 136px) / 3 - 30px)" loading="lazy" decoding="async" width="1448" height="1086" alt="Tô Cháo Sâm với rau má và đậu xanh">
                 <span class="card__type card__type--chay">Thuần chay</span>
               </div>
               <h4 class="card__name"><a href="#">Cháo Sâm – Rau má &amp; Đậu xanh</a></h4>
@@ -3493,7 +4770,7 @@ body.is-nav-open { overflow: hidden; }
 
             <li class="card" data-sku="B2/CS/DHA"><article>
               <div class="card__media">
-                <img src="../public/products-image/c%C3%A1%20h%E1%BB%93i(2).webp" loading="lazy" decoding="async" width="1448" height="1086" alt="Tô Cháo Sâm DHA Não bộ với cá hồi">
+                <img src="../public/home-webp-v1/products-image/c%C3%A1%20h%E1%BB%93i(2).w1448.q90.webp" srcset="../public/home-webp-v1/products-image/c%C3%A1%20h%E1%BB%93i(2).w480.q90.webp 480w, ../public/home-webp-v1/products-image/c%C3%A1%20h%E1%BB%93i(2).w768.q90.webp 768w, ../public/home-webp-v1/products-image/c%C3%A1%20h%E1%BB%93i(2).w1152.q90.webp 1152w, ../public/home-webp-v1/products-image/c%C3%A1%20h%E1%BB%93i(2).w1448.q90.webp 1448w" sizes="(max-width: 767px) calc(76vw - 30px), (max-width: 1279px) calc((100vw - 96px) / 2 - 30px), (min-width: 1320px) 364.667px, calc((100vw - 136px) / 3 - 30px)" loading="lazy" decoding="async" width="1448" height="1086" alt="Tô Cháo Sâm DHA Não bộ với cá hồi">
                 <span class="card__type">Mặn</span>
               </div>
               <h4 class="card__name"><a href="#">Cháo Sâm – DHA Não bộ</a></h4>
@@ -3524,7 +4801,7 @@ body.is-nav-open { overflow: hidden; }
 
             <li class="card" data-sku="B3/CS/CACOM"><article>
               <div class="card__media">
-                <img src="../public/products-image/c%C3%A1c%20c%C6%A1m%20v%C3%A0%20v%E1%BB%ABng.webp" loading="lazy" decoding="async" width="1448" height="1086" alt="Tô Cháo Sâm với cá cơm và vừng">
+                <img src="../public/home-webp-v1/products-image/c%C3%A1c%20c%C6%A1m%20v%C3%A0%20v%E1%BB%ABng.w1448.q90.webp" srcset="../public/home-webp-v1/products-image/c%C3%A1c%20c%C6%A1m%20v%C3%A0%20v%E1%BB%ABng.w480.q90.webp 480w, ../public/home-webp-v1/products-image/c%C3%A1c%20c%C6%A1m%20v%C3%A0%20v%E1%BB%ABng.w768.q90.webp 768w, ../public/home-webp-v1/products-image/c%C3%A1c%20c%C6%A1m%20v%C3%A0%20v%E1%BB%ABng.w1152.q90.webp 1152w, ../public/home-webp-v1/products-image/c%C3%A1c%20c%C6%A1m%20v%C3%A0%20v%E1%BB%ABng.w1448.q90.webp 1448w" sizes="(max-width: 767px) calc(76vw - 30px), (max-width: 1279px) calc((100vw - 96px) / 2 - 30px), (min-width: 1320px) 364.667px, calc((100vw - 136px) / 3 - 30px)" loading="lazy" decoding="async" width="1448" height="1086" alt="Tô Cháo Sâm với cá cơm và vừng">
                 <span class="card__type">Mặn</span>
               </div>
               <h4 class="card__name"><a href="#">Cháo Sâm – Cá cơm &amp; Vừng</a></h4>
@@ -3555,7 +4832,7 @@ body.is-nav-open { overflow: hidden; }
 
             <li class="card" data-sku="B4/CS/COLAGEN"><article>
               <div class="card__media">
-                <img src="../public/products-image/th%E1%BB%8Bt%20heo%20v%C3%A0%20da%20heo.webp" loading="lazy" decoding="async" width="1448" height="1086" alt="Tô Cháo Sâm với thịt heo và da heo">
+                <img src="../public/home-webp-v1/products-image/th%E1%BB%8Bt%20heo%20v%C3%A0%20da%20heo.w1448.q90.webp" srcset="../public/home-webp-v1/products-image/th%E1%BB%8Bt%20heo%20v%C3%A0%20da%20heo.w480.q90.webp 480w, ../public/home-webp-v1/products-image/th%E1%BB%8Bt%20heo%20v%C3%A0%20da%20heo.w768.q90.webp 768w, ../public/home-webp-v1/products-image/th%E1%BB%8Bt%20heo%20v%C3%A0%20da%20heo.w1152.q90.webp 1152w, ../public/home-webp-v1/products-image/th%E1%BB%8Bt%20heo%20v%C3%A0%20da%20heo.w1448.q90.webp 1448w" sizes="(max-width: 767px) calc(76vw - 30px), (max-width: 1279px) calc((100vw - 96px) / 2 - 30px), (min-width: 1320px) 364.667px, calc((100vw - 136px) / 3 - 30px)" loading="lazy" decoding="async" width="1448" height="1086" alt="Tô Cháo Sâm với thịt heo và da heo">
                 <span class="card__type">Mặn</span>
               </div>
               <h4 class="card__name"><a href="#">Cháo Sâm – Thịt heo &amp; Da heo</a></h4>
@@ -3586,7 +4863,7 @@ body.is-nav-open { overflow: hidden; }
 
             <li class="card" data-sku="B5/CS/SINHLUC"><article>
               <div class="card__media">
-                <img src="../public/products-image/h%C3%A0u%20bi%E1%BB%83n(2).webp" loading="lazy" decoding="async" width="1448" height="1086" alt="Tô Cháo Sâm với hàu biển">
+                <img src="../public/home-webp-v1/products-image/h%C3%A0u%20bi%E1%BB%83n(2).w1448.q90.webp" srcset="../public/home-webp-v1/products-image/h%C3%A0u%20bi%E1%BB%83n(2).w480.q90.webp 480w, ../public/home-webp-v1/products-image/h%C3%A0u%20bi%E1%BB%83n(2).w768.q90.webp 768w, ../public/home-webp-v1/products-image/h%C3%A0u%20bi%E1%BB%83n(2).w1152.q90.webp 1152w, ../public/home-webp-v1/products-image/h%C3%A0u%20bi%E1%BB%83n(2).w1448.q90.webp 1448w" sizes="(max-width: 767px) calc(76vw - 30px), (max-width: 1279px) calc((100vw - 96px) / 2 - 30px), (min-width: 1320px) 364.667px, calc((100vw - 136px) / 3 - 30px)" loading="lazy" decoding="async" width="1448" height="1086" alt="Tô Cháo Sâm với hàu biển">
                 <span class="card__type">Mặn</span>
               </div>
               <h4 class="card__name"><a href="#">Cháo Sâm – Hàu biển</a></h4>
@@ -3617,7 +4894,7 @@ body.is-nav-open { overflow: hidden; }
 
             <li class="card" data-sku="B6/CS/GAAC"><article>
               <div class="card__media">
-                <img src="../public/products-image/g%C3%A0%20%C3%A1c(2).webp" loading="lazy" decoding="async" width="1448" height="1086" alt="Tô Cháo Sâm với gà ác">
+                <img src="../public/home-webp-v1/products-image/g%C3%A0%20%C3%A1c(2).w1448.q90.webp" srcset="../public/home-webp-v1/products-image/g%C3%A0%20%C3%A1c(2).w480.q90.webp 480w, ../public/home-webp-v1/products-image/g%C3%A0%20%C3%A1c(2).w768.q90.webp 768w, ../public/home-webp-v1/products-image/g%C3%A0%20%C3%A1c(2).w1152.q90.webp 1152w, ../public/home-webp-v1/products-image/g%C3%A0%20%C3%A1c(2).w1448.q90.webp 1448w" sizes="(max-width: 767px) calc(76vw - 30px), (max-width: 1279px) calc((100vw - 96px) / 2 - 30px), (min-width: 1320px) 364.667px, calc((100vw - 136px) / 3 - 30px)" loading="lazy" decoding="async" width="1448" height="1086" alt="Tô Cháo Sâm với gà ác">
                 <span class="card__type">Mặn</span>
               </div>
               <h4 class="card__name"><a href="#">Cháo Sâm – Gà ác</a></h4>
@@ -3652,12 +4929,10 @@ body.is-nav-open { overflow: hidden; }
         <section class="collection" id="col-nourishing" data-collection="nourishing" aria-labelledby="nourishTitle">
           <div class="collection__head">
             <div>
-              <p class="collection__order"><span>Nhóm C<span class="collection__count"> · 9 sản phẩm</span></span></p>
               <h3 class="collection__title" id="nourishTitle">Cháo Sâm Bổ Dưỡng</h3>
-              <p class="collection__goal">Chín công thức bồi bổ từ hải sản, nấm dược liệu và thịt</p>
+              <p class="collection__goal">Công thức bổ dưỡng tinh tuý theo ẩm thực phương Đông</p>
             </div>
             <div class="collection__nav">
-              <a class="link-more" href="trang-chu-theo-doi-tuong/trang-chu.html#collections">Xem tất cả</a>
               <button type="button" class="iconbtn" data-scroll="prev" aria-label="Sản phẩm trước"><svg class="icon" aria-hidden="true"><use href="#i-chev-l"/></svg></button>
               <button type="button" class="iconbtn" data-scroll="next" aria-label="Sản phẩm tiếp theo"><svg class="icon" aria-hidden="true"><use href="#i-chev-r"/></svg></button>
             </div>
@@ -3665,7 +4940,7 @@ body.is-nav-open { overflow: hidden; }
           <ul class="cards">
             <li class="card" data-sku="C1/CS/BAONGU"><article>
               <div class="card__media">
-                <img src="../public/products-image/b%C3%A0o%20ng%C6%B0.webp" loading="lazy" decoding="async" width="1448" height="1086" alt="Tô Cháo Sâm với bào ngư">
+                <img src="../public/home-webp-v1/products-image/b%C3%A0o%20ng%C6%B0.w1448.q90.webp" srcset="../public/home-webp-v1/products-image/b%C3%A0o%20ng%C6%B0.w480.q90.webp 480w, ../public/home-webp-v1/products-image/b%C3%A0o%20ng%C6%B0.w768.q90.webp 768w, ../public/home-webp-v1/products-image/b%C3%A0o%20ng%C6%B0.w1152.q90.webp 1152w, ../public/home-webp-v1/products-image/b%C3%A0o%20ng%C6%B0.w1448.q90.webp 1448w" sizes="(max-width: 767px) calc(76vw - 30px), (max-width: 1279px) calc((100vw - 96px) / 2 - 30px), (min-width: 1320px) 364.667px, calc((100vw - 136px) / 3 - 30px)" loading="lazy" decoding="async" width="1448" height="1086" alt="Tô Cháo Sâm với bào ngư">
                 <span class="card__type">Mặn</span>
               </div>
               <h4 class="card__name"><a href="#">Cháo Sâm – Bào ngư</a></h4>
@@ -3696,7 +4971,7 @@ body.is-nav-open { overflow: hidden; }
 
             <li class="card" data-sku="C2/CS/DONGTRUNG"><article>
               <div class="card__media">
-                <img src="../public/products-image/%C4%91%C3%B4ng%20tr%C3%B9ng%20h%E1%BA%A1%20th%E1%BA%A3o(2).webp" loading="lazy" decoding="async" width="1448" height="1086" alt="Tô Cháo Sâm với đông trùng hạ thảo">
+                <img src="../public/home-webp-v1/products-image/%C4%91%C3%B4ng%20tr%C3%B9ng%20h%E1%BA%A1%20th%E1%BA%A3o(2).w1448.q90.webp" srcset="../public/home-webp-v1/products-image/%C4%91%C3%B4ng%20tr%C3%B9ng%20h%E1%BA%A1%20th%E1%BA%A3o(2).w480.q90.webp 480w, ../public/home-webp-v1/products-image/%C4%91%C3%B4ng%20tr%C3%B9ng%20h%E1%BA%A1%20th%E1%BA%A3o(2).w768.q90.webp 768w, ../public/home-webp-v1/products-image/%C4%91%C3%B4ng%20tr%C3%B9ng%20h%E1%BA%A1%20th%E1%BA%A3o(2).w1152.q90.webp 1152w, ../public/home-webp-v1/products-image/%C4%91%C3%B4ng%20tr%C3%B9ng%20h%E1%BA%A1%20th%E1%BA%A3o(2).w1448.q90.webp 1448w" sizes="(max-width: 767px) calc(76vw - 30px), (max-width: 1279px) calc((100vw - 96px) / 2 - 30px), (min-width: 1320px) 364.667px, calc((100vw - 136px) / 3 - 30px)" loading="lazy" decoding="async" width="1448" height="1086" alt="Tô Cháo Sâm với đông trùng hạ thảo">
                 <span class="card__type card__type--chay">Thuần chay</span>
               </div>
               <h4 class="card__name"><a href="#">Cháo Sâm – Đông trùng hạ thảo</a></h4>
@@ -3727,7 +5002,7 @@ body.is-nav-open { overflow: hidden; }
 
             <li class="card" data-sku="C3/CS/NAMDONGCO"><article>
               <div class="card__media">
-                <img src="../public/products-image/n%E1%BA%A5m%20%C4%91%C3%B4ng%20c%C3%B4(2).webp" loading="lazy" decoding="async" width="1448" height="1086" alt="Tô Cháo Sâm với nấm đông cô">
+                <img src="../public/home-webp-v1/products-image/n%E1%BA%A5m%20%C4%91%C3%B4ng%20c%C3%B4(2).w1448.q90.webp" srcset="../public/home-webp-v1/products-image/n%E1%BA%A5m%20%C4%91%C3%B4ng%20c%C3%B4(2).w480.q90.webp 480w, ../public/home-webp-v1/products-image/n%E1%BA%A5m%20%C4%91%C3%B4ng%20c%C3%B4(2).w768.q90.webp 768w, ../public/home-webp-v1/products-image/n%E1%BA%A5m%20%C4%91%C3%B4ng%20c%C3%B4(2).w1152.q90.webp 1152w, ../public/home-webp-v1/products-image/n%E1%BA%A5m%20%C4%91%C3%B4ng%20c%C3%B4(2).w1448.q90.webp 1448w" sizes="(max-width: 767px) calc(76vw - 30px), (max-width: 1279px) calc((100vw - 96px) / 2 - 30px), (min-width: 1320px) 364.667px, calc((100vw - 136px) / 3 - 30px)" loading="lazy" decoding="async" width="1448" height="1086" alt="Tô Cháo Sâm với nấm đông cô">
                 <span class="card__type card__type--chay">Thuần chay</span>
               </div>
               <h4 class="card__name"><a href="#">Cháo Sâm – Nấm đông cô</a></h4>
@@ -3758,7 +5033,7 @@ body.is-nav-open { overflow: hidden; }
 
             <li class="card" data-sku="C4/CS/CUABIEN"><article>
               <div class="card__media">
-                <img src="../public/products-image/cua%20bi%E1%BB%83n(2).webp" loading="lazy" decoding="async" width="1448" height="1086" alt="Tô Cháo Sâm với cua biển">
+                <img src="../public/home-webp-v1/products-image/cua%20bi%E1%BB%83n(2).w1448.q90.webp" srcset="../public/home-webp-v1/products-image/cua%20bi%E1%BB%83n(2).w480.q90.webp 480w, ../public/home-webp-v1/products-image/cua%20bi%E1%BB%83n(2).w768.q90.webp 768w, ../public/home-webp-v1/products-image/cua%20bi%E1%BB%83n(2).w1152.q90.webp 1152w, ../public/home-webp-v1/products-image/cua%20bi%E1%BB%83n(2).w1448.q90.webp 1448w" sizes="(max-width: 767px) calc(76vw - 30px), (max-width: 1279px) calc((100vw - 96px) / 2 - 30px), (min-width: 1320px) 364.667px, calc((100vw - 136px) / 3 - 30px)" loading="lazy" decoding="async" width="1448" height="1086" alt="Tô Cháo Sâm với cua biển">
                 <span class="card__type">Mặn</span>
               </div>
               <h4 class="card__name"><a href="#">Cháo Sâm – Cua biển</a></h4>
@@ -3789,7 +5064,7 @@ body.is-nav-open { overflow: hidden; }
 
             <li class="card" data-sku="C5/CS/CANGU"><article>
               <div class="card__media">
-                <img src="../public/products-image/c%C3%A1%20ng%E1%BB%AB(2).webp" loading="lazy" decoding="async" width="1448" height="1086" alt="Tô Cháo Sâm với cá ngừ">
+                <img src="../public/home-webp-v1/products-image/c%C3%A1%20ng%E1%BB%AB(2).w1448.q90.webp" srcset="../public/home-webp-v1/products-image/c%C3%A1%20ng%E1%BB%AB(2).w480.q90.webp 480w, ../public/home-webp-v1/products-image/c%C3%A1%20ng%E1%BB%AB(2).w768.q90.webp 768w, ../public/home-webp-v1/products-image/c%C3%A1%20ng%E1%BB%AB(2).w1152.q90.webp 1152w, ../public/home-webp-v1/products-image/c%C3%A1%20ng%E1%BB%AB(2).w1448.q90.webp 1448w" sizes="(max-width: 767px) calc(76vw - 30px), (max-width: 1279px) calc((100vw - 96px) / 2 - 30px), (min-width: 1320px) 364.667px, calc((100vw - 136px) / 3 - 30px)" loading="lazy" decoding="async" width="1448" height="1086" alt="Tô Cháo Sâm với cá ngừ">
                 <span class="card__type">Mặn</span>
               </div>
               <h4 class="card__name"><a href="#">Cháo Sâm – Cá ngừ</a></h4>
@@ -3820,7 +5095,7 @@ body.is-nav-open { overflow: hidden; }
 
             <li class="card" data-sku="C6/CS/TOM/RONGBIEN"><article>
               <div class="card__media">
-                <img src="../public/products-image/t%C3%B4m%20v%C3%A0%20r%C3%B4ng%20bi%E1%BB%83n.webp" loading="lazy" decoding="async" width="1448" height="1086" alt="Tô Cháo Sâm với tôm và rong biển">
+                <img src="../public/home-webp-v1/products-image/t%C3%B4m%20v%C3%A0%20r%C3%B4ng%20bi%E1%BB%83n.w1448.q90.webp" srcset="../public/home-webp-v1/products-image/t%C3%B4m%20v%C3%A0%20r%C3%B4ng%20bi%E1%BB%83n.w480.q90.webp 480w, ../public/home-webp-v1/products-image/t%C3%B4m%20v%C3%A0%20r%C3%B4ng%20bi%E1%BB%83n.w768.q90.webp 768w, ../public/home-webp-v1/products-image/t%C3%B4m%20v%C3%A0%20r%C3%B4ng%20bi%E1%BB%83n.w1152.q90.webp 1152w, ../public/home-webp-v1/products-image/t%C3%B4m%20v%C3%A0%20r%C3%B4ng%20bi%E1%BB%83n.w1448.q90.webp 1448w" sizes="(max-width: 767px) calc(76vw - 30px), (max-width: 1279px) calc((100vw - 96px) / 2 - 30px), (min-width: 1320px) 364.667px, calc((100vw - 136px) / 3 - 30px)" loading="lazy" decoding="async" width="1448" height="1086" alt="Tô Cháo Sâm với tôm và rong biển">
                 <span class="card__type">Mặn</span>
               </div>
               <h4 class="card__name"><a href="#">Cháo Sâm – Tôm &amp; Rong biển</a></h4>
@@ -3851,7 +5126,7 @@ body.is-nav-open { overflow: hidden; }
 
             <li class="card" data-sku="C7/CS/THITGA"><article>
               <div class="card__media">
-                <img src="../public/products-image/th%E1%BB%8Bt%20g%C3%A0(3).webp" loading="lazy" decoding="async" width="1448" height="1086" alt="Tô Cháo Sâm với thịt gà">
+                <img src="../public/home-webp-v1/products-image/th%E1%BB%8Bt%20g%C3%A0(3).w1448.q90.webp" srcset="../public/home-webp-v1/products-image/th%E1%BB%8Bt%20g%C3%A0(3).w480.q90.webp 480w, ../public/home-webp-v1/products-image/th%E1%BB%8Bt%20g%C3%A0(3).w768.q90.webp 768w, ../public/home-webp-v1/products-image/th%E1%BB%8Bt%20g%C3%A0(3).w1152.q90.webp 1152w, ../public/home-webp-v1/products-image/th%E1%BB%8Bt%20g%C3%A0(3).w1448.q90.webp 1448w" sizes="(max-width: 767px) calc(76vw - 30px), (max-width: 1279px) calc((100vw - 96px) / 2 - 30px), (min-width: 1320px) 364.667px, calc((100vw - 136px) / 3 - 30px)" loading="lazy" decoding="async" width="1448" height="1086" alt="Tô Cháo Sâm với thịt gà">
                 <span class="card__type">Mặn</span>
               </div>
               <h4 class="card__name"><a href="#">Cháo Sâm – Thịt gà</a></h4>
@@ -3882,7 +5157,7 @@ body.is-nav-open { overflow: hidden; }
 
             <li class="card" data-sku="C8/CS/THITHEO"><article>
               <div class="card__media">
-                <img src="../public/products-image/th%E1%BB%8Bt%20heo(3).webp" loading="lazy" decoding="async" width="1448" height="1086" alt="Tô Cháo Sâm với thịt heo">
+                <img src="../public/home-webp-v1/products-image/th%E1%BB%8Bt%20heo(3).w1448.q90.webp" srcset="../public/home-webp-v1/products-image/th%E1%BB%8Bt%20heo(3).w480.q90.webp 480w, ../public/home-webp-v1/products-image/th%E1%BB%8Bt%20heo(3).w768.q90.webp 768w, ../public/home-webp-v1/products-image/th%E1%BB%8Bt%20heo(3).w1152.q90.webp 1152w, ../public/home-webp-v1/products-image/th%E1%BB%8Bt%20heo(3).w1448.q90.webp 1448w" sizes="(max-width: 767px) calc(76vw - 30px), (max-width: 1279px) calc((100vw - 96px) / 2 - 30px), (min-width: 1320px) 364.667px, calc((100vw - 136px) / 3 - 30px)" loading="lazy" decoding="async" width="1448" height="1086" alt="Tô Cháo Sâm với thịt heo">
                 <span class="card__type">Mặn</span>
               </div>
               <h4 class="card__name"><a href="#">Cháo Sâm – Thịt heo</a></h4>
@@ -3913,7 +5188,7 @@ body.is-nav-open { overflow: hidden; }
 
             <li class="card" data-sku="C9/CS/THITBO"><article>
               <div class="card__media">
-                <img src="../public/products-image/th%E1%BB%8Bt%20b%C3%B2(2).webp" loading="lazy" decoding="async" width="1448" height="1086" alt="Tô Cháo Sâm với thịt bò">
+                <img src="../public/home-webp-v1/products-image/th%E1%BB%8Bt%20b%C3%B2(2).w1448.q90.webp" srcset="../public/home-webp-v1/products-image/th%E1%BB%8Bt%20b%C3%B2(2).w480.q90.webp 480w, ../public/home-webp-v1/products-image/th%E1%BB%8Bt%20b%C3%B2(2).w768.q90.webp 768w, ../public/home-webp-v1/products-image/th%E1%BB%8Bt%20b%C3%B2(2).w1152.q90.webp 1152w, ../public/home-webp-v1/products-image/th%E1%BB%8Bt%20b%C3%B2(2).w1448.q90.webp 1448w" sizes="(max-width: 767px) calc(76vw - 30px), (max-width: 1279px) calc((100vw - 96px) / 2 - 30px), (min-width: 1320px) 364.667px, calc((100vw - 136px) / 3 - 30px)" loading="lazy" decoding="async" width="1448" height="1086" alt="Tô Cháo Sâm với thịt bò">
                 <span class="card__type">Mặn</span>
               </div>
               <h4 class="card__name"><a href="#">Cháo Sâm – Thịt bò</a></h4>
@@ -3942,6 +5217,72 @@ body.is-nav-open { overflow: hidden; }
               </div>
             </article></li>
           </ul>
+        </section>
+
+        <!-- ===== Bốn nhóm sắp ra mắt, đem sang từ nhom-san-pham.html (quyết định chủ dự án) =====
+             Nội dung, ảnh và trạng thái (preview + khối pháp lý / khối rỗng) giữ như nhom-san-pham.html; ảnh dùng bản webp sẵn có của trang chủ.
+             Link "Tìm hiểu thêm", "Báo tôi khi có hàng"… là anchor mock; nút data-goto cuộn về nhóm đang bán. -->
+
+        <!-- Chủ dự án 2026-10-19: mỗi nhóm sắp ra mắt chỉ còn đầu nhóm (tên, mô tả, "Chưa mở bán") và thẻ "SẮP RA MẮT"; đã bỏ thẻ xem trước, khối chân preview và khối rỗng. CSS .preview-*, .previewfoot*, .empty* còn nguyên nhưng không còn dùng. Thuốc Y học cổ truyền giữ câu pháp lý riêng trong thẻ. -->
+
+        <!-- Thực phẩm chức năng — chỉ còn thẻ SẮP RA MẮT -->
+        <section class="collection" id="col-functional-food" data-collection="extended" aria-labelledby="functionalFoodTitle" hidden>
+          <div class="collection__head">
+            <div>
+              <h3 class="collection__title" id="functionalFoodTitle">Thực phẩm chức năng</h3>
+              <p class="collection__goal">Các sản phẩm bổ sung dinh dưỡng dạng viên và dạng bột, làm từ cùng nguồn sâm với Cháo Sâm.</p>
+            </div>
+            <p class="collection__note">Chưa mở bán</p>
+          </div>
+          <div class="legalgate">
+            <span class="legalgate__badge">SẮP RA MẮT</span>
+            <span class="legalgate__text">Nhóm này mới ở mức giới thiệu, chúng tôi chưa mở bán nên chưa có giá.</span>
+          </div>
+        </section>
+
+        <!-- Mỹ phẩm — chỉ còn thẻ SẮP RA MẮT -->
+        <section class="collection" id="col-cosmetics" data-collection="extended" aria-labelledby="cosmeticsTitle" hidden>
+          <div class="collection__head">
+            <div>
+              <h3 class="collection__title" id="cosmeticsTitle">Mỹ phẩm</h3>
+              <p class="collection__goal">Dòng chăm sóc da từ chiết xuất Sâm vùng cát biển.</p>
+            </div>
+            <p class="collection__note">Chưa mở bán</p>
+          </div>
+          <div class="legalgate">
+            <span class="legalgate__badge">SẮP RA MẮT</span>
+            <span class="legalgate__text">Nhóm này mới ở mức giới thiệu, chúng tôi chưa mở bán nên chưa có giá.</span>
+          </div>
+        </section>
+
+        <!-- Thuốc Y học cổ truyền — chỉ còn thẻ SẮP RA MẮT (câu pháp lý riêng) -->
+        <section class="collection" id="col-medicine" data-collection="extended" aria-labelledby="medicineTitle" hidden>
+          <div class="collection__head">
+            <div>
+              <h3 class="collection__title" id="medicineTitle">Thuốc Y học cổ truyền</h3>
+              <p class="collection__goal">Các bài thuốc từ dược liệu theo Y học cổ truyền. Chúng tôi chỉ nói những gì đã được cơ quan chức năng cho phép.</p>
+            </div>
+            <p class="collection__note">Chưa mở bán</p>
+          </div>
+          <div class="legalgate">
+            <span class="legalgate__badge">SẮP RA MẮT</span>
+            <span class="legalgate__text">Thuốc cần được cơ quan chức năng duyệt trước khi bán, nên hiện chưa có giá.</span>
+          </div>
+        </section>
+
+        <!-- Thuốc dược liệu thế hệ mới — chỉ còn thẻ SẮP RA MẮT -->
+        <section class="collection" id="col-newgen" data-collection="extended" aria-labelledby="newgenTitle" hidden>
+          <div class="collection__head">
+            <div>
+              <h3 class="collection__title" id="newgenTitle">Thuốc dược liệu thế hệ mới</h3>
+              <p class="collection__goal">Dược liệu sấy thăng hoa, giữ được hoạt chất và đo được hàm lượng trong từng mẻ.</p>
+            </div>
+            <p class="collection__note">Chưa mở bán</p>
+          </div>
+          <div class="legalgate">
+            <span class="legalgate__badge">SẮP RA MẮT</span>
+            <span class="legalgate__text">Nhóm này mới ở mức giới thiệu, chúng tôi chưa mở bán nên chưa có giá.</span>
+          </div>
         </section>
 
       </div>
@@ -4505,11 +5846,11 @@ body.is-nav-open { overflow: hidden; }
   var ghSlider = document.querySelector('.gh-slider');
   if (ghSlider) setupSlider(ghSlider.querySelector('.gh-cards'), ghSlider.querySelector('[data-scroll="prev"]'), ghSlider.querySelector('[data-scroll="next"]'), '.gh-card', 24);
 
-  /* Hai dải dính dưới header, đồng bộ với trang chủ và storefront (14/10/2026): thanh "Chủ đề" (.catbar) rồi thanh "Nhóm sản phẩm" (.groupbar, luôn ở dạng đã gắn).
+  /* Hai dải dính dưới header, đồng bộ với trang chủ và storefront (14/10/2026): thanh "Chủ đề" (.catbar) rồi thanh "Nhóm sản phẩm" (.groupbar, luôn ở dạng đã gắn; mã riêng của thanh Nhóm nằm ở script "Thanh Nhóm sản phẩm" cuối trang, lấy từ trang chủ).
      Việc cuộn tới nhóm do chính thẻ a lo (html có scroll-behavior: smooth, .collection có scroll-margin-top = header + hai dải + 16px). JS chỉ:
      - điện thoại (≤767px): bấm nút mở/đóng bảng nhãn; chọn nhãn, bấm ra ngoài dải, Esc hoặc nới màn qua 768px thì đóng;
-     - đo chiều cao thật của từng dải ghi vào --catbar-h và --groupbar-h (nhãn xuống dòng theo bề rộng màn nên dải cao 1–3 dòng; mọi scroll-margin-top đều dùng hai biến này);
-     - tô đậm badge của nhóm đang xem (khu nào nằm trong dải 30%–40% khung nhìn), điện thoại thì tên nhóm hiện trên nút mở bảng. */
+     - đo chiều cao thật của thanh Chủ đề ghi vào --catbar-h (nhãn xuống dòng theo bề rộng màn nên dải cao 1–3 dòng; --groupbar-h do script thanh Nhóm ghi);
+     (Tô badge theo vị trí cuộn đã bỏ: badge nay là bộ lọc nhóm như trang chủ.) */
   (function () {
     var root = document.documentElement;
     function wire(bar, toggleId, navId, cssVar, labels) {
@@ -4534,21 +5875,6 @@ body.is-nav-open { overflow: hidden; }
       return bar;
     }
     wire(document.querySelector('.catbar'), 'catToggle', 'catNav', '--catbar-h', null);
-    var groupBar = wire(document.getElementById('groupBar'), 'groupToggle', 'groupNav', '--groupbar-h', ['Mở bảng nhóm sản phẩm', 'Đóng bảng nhóm sản phẩm']);
-    var groupNav = document.getElementById('groupNav'), currentText = document.getElementById('groupCurrent');
-    if (groupBar && groupNav && 'IntersectionObserver' in window) {
-      var links = Array.prototype.slice.call(groupNav.querySelectorAll('a[href^="#col-"]'));
-      var byId = {};
-      links.forEach(function (a) { byId[a.getAttribute('href').slice(1)] = a; });
-      var io = new IntersectionObserver(function (records) {
-        var seen = records.filter(function (r) { return r.isIntersecting; }).sort(function (a, b) { return a.boundingClientRect.top - b.boundingClientRect.top; });
-        if (!seen.length) return;
-        var id = seen[0].target.id;
-        links.forEach(function (a) { if (a === byId[id]) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current'); });
-        if (currentText && byId[id]) currentText.textContent = byId[id].textContent;
-      }, { rootMargin: '-30% 0px -60% 0px' });
-      Object.keys(byId).forEach(function (id) { var el = document.getElementById(id); if (el) io.observe(el); });
-    }
   })();
   /* Quyền lợi thành viên: ở ≤767px danh sách hạng thành dải trượt (không nút), desktop là lưới nên setupSlider tự vô hiệu.
      Đường ray bậc thang chạy một lần khi khối vào khung nhìn. */
@@ -4586,6 +5912,244 @@ body.is-nav-open { overflow: hidden; }
   });
   document.addEventListener('click', function (e) {
     if (!supportMenu.hidden && !e.target.closest('#support')) { supportMenu.hidden = true; supportBtn.setAttribute('aria-expanded', 'false'); }
+  });
+})();
+</script>
+<script>
+/* Thanh "Nhóm sản phẩm" của trang chi tiết (chép từ script cùng tên ở trang-chu.html, 2026-10-21; đồng bộ ProductDetailGroupStickyBar của storefront). Chỉ để giữ giao diện nhìn đúng, không có logic nghiệp vụ:
+   - thanh LUÔN ở dạng đã gắn dưới thanh Chủ đề (data-docked="true" ngay từ HTML; mã gắn/nhả theo cuộn của trang chủ đã bỏ vì không có khu 24/7 để gắn/nhả);
+   - badge là bộ lọc: badge đang chọn sáng lên (aria-current) và bên dưới chỉ còn các nhóm của badge đó (xem khối "Lọc nhóm sản phẩm"); điện thoại thì tên đang chọn hiện trên nút mở bảng;
+   - điện thoại (≤767px): bấm nút mở/đóng bảng nhóm; chọn nhóm, bấm ra ngoài hoặc Esc thì đóng. */
+(function () {
+  'use strict';
+  var slot = document.getElementById('groupBarSlot'), bar = document.getElementById('groupBar');
+  if (!slot || !bar) return;
+  var root = document.documentElement;
+  var nav = document.getElementById('groupNav'), toggle = document.getElementById('groupToggle'), currentText = document.getElementById('groupCurrent');
+  var chips = Array.prototype.slice.call(nav.querySelectorAll(':scope > a, :scope > .groupbar__item > a'));   /* badge (không tính mục con) */
+  var subLinks = Array.prototype.slice.call(nav.querySelectorAll('.groupbar__sub a[href^="#col-"]'));   /* mục con (hàng con ngang dưới hàng badge chính) */
+  var items = Array.prototype.slice.call(nav.querySelectorAll('.groupbar__item'));   /* badge có hàng con */
+  var docked = false, subExtent = 0, slotBase = 0;   /* subExtent: phần thanh dưới nhô ra khỏi đáy thanh trên; slotBase: cao thanh trên lúc bắt đầu gắn */
+  function setDocked(on) {
+    if (on) { slotBase = bar.offsetHeight; slot.style.height = (slotBase + slotPad()) + 'px'; } else slot.style.height = '';   /* chỗ giữ = cao thanh trên lúc còn tại chỗ + phần giữ cho thanh dưới */
+    docked = on;
+    bar.setAttribute('data-docked', on ? 'true' : 'false');
+    placeSub();   /* thanh gắn rộng hơn thanh tại chỗ nên toạ độ của badge cha so với thanh đổi */
+    measure();
+  }
+  /* Cả cụm = thanh trên + phần thanh dưới nhô ra khỏi đáy nó (subExtent): đó là chiều cao mà scroll-margin của các nhóm và nhịp gắn/nhả phải chừa. */
+  function measure() { root.style.setProperty('--groupbar-h', Math.ceil(bar.getBoundingClientRect().height + subExtent) + 'px'); }
+  function isPhone() { return window.matchMedia('(max-width: 767px)').matches; }
+  function slotPad() { return parseFloat(slot.style.paddingBottom) || 0; }
+  /* Thanh dưới = mục con của badge đang chọn, treo ngay dưới đáy thanh trên (CSS .groupbar__sub từ 768px). JS lo những việc CSS không biết:
+     đặt left theo badge cha (lùi 20px để vành ôm quanh badge cha không dính góc lõm đầu thanh; kẹp trong lòng thanh trên để hai góc lõm không chạm góc bo của thanh), giữ chỗ cho nó bằng padding-bottom của chỗ gốc
+     (+ 8px khe với nhóm bên dưới), ghi phần nhô ra khỏi đáy thanh trên (subExtent) để tính chiều cao cả cụm, và vẽ hình liền khối của thanh dưới (shapeSub).
+     Điện thoại: mục con nằm trong bảng nhóm nên không cần gì. */
+  function placeSub() {
+    var open = null, i;
+    for (i = 0; i < items.length; i++) if (items[i].classList.contains('is-open') && !items[i].classList.contains('is-collapsed')) { open = items[i]; break; }   /* badge đang thu gọn (mũi tên) thì không có thanh dưới */
+    var ul = open && !isPhone() ? open.querySelector('.groupbar__sub') : null, pad = 0;
+    items.forEach(function (it) { var u = it.querySelector('.groupbar__sub'); if (u && u !== ul) { u.style.left = ''; u.style.maxWidth = ''; u.style.removeProperty('--shape'); } });
+    if (ul) {
+      var chip = open.firstElementChild, inner = bar.querySelector('.groupbar__inner'), cs = getComputedStyle(inner);
+      /* Đo bằng toạ độ bố cục (offsetLeft/offsetTop so với mép trong của thanh, cũng là gốc của left), KHÔNG dùng getBoundingClientRect: badge vừa chọn đang "nảy" (scale .93 → 1.06)
+         nên khung vẽ của nó lệch tới ~6px trong 280ms đầu, thanh dưới sẽ đặt sai chỗ. */
+      var minX = inner.offsetLeft + (parseFloat(cs.paddingLeft) || 0) + 20, maxX = inner.offsetLeft + inner.offsetWidth - (parseFloat(cs.paddingRight) || 0) - 20;   /* 16px góc lõm + 4px */
+      ul.style.maxWidth = Math.max(0, maxX - minX) + 'px';
+      var x = Math.max(minX, Math.min(chip.offsetLeft - 20, maxX - ul.offsetWidth));
+      ul.style.left = x + 'px';
+      shapeSub(ul, open, chip, x, bar.clientHeight - (chip.offsetTop + chip.offsetHeight));
+      subExtent = Math.ceil(ul.offsetHeight) - 1; pad = subExtent + 8;
+    } else subExtent = 0;
+    slot.style.paddingBottom = pad ? pad + 'px' : '';
+    if (docked) slot.style.height = (slotBase + pad) + 'px';
+  }
+  /* Hình liền khối của thanh dưới là MỘT ảnh SVG (nền của ul::before): thân thanh (hai góc lõm 16px vào đáy thanh trên, đáy bo tròn) + vành ÔM QUANH badge cha
+     (cách badge 3px, đỉnh bo tròn đồng tâm với hai đầu badge, hai chân nối xuống thanh dưới bằng góc lõm 5px). Vẽ bằng SVG vì viền 1px phải chạy liên tục theo đường cong và phần nền nhạt phải liền khối với thân thanh.
+     Toạ độ trong hệ của ul (gốc = góc trên trái của ul; y = 0 là vạch viền dưới của thanh trên, y âm là phía trên). Màu lấy từ --chip-bg / --chip-border của badge cha.
+     Vành ôm chỉ vẽ khi badge cha nằm ở hàng cuối của thanh trên (khổ hẹp dãy badge xuống dòng thì badge cha ở hàng trên, vành ôm sẽ đè lên badge khác) và nằm trọn trong thân thanh dưới. */
+  function shapeSub(ul, item, chip, x, gapB) {
+    var cs = getComputedStyle(item), bg = cs.getPropertyValue('--chip-bg').trim(), line = cs.getPropertyValue('--chip-border').trim();
+    var W = ul.offsetWidth, H = ul.offsetHeight, fr = 16, rb = Math.min(24, H / 2), g = 3, ra = 5;
+    var cl = chip.offsetLeft - x, cw = chip.offsetWidth, chh = chip.offsetHeight;
+    var wrap = gapB < 12 && cl - g - ra >= 4 && cl + cw + g + ra <= W - 4;
+    bar.setAttribute('data-wrap', wrap ? 'on' : 'off');
+    var al = cl - g, ar = cl + cw + g, at = -(gapB + chh + g), R = Math.min(chh / 2 + g, (ar - al) / 2);
+    var top = wrap ? at - 2 : -2, oy = -top;
+    function p(a, b) { return (fr + a) + ',' + (oy + b); }
+    var tab = 'M ' + p(-fr, 0) + ' A ' + fr + ' ' + fr + ' 0 0 1 ' + p(0, fr) + ' L ' + p(0, H - rb) + ' A ' + rb + ' ' + rb + ' 0 0 0 ' + p(rb, H) + ' L ' + p(W - rb, H) + ' A ' + rb + ' ' + rb + ' 0 0 0 ' + p(W, H - rb) + ' L ' + p(W, fr) + ' A ' + fr + ' ' + fr + ' 0 0 1 ' + p(W + fr, 0);
+    var fills = '<path d="' + tab + ' L ' + p(W + fr, -1.5) + ' L ' + p(-fr, -1.5) + ' Z" fill="' + bg + '"/>', strokes = tab;   /* hai miếng nền là hai <path> riêng: gộp một <path> mà hai miếng vẽ ngược chiều thì phần chồng nhau bị khoét thủng và lộ vạch viền dưới thanh trên */
+    if (wrap) {
+      var arch = 'M ' + p(al - ra, 0) + ' A ' + ra + ' ' + ra + ' 0 0 0 ' + p(al, -ra) + ' L ' + p(al, at + R) + ' A ' + R + ' ' + R + ' 0 0 1 ' + p(al + R, at) + ' L ' + p(ar - R, at) + ' A ' + R + ' ' + R + ' 0 0 1 ' + p(ar, at + R) + ' L ' + p(ar, -ra) + ' A ' + ra + ' ' + ra + ' 0 0 0 ' + p(ar + ra, 0);
+      fills += '<path d="' + arch + ' L ' + p(ar + ra, 1.5) + ' L ' + p(al - ra, 1.5) + ' Z" fill="' + bg + '"/>'; strokes += ' ' + arch;
+    }
+    var w = W + 2 * fr, h = H - top;
+    var svg = '<svg xmlns="http://www.w3.org/2000/svg" width="' + w + '" height="' + h + '">' + fills + '<path d="' + strokes + '" fill="none" stroke="' + line + '" stroke-width="1"/></svg>';
+    ul.style.setProperty('--shape', 'url("data:image/svg+xml,' + encodeURIComponent(svg) + '")');
+    ul.style.setProperty('--shape-l', -fr + 'px'); ul.style.setProperty('--shape-t', top + 'px'); ul.style.setProperty('--shape-w', w + 'px'); ul.style.setProperty('--shape-h', h + 'px');
+  }
+  function relayout() { placeSub(); measure(); }
+  window.addEventListener('resize', relayout);
+  if ('ResizeObserver' in window) { var ro = new ResizeObserver(relayout); ro.observe(bar); ro.observe(nav); }   /* nav đổi rộng khi phông web tải xong: badge cha dời chỗ, thanh dưới phải dời theo */
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(relayout);
+  setDocked(true);   /* thanh luôn ở dạng đã gắn: đặt chỗ giữ + đo chiều cao cụm (thanh trên + phần thanh dưới nhô ra) */
+  function setOpen(open) {
+    bar.classList.toggle('is-open', open);
+    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    toggle.setAttribute('aria-label', open ? 'Đóng bảng nhóm sản phẩm' : 'Mở bảng nhóm sản phẩm');
+  }
+  toggle.addEventListener('click', function () { setOpen(!bar.classList.contains('is-open')); });
+  nav.addEventListener('click', function (e) { var a = e.target.closest('a'); if (a && !a.hasAttribute('aria-controls')) setOpen(false); });   /* badge có hàng con (aria-controls) giữ bảng mở để chọn tiếp mục con; badge khác và mục con thì đóng bảng */
+  document.addEventListener('click', function (e) { if (bar.classList.contains('is-open') && !bar.contains(e.target)) setOpen(false); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && bar.classList.contains('is-open')) { setOpen(false); toggle.focus(); } });
+  window.matchMedia('(max-width: 767px)').addEventListener('change', function (e) { if (!e.matches) setOpen(false); relayout(); });
+  /* Lọc nhóm sản phẩm (chủ dự án 2026-10-19): badge là bộ lọc kiểu thẻ chọn.
+     - Bấm badge → badge sáng (aria-current) và bên dưới chỉ còn các nhóm (.collection) thuộc badge đó; nhóm khác ẩn bằng hidden. Mặc định là badge đầu ("Thực phẩm": ba nhóm Cháo Sâm).
+     - Mục con (hàng con ngang dưới hàng badge chính, chỉ hiện khi badge cha đang chọn) thu hẹp xuống đúng một nhóm; bấm lại mục con đang chọn hoặc bấm lại badge thì hiện đủ nhóm của badge. Badge chưa có nhóm ("Cao chuẩn hóa") không bấm được.
+     - Link #col-… ở nơi khác (mục lục trái, gợi ý tìm kiếm, #hash lúc nạp) tự chọn đúng badge để nhóm hiện ra rồi mới cuộn tới.
+     - Thanh đang gắn thì sau khi chọn cuộn về đầu nhóm đầu tiên đang hiện (nội dung phía dưới vừa đổi chiều cao). */
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var collections = Array.prototype.slice.call(document.querySelectorAll('#collections .collection'));
+  var selChip = null, selGroup = null, selSub = null;
+  function groupsOf(chip) { return (chip.getAttribute('data-targets') || (chip.getAttribute('href') || '').replace(/^#/, '')).split(/\s+/).filter(function (id) { return id && document.getElementById(id); }); }
+  function chipOfGroup(id) { for (var i = 0; i < chips.length; i++) if (groupsOf(chips[i]).indexOf(id) >= 0) return chips[i]; return null; }
+  function select(chip, group, sub, o) {
+    o = o || {};
+    var ids = groupsOf(chip); if (!ids.length) return false;
+    if (group && ids.indexOf(group) < 0) group = null;
+    selChip = chip; selGroup = group || null; selSub = selGroup ? (sub || null) : null;
+    var show = selGroup ? [selGroup] : ids, entering = [];
+    collections.forEach(function (c) { var hide = show.indexOf(c.id) < 0; if (c.hidden === hide) return; c.hidden = hide; if (!hide) entering.push(c); });
+    chips.forEach(function (a) { if (a === chip) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current'); });
+    subLinks.forEach(function (s) { if (s === selSub) s.setAttribute('aria-current', 'true'); else s.removeAttribute('aria-current'); });
+    /* Thanh dưới: chỉ badge đang chọn mới hiện mục con của nó (treo dưới đáy thanh trên). Hiện/ẩn/đổi sang badge khác thì phải đặt lại vị trí thanh dưới,
+       chỗ giữ của nó và chiều cao cả cụm (placeSub), rồi cập nhật --groupbar-h TRƯỚC khi cuộn vì scroll-margin của nhóm đọc biến này. */
+    var opened = null;
+    items.forEach(function (it) { var on = it.firstElementChild === chip; if (on && (!it.classList.contains('is-open') || it.classList.contains('is-collapsed'))) opened = it; it.classList.toggle('is-open', on); it.classList.remove('is-collapsed'); it.firstElementChild.setAttribute('aria-expanded', on ? 'true' : 'false'); setChevTitle(it); });   /* chọn badge luôn mở lại thanh mục con của nó */
+    placeSub(); measure();
+    if (currentText) currentText.textContent = ((selSub || chip).textContent || '').trim();
+    if (!o.init) {
+      if (!reduceMotion) {
+        var pop = selSub || chip;   /* bấm mục con thì mục con nảy, bấm badge thì badge nảy */
+        pop.classList.remove('is-activating'); void pop.offsetWidth; pop.classList.add('is-activating');
+        setTimeout(function () { pop.classList.remove('is-activating'); }, 340);
+        if (opened) { var row = opened.querySelector('.groupbar__sub'); row.classList.remove('is-entering'); void row.offsetWidth; row.classList.add('is-entering'); setTimeout(function () { row.classList.remove('is-entering'); }, 300); }
+        entering.forEach(function (c) { c.classList.remove('is-entering'); void c.offsetWidth; c.classList.add('is-entering'); setTimeout(function () { c.classList.remove('is-entering'); }, 360); });
+      }
+      window.dispatchEvent(new Event('resize'));   /* dải trượt vừa hiện lại, mục lục trái và thanh tính lại */
+    }
+    return true;
+  }
+  function toFirstVisible() {
+    if (!docked) return;
+    var first = collections.filter(function (c) { return !c.hidden; })[0];
+    if (first) first.scrollIntoView({ block: 'start', behavior: 'instant' });
+  }
+  function reveal(id) {
+    var el = id ? document.getElementById(id) : null;
+    if (!el || !el.classList.contains('collection') || !el.hidden) return false;
+    var chip = chipOfGroup(id); return chip ? select(chip, null, null, {}) : false;
+  }
+  window.gfRevealGroup = reveal;
+  document.addEventListener('click', function (e) { var a = e.target.closest && e.target.closest('a[href^="#col-"]'); if (a && !a.closest('#groupNav')) reveal(a.getAttribute('href').slice(1)); }, true);
+  window.addEventListener('hashchange', function () { var id = location.hash.slice(1); if (reveal(id)) { var el = document.getElementById(id); if (el) el.scrollIntoView({ block: 'start', behavior: 'instant' }); } });
+  /* Mũi tên ở đầu phải badge cha có mục con (chủ dự án 2026-10-20): đóng/mở thanh mục con của badge đó mà KHÔNG đổi bộ lọc (nhóm đang hiện giữ nguyên); badge chưa chọn thì bấm mũi tên = chọn và mở.
+     Thu gọn = thêm .is-collapsed vào .groupbar__item (CSS ẩn thanh dưới; placeSub bỏ vành ôm, chỗ giữ và phần cộng vào --groupbar-h). Chọn lại badge bằng cách khác (bấm thân badge, mục lục, #hash…) luôn mở lại.
+     Bàn phím trên badge cha: ↓ mở (và vào mục con đầu), ↑ hoặc Esc thu gọn; Esc trong thanh mục con thu gọn rồi trả tiêu điểm về badge cha. */
+  function setChevTitle(item) { var c = item.querySelector('.groupbar__chev'); if (c) c.title = item.classList.contains('is-open') && !item.classList.contains('is-collapsed') ? 'Thu gọn các mục con' : 'Mở các mục con'; }
+  function toggleSub(item, collapse) {
+    var chip = item.firstElementChild;
+    if (selChip !== chip) { if (collapse === true) return; select(chip, null, null, {}); toFirstVisible(); return; }
+    var open = !item.classList.contains('is-collapsed'), want = collapse === undefined ? open : collapse;   /* want = true: thu gọn */
+    if (want === !open) return;
+    item.classList.toggle('is-collapsed', want); chip.setAttribute('aria-expanded', want ? 'false' : 'true'); setChevTitle(item);
+    placeSub(); measure();
+    if (!want && !reduceMotion) { var ul = item.querySelector('.groupbar__sub'); ul.classList.remove('is-entering'); void ul.offsetWidth; ul.classList.add('is-entering'); setTimeout(function () { ul.classList.remove('is-entering'); }, 300); }
+    window.dispatchEvent(new Event('resize'));   /* chiều cao trang đổi: mục lục trái và thanh tính lại */
+  }
+  /* Bấm badge = chọn badge (lọc nhóm). Bấm mục con = thu hẹp xuống đúng một nhóm; bấm lại mục con đang chọn thì bỏ thu hẹp (hiện đủ nhóm của badge).
+     Thanh đang gắn thì chọn xong cuộn về đầu nhóm đầu tiên đang hiện. Enter kích hoạt sẵn nhờ href; thêm Space cho đúng vai trò nút. Hàm xử lý trả false thì không cuộn. */
+  function activate(el, fn) {
+    el.setAttribute('role', 'button');
+    el.addEventListener('click', function (e) { e.preventDefault(); if (fn(e) !== false) toFirstVisible(); });
+    el.addEventListener('keydown', function (e) { if (e.key === ' ') { e.preventDefault(); el.click(); } });
+  }
+  chips.forEach(function (a) { if (groupsOf(a).length) activate(a, function (e) { var it = a.closest('.groupbar__item'); if (it && e.target.closest && e.target.closest('.groupbar__chev')) { toggleSub(it); return false; } select(a, null, null, {}); }); });
+  items.forEach(function (item) {
+    var chip = item.firstElementChild;
+    chip.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowDown') { e.preventDefault(); toggleSub(item, false); var f = item.querySelector('.groupbar__sub a[href]'); if (f && f.getClientRects().length) f.focus(); }
+      else if (e.key === 'ArrowUp' || e.key === 'Escape') { e.preventDefault(); toggleSub(item, true); }
+    });
+    Array.prototype.forEach.call(item.querySelectorAll('.groupbar__sub a[href]'), function (a) {
+      activate(a, function () { if (selSub === a) select(chip, null, null, {}); else select(chip, a.getAttribute('href').slice(1), a, {}); });
+      a.addEventListener('keydown', function (e) { if (e.key === 'Escape') { e.preventDefault(); chip.focus(); toggleSub(item, true); } });
+    });
+  });
+  select(chips[0], null, null, { init: true });   /* mặc định: badge đầu (Thực phẩm) */
+  if (location.hash && reveal(location.hash.slice(1))) { var h0 = document.getElementById(location.hash.slice(1)); if (h0) requestAnimationFrame(function () { h0.scrollIntoView({ block: 'start', behavior: 'instant' }); }); }   /* mở thẳng #col-… đang bị ẩn */
+})();
+</script>
+<script id="gf-nav-sub-js">
+/* Menu con "Về chúng tôi" ở header máy tính: đặt vị trí bảng thả dưới mục, mở khi rê chuột / Tab / chạm lần đầu (thiết bị cảm ứng), Esc để đóng. */
+(function () {
+  'use strict';
+  var link = document.querySelector('.desktop-nav > a.nav-has-sub');
+  var sub = document.getElementById('gfNavSub');
+  var header = document.getElementById('header');
+  if (!link || !sub || !header) return;
+  var nav = link.parentNode, timer = 0, quiet = false;
+  var noHover = window.matchMedia('(hover: none)');
+  function place() {
+    if (!nav.offsetParent) return;
+    var top = header.getBoundingClientRect().bottom - nav.getBoundingClientRect().top;
+    sub.style.left = link.offsetLeft + 'px';
+    sub.style.top = top + 'px';
+    sub.style.setProperty('--sub-bridge', Math.max(0, top - link.offsetTop - link.offsetHeight) + 'px');
+  }
+  function isOpen() { return sub.classList.contains('is-open'); }
+  function setOpen(open) {
+    if (open) place();
+    sub.classList.toggle('is-open', open);
+    link.setAttribute('aria-expanded', String(open));
+  }
+  function open() { clearTimeout(timer); setOpen(true); }
+  function focusLink() { quiet = true; link.focus(); quiet = false; }
+  function closeSoon() { clearTimeout(timer); timer = setTimeout(function () { setOpen(false); }, 160); }
+  [link, sub].forEach(function (el) {
+    el.addEventListener('mouseenter', function () { if (!noHover.matches) open(); });
+    el.addEventListener('mouseleave', function () { if (!noHover.matches) closeSoon(); });
+    el.addEventListener('focusin', function (e) { if (!quiet && e.target.matches(':focus-visible')) open(); });
+    el.addEventListener('focusout', function (e) { if (e.relatedTarget !== link && !sub.contains(e.relatedTarget)) closeSoon(); });
+  });
+  link.addEventListener('click', function (e) { if (noHover.matches && !isOpen()) { e.preventDefault(); open(); } });
+  document.addEventListener('click', function (e) { if (noHover.matches && isOpen() && !nav.contains(e.target)) setOpen(false); });
+  link.addEventListener('keydown', function (e) { if (e.key === 'ArrowDown') { e.preventDefault(); open(); sub.querySelector('a').focus(); } });
+  sub.addEventListener('keydown', function (e) {
+    var items = Array.prototype.slice.call(sub.querySelectorAll('a')), i = items.indexOf(document.activeElement);
+    if (e.key === 'ArrowDown') { e.preventDefault(); items[(i + 1) % items.length].focus(); }
+    else if (e.key === 'ArrowUp') { e.preventDefault(); if (i <= 0) focusLink(); else items[i - 1].focus(); }
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== 'Escape' || !isOpen()) return;
+    var inside = sub.contains(document.activeElement);
+    setOpen(false);
+    if (inside) focusLink();
+  });
+  window.addEventListener('resize', function () { if (isOpen()) { if (nav.offsetParent) place(); else setOpen(false); } });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { if (isOpen()) place(); });
+})();
+</script>
+<script id="gf-mobile-menu-a-js">
+(function () {
+  /* Thẻ tài khoản trong menu ☰ (dưới 1280px): bấm để thu/mở lưới lối vào bên dưới; mở sẵn khi vào trang (như web chính). */
+  var trigger = document.querySelector('#mobileNav .header-member-card-trigger');
+  if (!trigger) return;
+  var menu = trigger.closest('.header-member-menu');
+  trigger.addEventListener('click', function () {
+    var open = trigger.getAttribute('aria-expanded') === 'true';
+    trigger.setAttribute('aria-expanded', String(!open));
+    if (open) menu.setAttribute('data-collapsed', ''); else menu.removeAttribute('data-collapsed');
   });
 })();
 </script>

@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="description" content="Ginsengfood – Điều khoản chương trình Cộng tác viên: điều kiện đăng ký, link chia sẻ, ghi nhận hoa hồng, đối soát, quy tắc quảng bá và bảo mật thông tin.">
+  <meta name="description" content="Ginsengfood – Khởi nghiệp cùng Ssavigroup: quyền lợi của nhà khởi nghiệp, điều kiện đăng ký (mua hàng tích lũy từ 2.000.000đ) và điều khoản hợp đồng chương trình Cộng tác viên.">
   <meta name="theme-color" content="#072A4E">
-  <title>Ginsengfood – Điều khoản chương trình Cộng tác viên</title>
+  <title>Ginsengfood – Khởi nghiệp cùng Ssavigroup</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -19,6 +19,9 @@
     - Mã giới thiệu ngẫu nhiên, không chứa họ tên / email / số điện thoại (spec 11.2).
     - Mốc đối soát (ngày 05 / 15), 30 ngày phản hồi, báo trước 07 ngày, đủ 18 tuổi là NỘI DUNG MẪU, chờ chủ dự án chốt.
     - Các nút xác nhận chỉ minh họa trạng thái giao diện, không lưu quyết định hoặc gọi API.
+    - 20/10/2026 (chủ dự án): thiết kế lại thành trang "Khởi nghiệp cùng Ssavigroup": PHÍA TRÊN giới thiệu quyền lợi và mời đăng ký khi đủ điều kiện
+      (mua hàng tích lũy từ 2.000.000đ), PHÍA DƯỚI là điều khoản hợp đồng. Khối "Điều kiện đăng ký" chuyển lên thẻ bên phải khối giới thiệu;
+      chữ 10 Điều, mục lục và khu xác nhận giữ nguyên. Chỉ sửa bản mẫu này, không sửa web chính (front-end/src).
   -->
 
   <style>
@@ -1158,6 +1161,98 @@
       transition-duration: 0.01ms !important;
     }
   }
+
+/*
+ * Header gọn (trang một việc: đăng nhập, đăng ký, thanh toán, tài khoản...) cũng nền navy đậm + viền vàng như header chung (chủ dự án chốt
+ * phương án A, 2026-10-17: sếp chê header trắng quá; bản mẫu đồng bộ với storefront, đợt mười sáu). Nền là navy đậm của chân trang, viền dưới
+ * vàng, link và chữ màu ngà, nút ngôn ngữ trong mờ viền vàng (rê hoặc mở thì tô vàng đặc icon navy), vòng tiêu điểm vàng nhạt. Chip tài khoản
+ * in tên màu ngà và dòng hạng bằng kim loại của hạng (chỉ đặt được trên nền tối). Logo là bản chữ ngà dành cho nền tối.
+ */
+.focus-header {
+  border-bottom: 1px solid var(--gf-gold, #C69A2B);
+  background: var(--gf-navy-dark, #072A4E);
+  box-shadow: 0 10px 30px rgba(7, 42, 78, 0.3);
+}
+
+.focus-header :focus-visible {
+  box-shadow: 0 0 0 3px rgba(232, 201, 121, 0.55);
+}
+
+.focus-header .focus-header__back {
+  color: var(--gf-ivory, #FFF8EA);
+}
+
+.focus-header .focus-header__back:hover {
+  color: var(--gf-gold-soft, #E8C979);
+}
+
+.focus-header [data-tier="silver"] {
+  --tier-on-dark: var(--storefront-tier-silver, #B9BFC7);
+}
+
+.focus-header [data-tier="gold"] {
+  --tier-on-dark: var(--storefront-tier-gold, #D4AF37);
+}
+
+.focus-header [data-tier="platinum"] {
+  --tier-on-dark: var(--storefront-tier-platinum, #E5EAF0);
+}
+
+.focus-header [data-tier="diamond"] {
+  --tier-on-dark: var(--storefront-tier-diamond, #EAF6FF);
+}
+
+.focus-header [data-tier="none"] {
+  --tier-on-dark: rgba(255, 248, 234, 0.72);
+}
+
+.focus-header .who {
+  border-left-color: rgba(255, 248, 234, 0.28);
+}
+
+.focus-header .who__name {
+  color: var(--gf-ivory, #FFF8EA);
+}
+
+.focus-header .who__tier {
+  color: var(--tier-on-dark);
+}
+
+.focus-header .who__dot {
+  box-shadow: 0 0 0 3px rgba(255, 248, 234, 0.18);
+}
+
+.focus-header .locale-pill {
+  border-color: rgba(198, 154, 43, 0.65);
+  background: rgba(255, 248, 234, 0.06);
+  color: var(--gf-ivory, #FFF8EA);
+  box-shadow: none;
+}
+
+.focus-header .locale-pill:hover,
+.focus-header .locale-pill:focus-visible,
+.focus-header .locale-pill[aria-expanded="true"],
+.focus-header .locale-dropdown:focus-within .locale-pill {
+  border-color: var(--gf-gold-soft, #E8C979);
+  background: var(--gf-gold, #C69A2B);
+  color: var(--gf-navy-dark, #072A4E);
+  box-shadow: none;
+}
+
+.focus-header .locale-pill:focus-visible {
+  outline: 3px solid var(--gf-gold-soft, #E8C979);
+  outline-offset: 4px;
+}
+
+.focus-header .locale-pill .locale-flag {
+  border-color: rgba(255, 248, 234, 0.4);
+  box-shadow: none;
+}
+
+.focus-header .locale-pill .locale-flag.is-active {
+  border-color: var(--gf-gold-soft, #E8C979);
+  box-shadow: 0 0 0 1px rgba(232, 201, 121, 0.35);
+}
 </style>
 <!-- gf-shell:css:end -->
 <!-- gf-contact-rail:css:begin -->
@@ -1453,12 +1548,275 @@
 }
 </style>
 <!-- gf-contact-rail:css:end -->
+<!-- ctv-intro: phần giới thiệu quyền lợi + mời đăng ký phía trên điều khoản (chủ dự án yêu cầu 2026-10-20) — chỉ bản mẫu này -->
+<style id="ctv-intro-css">
+/* KHỞI NGHIỆP CÙNG SSAVIGROUP — thiết kế lại trang (chủ dự án 2026-10-20): phía trên là lời giới thiệu quyền lợi và lời mời đăng ký khi đủ điều kiện
+   (mua hàng tích lũy từ 2.000.000đ), phía dưới mới là điều khoản hợp đồng đăng ký làm nhà khởi nghiệp (cộng tác viên). Chỉ thêm kiểu cho các khối mới;
+   khung tài liệu điều khoản, mục lục, khu xác nhận giữ nguyên kiểu của storefront ở khối <style> phía trên. Màu: navy #10305F/#072A4E, vàng #C69A2B/#E8C979,
+   ngà #FFF8EA, nền kem của trang; nút vàng cùng dải màu và hiệu ứng với nút "Đăng ký" ở header của trang chủ. */
+[data-collaborator-register] { --gf-gold-soft: #E8C979; padding: 0 0 56px; }
+[data-collaborator-register] .ctv-container { width: 100%; max-width: 1160px; margin: 0 auto; padding: 0 24px; }
+
+/* ---------- Khối giới thiệu (hero) ---------- */
+[data-collaborator-register] .ctv-hero { padding: 22px 0 0; }
+[data-collaborator-register] .ctv-hero__card {
+  position: relative; overflow: hidden; border: 1px solid rgba(232, 201, 121, 0.32); border-radius: 24px; color: var(--gf-ivory);
+  background:
+    radial-gradient(620px 340px at 94% -8%, rgba(232, 201, 121, 0.22), rgba(232, 201, 121, 0) 70%),
+    radial-gradient(460px 240px at -4% 112%, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0) 70%),
+    linear-gradient(120deg, #10305F 0%, #072A4E 100%);
+  box-shadow: 0 28px 56px -32px rgba(7, 42, 78, 0.75);
+}
+[data-collaborator-register] .ctv-hero__grid { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr); gap: 36px; align-items: center; padding: 34px 48px 44px; }
+[data-collaborator-register] .ctv-hero__copy { min-width: 0; }
+[data-collaborator-register] .ctv-hero .ctv-crumbs { margin: 0 0 26px; color: rgba(255, 248, 234, 0.72); font-size: 13px; }
+[data-collaborator-register] .ctv-hero .ctv-crumbs a { color: rgba(255, 248, 234, 0.72); }
+[data-collaborator-register] .ctv-hero .ctv-crumbs a:hover { color: #FFFFFF; }
+[data-collaborator-register] .ctv-hero .ctv-crumbs [aria-current] { color: var(--gf-ivory); }
+[data-collaborator-register] .ctv-eyebrow { display: inline-flex; align-items: center; gap: 10px; margin: 0; color: var(--gf-gold-soft); font-size: 12px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; }
+[data-collaborator-register] .ctv-eyebrow::before { content: ""; width: 26px; height: 2px; border-radius: 2px; background: currentColor; }
+[data-collaborator-register] .ctv-eyebrow--dark { color: var(--gf-gold-text); }
+[data-collaborator-register] .ctv-sectionhead .ctv-eyebrow::after { content: ""; width: 26px; height: 2px; border-radius: 2px; background: currentColor; }
+[data-collaborator-register] .ctv-hero__title { margin: 14px 0 0; color: #FFF8EA; font-family: var(--gf-font-serif), Georgia, serif; font-size: clamp(28px, 3.1vw, 42px); font-weight: 700; line-height: 1.16; letter-spacing: 0.005em; text-wrap: balance; }
+[data-collaborator-register] .ctv-hero__title::after { content: ""; display: block; width: 64px; height: 3px; margin-top: 18px; border-radius: 3px; background: linear-gradient(90deg, #C69A2B, #E8C979); }
+[data-collaborator-register] .ctv-hero__quote { max-width: 30em; margin: 16px 0 0; color: #F3DE9E; font-family: var(--gf-font-serif), Georgia, serif; font-size: 19px; font-style: italic; font-weight: 600; line-height: 1.5; text-wrap: balance; }
+[data-collaborator-register] .ctv-path { margin-top: 22px; }
+[data-collaborator-register] .ctv-path__lead { margin: 0; color: rgba(255, 248, 234, 0.94); font-size: 15.5px; font-weight: 600; }
+[data-collaborator-register] .ctv-path__steps { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 8px; margin: 10px 0 0; padding: 0; list-style: none; }
+[data-collaborator-register] .ctv-path__steps li { display: inline-flex; align-items: center; gap: 10px; min-height: 38px; padding: 0 16px; border: 1px solid rgba(232, 201, 121, 0.55); border-radius: 999px; background: rgba(232, 201, 121, 0.12); color: #FFF8EA; font-size: 14.5px; font-weight: 700; }
+[data-collaborator-register] .ctv-path__steps li:not(:last-child) { padding-right: 14px; }
+[data-collaborator-register] .ctv-path__steps li:not(:last-child)::after { content: ""; flex: 0 0 auto; width: 7px; height: 7px; margin-left: 2px; border-top: 2px solid #E8C979; border-right: 2px solid #E8C979; transform: rotate(45deg); }
+[data-collaborator-register] .ctv-hero__cta { margin-top: 24px; }
+[data-collaborator-register] .ctv-hero__invite { max-width: 34em; margin: 0; color: #FFF8EA; font-size: 16px; line-height: 1.6; }
+[data-collaborator-register] .ctv-hero__invite strong { color: var(--gf-gold-soft); font-weight: 700; }
+[data-collaborator-register] .ctv-hero__acts { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 14px; margin-top: 16px; }
+[data-collaborator-register] .ctv-hero__hint { margin: 12px 0 0; color: rgba(255, 248, 234, 0.72); font-size: 13px; }
+
+/* Nút vàng (cùng dải màu và hiệu ứng với nút "Đăng ký" ở header trang chủ): viên thuốc cao 54px, mũi tên trong chấm tròn navy. */
+[data-collaborator-register] .ctv-cta {
+  --ctv-cta-ring: rgba(240, 214, 138, 0.95);
+  position: relative; isolation: isolate; display: inline-flex; align-items: center; justify-content: center; gap: 12px; min-height: 54px; padding: 0 10px 0 26px;
+  border: 1px solid #E0BA5A; border-radius: 999px; color: #072A4E; font-size: 15.5px; font-weight: 800; letter-spacing: 0.01em; line-height: 1.2; text-align: left; text-decoration: none; text-shadow: 0 1px 0 rgba(255, 255, 255, 0.42);
+  background: linear-gradient(180deg, #F6E3A5 0%, #E8C979 46%, #CDA130 100%); background-color: #E8C979;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7), inset 0 -2px 0 rgba(139, 98, 12, 0.26), 0 0 0 4px rgba(232, 201, 121, 0.14), 0 7px 16px -6px rgba(198, 154, 43, 0.8), 0 0 22px rgba(232, 201, 121, 0.3);
+  transition: transform var(--motion-base) var(--ease-standard), box-shadow var(--motion-base) var(--ease-standard), filter var(--motion-base) var(--ease-standard);
+}
+[data-collaborator-register] .ctv-cta:hover, [data-collaborator-register] .ctv-cta:focus-visible {
+  color: #072A4E; transform: translateY(-2px); filter: brightness(1.07) saturate(1.05);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8), inset 0 -2px 0 rgba(139, 98, 12, 0.24), 0 0 0 5px rgba(232, 201, 121, 0.22), 0 10px 20px -6px rgba(198, 154, 43, 0.9), 0 0 30px rgba(232, 201, 121, 0.45);
+}
+[data-collaborator-register] .ctv-cta:focus-visible { outline: 3px solid #FFF8EA; outline-offset: 6px; border-radius: 999px; }
+[data-collaborator-register] .ctv-cta:active { transform: translateY(0) scale(0.98); }
+[data-collaborator-register] .ctv-cta .icon { box-sizing: content-box; width: 18px; height: 18px; padding: 7px; border-radius: 50%; background: #10305F; color: #F6E3A5; stroke-width: 2.4; transition: transform var(--motion-base) var(--ease-standard); }
+[data-collaborator-register] .ctv-cta:hover .icon, [data-collaborator-register] .ctv-cta:focus-visible .icon { transform: translateX(3px); }
+[data-collaborator-register] .ctv-cta::before { content: ""; position: absolute; z-index: -1; inset: 0; border-radius: inherit; pointer-events: none; background: linear-gradient(105deg, rgba(255, 255, 255, 0) 42%, rgba(255, 255, 255, 0.85) 50%, rgba(255, 255, 255, 0) 58%) 0 0 / 300% 100% no-repeat; }
+[data-collaborator-register] .ctv-cta::after { content: ""; position: absolute; z-index: -1; inset: -1px; border-radius: inherit; pointer-events: none; outline: 2px solid transparent; outline-offset: 0; }
+@keyframes ctvCtaShine { 0% { background-position: 0% 0; } 22%, 100% { background-position: 100% 0; } }
+@keyframes ctvCtaPulse { 0%, 18% { outline-color: transparent; outline-offset: 0; } 20% { outline-color: var(--ctv-cta-ring); outline-offset: 0; } 46%, 100% { outline-color: transparent; outline-offset: 12px; } }
+@media (prefers-reduced-motion: no-preference) {
+  [data-collaborator-register] .ctv-cta::before { animation: ctvCtaShine 6s ease-in-out 1.2s infinite; }
+  [data-collaborator-register] .ctv-cta::after { animation: ctvCtaPulse 6s ease-out 1.2s infinite; }
+}
+[data-collaborator-register] .ctv-ghost { display: inline-flex; align-items: center; justify-content: center; min-height: 54px; padding: 0 24px; border: 1px solid rgba(255, 248, 234, 0.5); border-radius: 999px; background: rgba(255, 248, 234, 0.06); color: #FFF8EA; font-size: 15px; font-weight: 600; text-decoration: none; transition: background var(--motion-base) var(--ease-standard), border-color var(--motion-base) var(--ease-standard); }
+[data-collaborator-register] .ctv-ghost:hover { border-color: rgba(255, 248, 234, 0.85); background: rgba(255, 248, 234, 0.14); color: #FFFFFF; }
+[data-collaborator-register] .ctv-ghost:focus-visible { outline: 3px solid #FFF8EA; outline-offset: 3px; box-shadow: none; border-radius: 999px; }
+
+/* ---------- Thẻ điều kiện / trạng thái (bên phải khối giới thiệu) ---------- */
+[data-collaborator-register] .ctv-hero__panel { min-width: 0; }
+[data-collaborator-register] .ctv-elig { position: relative; overflow: hidden; padding: 28px 26px 22px; border-radius: 20px; background: #FFF8EA; color: var(--gf-text); box-shadow: 0 30px 50px -30px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(198, 154, 43, 0.4); }
+[data-collaborator-register] .ctv-elig::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 5px; background: linear-gradient(90deg, #C69A2B, #E8C979 60%, #C69A2B); }
+[data-collaborator-register] .ctv-elig:focus-visible { outline: none; box-shadow: 0 30px 50px -30px rgba(0, 0, 0, 0.6), 0 0 0 3px #E8C979; }
+[data-collaborator-register] .ctv-elig__head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 14px; }
+[data-collaborator-register] .ctv-elig__title { margin: 0; color: var(--gf-navy); font-family: var(--gf-font-serif), Georgia, serif; font-size: 20px; font-weight: 700; line-height: 1.3; }
+[data-collaborator-register] .ctv-badge { display: inline-flex; align-items: center; gap: 6px; padding: 5px 12px 5px 9px; border: 1px solid; border-radius: 999px; font-size: 13px; font-weight: 700; line-height: 1.3; white-space: nowrap; }
+[data-collaborator-register] .ctv-badge .icon { width: 16px; height: 16px; stroke-width: 2.6; }
+[data-collaborator-register] .ctv-badge[data-tone="ok"] { border-color: #B7DCC4; background: #E6F4EA; color: #1E5B3A; }
+[data-collaborator-register] .ctv-badge[data-tone="warn"] { border-color: #EFCB86; background: #FFF1D6; color: #7A4B06; }
+[data-collaborator-register] .ctv-badge[data-tone="neutral"] { border-color: #CDD5E2; background: #EEF1F6; color: #3A4A68; }
+[data-collaborator-register] .ctv-elig__lead { margin: 14px 0 0; color: var(--gf-text); font-size: 15.5px; font-weight: 600; }
+[data-collaborator-register] .ctv-elig__text { margin: 12px 0 0; color: var(--gf-text); font-size: 15px; line-height: 1.65; }
+[data-collaborator-register] .ctv-elig__list { display: flex; flex-direction: column; gap: 16px; margin: 18px 0 0; padding: 0; list-style: none; }
+[data-collaborator-register] .ctv-elig .ctv-cond { align-items: flex-start; gap: 12px; }
+[data-collaborator-register] .ctv-elig .ctv-cond__mark { width: 24px; height: 24px; margin-top: 0; font-size: 14px; }
+[data-collaborator-register] .ctv-cond[data-met="pending"] .ctv-cond__mark { border: 2px solid #C9D1DC; background: #FFFFFF; color: #667085; }
+[data-collaborator-register] .ctv-cond__body { min-width: 0; flex: 1 1 auto; }
+[data-collaborator-register] .ctv-cond__label { margin: 0; color: #4A5876; font-size: 13.5px; font-weight: 600; }
+[data-collaborator-register] .ctv-cond__value { margin: 2px 0 0; color: var(--gf-navy); font-size: 26px; font-weight: 800; line-height: 1.2; font-variant-numeric: tabular-nums; }
+[data-collaborator-register] .ctv-cond__value span { color: #667085; font-size: 15px; font-weight: 600; }
+[data-collaborator-register] .ctv-cond__need { margin: 8px 0 0; color: #7A4B06; font-size: 14.5px; font-weight: 700; }
+[data-collaborator-register] .ctv-meter { position: relative; height: 10px; margin-top: 10px; overflow: hidden; border-radius: 999px; background: #E9E0C8; }
+[data-collaborator-register] .ctv-meter > span { position: absolute; inset: 0 auto 0 0; width: var(--pct, 0%); border-radius: inherit; background: linear-gradient(90deg, #2F6F4A, #4C9A6F); }
+[data-collaborator-register] .ctv-cond[data-met="false"] .ctv-meter > span { background: linear-gradient(90deg, #C69A2B, #E8C979); }
+@keyframes ctvMeter { from { width: 0; } }
+@media (prefers-reduced-motion: no-preference) { [data-collaborator-register] .ctv-meter > span { animation: ctvMeter 900ms var(--ease-standard) 250ms both; } }
+[data-collaborator-register] .ctv-elig__foot { margin: 16px 0 0; padding-top: 12px; border-top: 1px dashed #D9C79C; color: #5B6783; font-size: 12.5px; line-height: 1.55; }
+[data-collaborator-register] .ctv-elig .ctv-was { margin: 14px 0 0; background: #F6EBCB; font-size: 14px; }
+[data-collaborator-register] .ctv-elig[data-tone="warning"]::before { background: linear-gradient(90deg, #B7791F, #E8C979 60%, #B7791F); }
+
+/* ---------- Quyền lợi ---------- */
+[data-collaborator-register] .ctv-benefits { padding: 58px 0 8px; scroll-margin-top: -44px; }
+[data-collaborator-register] .ctv-sectionhead { max-width: 46em; margin: 0 auto 30px; text-align: center; }
+[data-collaborator-register] .ctv-sectionhead .ctv-eyebrow { justify-content: center; }
+[data-collaborator-register] .ctv-sectionhead h2 { margin: 12px 0 0; color: var(--gf-navy); font-family: var(--gf-font-serif), Georgia, serif; font-size: clamp(24px, 2.6vw, 32px); font-weight: 700; line-height: 1.25; }
+[data-collaborator-register] .ctv-sectionhead p { margin: 12px 0 0; color: #3B4A66; font-size: 16px; line-height: 1.7; }
+[data-collaborator-register] .ctv-benefit-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; margin: 0; padding: 0; list-style: none; }
+[data-collaborator-register] .ctv-benefit { display: flex; flex-direction: column; gap: 12px; padding: 22px 22px 24px; border: 1px solid var(--gf-border); border-radius: 18px; background: #FFFFFF; box-shadow: 0 1px 2px rgba(16, 48, 95, 0.04), 0 16px 30px -26px rgba(16, 48, 95, 0.4); transition: transform var(--motion-base) var(--ease-standard), box-shadow var(--motion-base) var(--ease-standard), border-color var(--motion-base) var(--ease-standard); }
+[data-collaborator-register] .ctv-benefit:hover { transform: translateY(-3px); border-color: #D9C079; box-shadow: 0 1px 2px rgba(16, 48, 95, 0.05), 0 22px 34px -24px rgba(16, 48, 95, 0.45); }
+[data-collaborator-register] .ctv-benefit__icon { display: grid; width: 48px; height: 48px; place-items: center; border-radius: 50%; background: linear-gradient(180deg, #F6E3A5, #E8C979); color: #10305F; box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7), 0 6px 14px -8px rgba(198, 154, 43, 0.8); }
+[data-collaborator-register] .ctv-benefit__icon .icon { width: 24px; height: 24px; stroke-width: 1.9; }
+[data-collaborator-register] .ctv-benefit h3 { margin: 0; color: var(--gf-navy); font-family: var(--gf-font-serif), Georgia, serif; font-size: 18px; font-weight: 700; line-height: 1.35; }
+[data-collaborator-register] .ctv-benefit p { margin: 0; color: #3B4A66; font-size: 14.5px; line-height: 1.7; }
+[data-collaborator-register] .ctv-trust { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px 28px; margin: 24px 0 0; padding: 16px 22px; border: 1px dashed rgba(198, 154, 43, 0.7); border-radius: 16px; background: #FFFBF0; list-style: none; }
+[data-collaborator-register] .ctv-trust li { display: inline-flex; align-items: center; gap: 9px; color: var(--gf-navy); font-size: 14.5px; font-weight: 600; }
+[data-collaborator-register] .ctv-trust .icon { width: 20px; height: 20px; color: #2F6F4A; stroke-width: 2.4; }
+[data-collaborator-register] .ctv-benefits__note { max-width: 52em; margin: 14px auto 0; color: var(--gf-muted); font-size: 12.5px; line-height: 1.6; text-align: center; }
+
+/* ---------- Điểm nổi bật (không cần vốn, không nhập hàng, ...) ---------- */
+[data-collaborator-register] .ctv-promise { padding: 26px 0 0; }
+[data-collaborator-register] .ctv-promise__list { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 1px; margin: 0; padding: 0; overflow: hidden; border: 1px solid #E3D6B2; border-radius: 22px; background: #EADFC4; box-shadow: 0 1px 2px rgba(16, 48, 95, 0.04), 0 18px 34px -28px rgba(16, 48, 95, 0.45); list-style: none; }
+[data-collaborator-register] .ctv-promise__list li { display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 22px 14px 20px; background: #FFFFFF; color: var(--gf-navy); font-size: 15px; font-weight: 700; line-height: 1.45; text-align: center; }
+[data-collaborator-register] .ctv-promise__icon { display: grid; width: 50px; height: 50px; flex: 0 0 auto; place-items: center; border-radius: 50%; background: linear-gradient(180deg, #F6E3A5, #E8C979); color: #10305F; box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7), 0 6px 14px -8px rgba(198, 154, 43, 0.8); }
+[data-collaborator-register] .ctv-promise__icon .icon { width: 25px; height: 25px; stroke-width: 1.9; }
+[data-collaborator-register] .ctv-promise__time { display: flex; align-items: center; justify-content: center; gap: 12px; max-width: 540px; margin: 16px auto 0; padding: 14px 28px; border: 1px solid #E0BA5A; border-radius: 999px; background: linear-gradient(100deg, #FFF3CC, #F6E3A5 50%, #FFF3CC); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7), 0 10px 22px -16px rgba(198, 154, 43, 0.9); color: #10305F; font-family: var(--gf-font-serif), Georgia, serif; font-size: 21px; font-weight: 700; line-height: 1.3; text-align: center; }
+[data-collaborator-register] .ctv-promise__time .icon { width: 26px; height: 26px; stroke-width: 2; }
+[data-collaborator-register] .ctv-promise__time b { color: #072A4E; font-size: 28px; font-weight: 800; }
+
+/* ---------- "Quyền lợi của bạn": gửi link / đăng bài → đơn thành công → chiết khấu ---------- */
+[data-collaborator-register] .ctv-earn { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.08fr); gap: 30px; align-items: center; padding: 32px 34px; border: 1px solid var(--gf-border); border-radius: 24px; background: #FFFFFF; box-shadow: 0 1px 2px rgba(16, 48, 95, 0.04), 0 22px 40px -30px rgba(16, 48, 95, 0.45); }
+[data-collaborator-register] .ctv-earn__steps { display: flex; flex-direction: column; gap: 28px; margin: 0; padding: 0; list-style: none; }
+[data-collaborator-register] .ctv-earn__step { position: relative; display: flex; align-items: center; gap: 16px; }
+[data-collaborator-register] .ctv-earn__step:not(:last-child)::after { content: ""; position: absolute; top: 60px; left: 27px; height: 26px; border-left: 2px dashed #C69A2B; }
+[data-collaborator-register] .ctv-earn__icon { display: grid; width: 56px; height: 56px; flex: 0 0 auto; place-items: center; border-radius: 50%; background: #10305F; color: #F6E3A5; box-shadow: 0 0 0 4px #FFF8EA, 0 0 0 5px rgba(198, 154, 43, 0.5); }
+[data-collaborator-register] .ctv-earn__icon .icon { width: 26px; height: 26px; stroke-width: 1.9; }
+[data-collaborator-register] .ctv-earn__step p { margin: 0; color: var(--gf-navy); font-family: var(--gf-font-serif), Georgia, serif; font-size: 20px; font-weight: 700; line-height: 1.45; }
+[data-collaborator-register] .ctv-rates { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 0; padding: 0; list-style: none; }
+[data-collaborator-register] .ctv-rate { display: flex; flex-direction: column; align-items: center; justify-content: flex-start; min-height: 214px; padding: 32px 18px 22px; border-radius: 20px; text-align: center; }
+[data-collaborator-register] .ctv-rate p { margin: 0; }
+[data-collaborator-register] .ctv-rate--day { border: 1px solid #E6D3A3; background: linear-gradient(180deg, #FFFBF0, #FFF3D6); color: var(--gf-navy); }
+[data-collaborator-register] .ctv-rate--gold { border: 1px solid rgba(232, 201, 121, 0.45); background: radial-gradient(260px 160px at 90% -10%, rgba(232, 201, 121, 0.24), rgba(232, 201, 121, 0) 70%), linear-gradient(120deg, #10305F, #072A4E); box-shadow: 0 22px 36px -26px rgba(7, 42, 78, 0.7); color: #FFF8EA; }
+[data-collaborator-register] .ctv-rate__kicker { color: #7B5614; font-size: 12.5px; font-weight: 800; letter-spacing: 0.16em; text-transform: uppercase; }
+[data-collaborator-register] .ctv-rate--gold .ctv-rate__kicker { color: #E8C979; }
+[data-collaborator-register] .ctv-rate__value { margin-top: 8px; color: #10305F; font-size: 56px; font-weight: 800; line-height: 1.02; font-variant-numeric: tabular-nums; }
+[data-collaborator-register] .ctv-rate--gold .ctv-rate__value { color: #F3DE9E; }
+[data-collaborator-register] .ctv-rate__value small, [data-collaborator-register] .ctv-rate--gold .ctv-rate__value::before { display: block; margin-bottom: 2px; color: #5B6783; font-size: 13px; font-weight: 700; letter-spacing: 0.08em; line-height: 1.3; text-transform: uppercase; }
+[data-collaborator-register] .ctv-rate--gold .ctv-rate__value::before { content: "\00a0"; }
+[data-collaborator-register] .ctv-rate__prog { margin-top: 10px; font-size: 14.5px; font-weight: 600; line-height: 1.5; }
+[data-collaborator-register] .ctv-earn__note { max-width: 52em; margin: 14px auto 0; color: var(--gf-muted); font-size: 12.5px; line-height: 1.6; text-align: center; }
+[data-collaborator-register] .ctv-subhead { margin: 38px 0 16px; color: var(--gf-navy); font-family: var(--gf-font-serif), Georgia, serif; font-size: 20px; font-weight: 700; line-height: 1.35; text-align: center; }
+/* ---------- Ba bước bắt đầu (bước hiện tại theo trạng thái của người dùng) ---------- */
+[data-collaborator-register] .ctv-steps { padding: 46px 0 0; }
+[data-collaborator-register] .ctv-steps .ctv-sectionhead { margin-bottom: 26px; }
+[data-collaborator-register] .ctv-steps__list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; margin: 0; padding: 0; list-style: none; }
+[data-collaborator-register] .ctv-steps__item { position: relative; min-width: 0; }
+[data-collaborator-register] .ctv-steps__num { position: relative; z-index: 1; display: grid; width: 44px; height: 44px; place-items: center; border-radius: 50%; background: #10305F; color: #FFF8EA; font-size: 18px; font-weight: 800; box-shadow: 0 0 0 4px #FBF8F1, 0 0 0 5px rgba(16, 48, 95, 0.18); }
+[data-collaborator-register] .ctv-steps__item:not(:last-child)::after { content: ""; position: absolute; top: 21px; left: 58px; right: -12px; height: 2px; background: repeating-linear-gradient(90deg, #C69A2B 0 6px, transparent 6px 12px); }
+[data-collaborator-register] .ctv-steps__item h3 { margin: 14px 0 0; color: var(--gf-navy); font-family: var(--gf-font-serif), Georgia, serif; font-size: 17.5px; font-weight: 700; line-height: 1.35; }
+[data-collaborator-register] .ctv-steps__item p { margin: 6px 0 0; color: #3B4A66; font-size: 14.5px; line-height: 1.7; }
+[data-collaborator-register] .ctv-steps__tag { display: none; align-items: center; gap: 6px; margin-top: 10px; padding: 4px 12px; border-radius: 999px; background: #10305F; color: #FFF8EA; font-size: 12.5px; font-weight: 700; }
+[data-collaborator-register] .ctv-steps__item.is-now .ctv-steps__tag { display: inline-flex; }
+[data-collaborator-register] .ctv-steps__item.is-now .ctv-steps__num { background: linear-gradient(180deg, #F6E3A5, #E8C979 50%, #CDA130); color: #072A4E; box-shadow: 0 0 0 4px #FBF8F1, 0 0 0 6px #C69A2B; }
+[data-collaborator-register] .ctv-steps__item.is-done .ctv-steps__num { background: #2F6F4A; font-size: 0; }
+[data-collaborator-register] .ctv-steps__item.is-done .ctv-steps__num::after { content: "✓"; font-size: 20px; line-height: 1; }
+
+/* ---------- Điều khoản hợp đồng (bên dưới) ---------- */
+[data-collaborator-register] .ctv-terms { padding: 56px 24px 0; scroll-margin-top: -44px; }
+[data-collaborator-register] .ctv-termshead { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 14px 24px; margin: 0 0 18px; }
+[data-collaborator-register] .ctv-termshead h2 { margin: 10px 0 0; color: var(--gf-navy); font-family: var(--gf-font-serif), Georgia, serif; font-size: clamp(22px, 2.4vw, 28px); font-weight: 700; line-height: 1.3; }
+[data-collaborator-register] .ctv-termshead p { max-width: 40em; margin: 8px 0 0; color: #3B4A66; font-size: 15px; line-height: 1.65; }
+
+@media (max-width: 1023px) {
+  [data-collaborator-register] .ctv-hero__grid { grid-template-columns: 1fr; gap: 28px; padding: 28px 32px 34px; }
+  [data-collaborator-register] .ctv-benefit-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  [data-collaborator-register] .ctv-steps__list { grid-template-columns: 1fr; gap: 22px; }
+  [data-collaborator-register] .ctv-steps__item { padding-left: 62px; min-height: 48px; }
+  [data-collaborator-register] .ctv-steps__num { position: absolute; top: 0; left: 0; }
+  [data-collaborator-register] .ctv-steps__item h3 { margin-top: 0; padding-top: 10px; }
+  [data-collaborator-register] .ctv-steps__item:not(:last-child)::after { top: 52px; bottom: -24px; left: 21px; right: auto; width: 2px; height: auto; background: repeating-linear-gradient(180deg, #C69A2B 0 6px, transparent 6px 12px); }
+}
+@media (max-width: 767px) {
+  [data-collaborator-register] .ctv-container { padding: 0 16px; }
+  [data-collaborator-register] .ctv-hero { padding-top: 14px; }
+  [data-collaborator-register] .ctv-hero__card { border-radius: 20px; }
+  [data-collaborator-register] .ctv-hero__grid { gap: 22px; padding: 22px 18px 24px; }
+  [data-collaborator-register] .ctv-hero .ctv-crumbs { margin-bottom: 20px; }
+  [data-collaborator-register] .ctv-hero .ctv-eyebrow { font-size: 11px; letter-spacing: 0.14em; }
+  [data-collaborator-register] .ctv-hero .ctv-eyebrow::before { display: none; }
+  [data-collaborator-register] .ctv-hero__acts { flex-direction: column; align-items: stretch; }
+  [data-collaborator-register] .ctv-cta, [data-collaborator-register] .ctv-ghost { width: 100%; justify-content: center; }
+  [data-collaborator-register] .ctv-elig { padding: 24px 18px 18px; }
+  [data-collaborator-register] .ctv-cond__value { font-size: 24px; }
+  [data-collaborator-register] .ctv-benefits { padding-top: 44px; }
+  [data-collaborator-register] .ctv-benefit-grid { grid-template-columns: 1fr; }
+  [data-collaborator-register] .ctv-benefit { padding: 20px 18px 22px; }
+  [data-collaborator-register] .ctv-trust { justify-content: flex-start; padding: 14px 16px; }
+  [data-collaborator-register] .ctv-steps { padding-top: 38px; }
+  [data-collaborator-register] .ctv-terms { padding: 44px 16px 0; }
+}
+@media (max-width: 359px) {
+  [data-collaborator-register] .ctv-hero__title { font-size: 27px; }
+  [data-collaborator-register] .ctv-cta { padding-left: 18px; font-size: 14.5px; }
+}
+@media (max-width: 1023px) {
+  [data-collaborator-register] .ctv-promise__list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  [data-collaborator-register] .ctv-promise__list li:last-child { grid-column: 1 / -1; }
+  [data-collaborator-register] .ctv-earn { grid-template-columns: 1fr; gap: 26px; padding: 26px 24px; }
+}
+@media (max-width: 767px) {
+  [data-collaborator-register] .ctv-hero__quote { font-size: 17px; }
+  [data-collaborator-register] .ctv-promise { padding-top: 18px; }
+  [data-collaborator-register] .ctv-promise__list { grid-template-columns: 1fr; border-radius: 18px; }
+  [data-collaborator-register] .ctv-promise__list li { flex-direction: row; justify-content: flex-start; gap: 14px; padding: 14px 16px; text-align: left; }
+  [data-collaborator-register] .ctv-promise__icon { width: 44px; height: 44px; }
+  [data-collaborator-register] .ctv-promise__time { padding: 12px 18px; font-size: 18px; }
+  [data-collaborator-register] .ctv-promise__time b { font-size: 24px; }
+  [data-collaborator-register] .ctv-earn { padding: 22px 16px; border-radius: 20px; }
+  [data-collaborator-register] .ctv-earn__step p { font-size: 17.5px; }
+  [data-collaborator-register] .ctv-rate { min-height: 0; padding: 18px 12px; }
+  [data-collaborator-register] .ctv-rate__value { font-size: 44px; }
+  [data-collaborator-register] .ctv-subhead { margin-top: 30px; }
+}
+@media (max-width: 479px) {
+  [data-collaborator-register] .ctv-rates { grid-template-columns: 1fr; }
+  [data-collaborator-register] .ctv-rate--gold .ctv-rate__value::before { display: none; }
+}@media (prefers-reduced-motion: reduce) {
+  [data-collaborator-register] .ctv-cta:hover, [data-collaborator-register] .ctv-cta:focus-visible, [data-collaborator-register] .ctv-cta:active, [data-collaborator-register] .ctv-benefit:hover { transform: none; }
+  [data-collaborator-register] .ctv-cta:hover .icon, [data-collaborator-register] .ctv-cta:focus-visible .icon { transform: none; }
+}
+@media (forced-colors: active) {
+  [data-collaborator-register] .ctv-hero__card, [data-collaborator-register] .ctv-elig { border: 1px solid CanvasText; background: Canvas; box-shadow: none; }
+  [data-collaborator-register] .ctv-cta { border: 1px solid ButtonText; background: ButtonFace; color: ButtonText; box-shadow: none; text-shadow: none; }
+  [data-collaborator-register] .ctv-cta .icon { background: none; color: ButtonText; }
+  [data-collaborator-register] .ctv-cta::before, [data-collaborator-register] .ctv-cta::after { display: none; }
+  [data-collaborator-register] .ctv-meter { border: 1px solid CanvasText; background: Canvas; }
+  [data-collaborator-register] .ctv-meter > span { background: Highlight; }
+}
+@media print {
+  [data-collaborator-register] .ctv-hero, [data-collaborator-register] .ctv-promise, [data-collaborator-register] .ctv-benefits, [data-collaborator-register] .ctv-steps, [data-collaborator-register] .ctv-termshead { display: none !important; }
+  [data-collaborator-register] .ctv-terms { padding: 0; }
+}
+</style>
 </head>
 <body>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
   <symbol id="i-chev-l" viewBox="0 0 24 24"><path d="M14 6.5L8.5 12l5.5 5.5"/></symbol>
   <symbol id="i-up" viewBox="0 0 24 24"><path d="M12 19V6M6.5 11.5L12 6l5.5 5.5"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l7 3v5.5c0 4.2-2.8 7.4-7 9-4.2-1.6-7-4.8-7-9V6l7-3z"/><path d="M9 12l2.2 2.2L15.5 10"/></symbol>
+  <symbol id="i-percent" viewBox="0 0 24 24"><path d="M19 5L5 19"/><circle cx="7.2" cy="7.2" r="2.4"/><circle cx="16.8" cy="16.8" r="2.4"/></symbol>
+  <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></symbol>
+  <symbol id="i-image" viewBox="0 0 24 24"><rect x="3.5" y="4.5" width="17" height="15" rx="2.5"/><circle cx="9" cy="10" r="1.6"/><path d="M4.5 17l5-4.5 3.5 3 3-2.5 3.5 3.5"/></symbol>
+  <symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 19.5h16"/><path d="M7 16v-5M12 16V6M17 16v-8"/></symbol>
+  <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="4" y="5.5" width="16" height="14" rx="2.5"/><path d="M4 10h16M8.5 3.5v4M15.5 3.5v4"/><path d="M9 14.5l2 2 4-4"/></symbol>
+  <symbol id="i-gift" viewBox="0 0 24 24"><rect x="4" y="9.5" width="16" height="10.5" rx="2"/><path d="M12 9.5V20M4 13.5h16"/><path d="M12 9.5C9.5 9.5 8 8.2 8 6.8S9.2 4.5 10.6 5c1.2.5 1.4 2.4 1.4 4.5zM12 9.5c2.5 0 4-1.3 4-2.7S14.8 4.5 13.4 5c-1.2.5-1.4 2.4-1.4 4.5z"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="10.5" width="14" height="9.5" rx="2.2"/><path d="M8.5 10.5V8a3.5 3.5 0 0 1 7 0v2.5"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></symbol>
+  <symbol id="i-wallet" viewBox="0 0 24 24"><rect x="3.5" y="6.5" width="17" height="12" rx="2.5"/><path d="M3.5 10h17"/><circle cx="16.5" cy="14.3" r="1"/></symbol>
+  <symbol id="i-box" viewBox="0 0 24 24"><path d="M4 8l8-4 8 4v8l-8 4-8-4V8z"/><path d="M4 8l8 4 8-4M12 12v8"/></symbol>
+  <symbol id="i-book" viewBox="0 0 24 24"><path d="M4 5.5C6 4.5 9 4.5 12 6c3-1.5 6-1.5 8-.5v13c-2-1-5-1-8 .5-3-1.5-6-1.5-8-.5v-13z"/><path d="M12 6v13"/></symbol>
+  <symbol id="i-chat" viewBox="0 0 24 24"><path d="M5 6.5h14A1.5 1.5 0 0 1 20.5 8v8a1.5 1.5 0 0 1-1.5 1.5h-8l-4 3v-3H5A1.5 1.5 0 0 1 3.5 16V8A1.5 1.5 0 0 1 5 6.5z"/><path d="M8.5 11.5h.01M12 11.5h.01M15.5 11.5h.01"/></symbol>
+  <symbol id="i-cart-check" viewBox="0 0 24 24"><path d="M3 4h2.4l2.2 11h9.6l2-7.5H6.2"/><circle cx="9.5" cy="19" r="1.3"/><circle cx="16.5" cy="19" r="1.3"/><path d="M10 9.5l2 2 3.5-3.5"/></symbol>
 </svg>
 
 <!-- gf-shell:header:begin -->
@@ -1466,7 +1824,7 @@
 <header class="focus-header">
 <div class="focus-header__inner">
 <a class="focus-header__logo" aria-label="Ginsengfood – Trang chủ" href="trang-chu.html">
-<img src="../../public/home-webp-v1/logo-header-light.w558.webp" srcset="../../public/home-webp-v1/logo-header-light.w186.webp 186w, ../../public/home-webp-v1/logo-header-light.w372.webp 372w, ../../public/home-webp-v1/logo-header-light.w558.webp 558w" sizes="(max-width: 767px) 128px, 150px" alt="Ginsengfood · Y thực đồng nguyên" width="186" height="67" decoding="async">
+<img src="../../public/home-webp-v1/logo-header-v2.w360.webp" srcset="../../public/home-webp-v1/logo-header-v2.w120.webp 120w, ../../public/home-webp-v1/logo-header-v2.w240.webp 240w, ../../public/home-webp-v1/logo-header-v2.w360.webp 360w" sizes="(max-width: 767px) 128px, 150px" alt="Ginsengfood · Y thực đồng nguyên" width="186" height="67" decoding="async">
 </a>
 <div class="focus-header__actions">
 <nav id="localeDropdown" class="locale-dropdown" aria-label="Chọn ngôn ngữ">
@@ -1483,268 +1841,491 @@
 </header>
 <!-- gf-shell:header:end -->
 
-<main class="ctv-register" data-collaborator-register="true" id="noi-dung">
-  <!-- Đồng bộ UI với storefront /vi/collaborator/register (2026-10-12): cùng khung, chữ, thứ tự khối và kiểu dáng; dữ liệu mẫu giữ nguyên.
-       Chế độ xem (bản mẫu, chỉ ẩn/hiện khối tĩnh): ?che-do=khach | da-dang-ky | can-dong-y-lai | da-cham-dut và &noi-dung=pdf. -->
-  <div class="ctv-wrap">
-    <div class="ctv-toolbar">
-      <nav class="ctv-crumbs" aria-label="Đường dẫn">
-        <a href="trang-chu.html">Trang chủ</a><span aria-hidden="true">/</span>
-        <span aria-current="page">Đăng ký cộng tác viên</span>
-      </nav>
-      <button type="button" class="ctv-print" id="printBtn" data-content="text">In điều khoản</button>
-    </div>
+<main class="ctv-register" data-collaborator-register="true" id="noi-dung" data-kind="apply">
+  <!-- KHỞI NGHIỆP CÙNG SSAVIGROUP (thiết kế lại 2026-10-20, chủ dự án): PHÍA TRÊN là lời giới thiệu quyền lợi + lời mời đăng ký khi đủ điều kiện
+       (mua hàng tích lũy từ 2.000.000đ, số điện thoại đã xác minh); PHÍA DƯỚI mới là điều khoản hợp đồng đăng ký làm nhà khởi nghiệp (cộng tác viên).
+       Chỉ bản mẫu giao diện; không sửa web chính. Chữ điều khoản (10 Điều), mục lục và khu xác nhận giữ nguyên.
+       Chế độ xem (bản mẫu, chỉ ẩn/hiện khối tĩnh): ?che-do=khach | chua-du-dieu-kien | da-dang-ky | can-dong-y-lai | da-cham-dut và &noi-dung=pdf (không tham số = đủ điều kiện, chưa đăng ký). -->
 
-    <!-- Khối trạng thái phía trên tài liệu: vừa đăng ký xong / đã là cộng tác viên / cần đồng ý điều khoản mới -->
-    <section class="ctv-state" id="agreeDone" role="status" tabindex="-1" data-tone="ok" hidden>
-      <h2 class="ctv-state__title">Bạn đã là cộng tác viên</h2>
-      <p class="ctv-state__text">Bạn đã đồng ý điều khoản phiên bản 1.0.</p>
-      <p class="ctv-state__text">Để tạo link chia sẻ, mở một trang sản phẩm và bấm “Chia sẻ link sản phẩm”.</p>
-      <div class="ctv-state__acts">
-        <a class="ctv-btn ctv-btn--primary" href="trung-tam-cong-tac-vien.html">Mở Trung tâm cộng tác viên</a>
-        <a class="ctv-btn ctv-btn--outline" href="trang-chu.html#san-pham">Xem sản phẩm</a>
-        <a class="ctv-btn ctv-btn--outline" href="../tai-khoan.html">Về trang Tài khoản</a>
-      </div>
-    </section>
-    <section class="ctv-state" role="status" tabindex="-1" data-tone="ok" data-only="registered" hidden>
-      <h2 class="ctv-state__title">Bạn là cộng tác viên</h2>
-      <p class="ctv-state__text">Bạn đã đồng ý điều khoản phiên bản 1.0.</p>
-      <p class="ctv-state__text">Để tạo link chia sẻ, mở một trang sản phẩm và bấm “Chia sẻ link sản phẩm”.</p>
-      <div class="ctv-state__acts">
-        <a class="ctv-btn ctv-btn--primary" href="trung-tam-cong-tac-vien.html">Mở Trung tâm cộng tác viên</a>
-        <a class="ctv-btn ctv-btn--outline" href="trang-chu.html#san-pham">Xem sản phẩm</a>
-        <a class="ctv-btn ctv-btn--outline" href="../tai-khoan.html">Về trang Tài khoản</a>
-      </div>
-    </section>
-    <section class="ctv-state" role="status" tabindex="-1" data-tone="warning" data-only="reaccept" hidden>
-      <h2 class="ctv-state__title">Điều khoản mới cần bạn đồng ý</h2>
-      <p class="ctv-state__text">Điều khoản mới đã áp dụng. Bạn cần đồng ý để tiếp tục dùng chức năng cộng tác viên.</p>
-    </section>
-
-    <article class="ctv-paper" aria-labelledby="ctv-paper-title" data-collaborator-terms="true">
-      <header class="ctv-paper__head">
-        <p class="ctv-paper__org">Ginsengfood</p>
-        <h1 class="ctv-paper__title" id="ctv-paper-title">Điều khoản chương trình Cộng tác viên</h1>
-        <p class="ctv-paper__meta"><span>Phiên bản 1.0</span><span>Hiệu lực từ ngày 01/09/2026</span></p>
-      </header>
-
-      <!-- Điều kiện đăng ký: người đủ điều kiện thấy hai dòng ✓ (người từng chấm dứt thấy thêm lời nhắc), khách thấy lời mời đăng nhập -->
-      <p class="ctv-was" data-collaborator-was-collaborator="true" data-only="terminated" hidden>Bạn từng là cộng tác viên; hoa hồng đã ghi nhận trước đây được giữ nguyên.</p>
-      <section class="ctv-conditions" id="dkConditions" aria-labelledby="ctv-conditions-title" data-collaborator-conditions="member" data-only="apply terminated">
-        <h2 class="ctv-conditions__title" id="ctv-conditions-title">Điều kiện đăng ký</h2>
-        <ul>
-          <li class="ctv-cond" data-met="true" data-condition="spend"><span aria-hidden="true" class="ctv-cond__mark">✓</span><span>Doanh số tích lũy: 2.500.000đ / 2.000.000đ</span></li>
-          <li class="ctv-cond" data-met="true" data-condition="phone"><span aria-hidden="true" class="ctv-cond__mark">✓</span><span>Số điện thoại đã xác minh</span></li>
-        </ul>
-      </section>
-      <section class="ctv-conditions" aria-labelledby="ctv-conditions-guest-title" data-collaborator-conditions="guest" data-only="guest" hidden>
-        <h2 class="ctv-conditions__title" id="ctv-conditions-guest-title">Điều kiện đăng ký</h2>
-        <div class="ctv-conditions__acts">
-          <p class="ctv-conditions__note" style="margin: 0">Đăng nhập để kiểm tra điều kiện</p>
-          <a class="ctv-btn ctv-btn--primary" href="../dang-nhap.html">Đăng nhập</a>
-        </div>
-      </section>
-
-      <!-- Chế độ văn bản: lời mở đầu, mục lục và từng điều -->
-      <div data-content="text">
-        <div class="ctv-doc ctv-doc--preamble">
-          <p>Điều khoản này quy định quyền và nghĩa vụ giữa Ginsengfood và thành viên tham gia chương trình Cộng tác viên. Vui lòng đọc kỹ toàn bộ nội dung trước khi xác nhận tham gia. Việc xác nhận ở cuối tài liệu được xem là bạn đã đọc, hiểu và đồng ý với toàn bộ điều khoản dưới đây.</p>
-        </div>
-
-        <nav class="ctv-contents" aria-labelledby="ctv-contents-title">
-          <h2 class="ctv-contents__title" id="ctv-contents-title">Mục lục</h2>
-          <ol>
-            <li><a href="#dieu-1">Điều 1. Giải thích từ ngữ</a></li>
-            <li><a href="#dieu-2">Điều 2. Điều kiện đăng ký</a></li>
-            <li><a href="#dieu-3">Điều 3. Link chia sẻ và mã giới thiệu</a></li>
-            <li><a href="#dieu-4">Điều 4. Ghi nhận đơn hàng và hoa hồng</a></li>
-            <li><a href="#dieu-5">Điều 5. Đối soát và chi trả</a></li>
-            <li><a href="#dieu-6">Điều 6. Quy tắc quảng bá</a></li>
-            <li><a href="#dieu-7">Điều 7. Bảo mật thông tin</a></li>
-            <li><a href="#dieu-8">Điều 8. Tạm ngưng và chấm dứt</a></li>
-            <li><a href="#dieu-9">Điều 9. Sửa đổi điều khoản</a></li>
-            <li><a href="#dieu-10">Điều 10. Liên hệ</a></li>
-          </ol>
-        </nav>
-
-        <section class="ctv-section" id="dieu-1" tabindex="-1">
-          <div class="ctv-doc">
-            <h2>Điều 1. Giải thích từ ngữ</h2>
-            <p>Trong điều khoản này, các từ ngữ dưới đây được hiểu như sau:</p>
-            <p>1.1. “Cộng tác viên” là thành viên Ginsengfood đủ điều kiện, đã đồng ý với điều khoản này và được cấp link chia sẻ riêng.</p>
-            <p>1.2. “Link chia sẻ” là đường dẫn tới sản phẩm trên website Ginsengfood có gắn mã giới thiệu của Cộng tác viên.</p>
-            <p>1.3. “Mã giới thiệu” là chuỗi ký tự ngẫu nhiên do hệ thống tạo, dùng để nhận biết đơn hàng phát sinh từ link chia sẻ.</p>
-            <p>1.4. “Đơn hợp lệ” là đơn mua qua link chia sẻ, đã giao thành công và không bị huỷ, trả hàng hoặc hoàn tiền.</p>
-            <p>1.5. “Hoa hồng chờ xác nhận” là hoa hồng tạm tính của đơn đang xử lý, đang giao hoặc còn trong thời hạn đổi trả.</p>
-            <p>1.6. “Hoa hồng đã xác nhận” là hoa hồng của đơn hợp lệ, đã qua đối soát và sẵn sàng chi trả trong kỳ.</p>
-          </div>
-        </section>
-
-        <section class="ctv-section" id="dieu-2" tabindex="-1">
-          <div class="ctv-doc">
-            <h2>Điều 2. Điều kiện đăng ký</h2>
-            <p>2.1. Thành viên được đăng ký tham gia chương trình khi đáp ứng đủ các điều kiện sau:</p>
-            <ol>
-              <li>a) Có tài khoản thành viên Ginsengfood và đã xác minh số điện thoại;</li>
-              <li>b) Đã đạt hạng thành viên từ Silver trở lên và hạng đang còn hiệu lực;</li>
-              <li>c) Có doanh số tích lũy hợp lệ trên 2.000.000đ, chỉ tính các đơn đã giao thành công, không tính đơn bị huỷ hoặc trả hàng;</li>
-              <li>d) Đủ 18 tuổi và cung cấp tài khoản ngân hàng chính chủ, trùng họ tên với tài khoản thành viên.</li>
-            </ol>
-            <p>2.2. Mỗi thành viên chỉ được đăng ký một tài khoản Cộng tác viên.</p>
-            <p>2.3. Ginsengfood có quyền từ chối đăng ký nếu thông tin cung cấp không chính xác hoặc có dấu hiệu gian lận.</p>
-          </div>
-        </section>
-
-        <section class="ctv-section" id="dieu-3" tabindex="-1">
-          <div class="ctv-doc">
-            <h2>Điều 3. Link chia sẻ và mã giới thiệu</h2>
-            <p>3.1. Sau khi được duyệt, link chia sẻ của Cộng tác viên được cung cấp trong trang Tài khoản, mục Cộng tác viên.</p>
-            <p>3.2. Mã giới thiệu là chuỗi ngẫu nhiên, không chứa họ tên, email hoặc số điện thoại của Cộng tác viên.</p>
-            <p>3.3. Đơn hàng được ghi nhận cho Cộng tác viên khi khách truy cập qua link chia sẻ và đặt hàng thành công. Trường hợp khách truy cập qua nhiều link khác nhau, đơn hàng được ghi nhận cho link được truy cập gần nhất.</p>
-            <p>3.4. Đơn hàng do Cộng tác viên tự đặt qua link của chính mình không được tính hoa hồng.</p>
-            <p>3.5. Link chia sẻ chỉ dành cho Cộng tác viên sử dụng; không được mua bán, chuyển nhượng hoặc gắn vào trang giả mạo, trang che giấu địa chỉ đích.</p>
-          </div>
-        </section>
-
-        <section class="ctv-section" id="dieu-4" tabindex="-1">
-          <div class="ctv-doc">
-            <h2>Điều 4. Ghi nhận đơn hàng và hoa hồng</h2>
-            <p>4.1. Hoa hồng được ghi nhận theo trình tự sau:</p>
-            <ol>
-              <li>a) Đơn hàng phát sinh từ link chia sẻ được ghi nhận ở trạng thái hoa hồng chờ xác nhận;</li>
-              <li>b) Khi đơn giao thành công, hết thời hạn đổi trả và qua đối soát, hoa hồng chuyển sang trạng thái đã xác nhận;</li>
-              <li>c) Hoa hồng đã xác nhận được chi trả theo kỳ quy định tại Điều 5.</li>
-            </ol>
-            <p>4.2. Tỷ lệ hoa hồng được công bố trong mục Cộng tác viên và có thể khác nhau giữa giá bán 24/7 và phiên Giờ Vàng Tri Ân.</p>
-            <p>4.3. Hoa hồng được tính trên giá trị hàng hoá khách hàng thực trả, không bao gồm phí vận chuyển.</p>
-            <p>4.4. Không tính hoa hồng đối với:</p>
-            <ol>
-              <li>a) Đơn bị huỷ, trả hàng hoặc hoàn tiền. Trường hợp trả một phần, hoa hồng được điều chỉnh theo phần hàng giữ lại;</li>
-              <li>b) Đơn do Cộng tác viên tự đặt qua link của chính mình;</li>
-              <li>c) Đơn phát sinh từ hành vi gian lận hoặc từ hoạt động quảng bá vi phạm Điều 6.</li>
-            </ol>
-            <p>4.5. Hoa hồng chỉ phát sinh từ đơn mua trực tiếp qua link chia sẻ của Cộng tác viên. Chương trình không thu phí tham gia và không tính hoa hồng nhiều tầng từ việc giới thiệu người khác làm Cộng tác viên. Ginsengfood không cam kết mức hoa hồng hoặc lợi nhuận.</p>
-            <p>4.6. Khách hàng mua qua link chia sẻ được áp dụng một quyền lợi theo thứ tự ưu tiên của chính sách; ưu đãi không cộng dồn với quyền lợi thành viên hoặc chương trình khuyến mãi khác.</p>
-          </div>
-        </section>
-
-        <section class="ctv-section" id="dieu-5" tabindex="-1">
-          <div class="ctv-doc">
-            <h2>Điều 5. Đối soát và chi trả</h2>
-            <p>5.1. Lịch đối soát và chi trả hoa hồng được quy định như sau:</p>
-            <ul>
-              <li><strong>Kỳ đối soát:</strong> Từ ngày 01 đến ngày cuối cùng của mỗi tháng.</li>
-              <li><strong>Công bố số liệu:</strong> Trước ngày 05 của tháng kế tiếp, trong mục Cộng tác viên, gồm đơn hợp lệ, hoa hồng chờ xác nhận và hoa hồng đã xác nhận.</li>
-              <li><strong>Chi trả hoa hồng:</strong> Trước ngày 15 của tháng kế tiếp, vào tài khoản ngân hàng chính chủ đã đăng ký.</li>
-              <li><strong>Phản hồi số liệu:</strong> Trong vòng 30 ngày kể từ ngày công bố số liệu.</li>
-            </ul>
-            <p>5.2. Ginsengfood thực hiện khấu trừ và kê khai thuế theo quy định pháp luật hiện hành trước khi chi trả hoa hồng.</p>
-            <p>5.3. Sau thời hạn phản hồi, số liệu đã công bố được xem là số liệu chính thức của kỳ đối soát.</p>
-          </div>
-        </section>
-
-        <section class="ctv-section" id="dieu-6" tabindex="-1">
-          <div class="ctv-doc">
-            <h2>Điều 6. Quy tắc quảng bá</h2>
-            <p>6.1. Cộng tác viên được phép:</p>
-            <ol>
-              <li>a) Chia sẻ link trên trang cá nhân, nhóm hoặc kênh do mình quản lý;</li>
-              <li>b) Sử dụng hình ảnh và nội dung trong bộ tài nguyên chính thức của Ginsengfood;</li>
-              <li>c) Giới thiệu sản phẩm với đúng giá, ưu đãi và thông tin đang hiển thị trên website.</li>
-            </ol>
-            <p>6.2. Khi giới thiệu sản phẩm, Cộng tác viên phải nêu rõ mình là Cộng tác viên của Ginsengfood.</p>
-            <p>6.3. Cộng tác viên không được:</p>
-            <ol>
-              <li>a) Quảng cáo sản phẩm có tác dụng chữa bệnh hoặc thay thế thuốc chữa bệnh;</li>
-              <li>b) Gửi tin nhắn, bình luận hàng loạt hoặc chia sẻ link ở nơi chưa được phép;</li>
-              <li>c) Giả danh Ginsengfood, nhân viên hoặc cửa hàng chính thức;</li>
-              <li>d) Chạy quảng cáo sử dụng tên thương hiệu Ginsengfood hoặc tên sản phẩm làm từ khoá;</li>
-              <li>đ) Tự đặt mã giảm giá, hứa tặng quà hoặc hoàn tiền ngoài chính sách;</li>
-              <li>e) Mời người khác tham gia bằng cách hứa hẹn thu nhập hoặc lợi nhuận.</li>
-            </ol>
-          </div>
-        </section>
-
-        <section class="ctv-section" id="dieu-7" tabindex="-1">
-          <div class="ctv-doc">
-            <h2>Điều 7. Bảo mật thông tin</h2>
-            <p>7.1. Cộng tác viên chỉ được xem mã đơn rút gọn, trạng thái đơn và hoa hồng tương ứng; không được xem họ tên, số điện thoại hoặc địa chỉ của người mua.</p>
-            <p>7.2. Link chia sẻ và mã giới thiệu không chứa thông tin cá nhân của Cộng tác viên.</p>
-            <p>7.3. Cộng tác viên không được thu thập, lưu trữ hoặc sử dụng thông tin khách hàng cho mục đích khác ngoài việc giới thiệu sản phẩm.</p>
-            <p>7.4. Cộng tác viên có trách nhiệm bảo mật thông tin đăng nhập; mọi hoạt động phát sinh từ tài khoản được xem là do Cộng tác viên thực hiện.</p>
-          </div>
-        </section>
-
-        <section class="ctv-section" id="dieu-8" tabindex="-1">
-          <div class="ctv-doc">
-            <h2>Điều 8. Tạm ngưng và chấm dứt</h2>
-            <p>8.1. Trường hợp Cộng tác viên vi phạm Điều 6 hoặc Điều 7, Ginsengfood có quyền tạm ngưng link chia sẻ, huỷ hoa hồng của các đơn liên quan hoặc chấm dứt tư cách Cộng tác viên.</p>
-            <p>8.2. Trường hợp hạng thành viên hết hiệu lực sau 60 ngày ân hạng, link chia sẻ được tạm ngưng cho đến khi Cộng tác viên đáp ứng lại điều kiện tại Điều 2.</p>
-            <p>8.3. Cộng tác viên có thể chấm dứt tham gia bất kỳ lúc nào trong mục Cộng tác viên. Hoa hồng đã xác nhận trước thời điểm chấm dứt vẫn được chi trả trong kỳ kế tiếp.</p>
-          </div>
-        </section>
-
-        <section class="ctv-section" id="dieu-9" tabindex="-1">
-          <div class="ctv-doc">
-            <h2>Điều 9. Sửa đổi điều khoản</h2>
-            <p>9.1. Ginsengfood có thể sửa đổi điều khoản khi chính sách chương trình hoặc quy định pháp luật thay đổi. Nội dung sửa đổi được thông báo qua email và trong tài khoản ít nhất 07 ngày trước ngày áp dụng.</p>
-            <p>9.2. Việc Cộng tác viên tiếp tục sử dụng link chia sẻ sau ngày áp dụng được xem là đồng ý với điều khoản sửa đổi. Trường hợp không đồng ý, Cộng tác viên có thể chấm dứt tham gia theo khoản 8.3.</p>
-          </div>
-        </section>
-
-        <section class="ctv-section" id="dieu-10" tabindex="-1">
-          <div class="ctv-doc">
-            <h2>Điều 10. Liên hệ</h2>
-            <p>10.1. Mọi thắc mắc về chương trình, số liệu hoa hồng hoặc link chia sẻ, vui lòng liên hệ Ginsengfood qua <a href="#">Zalo</a> hoặc tổng đài <a href="#">1900 1234</a>.</p>
-          </div>
-        </section>
-      </div>
-
-      <!-- Chế độ tệp PDF: thẻ mở/tải hợp đồng (máy tính nhúng khung PDF nếu trình duyệt có trình xem) -->
-      <section class="ctv-pdf" data-collaborator-embed="card" data-content="pdf" hidden>
-        <div class="ctv-pdf-card" data-collaborator-pdf-card="true">
-          <span aria-hidden="true" class="ctv-pdf-card__icon">PDF</span>
-          <div class="ctv-pdf-card__body">
-            <h2 class="ctv-pdf-card__title">Điều khoản dạng tệp PDF</h2>
-            <p class="ctv-pdf-card__meta">Phiên bản 1.0&nbsp;· Hiệu lực từ ngày 01/09/2026&nbsp;· Dung lượng 2 MB</p>
-            <p class="ctv-pdf-card__hint">Tệp PDF mở toàn màn hình ở tab riêng để bạn đọc dễ hơn. Đọc xong, quay lại trang này để xác nhận.</p>
-          </div>
-          <div class="ctv-pdf__acts">
-            <a class="ctv-btn ctv-btn--primary" href="#" rel="noopener" aria-label="Đọc điều khoản (PDF), mở ở tab mới">Đọc điều khoản (PDF)</a>
-            <a class="ctv-btn ctv-btn--outline" href="#" download aria-label="Tải xuống tệp PDF điều khoản (2 MB)">Tải xuống</a>
-          </div>
-        </div>
-      </section>
-
-      <p class="ctv-paper__end">Điều khoản chương trình Cộng tác viên · Phiên bản 1.0 · Hiệu lực từ ngày 01/09/2026</p>
-
-      <!-- Khu xác nhận: khách chỉ có "Để sau"; người đã là cộng tác viên không có khu này -->
-      <section class="ctv-confirm" id="xac-nhan" aria-labelledby="ctv-confirm-title" data-collaborator-confirm="apply" data-only="apply terminated reaccept">
-        <div id="agreeForm">
-          <h2 class="ctv-confirm__title" id="ctv-confirm-title">Xác nhận của cộng tác viên</h2>
-          <p class="ctv-confirm__lead">Bằng việc đánh dấu các mục dưới đây, tôi xác nhận:</p>
-          <ul class="ctv-checks">
-            <li><label class="ctv-check" id="checkTerms"><input type="checkbox" id="agTerms"><span>Tôi đã đọc, hiểu và đồng ý với toàn bộ Điều khoản chương trình Cộng tác viên, phiên bản 1.0.</span></label></li>
-            <li><label class="ctv-check" id="checkHonest"><input type="checkbox" id="agHonest"><span>Tôi cam kết quảng bá trung thực và không đưa thông tin sai về công dụng sản phẩm.</span></label></li>
-          </ul>
-          <div class="ctv-confirm__foot">
-            <p class="ctv-hint" id="agHint" aria-live="polite">Còn 2 mục cần đánh dấu để tiếp tục.</p>
-            <div class="ctv-acts">
-              <a class="ctv-btn ctv-btn--outline" href="trang-chu.html">Để sau</a>
-              <button type="button" class="ctv-btn ctv-btn--outline" id="agDecline" data-only="apply terminated">Không đồng ý</button>
-              <button type="button" class="ctv-btn ctv-btn--primary" id="agSubmit" aria-disabled="true" aria-describedby="agHint"><span data-only="apply terminated">Đồng ý và đăng ký</span><span data-only="reaccept" hidden>Đồng ý</span></button>
+  <!-- ===== 1. GIỚI THIỆU + MỜI ĐĂNG KÝ ===== -->
+  <section class="ctv-hero" aria-labelledby="ctv-hero-title">
+    <div class="ctv-container">
+      <div class="ctv-hero__card">
+        <div class="ctv-hero__grid">
+          <div class="ctv-hero__copy">
+            <nav class="ctv-crumbs" aria-label="Đường dẫn">
+              <a href="trang-chu.html">Trang chủ</a><span aria-hidden="true">/</span>
+              <span aria-current="page">Khởi nghiệp cùng Ssavigroup</span>
+            </nav>
+            <p class="ctv-eyebrow">Chương trình đối tác khởi nghiệp</p>
+            <h1 class="ctv-hero__title" id="ctv-hero-title">Khởi nghiệp làm giàu và tự&nbsp;hào cùng Ssavigroup</h1>
+            <p class="ctv-hero__quote">Vì cuộc sống tốt đẹp hơn cho người dân vùng cát biển và vì sức khoẻ cộng đồng</p>
+            <div class="ctv-path">
+              <p class="ctv-path__lead">Chỉ với Facebook hoặc Zalo của bạn</p>
+              <ol class="ctv-path__steps">
+                <li>Giới thiệu sản phẩm</li>
+                <li>Gia tăng thu nhập</li>
+                <li>Làm chủ tài chính</li>
+              </ol>
+            </div>
+            <!-- Lời mời và nút theo trạng thái của người dùng -->
+            <div class="ctv-hero__cta" data-only="apply">
+              <p class="ctv-hero__invite"><strong>Bạn đã đủ điều kiện.</strong> Đăng ký ngay để nhận link cửa hàng riêng và bắt đầu nhận hoa hồng từ đơn hợp lệ.</p>
+              <div class="ctv-hero__acts">
+                <a class="ctv-cta" href="#dieu-khoan">Đăng ký làm nhà khởi nghiệp<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+                <a class="ctv-ghost" href="#quyen-loi">Xem quyền lợi</a>
+              </div>
+              <p class="ctv-hero__hint">Bạn sẽ đọc điều khoản hợp đồng và xác nhận ở bên dưới.</p>
+            </div>
+            <div class="ctv-hero__cta" data-only="unmet" hidden>
+              <p class="ctv-hero__invite"><strong>Chỉ còn một bước nữa.</strong> Mua hàng tích lũy đủ từ 2.000.000đ để mở quyền đăng ký làm nhà khởi nghiệp.</p>
+              <div class="ctv-hero__acts">
+                <a class="ctv-cta" href="trang-chu.html#san-pham">Mua sắm để tích lũy<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+                <a class="ctv-ghost" href="#dieu-khoan">Đọc điều khoản</a>
+              </div>
+            </div>
+            <div class="ctv-hero__cta" data-only="guest" hidden>
+              <p class="ctv-hero__invite"><strong>Bạn đã đủ điều kiện chưa?</strong> Đăng nhập để kiểm tra mua hàng tích lũy và số điện thoại của bạn.</p>
+              <div class="ctv-hero__acts">
+                <a class="ctv-cta" href="../dang-nhap.html">Đăng nhập để kiểm tra<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+                <a class="ctv-ghost" href="../dang-ky.html">Tạo tài khoản</a>
+              </div>
+            </div>
+            <div class="ctv-hero__cta" data-only="registered" hidden>
+              <p class="ctv-hero__invite"><strong>Bạn đã là nhà khởi nghiệp của Ssavigroup.</strong> Mở Trung tâm cộng tác viên để lấy link cửa hàng và theo dõi hoa hồng.</p>
+              <div class="ctv-hero__acts">
+                <a class="ctv-cta" href="trung-tam-cong-tac-vien.html">Mở Trung tâm cộng tác viên<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+                <a class="ctv-ghost" href="trang-chu.html#san-pham">Xem sản phẩm</a>
+              </div>
+            </div>
+            <div class="ctv-hero__cta" data-only="reaccept" hidden>
+              <p class="ctv-hero__invite"><strong>Điều khoản mới đã áp dụng.</strong> Bạn cần đồng ý để tiếp tục dùng chức năng cộng tác viên.</p>
+              <div class="ctv-hero__acts">
+                <a class="ctv-cta" href="#xac-nhan">Xem và đồng ý<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+                <a class="ctv-ghost" href="#dieu-khoan">Đọc điều khoản</a>
+              </div>
+            </div>
+            <div class="ctv-hero__cta" data-only="terminated" hidden>
+              <p class="ctv-hero__invite"><strong>Chào mừng bạn quay lại.</strong> Bạn vẫn đủ điều kiện, đăng ký lại ngay để tiếp tục giới thiệu sản phẩm.</p>
+              <div class="ctv-hero__acts">
+                <a class="ctv-cta" href="#dieu-khoan">Đăng ký lại<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+                <a class="ctv-ghost" href="#quyen-loi">Xem quyền lợi</a>
+              </div>
             </div>
           </div>
-          <p class="ctv-alert" id="agNotice" role="status" hidden></p>
+
+          <!-- Thẻ điều kiện / trạng thái -->
+          <div class="ctv-hero__panel">
+            <section class="ctv-elig" id="dkConditions" data-only="apply terminated" data-collaborator-conditions="member" aria-labelledby="ctv-elig-title">
+              <header class="ctv-elig__head">
+                <h2 class="ctv-elig__title" id="ctv-elig-title">Điều kiện đăng ký</h2>
+                <span class="ctv-badge" data-tone="ok"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>Bạn đã đủ điều kiện</span>
+              </header>
+              <p class="ctv-was" data-collaborator-was-collaborator="true" data-only="terminated" hidden>Bạn từng là cộng tác viên; hoa hồng đã ghi nhận trước đây được giữ nguyên.</p>
+              <ul class="ctv-elig__list">
+                <li class="ctv-cond" data-met="true" data-condition="spend">
+                  <span aria-hidden="true" class="ctv-cond__mark">✓</span>
+                  <div class="ctv-cond__body">
+                    <p class="ctv-cond__label">Mua hàng tích lũy</p>
+                    <p class="ctv-cond__value">2.500.000đ <span>/ 2.000.000đ</span></p>
+                    <div class="ctv-meter" role="progressbar" aria-label="Mua hàng tích lũy so với mốc 2.000.000đ" aria-valuemin="0" aria-valuemax="2000000" aria-valuenow="2000000" aria-valuetext="Đã đạt mốc 2.000.000đ, tích lũy 2.500.000đ"><span style="--pct: 100%"></span></div>
+                  </div>
+                </li>
+                <li class="ctv-cond" data-met="true" data-condition="phone"><span aria-hidden="true" class="ctv-cond__mark">✓</span><span>Số điện thoại đã xác minh</span></li>
+              </ul>
+              <p class="ctv-elig__foot">Chỉ tính đơn đã giao thành công, không tính đơn bị huỷ hoặc trả hàng.</p>
+            </section>
+            <section class="ctv-elig" data-only="unmet" data-collaborator-conditions="member" aria-labelledby="ctv-elig-unmet-title" hidden>
+              <header class="ctv-elig__head">
+                <h2 class="ctv-elig__title" id="ctv-elig-unmet-title">Điều kiện đăng ký</h2>
+                <span class="ctv-badge" data-tone="warn"><svg class="icon" aria-hidden="true"><use href="#i-clock"/></svg>Chưa đủ điều kiện</span>
+              </header>
+              <ul class="ctv-elig__list">
+                <li class="ctv-cond" data-met="false" data-condition="spend">
+                  <span aria-hidden="true" class="ctv-cond__mark">✗</span>
+                  <div class="ctv-cond__body">
+                    <p class="ctv-cond__label">Mua hàng tích lũy</p>
+                    <p class="ctv-cond__value">1.350.000đ <span>/ 2.000.000đ</span></p>
+                    <div class="ctv-meter" role="progressbar" aria-label="Mua hàng tích lũy so với mốc 2.000.000đ" aria-valuemin="0" aria-valuemax="2000000" aria-valuenow="1350000" aria-valuetext="1.350.000đ trên mốc 2.000.000đ"><span style="--pct: 67.5%"></span></div>
+                    <p class="ctv-cond__need">Bạn cần mua thêm 650.000đ để đăng ký.</p>
+                  </div>
+                </li>
+                <li class="ctv-cond" data-met="true" data-condition="phone"><span aria-hidden="true" class="ctv-cond__mark">✓</span><span>Số điện thoại đã xác minh</span></li>
+              </ul>
+              <p class="ctv-elig__foot">Chỉ tính đơn đã giao thành công, không tính đơn bị huỷ hoặc trả hàng.</p>
+            </section>
+            <section class="ctv-elig" data-only="guest" data-collaborator-conditions="guest" aria-labelledby="ctv-elig-guest-title" hidden>
+              <header class="ctv-elig__head">
+                <h2 class="ctv-elig__title" id="ctv-elig-guest-title">Điều kiện đăng ký</h2>
+                <span class="ctv-badge" data-tone="neutral"><svg class="icon" aria-hidden="true"><use href="#i-lock"/></svg>Chưa đăng nhập</span>
+              </header>
+              <p class="ctv-elig__lead">Đăng nhập để kiểm tra điều kiện</p>
+              <ul class="ctv-elig__list">
+                <li class="ctv-cond" data-met="pending" data-condition="spend"><span aria-hidden="true" class="ctv-cond__mark">○</span><span>Mua hàng tích lũy từ 2.000.000đ</span></li>
+                <li class="ctv-cond" data-met="pending" data-condition="phone"><span aria-hidden="true" class="ctv-cond__mark">○</span><span>Số điện thoại đã xác minh</span></li>
+              </ul>
+              <p class="ctv-elig__foot">Chỉ tính đơn đã giao thành công, không tính đơn bị huỷ hoặc trả hàng.</p>
+            </section>
+            <section class="ctv-elig" id="agreeDone" role="status" tabindex="-1" data-only="registered" aria-labelledby="agreeTitle" hidden>
+              <header class="ctv-elig__head">
+                <h2 class="ctv-elig__title" id="agreeTitle">Bạn là cộng tác viên</h2>
+                <span class="ctv-badge" data-tone="ok"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>Đã đăng ký</span>
+              </header>
+              <p class="ctv-elig__text">Bạn đã đồng ý điều khoản phiên bản 1.0.</p>
+              <p class="ctv-elig__text">Để lấy link chia sẻ, mở Trung tâm cộng tác viên và sao chép link cửa hàng của bạn.</p>
+            </section>
+            <section class="ctv-elig" data-only="reaccept" data-tone="warning" role="status" tabindex="-1" aria-labelledby="ctv-elig-reaccept-title" hidden>
+              <header class="ctv-elig__head">
+                <h2 class="ctv-elig__title" id="ctv-elig-reaccept-title">Điều khoản mới cần bạn đồng ý</h2>
+                <span class="ctv-badge" data-tone="warn"><svg class="icon" aria-hidden="true"><use href="#i-clock"/></svg>Cần đồng ý lại</span>
+              </header>
+              <p class="ctv-elig__text">Điều khoản mới đã áp dụng. Bạn cần đồng ý để tiếp tục dùng chức năng cộng tác viên.</p>
+            </section>
+          </div>
         </div>
-      </section>
-      <section class="ctv-confirm" data-collaborator-confirm="guest" data-only="guest" hidden>
-        <div class="ctv-acts">
-          <a class="ctv-btn ctv-btn--outline" href="trang-chu.html">Để sau</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 1b. ĐIỂM NỔI BẬT — chữ do chủ dự án cung cấp 2026-10-20 (đã sửa lỗi gõ: "facebok"→"Facebook", "hoạt"→"hoặc", "Ai"→"AI") ===== -->
+  <section class="ctv-promise" aria-label="Điểm nổi bật của chương trình">
+    <div class="ctv-container">
+      <ul class="ctv-promise__list">
+        <li><span class="ctv-promise__icon" aria-hidden="true"><svg class="icon"><use href="#i-wallet"/></svg></span>Không cần vốn</li>
+        <li><span class="ctv-promise__icon" aria-hidden="true"><svg class="icon"><use href="#i-box"/></svg></span>Không nhập hàng</li>
+        <li><span class="ctv-promise__icon" aria-hidden="true"><svg class="icon"><use href="#i-shield"/></svg></span>Không rủi ro</li>
+        <li><span class="ctv-promise__icon" aria-hidden="true"><svg class="icon"><use href="#i-book"/></svg></span>Được hỗ trợ đào tạo, hướng dẫn kinh doanh</li>
+        <li><span class="ctv-promise__icon" aria-hidden="true"><svg class="icon"><use href="#i-chat"/></svg></span>AI hỗ trợ tư vấn trực tiếp cho khách hàng của bạn</li>
+      </ul>
+      <p class="ctv-promise__time"><svg class="icon" aria-hidden="true"><use href="#i-clock"/></svg><span>Mỗi ngày chỉ cần <b>5 phút</b></span></p>
+    </div>
+  </section>
+  <!-- ===== 2. QUYỀN LỢI =====
+       Chữ ở khối này là NHÁP do thiết kế soạn từ chính điều khoản (Điều 3–8) và thẻ cộng tác viên ở trang chi tiết sản phẩm, chờ chủ dự án duyệt.
+       Cố ý KHÔNG ghi tỷ lệ hoa hồng và ngày đối soát/chi trả (Điều 4.5: không cam kết mức hoa hồng; mốc ngày 05/15 là nội dung mẫu). -->
+  <section class="ctv-benefits" id="quyen-loi" aria-labelledby="ctv-benefits-title">
+    <div class="ctv-container">
+      <header class="ctv-sectionhead">
+        <p class="ctv-eyebrow ctv-eyebrow--dark">Quyền lợi</p>
+        <h2 id="ctv-benefits-title">Quyền lợi của bạn</h2>
+      </header>
+      <div class="ctv-earn">
+        <ol class="ctv-earn__steps">
+          <li class="ctv-earn__step">
+            <span class="ctv-earn__icon" aria-hidden="true"><svg class="icon"><use href="#i-link"/></svg></span>
+            <p>Khi gửi link giới thiệu hoặc đăng video, bài viết lên tường nhà bạn</p>
+          </li>
+          <li class="ctv-earn__step">
+            <span class="ctv-earn__icon" aria-hidden="true"><svg class="icon"><use href="#i-cart-check"/></svg></span>
+            <p>Đơn hàng thành công, bạn được</p>
+          </li>
+        </ol>
+        <ul class="ctv-rates">
+          <li class="ctv-rate ctv-rate--day">
+            <p class="ctv-rate__kicker">Chiết khấu</p>
+            <p class="ctv-rate__value"><small>lên đến</small> 15%</p>
+            <p class="ctv-rate__prog">cho chương trình bán hàng 24/7</p>
+          </li>
+          <li class="ctv-rate ctv-rate--gold">
+            <p class="ctv-rate__kicker">Chiết khấu</p>
+            <p class="ctv-rate__value">10%</p>
+            <p class="ctv-rate__prog">cho chương trình Giờ Vàng</p>
+          </li>
+        </ul>
+      </div>
+      <p class="ctv-earn__note">“Chiết khấu” ở trang này chính là “hoa hồng” trong điều khoản. Tỷ lệ hiện hành được công bố trong Trung tâm cộng tác viên.</p>
+      <h3 class="ctv-subhead">Chi tiết quyền lợi</h3>
+      <ul class="ctv-benefit-grid">        <li class="ctv-benefit">
+          <span class="ctv-benefit__icon" aria-hidden="true"><svg class="icon"><use href="#i-percent"/></svg></span>
+          <h3>Cách tính chiết khấu</h3>
+          <p>Chiết khấu tính trên giá trị hàng hoá khách thực trả, không gồm phí vận chuyển. Tỷ lệ hiện hành được công bố trong Trung tâm cộng tác viên.</p>
+        </li>
+        <li class="ctv-benefit">
+          <span class="ctv-benefit__icon" aria-hidden="true"><svg class="icon"><use href="#i-link"/></svg></span>
+          <h3>Link cửa hàng riêng</h3>
+          <p>Nhận link và mã giới thiệu ngẫu nhiên của riêng bạn. Đơn khách đặt thành công qua link được ghi nhận cho bạn.</p>
+        </li>
+        <li class="ctv-benefit">
+          <span class="ctv-benefit__icon" aria-hidden="true"><svg class="icon"><use href="#i-image"/></svg></span>
+          <h3>Tài nguyên quảng bá chính thức</h3>
+          <p>Hình ảnh sản phẩm và bài viết mẫu sẵn dùng để bạn giới thiệu đúng giá, đúng thông tin.</p>
+        </li>
+        <li class="ctv-benefit">
+          <span class="ctv-benefit__icon" aria-hidden="true"><svg class="icon"><use href="#i-chart"/></svg></span>
+          <h3>Theo dõi minh bạch</h3>
+          <p>Xem đơn phát sinh từ link, hoa hồng chờ xác nhận và hoa hồng đã xác nhận ngay trong Trung tâm cộng tác viên.</p>
+        </li>
+        <li class="ctv-benefit">
+          <span class="ctv-benefit__icon" aria-hidden="true"><svg class="icon"><use href="#i-calendar"/></svg></span>
+          <h3>Đối soát và chi trả theo kỳ</h3>
+          <p>Số liệu được công bố hằng tháng; hoa hồng đã xác nhận được chi trả theo kỳ vào tài khoản ngân hàng chính chủ của bạn.</p>
+        </li>
+        <li class="ctv-benefit">
+          <span class="ctv-benefit__icon" aria-hidden="true"><svg class="icon"><use href="#i-gift"/></svg></span>
+          <h3>Quyền lợi cho khách của bạn</h3>
+          <p>Khách mua qua link của bạn được áp dụng một quyền lợi theo thứ tự ưu tiên của chính sách chương trình.</p>
+        </li>
+      </ul>
+      <ul class="ctv-trust">
+        <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>Không thu phí tham gia</li>
+        <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>Không hoa hồng nhiều tầng</li>
+        <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>Chấm dứt tham gia bất cứ lúc nào; hoa hồng đã xác nhận vẫn được chi trả</li>
+      </ul>
+      <p class="ctv-benefits__note">Hoa hồng chỉ phát sinh từ đơn hợp lệ mua trực tiếp qua link của bạn. Ginsengfood không cam kết mức hoa hồng hoặc lợi nhuận.</p>
+    </div>
+  </section>
+
+  <!-- ===== 3. BA BƯỚC BẮT ĐẦU ===== -->
+  <section class="ctv-steps" id="cac-buoc" aria-labelledby="ctv-steps-title">
+    <div class="ctv-container">
+      <header class="ctv-sectionhead">
+        <p class="ctv-eyebrow ctv-eyebrow--dark">Cách tham gia</p>
+        <h2 id="ctv-steps-title">Bắt đầu chỉ với 3 bước</h2>
+      </header>
+      <ol class="ctv-steps__list">
+        <li class="ctv-steps__item" data-step="1">
+          <span class="ctv-steps__num" aria-hidden="true">1</span>
+          <h3>Mua hàng tích lũy từ 2.000.000đ</h3>
+          <p>Chỉ tính đơn đã giao thành công; số điện thoại của bạn cần được xác minh.</p>
+          <span class="ctv-steps__tag">Bạn đang ở bước này</span>
+        </li>
+        <li class="ctv-steps__item" data-step="2">
+          <span class="ctv-steps__num" aria-hidden="true">2</span>
+          <h3>Đọc và đồng ý điều khoản</h3>
+          <p>Đọc điều khoản hợp đồng bên dưới, đánh dấu xác nhận rồi bấm “Đồng ý và đăng ký”.</p>
+          <span class="ctv-steps__tag">Bạn đang ở bước này</span>
+        </li>
+        <li class="ctv-steps__item" data-step="3">
+          <span class="ctv-steps__num" aria-hidden="true">3</span>
+          <h3>Nhận link và bắt đầu giới thiệu</h3>
+          <p>Mở Trung tâm cộng tác viên, lấy link cửa hàng riêng và tài nguyên quảng bá chính thức.</p>
+          <span class="ctv-steps__tag">Bạn đang ở bước này</span>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ===== 4. ĐIỀU KHOẢN HỢP ĐỒNG (bên dưới) ===== -->
+  <section class="ctv-terms" id="dieu-khoan" aria-labelledby="ctv-terms-title">
+    <div class="ctv-wrap">
+      <header class="ctv-termshead">
+        <div>
+          <p class="ctv-eyebrow ctv-eyebrow--dark">Điều khoản hợp đồng</p>
+          <h2 id="ctv-terms-title">Đăng ký làm nhà khởi nghiệp (cộng tác viên)</h2>
+          <p>Nhà khởi nghiệp Ssavigroup được gọi là “Cộng tác viên” trong điều khoản. Vui lòng đọc kỹ rồi xác nhận ở cuối tài liệu để hoàn tất đăng ký.</p>
         </div>
-      </section>
-    </article>
-  </div>
+        <button type="button" class="ctv-print" id="printBtn" data-content="text">In điều khoản</button>
+      </header>
+      <article class="ctv-paper" aria-labelledby="ctv-paper-title" data-collaborator-terms="true">
+        <header class="ctv-paper__head">
+          <p class="ctv-paper__org">Ginsengfood</p>
+          <h2 class="ctv-paper__title" id="ctv-paper-title">Điều khoản chương trình Cộng tác viên</h2>
+          <p class="ctv-paper__meta"><span>Phiên bản 1.0</span><span>Hiệu lực từ ngày 01/09/2026</span></p>
+        </header>
+
+        <!-- Điều kiện đăng ký đã chuyển lên thẻ bên phải khối giới thiệu ở đầu trang (id dkConditions); người từng chấm dứt thấy lời nhắc ngay trong thẻ đó. -->
+
+        <!-- Chế độ văn bản: lời mở đầu, mục lục và từng điều -->
+        <div data-content="text">
+          <div class="ctv-doc ctv-doc--preamble">
+            <p>Điều khoản này quy định quyền và nghĩa vụ giữa Ginsengfood và thành viên tham gia chương trình Cộng tác viên. Vui lòng đọc kỹ toàn bộ nội dung trước khi xác nhận tham gia. Việc xác nhận ở cuối tài liệu được xem là bạn đã đọc, hiểu và đồng ý với toàn bộ điều khoản dưới đây.</p>
+          </div>
+
+          <nav class="ctv-contents" aria-labelledby="ctv-contents-title">
+            <h2 class="ctv-contents__title" id="ctv-contents-title">Mục lục</h2>
+            <ol>
+              <li><a href="#dieu-1">Điều 1. Giải thích từ ngữ</a></li>
+              <li><a href="#dieu-2">Điều 2. Điều kiện đăng ký</a></li>
+              <li><a href="#dieu-3">Điều 3. Link chia sẻ và mã giới thiệu</a></li>
+              <li><a href="#dieu-4">Điều 4. Ghi nhận đơn hàng và hoa hồng</a></li>
+              <li><a href="#dieu-5">Điều 5. Đối soát và chi trả</a></li>
+              <li><a href="#dieu-6">Điều 6. Quy tắc quảng bá</a></li>
+              <li><a href="#dieu-7">Điều 7. Bảo mật thông tin</a></li>
+              <li><a href="#dieu-8">Điều 8. Tạm ngưng và chấm dứt</a></li>
+              <li><a href="#dieu-9">Điều 9. Sửa đổi điều khoản</a></li>
+              <li><a href="#dieu-10">Điều 10. Liên hệ</a></li>
+            </ol>
+          </nav>
+
+          <section class="ctv-section" id="dieu-1" tabindex="-1">
+            <div class="ctv-doc">
+              <h2>Điều 1. Giải thích từ ngữ</h2>
+              <p>Trong điều khoản này, các từ ngữ dưới đây được hiểu như sau:</p>
+              <p>1.1. “Cộng tác viên” là thành viên Ginsengfood đủ điều kiện, đã đồng ý với điều khoản này và được cấp link chia sẻ riêng.</p>
+              <p>1.2. “Link chia sẻ” là đường dẫn tới sản phẩm trên website Ginsengfood có gắn mã giới thiệu của Cộng tác viên.</p>
+              <p>1.3. “Mã giới thiệu” là chuỗi ký tự ngẫu nhiên do hệ thống tạo, dùng để nhận biết đơn hàng phát sinh từ link chia sẻ.</p>
+              <p>1.4. “Đơn hợp lệ” là đơn mua qua link chia sẻ, đã giao thành công và không bị huỷ, trả hàng hoặc hoàn tiền.</p>
+              <p>1.5. “Hoa hồng chờ xác nhận” là hoa hồng tạm tính của đơn đang xử lý, đang giao hoặc còn trong thời hạn đổi trả.</p>
+              <p>1.6. “Hoa hồng đã xác nhận” là hoa hồng của đơn hợp lệ, đã qua đối soát và sẵn sàng chi trả trong kỳ.</p>
+            </div>
+          </section>
+
+          <section class="ctv-section" id="dieu-2" tabindex="-1">
+            <div class="ctv-doc">
+              <h2>Điều 2. Điều kiện đăng ký</h2>
+              <p>2.1. Thành viên được đăng ký tham gia chương trình khi đáp ứng đủ các điều kiện sau:</p>
+              <ol>
+                <li>a) Có tài khoản thành viên Ginsengfood và đã xác minh số điện thoại;</li>
+                <li>b) Đã đạt hạng thành viên từ Silver trở lên và hạng đang còn hiệu lực;</li>
+                <li>c) Có doanh số tích lũy hợp lệ trên 2.000.000đ, chỉ tính các đơn đã giao thành công, không tính đơn bị huỷ hoặc trả hàng;</li>
+                <li>d) Đủ 18 tuổi và cung cấp tài khoản ngân hàng chính chủ, trùng họ tên với tài khoản thành viên.</li>
+              </ol>
+              <p>2.2. Mỗi thành viên chỉ được đăng ký một tài khoản Cộng tác viên.</p>
+              <p>2.3. Ginsengfood có quyền từ chối đăng ký nếu thông tin cung cấp không chính xác hoặc có dấu hiệu gian lận.</p>
+            </div>
+          </section>
+
+          <section class="ctv-section" id="dieu-3" tabindex="-1">
+            <div class="ctv-doc">
+              <h2>Điều 3. Link chia sẻ và mã giới thiệu</h2>
+              <p>3.1. Sau khi được duyệt, link chia sẻ của Cộng tác viên được cung cấp trong trang Tài khoản, mục Cộng tác viên.</p>
+              <p>3.2. Mã giới thiệu là chuỗi ngẫu nhiên, không chứa họ tên, email hoặc số điện thoại của Cộng tác viên.</p>
+              <p>3.3. Đơn hàng được ghi nhận cho Cộng tác viên khi khách truy cập qua link chia sẻ và đặt hàng thành công. Trường hợp khách truy cập qua nhiều link khác nhau, đơn hàng được ghi nhận cho link được truy cập gần nhất.</p>
+              <p>3.4. Đơn hàng do Cộng tác viên tự đặt qua link của chính mình không được tính hoa hồng.</p>
+              <p>3.5. Link chia sẻ chỉ dành cho Cộng tác viên sử dụng; không được mua bán, chuyển nhượng hoặc gắn vào trang giả mạo, trang che giấu địa chỉ đích.</p>
+            </div>
+          </section>
+
+          <section class="ctv-section" id="dieu-4" tabindex="-1">
+            <div class="ctv-doc">
+              <h2>Điều 4. Ghi nhận đơn hàng và hoa hồng</h2>
+              <p>4.1. Hoa hồng được ghi nhận theo trình tự sau:</p>
+              <ol>
+                <li>a) Đơn hàng phát sinh từ link chia sẻ được ghi nhận ở trạng thái hoa hồng chờ xác nhận;</li>
+                <li>b) Khi đơn giao thành công, hết thời hạn đổi trả và qua đối soát, hoa hồng chuyển sang trạng thái đã xác nhận;</li>
+                <li>c) Hoa hồng đã xác nhận được chi trả theo kỳ quy định tại Điều 5.</li>
+              </ol>
+              <p>4.2. Tỷ lệ hoa hồng được công bố trong mục Cộng tác viên và có thể khác nhau giữa giá bán 24/7 và phiên Giờ Vàng Tri Ân.</p>
+              <p>4.3. Hoa hồng được tính trên giá trị hàng hoá khách hàng thực trả, không bao gồm phí vận chuyển.</p>
+              <p>4.4. Không tính hoa hồng đối với:</p>
+              <ol>
+                <li>a) Đơn bị huỷ, trả hàng hoặc hoàn tiền. Trường hợp trả một phần, hoa hồng được điều chỉnh theo phần hàng giữ lại;</li>
+                <li>b) Đơn do Cộng tác viên tự đặt qua link của chính mình;</li>
+                <li>c) Đơn phát sinh từ hành vi gian lận hoặc từ hoạt động quảng bá vi phạm Điều 6.</li>
+              </ol>
+              <p>4.5. Hoa hồng chỉ phát sinh từ đơn mua trực tiếp qua link chia sẻ của Cộng tác viên. Chương trình không thu phí tham gia và không tính hoa hồng nhiều tầng từ việc giới thiệu người khác làm Cộng tác viên. Ginsengfood không cam kết mức hoa hồng hoặc lợi nhuận.</p>
+              <p>4.6. Khách hàng mua qua link chia sẻ được áp dụng một quyền lợi theo thứ tự ưu tiên của chính sách; ưu đãi không cộng dồn với quyền lợi thành viên hoặc chương trình khuyến mãi khác.</p>
+            </div>
+          </section>
+
+          <section class="ctv-section" id="dieu-5" tabindex="-1">
+            <div class="ctv-doc">
+              <h2>Điều 5. Đối soát và chi trả</h2>
+              <p>5.1. Lịch đối soát và chi trả hoa hồng được quy định như sau:</p>
+              <ul>
+                <li><strong>Kỳ đối soát:</strong> Từ ngày 01 đến ngày cuối cùng của mỗi tháng.</li>
+                <li><strong>Công bố số liệu:</strong> Trước ngày 05 của tháng kế tiếp, trong mục Cộng tác viên, gồm đơn hợp lệ, hoa hồng chờ xác nhận và hoa hồng đã xác nhận.</li>
+                <li><strong>Chi trả hoa hồng:</strong> Trước ngày 15 của tháng kế tiếp, vào tài khoản ngân hàng chính chủ đã đăng ký.</li>
+                <li><strong>Phản hồi số liệu:</strong> Trong vòng 30 ngày kể từ ngày công bố số liệu.</li>
+              </ul>
+              <p>5.2. Ginsengfood thực hiện khấu trừ và kê khai thuế theo quy định pháp luật hiện hành trước khi chi trả hoa hồng.</p>
+              <p>5.3. Sau thời hạn phản hồi, số liệu đã công bố được xem là số liệu chính thức của kỳ đối soát.</p>
+            </div>
+          </section>
+
+          <section class="ctv-section" id="dieu-6" tabindex="-1">
+            <div class="ctv-doc">
+              <h2>Điều 6. Quy tắc quảng bá</h2>
+              <p>6.1. Cộng tác viên được phép:</p>
+              <ol>
+                <li>a) Chia sẻ link trên trang cá nhân, nhóm hoặc kênh do mình quản lý;</li>
+                <li>b) Sử dụng hình ảnh và nội dung trong bộ tài nguyên chính thức của Ginsengfood;</li>
+                <li>c) Giới thiệu sản phẩm với đúng giá, ưu đãi và thông tin đang hiển thị trên website.</li>
+              </ol>
+              <p>6.2. Khi giới thiệu sản phẩm, Cộng tác viên phải nêu rõ mình là Cộng tác viên của Ginsengfood.</p>
+              <p>6.3. Cộng tác viên không được:</p>
+              <ol>
+                <li>a) Quảng cáo sản phẩm có tác dụng chữa bệnh hoặc thay thế thuốc chữa bệnh;</li>
+                <li>b) Gửi tin nhắn, bình luận hàng loạt hoặc chia sẻ link ở nơi chưa được phép;</li>
+                <li>c) Giả danh Ginsengfood, nhân viên hoặc cửa hàng chính thức;</li>
+                <li>d) Chạy quảng cáo sử dụng tên thương hiệu Ginsengfood hoặc tên sản phẩm làm từ khoá;</li>
+                <li>đ) Tự đặt mã giảm giá, hứa tặng quà hoặc hoàn tiền ngoài chính sách;</li>
+                <li>e) Mời người khác tham gia bằng cách hứa hẹn thu nhập hoặc lợi nhuận.</li>
+              </ol>
+            </div>
+          </section>
+
+          <section class="ctv-section" id="dieu-7" tabindex="-1">
+            <div class="ctv-doc">
+              <h2>Điều 7. Bảo mật thông tin</h2>
+              <p>7.1. Cộng tác viên chỉ được xem mã đơn rút gọn, trạng thái đơn và hoa hồng tương ứng; không được xem họ tên, số điện thoại hoặc địa chỉ của người mua.</p>
+              <p>7.2. Link chia sẻ và mã giới thiệu không chứa thông tin cá nhân của Cộng tác viên.</p>
+              <p>7.3. Cộng tác viên không được thu thập, lưu trữ hoặc sử dụng thông tin khách hàng cho mục đích khác ngoài việc giới thiệu sản phẩm.</p>
+              <p>7.4. Cộng tác viên có trách nhiệm bảo mật thông tin đăng nhập; mọi hoạt động phát sinh từ tài khoản được xem là do Cộng tác viên thực hiện.</p>
+            </div>
+          </section>
+
+          <section class="ctv-section" id="dieu-8" tabindex="-1">
+            <div class="ctv-doc">
+              <h2>Điều 8. Tạm ngưng và chấm dứt</h2>
+              <p>8.1. Trường hợp Cộng tác viên vi phạm Điều 6 hoặc Điều 7, Ginsengfood có quyền tạm ngưng link chia sẻ, huỷ hoa hồng của các đơn liên quan hoặc chấm dứt tư cách Cộng tác viên.</p>
+              <p>8.2. Trường hợp hạng thành viên hết hiệu lực sau 60 ngày ân hạng, link chia sẻ được tạm ngưng cho đến khi Cộng tác viên đáp ứng lại điều kiện tại Điều 2.</p>
+              <p>8.3. Cộng tác viên có thể chấm dứt tham gia bất kỳ lúc nào trong mục Cộng tác viên. Hoa hồng đã xác nhận trước thời điểm chấm dứt vẫn được chi trả trong kỳ kế tiếp.</p>
+            </div>
+          </section>
+
+          <section class="ctv-section" id="dieu-9" tabindex="-1">
+            <div class="ctv-doc">
+              <h2>Điều 9. Sửa đổi điều khoản</h2>
+              <p>9.1. Ginsengfood có thể sửa đổi điều khoản khi chính sách chương trình hoặc quy định pháp luật thay đổi. Nội dung sửa đổi được thông báo qua email và trong tài khoản ít nhất 07 ngày trước ngày áp dụng.</p>
+              <p>9.2. Việc Cộng tác viên tiếp tục sử dụng link chia sẻ sau ngày áp dụng được xem là đồng ý với điều khoản sửa đổi. Trường hợp không đồng ý, Cộng tác viên có thể chấm dứt tham gia theo khoản 8.3.</p>
+            </div>
+          </section>
+
+          <section class="ctv-section" id="dieu-10" tabindex="-1">
+            <div class="ctv-doc">
+              <h2>Điều 10. Liên hệ</h2>
+              <p>10.1. Mọi thắc mắc về chương trình, số liệu hoa hồng hoặc link chia sẻ, vui lòng liên hệ Ginsengfood qua <a href="#">Zalo</a> hoặc tổng đài <a href="#">1900 1234</a>.</p>
+            </div>
+          </section>
+        </div>
+
+        <!-- Chế độ tệp PDF: thẻ mở/tải hợp đồng (máy tính nhúng khung PDF nếu trình duyệt có trình xem) -->
+        <section class="ctv-pdf" data-collaborator-embed="card" data-content="pdf" hidden>
+          <div class="ctv-pdf-card" data-collaborator-pdf-card="true">
+            <span aria-hidden="true" class="ctv-pdf-card__icon">PDF</span>
+            <div class="ctv-pdf-card__body">
+              <h2 class="ctv-pdf-card__title">Điều khoản dạng tệp PDF</h2>
+              <p class="ctv-pdf-card__meta">Phiên bản 1.0&nbsp;· Hiệu lực từ ngày 01/09/2026&nbsp;· Dung lượng 2 MB</p>
+              <p class="ctv-pdf-card__hint">Tệp PDF mở toàn màn hình ở tab riêng để bạn đọc dễ hơn. Đọc xong, quay lại trang này để xác nhận.</p>
+            </div>
+            <div class="ctv-pdf__acts">
+              <a class="ctv-btn ctv-btn--primary" href="#" rel="noopener" aria-label="Đọc điều khoản (PDF), mở ở tab mới">Đọc điều khoản (PDF)</a>
+              <a class="ctv-btn ctv-btn--outline" href="#" download aria-label="Tải xuống tệp PDF điều khoản (2 MB)">Tải xuống</a>
+            </div>
+          </div>
+        </section>
+
+        <p class="ctv-paper__end">Điều khoản chương trình Cộng tác viên · Phiên bản 1.0 · Hiệu lực từ ngày 01/09/2026</p>
+
+        <!-- Khu xác nhận: khách chỉ có "Để sau"; người đã là cộng tác viên không có khu này -->
+        <section class="ctv-confirm" id="xac-nhan" aria-labelledby="ctv-confirm-title" data-collaborator-confirm="apply" data-only="apply unmet terminated reaccept">
+          <div id="agreeForm">
+            <h2 class="ctv-confirm__title" id="ctv-confirm-title">Xác nhận của cộng tác viên</h2>
+            <p class="ctv-confirm__lead">Bằng việc đánh dấu các mục dưới đây, tôi xác nhận:</p>
+            <ul class="ctv-checks">
+              <li><label class="ctv-check" id="checkTerms"><input type="checkbox" id="agTerms"><span>Tôi đã đọc, hiểu và đồng ý với toàn bộ Điều khoản chương trình Cộng tác viên, phiên bản 1.0.</span></label></li>
+              <li><label class="ctv-check" id="checkHonest"><input type="checkbox" id="agHonest"><span>Tôi cam kết quảng bá trung thực và không đưa thông tin sai về công dụng sản phẩm.</span></label></li>
+            </ul>
+            <div class="ctv-confirm__foot">
+              <p class="ctv-hint" id="agHint" aria-live="polite">Còn 2 mục cần đánh dấu để tiếp tục.</p>
+              <div class="ctv-acts">
+                <a class="ctv-btn ctv-btn--outline" href="trang-chu.html">Để sau</a>
+                <button type="button" class="ctv-btn ctv-btn--outline" id="agDecline" data-only="apply unmet terminated">Không đồng ý</button>
+                <button type="button" class="ctv-btn ctv-btn--primary" id="agSubmit" aria-disabled="true" aria-describedby="agHint"><span data-only="apply unmet terminated">Đồng ý và đăng ký</span><span data-only="reaccept" hidden>Đồng ý</span></button>
+              </div>
+            </div>
+            <p class="ctv-alert" id="agNotice" role="status" hidden></p>
+          </div>
+        </section>
+        <section class="ctv-confirm" data-collaborator-confirm="guest" data-only="guest" hidden>
+          <div class="ctv-acts">
+            <a class="ctv-btn ctv-btn--outline" href="trang-chu.html">Để sau</a>
+          </div>
+        </section>
+      </article>
+    </div>
+  </section>
 </main>
 
 <!-- gf-shell:footer:begin -->
@@ -1835,6 +2416,7 @@
   (function () {
     var readBar = document.getElementById('readBar');
     var toTop = document.getElementById('toTop');
+    var main = document.getElementById('noi-dung');
 
     /* Tiến độ đọc + nút lên đầu trang */
     var ticking = false;
@@ -1853,18 +2435,39 @@
     toTop.addEventListener('click', function () { window.scrollTo({ top: 0 }); });
     document.getElementById('printBtn').addEventListener('click', function () { window.print(); });
 
+    /* Chế độ xem (bản mẫu): ?che-do=khach | chua-du-dieu-kien | da-dang-ky | can-dong-y-lai | da-cham-dut và &noi-dung=pdf.
+       Chỉ ẩn/hiện các khối tĩnh có data-only / data-content, không đổi dữ liệu; không tham số = đủ điều kiện, chưa đăng ký. */
+    var params = new URLSearchParams(window.location.search);
+    var kind = { 'khach': 'guest', 'chua-du-dieu-kien': 'unmet', 'da-dang-ky': 'registered', 'can-dong-y-lai': 'reaccept', 'da-cham-dut': 'terminated' }[params.get('che-do')] || 'apply';
+    var content = params.get('noi-dung') === 'pdf' ? 'pdf' : 'text';
+
     /* Trình diễn các trạng thái giao diện của trang chính; không ghi quyết định vào phiên hay máy chủ. */
     var boxes = [document.getElementById('agTerms'), document.getElementById('agHonest')];
     var submit = document.getElementById('agSubmit'), hint = document.getElementById('agHint');
     var form = document.getElementById('agreeForm'), done = document.getElementById('agreeDone');
     var decline = document.getElementById('agDecline'), notice = document.getElementById('agNotice');
+    var INELIGIBLE = 'Bạn chưa đủ điều kiện đăng ký nên chưa thể đồng ý.';
+    /* Ba bước bắt đầu: bước đã xong (dấu ✓) và bước người dùng đang ở (nhãn "Bạn đang ở bước này"), theo trạng thái. */
+    var STEP_STATE = { apply: { done: [1], now: 2 }, unmet: { done: [], now: 1 }, guest: { done: [], now: 0 }, registered: { done: [1, 2], now: 3 }, reaccept: { done: [1], now: 2 }, terminated: { done: [1], now: 2 } };
     function missing() { return boxes.filter(function (b) { return !b.checked; }); }
     function sync() {
-      var n = missing().length;
-      submit.setAttribute('aria-disabled', n ? 'true' : 'false');
+      var n = missing().length, unmet = kind === 'unmet';
+      submit.setAttribute('aria-disabled', (n || unmet) ? 'true' : 'false');
       hint.classList.remove('is-error');
-      hint.classList.toggle('is-ready', !n);
-      hint.textContent = n ? 'Còn ' + n + ' mục cần đánh dấu để tiếp tục.' : 'Đã đánh dấu đủ, bấm để tiếp tục.';
+      hint.classList.toggle('is-ready', !n && !unmet);
+      hint.textContent = unmet ? INELIGIBLE : (n ? 'Còn ' + n + ' mục cần đánh dấu để tiếp tục.' : 'Đã đánh dấu đủ, bấm để tiếp tục.');
+    }
+    function applyKind(k) {
+      kind = k;
+      main.setAttribute('data-kind', k);
+      [].forEach.call(document.querySelectorAll('[data-only]'), function (el) { el.hidden = el.getAttribute('data-only').split(' ').indexOf(k) < 0; });
+      var st = STEP_STATE[k] || STEP_STATE.apply;
+      [].forEach.call(document.querySelectorAll('.ctv-steps__item'), function (li) {
+        var n = +li.getAttribute('data-step');
+        li.classList.toggle('is-done', st.done.indexOf(n) >= 0);
+        li.classList.toggle('is-now', st.now === n);
+      });
+      sync();
     }
     boxes.forEach(function (b) {
       b.addEventListener('change', function () { if (b.checked) b.closest('.ctv-check').classList.remove('is-invalid'); sync(); });
@@ -1875,6 +2478,11 @@
     });
     submit.addEventListener('click', function () {
       if (submit.getAttribute('aria-busy') === 'true') return;
+      if (kind === 'unmet') {
+        hint.classList.remove('is-ready'); hint.classList.add('is-error');
+        hint.textContent = INELIGIBLE;
+        return;
+      }
       var miss = missing();
       if (miss.length) {
         miss.forEach(function (b) { b.closest('.ctv-check').classList.add('is-invalid'); });
@@ -1885,19 +2493,15 @@
       }
       submit.setAttribute('aria-busy', 'true'); submit.textContent = 'Đang ghi nhận…';
       setTimeout(function () {
-        /* Như storefront: khu xác nhận và khối điều kiện biến mất, khối "Bạn đã là cộng tác viên" hiện phía trên tài liệu */
-        form.hidden = true; document.getElementById('xac-nhan').hidden = true; document.getElementById('dkConditions').hidden = true; done.hidden = false;
-        done.scrollIntoView({ block: 'start' });
+        /* Khu xác nhận biến mất, khối giới thiệu phía trên đổi sang "Bạn đã là cộng tác viên" và trang cuộn lên đầu để người dùng thấy ngay. */
+        applyKind('registered');
+        document.getElementById('agreeTitle').textContent = 'Bạn đã là cộng tác viên';
+        window.scrollTo({ top: 0 });
         done.focus({ preventScroll: true });
       }, 500);
     });
 
-    /* Chế độ xem (bản mẫu, như storefront): ?che-do=khach | da-dang-ky | can-dong-y-lai | da-cham-dut và &noi-dung=pdf.
-       Chỉ ẩn/hiện các khối tĩnh có data-only / data-content, không đổi dữ liệu. */
-    var params = new URLSearchParams(window.location.search);
-    var kind = { 'khach': 'guest', 'da-dang-ky': 'registered', 'can-dong-y-lai': 'reaccept', 'da-cham-dut': 'terminated' }[params.get('che-do')] || 'apply';
-    var content = params.get('noi-dung') === 'pdf' ? 'pdf' : 'text';
-    [].forEach.call(document.querySelectorAll('[data-only]'), function (el) { el.hidden = el.getAttribute('data-only').split(' ').indexOf(kind) < 0; });
+    applyKind(kind);
     [].forEach.call(document.querySelectorAll('[data-content]'), function (el) { el.hidden = el.getAttribute('data-content') !== content; });
 
     document.addEventListener('click', function (e) { var a = e.target.closest('a[href="#"]'); if (a) e.preventDefault(); });
