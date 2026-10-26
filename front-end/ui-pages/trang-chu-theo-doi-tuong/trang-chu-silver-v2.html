@@ -1308,12 +1308,23 @@
     .golden__label { width: 0; min-width: 100%; justify-content: center; }
     .golden__label-rule { flex: 0 1 26px; min-width: 0; }
     .countdown { display: flex; gap: 12px; }
+    /* Ô đếm ngược nổi khối 3D, đồng bộ storefront (`.home-golden__cell`, chủ dự án 2026-10-19; chép sang các trang hội viên 2026-10-26): khung vàng vát cạnh (viền 2px trong suốt + lớp nền thứ ba cắt theo border-box),
+       mặt đỏ có điểm sáng vòm ở góc trên trái, cạnh dày 5px bằng năm bóng cứng, bóng mờ dưới đáy. Kích thước ô giữ nguyên (78 / 70 / 68px), không chuyển động. */
     .countdown__cell {
       display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; width: 78px; height: 78px; border-radius: 14px;
-      background: linear-gradient(180deg, #B22A1D 0%, #7C150F 100%); border: 1px solid rgba(232,201,121,.6); box-shadow: inset 0 1px 0 rgba(255,255,255,.12);
+      border: 2px solid transparent;
+      background:
+        radial-gradient(ellipse 70% 55% at 24% 0%, rgba(255,255,255,.2) 0%, rgba(255,255,255,0) 100%) padding-box,
+        linear-gradient(180deg, #C63A2A 0%, #A12218 46%, #861810 100%) padding-box,
+        linear-gradient(145deg, #FFF0B8 0%, #E8C979 26%, #B98A2B 60%, #7A5516 100%) border-box;
+      box-shadow:
+        inset 0 2px 0 rgba(255,255,255,.3), inset 0 -10px 12px -6px rgba(0,0,0,.35),
+        0 1px 0 #6F130C, 0 2px 0 #650F09, 0 3px 0 #5A0D08, 0 4px 0 #4F0B07, 0 5px 0 #440906,
+        0 12px 14px -4px rgba(0,0,0,.55);
     }
-    .countdown__cell b { font-size: 34px; line-height: 1; color: #FFF3DC; font-variant-numeric: tabular-nums; }
-    .countdown__cell span { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--gf-gold-soft); }
+    .countdown__cell b { font-size: 34px; line-height: 1; color: #FFF3DC; font-variant-numeric: tabular-nums; text-shadow: 0 2px 0 rgba(60,8,4,.55), 0 4px 6px rgba(0,0,0,.35); } /* số nổi khỏi mặt ô */
+    .countdown__cell span { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--gf-gold-soft); text-shadow: 0 1px 0 rgba(40,6,3,.5); }
+    @media (forced-colors: active) { .countdown__cell { border-color: CanvasText; } }
     /* Phải: nút theo trạng thái (khách: mời trở thành thành viên; đã đăng nhập: "Gửi thông báo cho tôi" + chip "Sắp mở"). */
     .golden__cta { padding: 30px 18px 0; display: flex; flex-direction: column; align-items: flex-end; justify-content: center; }
     .golden__cta-stack { display: flex; flex-direction: column; align-items: stretch; gap: 8px; }
@@ -1334,11 +1345,30 @@
     .golden__btn.golden__btn--member { height: auto; min-height: 44px; padding: 4px 16px; line-height: 1.2; text-decoration: none; white-space: normal; }
     .golden__btn--member .golden__btn-text { text-wrap: balance; }
     /* Nút mời trở thành thành viên là nút bấm thật: nền vàng (cùng dải màu chữ "-38% đến -42%") và chữ đỏ rượu vang để nổi hẳn khỏi nền card đỏ và khác ô đồng hồ (đồng bộ storefront, chủ dự án chọn 14/10/2026).
-       Nút "Gửi thông báo cho tôi" đang khoá giữ kiểu tối. Viền focus trắng riêng vì viền focus chung (quầng xanh 28%) không thấy được trên nền đỏ và vàng, và còn ép góc về vuông. */
+       Nút "Gửi thông báo cho tôi" đang khoá có kiểu riêng (khối `--notify` bên dưới, 2026-10-26). Viền focus trắng riêng vì viền focus chung (quầng xanh 28%) không thấy được trên nền đỏ và vàng, và còn ép góc về vuông. */
     .golden__btn.golden__btn--member { border-color: #FFF3DC; background: linear-gradient(180deg, #F8E3A0 0%, #E8C979 55%, #D2A43C 100%); color: #6E110C; box-shadow: 0 8px 18px -8px rgba(40,6,4,.75), 0 0 0 4px rgba(232,201,121,.3), inset 0 1px 0 rgba(255,255,255,.6); }
     .golden__btn--member .golden__btn-icon { border-right-color: rgba(110,17,12,.35); }
     .golden__btn.golden__btn--member:not(:disabled):hover { border-color: #FFFFFF; background: linear-gradient(180deg, #FFF0BF 0%, #F3D98A 55%, #E0B44A 100%); color: #5A0D09; box-shadow: 0 10px 22px -8px rgba(40,6,4,.8), 0 0 0 5px rgba(232,201,121,.4), inset 0 1px 0 rgba(255,255,255,.6); }
     .golden__btn.golden__btn--member:focus-visible { outline: 3px solid #FFFFFF; outline-offset: 3px; border-radius: var(--radius-pill); }
+    /* Nút "Gửi thông báo cho tôi" đang khoá nổi khối 3D như nút mời của khách nhưng vàng sâm banh dịu hơn (storefront `.home-golden__btn--notify`, chủ dự án 2026-10-26, dịu thêm một nấc cùng ngày):
+       viền 2px trong suốt cho khung vát cạnh, điểm sáng vòm, cạnh dày 5px bằng năm bóng cứng nâu đồng, quầng sáng mờ; đang khoá nên không có rê chuột và nhấn. Chỉ đặt viền, nền, bóng và màu:
+       chiều cao, cỡ chữ, khoảng cách vẫn theo `.golden__btn` và các khổ thu gọn. Viền 2px thay viền 1px (Chrome làm tròn 1,5px xuống 1px) nên đệm ngang bớt 1px mỗi bên để nút giữ đúng chiều rộng cũ. */
+    .golden__btn.golden__btn--notify {
+      padding-inline: 11px;
+      border: 2px solid transparent;
+      background:
+        radial-gradient(ellipse 55% 90% at 16% 0%, rgba(255,255,255,.26) 0%, rgba(255,255,255,0) 100%) padding-box,
+        linear-gradient(180deg, #DACAA9 0%, #CBB586 55%, #B39356 100%) padding-box,
+        linear-gradient(145deg, #EEE4CC 0%, #E0D2B0 22%, #BFA672 55%, #876A30 100%) border-box;
+      box-shadow:
+        inset 0 2px 0 rgba(255,255,255,.4), inset 0 -8px 10px -6px rgba(100,72,20,.36),
+        0 1px 0 #A38A55, 0 2px 0 #967D4C, 0 3px 0 #887044, 0 4px 0 #7A633C, 0 5px 0 #6B5533,
+        0 12px 14px -4px rgba(40,6,4,.6), 0 0 16px rgba(236,218,170,.1);
+      color: #6E110C; text-shadow: 0 1px 0 rgba(255,246,214,.4);
+    }
+    .golden__btn--notify .golden__btn-icon { border-right-color: rgba(110,17,12,.35); }
+    .golden__btn--notify .golden__btn-soon { background: rgba(110,17,12,.13); box-shadow: inset 0 1px 2px rgba(60,8,4,.28); color: #5A0D09; } /* chip "Sắp mở" chìm xuống mặt nút như khắc */
+    @media (forced-colors: active) { .golden__btn.golden__btn--notify { border-color: GrayText; } } /* tương phản cao bỏ ảnh nền nên viền trong suốt sẽ mất khung nút: dùng màu của nút bị vô hiệu hoá */
 
     /* Dải sản phẩm trong phiên: cuộn ngang có điểm dừng, kéo chuột được, hai nút tròn ở hai đầu. */
     .gh-slider { position: relative; margin-top: 16px; }
@@ -4094,7 +4124,7 @@ body.is-cart-open {overflow: hidden;}
         <div class="golden__cta">
           <div class="golden__cta-stack">
             <!-- Đã đăng nhập: chưa có hạ tầng nhắc lịch nên nút khoá, chip "Sắp mở" nói rõ để không hứa suông. -->
-            <button type="button" class="golden__btn" id="remindBtn" disabled>
+            <button type="button" class="golden__btn golden__btn--notify" id="remindBtn" disabled>
               <span class="golden__btn-icon" aria-hidden="true"><svg class="icon"><use href="#i-bell"/></svg></span>
               <span class="golden__btn-text" id="remindLabel">Gửi thông báo cho tôi</span>
               <span class="golden__btn-soon">Sắp mở</span>
