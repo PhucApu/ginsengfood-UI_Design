@@ -1645,7 +1645,7 @@
     <button type="button" data-state="het-han">Hết hạn</button>
     <button type="button" data-state="dang-giao">Đang giao</button>
     <button type="button" data-state="da-giao">Đã giao</button>
-    <button type="button" data-state="da-huy">Đã huỷ</button>
+    <button type="button" data-state="da-huy">Đã hủy</button>
   </div>
 </div>
 
@@ -1861,12 +1861,12 @@
         steps: { current: 1, label: 'Đang xác nhận', dates: ['29/09', '', '', '', ''] },
         pay: { label: 'VNPAY', chip: ['yes', 'Đã thanh toán'], paidAt: '14:32 · 29/09/2026' },
         tl: { title: 'Lịch sử đơn hàng', icon: 'i-receipt', latest: 'i-check', cls: '', carrier: false, events: [
-          ['Đã nhận thanh toán', 'VNPAY xác nhận giao dịch 843.120\u00a0₫.', '14:32 · 29/09/2026', ''], PLACED_EV] },
+          ['Đã nhận thanh toán', 'VNPAY xác nhận giao dịch 843.120đ.', '14:32 · 29/09/2026', ''], PLACED_EV] },
         acts: ['result:thanh-cong', 'rebuy', 'support']
       },
       'dang-cho': {
         o: PLACED, updated: '14:30, 29/09/2026', doc: 'Chờ thanh toán',
-        badges: [['info', 'pending_actions', 'Đang xác nhận'], ['info', 'schedule', 'Đang chờ thanh toán']],
+        badges: [['info', 'pending_actions', 'Chờ thanh toán'], ['info', 'schedule', 'Đang chờ thanh toán']],
         band: { cls: '', icon: 'i-clock', title: 'Đang chờ thanh toán qua <b>VNPAY</b>', desc: 'Hoàn tất thanh toán để Ginsengfood xác nhận đơn. Nếu bạn vừa thanh toán, hãy bấm “Kiểm tra kết quả” để xem trạng thái mới nhất.', cta: [['pay', 'Tiếp tục thanh toán', 'i-card'], ['result:dang-cho', 'Kiểm tra kết quả', 'i-refresh', 'ghost']] },
         steps: { current: 1, label: 'Chờ thanh toán', icon: 'i-card', dates: ['29/09', '', '', '', ''] },
         pay: { label: 'VNPAY', chip: ['wait', 'Đang chờ thanh toán'] },
@@ -1876,7 +1876,7 @@
       },
       'that-bai': {
         o: PLACED, updated: '14:31, 29/09/2026', doc: 'Thanh toán thất bại',
-        badges: [['info', 'pending_actions', 'Đang xác nhận'], ['bad', 'error', 'Thanh toán thất bại']],
+        badges: [['info', 'pending_actions', 'Chờ thanh toán'], ['bad', 'error', 'Thanh toán thất bại']],
         band: { cls: 'progress--failed', icon: 'i-warning', title: 'Thanh toán <b>chưa thành công</b>', desc: 'Đơn hàng chưa được thanh toán. Bạn có thể thanh toán lại ngay.', cta: [['pay', 'Thanh toán lại', 'i-card'], ['result:that-bai', 'Xem chi tiết lỗi', 'i-info', 'ghost']] },
         steps: { current: 1, cancel: true, label: 'Thanh toán lỗi', icon: 'i-close', dates: ['29/09', '', '', '', ''] },
         pay: { label: 'VNPAY', chip: ['bad', 'Thanh toán thất bại'] },
@@ -1906,7 +1906,7 @@
           ['Đang trung chuyển', 'Kiện hàng rời kho phân loại khu vực phía Nam.', '14:05 · 15/09/2026', 'Kho phân loại khu vực phía Nam'],
           ['Đã bàn giao cho đơn vị vận chuyển', 'Kiện hàng 1 thùng, 2,1 kg.', '16:30 · 13/09/2026', 'Kho Ginsengfood'],
           ['Đang đóng gói', 'Đóng gói tại kho Ginsengfood, kèm hồ sơ truy xuất lô sản xuất.', '09:10 · 13/09/2026', 'Kho Ginsengfood'],
-          ['Đã nhận thanh toán', 'VNPAY xác nhận giao dịch 843.120\u00a0₫.', '10:40 · 12/09/2026', ''],
+          ['Đã nhận thanh toán', 'VNPAY xác nhận giao dịch 843.120đ.', '10:40 · 12/09/2026', ''],
           ['Đã đặt hàng', 'Đơn hàng được tạo thành công.', '10:24 · 12/09/2026', '']] },
         acts: ['rebuy', 'support']
       },
@@ -1930,18 +1930,18 @@
       'da-huy': {
         o: PLACED, updated: '14:32, 29/09/2026', doc: 'Đã hủy',
         badges: [['bad', 'cancel', 'Đã hủy'], ['mute', 'payments', 'Chưa thanh toán']],
-        band: { cls: 'progress--failed', icon: 'i-close', title: 'Đơn hàng <b>đã huỷ</b>', desc: 'Đơn hàng này đã được huỷ. Cần hỗ trợ thêm, bạn hãy liên hệ Ginsengfood kèm mã đơn.' },
-        steps: { current: 1, only: 2, cancel: true, label: 'Đã huỷ', icon: 'i-close', dates: ['29/09', ''] },
+        band: { cls: 'progress--failed', icon: 'i-close', title: 'Đơn hàng <b>đã hủy</b>', desc: 'Đơn hàng này đã được hủy. Cần hỗ trợ thêm, bạn hãy liên hệ Ginsengfood kèm mã đơn.' },
+        steps: { current: 1, only: 2, cancel: true, label: 'Đã hủy', icon: 'i-close', dates: ['29/09', ''] },
         pay: { label: 'Thanh toán khi nhận hàng', chip: ['no', 'Chưa thanh toán'] },
         tl: { title: 'Lịch sử đơn hàng', icon: 'i-receipt', latest: 'i-close', cls: 'is-bad', carrier: false, events: [
-          ['Đơn hàng đã huỷ', 'Đơn hàng này đã được huỷ.', '14:32 · 29/09/2026', ''], PLACED_EV] },
+          ['Đơn hàng đã hủy', 'Đơn hàng này đã được hủy.', '14:32 · 29/09/2026', ''], PLACED_EV] },
         acts: ['rebuy', 'support']
       }
     };
     var KEYS = Object.keys(STATES);
 
     var $ = function (id) { return document.getElementById(id); };
-    function money(n) { return n.toLocaleString('vi-VN') + '\u00a0₫'; }
+    function money(n) { return n.toLocaleString('vi-VN') + 'đ'; }
     function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
     function ic(id) { return '<svg class="icon" aria-hidden="true"><use href="#' + id + '"/></svg>'; }
     var toast = $('toast'), toastTimer = 0;

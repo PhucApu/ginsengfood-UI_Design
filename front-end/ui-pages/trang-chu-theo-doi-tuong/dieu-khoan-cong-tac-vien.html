@@ -91,6 +91,21 @@
     [data-collaborator-register] .ctv-btn--outline:hover { background: var(--gf-cream); }
     [data-collaborator-register] .ctv-btn[aria-disabled="true"], [data-collaborator-register] .ctv-btn:disabled { border-color: transparent; background: #C9D1DC; color: var(--gf-white); cursor: not-allowed; }
     [data-collaborator-register] .ctv-btn[aria-busy="true"] { background: var(--gf-navy-700); cursor: progress; }
+    /* Nút Tải xuống tệp PDF đổi theo trạng thái, không chỉ biểu tượng (<ui-download-morph>, ../download-morph.css; chủ dự án 2026-10-29): chữ "Tải xuống" → "Đang tải" → "Đã tải" (hoặc "Thử lại"); nút viền → xanh lá đặc khi xong (--ctv-ok) / đỏ khi lỗi (--ctv-danger). Bốn nhãn xếp chồng trong một ô lưới (cái không dùng chỉ ẩn bằng visibility) nên nút luôn rộng bằng nhãn dài nhất, đổi chữ không làm nút nhảy. Biểu tượng vẽ bằng màu chữ nên tự đổi theo nền. */
+    [data-collaborator-register] .ctv-dl__label { display: inline-grid; justify-items: center; }
+    [data-collaborator-register] .ctv-dl__label > span { grid-area: 1 / 1; visibility: hidden; }
+    [data-collaborator-register] ui-download-morph:not([state]) .ctv-dl__label > [data-for="idle"], [data-collaborator-register] ui-download-morph[state="idle"] .ctv-dl__label > [data-for="idle"], [data-collaborator-register] ui-download-morph[state="loading"] .ctv-dl__label > [data-for="loading"], [data-collaborator-register] ui-download-morph[state="done"] .ctv-dl__label > [data-for="done"], [data-collaborator-register] ui-download-morph[state="error"] .ctv-dl__label > [data-for="error"] { visibility: visible; }
+    [data-collaborator-register] ui-download-morph { --dm-size: 22px; }
+    [data-collaborator-register] ui-download-morph > a.ctv-btn { gap: 8px; transition: background-color calc(var(--dm-duration) * 0.4) var(--dm-ease), border-color calc(var(--dm-duration) * 0.4) var(--dm-ease), color calc(var(--dm-duration) * 0.4) var(--dm-ease); }
+    /* Đang tải: nút vẫn ở trong thứ tự Tab và báo bận bằng aria-disabled, nên giữ dáng nút viền thay vì tô xám như nút bị khoá thật. */
+    [data-collaborator-register] ui-download-morph > a.ctv-btn[aria-disabled="true"] { border-color: var(--gf-navy); background: var(--gf-white); color: var(--gf-navy); cursor: progress; }
+    [data-collaborator-register] ui-download-morph[state="done"] > a.ctv-btn { border-color: var(--ctv-ok); background: var(--ctv-ok); color: var(--gf-white); }
+    [data-collaborator-register] ui-download-morph[state="done"] > a.ctv-btn:hover { border-color: #245A3C; background: #245A3C; }
+    [data-collaborator-register] ui-download-morph[state="error"] > a.ctv-btn { border-color: var(--ctv-danger); background: var(--ctv-danger); color: var(--gf-white); }
+    [data-collaborator-register] ui-download-morph[state="error"] > a.ctv-btn:hover { border-color: #912018; background: #912018; }
+    @media (prefers-reduced-motion: reduce) {
+      [data-collaborator-register] ui-download-morph > a.ctv-btn { transition: none; }
+    }
     /* Khung tài liệu. */
     [data-collaborator-register] .ctv-paper { padding: 52px 64px 48px; border: 1px solid var(--gf-border); border-top: 3px solid var(--gf-navy); border-radius: 6px; background: var(--gf-white); box-shadow: 0 1px 2px rgba(16, 48, 95, 0.05), 0 14px 36px -22px rgba(16, 48, 95, 0.35); overflow-wrap: anywhere; }
     [data-collaborator-register] .ctv-paper__head { padding-bottom: 28px; border-bottom: 1px solid #E6E1D6; text-align: center; }
@@ -184,6 +199,8 @@
       [data-collaborator-register] .ctv-check { padding: 12px; font-size: 14.5px; }
       [data-collaborator-register] .ctv-acts, [data-collaborator-register] .ctv-state__acts, [data-collaborator-register] .ctv-pdf__acts { width: 100%; }
       [data-collaborator-register] .ctv-acts .ctv-btn, [data-collaborator-register] .ctv-state__acts .ctv-btn, [data-collaborator-register] .ctv-pdf__acts .ctv-btn { flex: 1 1 100%; }
+      [data-collaborator-register] .ctv-pdf__acts ui-download-morph { flex: 1 1 100%; }
+      [data-collaborator-register] .ctv-pdf__acts ui-download-morph > .ctv-btn { width: 100%; }
       [data-collaborator-register] .ctv-pdf-card { padding: 18px 16px; }
       [data-collaborator-register] .ctv-acts .ctv-btn--primary { order: -1; }
     }
@@ -1795,6 +1812,7 @@
   [data-collaborator-register] .ctv-terms { padding: 0; }
 }
 </style>
+<link rel="stylesheet" href="../download-morph.css">
 </head>
 <body>
 
@@ -1859,7 +1877,7 @@
             </nav>
             <p class="ctv-eyebrow">Chương trình đối tác khởi nghiệp</p>
             <h1 class="ctv-hero__title" id="ctv-hero-title">Khởi nghiệp làm giàu và tự&nbsp;hào cùng Ssavigroup</h1>
-            <p class="ctv-hero__quote">Vì cuộc sống tốt đẹp hơn cho người dân vùng cát biển và vì sức khoẻ cộng đồng</p>
+            <p class="ctv-hero__quote">Vì cuộc sống tốt đẹp hơn cho người dân vùng cát biển và vì sức khỏe cộng đồng</p>
             <div class="ctv-path">
               <p class="ctv-path__lead">Chỉ với Facebook hoặc Zalo của bạn</p>
               <ol class="ctv-path__steps">
@@ -1933,7 +1951,7 @@
                 </li>
                 <li class="ctv-cond" data-met="true" data-condition="phone"><span aria-hidden="true" class="ctv-cond__mark">✓</span><span>Số điện thoại đã xác minh</span></li>
               </ul>
-              <p class="ctv-elig__foot">Chỉ tính đơn đã giao thành công, không tính đơn bị huỷ hoặc trả hàng.</p>
+              <p class="ctv-elig__foot">Chỉ tính đơn đã giao thành công, không tính đơn bị hủy hoặc trả hàng.</p>
             </section>
             <section class="ctv-elig" data-only="unmet" data-collaborator-conditions="member" aria-labelledby="ctv-elig-unmet-title" hidden>
               <header class="ctv-elig__head">
@@ -1952,7 +1970,7 @@
                 </li>
                 <li class="ctv-cond" data-met="true" data-condition="phone"><span aria-hidden="true" class="ctv-cond__mark">✓</span><span>Số điện thoại đã xác minh</span></li>
               </ul>
-              <p class="ctv-elig__foot">Chỉ tính đơn đã giao thành công, không tính đơn bị huỷ hoặc trả hàng.</p>
+              <p class="ctv-elig__foot">Chỉ tính đơn đã giao thành công, không tính đơn bị hủy hoặc trả hàng.</p>
             </section>
             <section class="ctv-elig" data-only="guest" data-collaborator-conditions="guest" aria-labelledby="ctv-elig-guest-title" hidden>
               <header class="ctv-elig__head">
@@ -1964,7 +1982,7 @@
                 <li class="ctv-cond" data-met="pending" data-condition="spend"><span aria-hidden="true" class="ctv-cond__mark">○</span><span>Mua hàng tích lũy từ 2.000.000đ</span></li>
                 <li class="ctv-cond" data-met="pending" data-condition="phone"><span aria-hidden="true" class="ctv-cond__mark">○</span><span>Số điện thoại đã xác minh</span></li>
               </ul>
-              <p class="ctv-elig__foot">Chỉ tính đơn đã giao thành công, không tính đơn bị huỷ hoặc trả hàng.</p>
+              <p class="ctv-elig__foot">Chỉ tính đơn đã giao thành công, không tính đơn bị hủy hoặc trả hàng.</p>
             </section>
             <section class="ctv-elig" id="agreeDone" role="status" tabindex="-1" data-only="registered" aria-labelledby="agreeTitle" hidden>
               <header class="ctv-elig__head">
@@ -2038,7 +2056,7 @@
       <ul class="ctv-benefit-grid">        <li class="ctv-benefit">
           <span class="ctv-benefit__icon" aria-hidden="true"><svg class="icon"><use href="#i-percent"/></svg></span>
           <h3>Cách tính chiết khấu</h3>
-          <p>Chiết khấu tính trên giá trị hàng hoá khách thực trả, không gồm phí vận chuyển. Tỷ lệ hiện hành được công bố trong Trung tâm cộng tác viên.</p>
+          <p>Chiết khấu tính trên giá trị hàng hóa khách thực trả, không gồm phí vận chuyển. Tỷ lệ hiện hành được công bố trong Trung tâm cộng tác viên.</p>
         </li>
         <li class="ctv-benefit">
           <span class="ctv-benefit__icon" aria-hidden="true"><svg class="icon"><use href="#i-link"/></svg></span>
@@ -2154,7 +2172,7 @@
               <p>1.1. “Cộng tác viên” là thành viên Ginsengfood đủ điều kiện, đã đồng ý với điều khoản này và được cấp link chia sẻ riêng.</p>
               <p>1.2. “Link chia sẻ” là đường dẫn tới sản phẩm trên website Ginsengfood có gắn mã giới thiệu của Cộng tác viên.</p>
               <p>1.3. “Mã giới thiệu” là chuỗi ký tự ngẫu nhiên do hệ thống tạo, dùng để nhận biết đơn hàng phát sinh từ link chia sẻ.</p>
-              <p>1.4. “Đơn hợp lệ” là đơn mua qua link chia sẻ, đã giao thành công và không bị huỷ, trả hàng hoặc hoàn tiền.</p>
+              <p>1.4. “Đơn hợp lệ” là đơn mua qua link chia sẻ, đã giao thành công và không bị hủy, trả hàng hoặc hoàn tiền.</p>
               <p>1.5. “Hoa hồng chờ xác nhận” là hoa hồng tạm tính của đơn đang xử lý, đang giao hoặc còn trong thời hạn đổi trả.</p>
               <p>1.6. “Hoa hồng đã xác nhận” là hoa hồng của đơn hợp lệ, đã qua đối soát và sẵn sàng chi trả trong kỳ.</p>
             </div>
@@ -2167,7 +2185,7 @@
               <ol>
                 <li>a) Có tài khoản thành viên Ginsengfood và đã xác minh số điện thoại;</li>
                 <li>b) Đã đạt hạng thành viên từ Silver trở lên và hạng đang còn hiệu lực;</li>
-                <li>c) Có doanh số tích lũy hợp lệ trên 2.000.000đ, chỉ tính các đơn đã giao thành công, không tính đơn bị huỷ hoặc trả hàng;</li>
+                <li>c) Có doanh số tích lũy hợp lệ trên 2.000.000đ, chỉ tính các đơn đã giao thành công, không tính đơn bị hủy hoặc trả hàng;</li>
                 <li>d) Đủ 18 tuổi và cung cấp tài khoản ngân hàng chính chủ, trùng họ tên với tài khoản thành viên.</li>
               </ol>
               <p>2.2. Mỗi thành viên chỉ được đăng ký một tài khoản Cộng tác viên.</p>
@@ -2196,10 +2214,10 @@
                 <li>c) Hoa hồng đã xác nhận được chi trả theo kỳ quy định tại Điều 5.</li>
               </ol>
               <p>4.2. Tỷ lệ hoa hồng được công bố trong mục Cộng tác viên và có thể khác nhau giữa giá bán 24/7 và phiên Giờ Vàng Tri Ân.</p>
-              <p>4.3. Hoa hồng được tính trên giá trị hàng hoá khách hàng thực trả, không bao gồm phí vận chuyển.</p>
+              <p>4.3. Hoa hồng được tính trên giá trị hàng hóa khách hàng thực trả, không bao gồm phí vận chuyển.</p>
               <p>4.4. Không tính hoa hồng đối với:</p>
               <ol>
-                <li>a) Đơn bị huỷ, trả hàng hoặc hoàn tiền. Trường hợp trả một phần, hoa hồng được điều chỉnh theo phần hàng giữ lại;</li>
+                <li>a) Đơn bị hủy, trả hàng hoặc hoàn tiền. Trường hợp trả một phần, hoa hồng được điều chỉnh theo phần hàng giữ lại;</li>
                 <li>b) Đơn do Cộng tác viên tự đặt qua link của chính mình;</li>
                 <li>c) Đơn phát sinh từ hành vi gian lận hoặc từ hoạt động quảng bá vi phạm Điều 6.</li>
               </ol>
@@ -2238,7 +2256,7 @@
                 <li>a) Quảng cáo sản phẩm có tác dụng chữa bệnh hoặc thay thế thuốc chữa bệnh;</li>
                 <li>b) Gửi tin nhắn, bình luận hàng loạt hoặc chia sẻ link ở nơi chưa được phép;</li>
                 <li>c) Giả danh Ginsengfood, nhân viên hoặc cửa hàng chính thức;</li>
-                <li>d) Chạy quảng cáo sử dụng tên thương hiệu Ginsengfood hoặc tên sản phẩm làm từ khoá;</li>
+                <li>d) Chạy quảng cáo sử dụng tên thương hiệu Ginsengfood hoặc tên sản phẩm làm từ khóa;</li>
                 <li>đ) Tự đặt mã giảm giá, hứa tặng quà hoặc hoàn tiền ngoài chính sách;</li>
                 <li>e) Mời người khác tham gia bằng cách hứa hẹn thu nhập hoặc lợi nhuận.</li>
               </ol>
@@ -2258,7 +2276,7 @@
           <section class="ctv-section" id="dieu-8" tabindex="-1">
             <div class="ctv-doc">
               <h2>Điều 8. Tạm ngưng và chấm dứt</h2>
-              <p>8.1. Trường hợp Cộng tác viên vi phạm Điều 6 hoặc Điều 7, Ginsengfood có quyền tạm ngưng link chia sẻ, huỷ hoa hồng của các đơn liên quan hoặc chấm dứt tư cách Cộng tác viên.</p>
+              <p>8.1. Trường hợp Cộng tác viên vi phạm Điều 6 hoặc Điều 7, Ginsengfood có quyền tạm ngưng link chia sẻ, hủy hoa hồng của các đơn liên quan hoặc chấm dứt tư cách Cộng tác viên.</p>
               <p>8.2. Trường hợp hạng thành viên hết hiệu lực sau 60 ngày ân hạng, link chia sẻ được tạm ngưng cho đến khi Cộng tác viên đáp ứng lại điều kiện tại Điều 2.</p>
               <p>8.3. Cộng tác viên có thể chấm dứt tham gia bất kỳ lúc nào trong mục Cộng tác viên. Hoa hồng đã xác nhận trước thời điểm chấm dứt vẫn được chi trả trong kỳ kế tiếp.</p>
             </div>
@@ -2291,7 +2309,7 @@
             </div>
             <div class="ctv-pdf__acts">
               <a class="ctv-btn ctv-btn--primary" href="#" rel="noopener" aria-label="Đọc điều khoản (PDF), mở ở tab mới">Đọc điều khoản (PDF)</a>
-              <a class="ctv-btn ctv-btn--outline" href="#" download aria-label="Tải xuống tệp PDF điều khoản (2 MB)">Tải xuống</a>
+              <ui-download-morph><a class="ctv-btn ctv-btn--outline" href="#" download aria-label="Tải xuống tệp PDF điều khoản (2 MB)"><span class="ctv-dl__label"><span data-for="idle">Tải xuống</span><span data-for="loading">Đang tải</span><span data-for="done">Đã tải</span><span data-for="error">Thử lại</span></span></a></ui-download-morph>
             </div>
           </div>
         </section>
@@ -2507,5 +2525,60 @@
     document.addEventListener('click', function (e) { var a = e.target.closest('a[href="#"]'); if (a) e.preventDefault(); });
   })();
 </script>
+<script src="../download-morph.js"></script>
+<script id="gf-ctv-download-js">
+/* Nút "Tải xuống" tệp PDF điều khoản: trang quyết định ý nghĩa của một lần bấm và giữ TẤT CẢ: trạng thái, giá trị, tên nút, aria-disabled và lời thông báo.
+   <ui-download-morph> chỉ vẽ biểu tượng. Bản mẫu (không gọi API, tệp PDF chưa có nên href="#"): trang mô phỏng tiến độ, cứ 150 ms ghi thêm giá trị
+   theo các bước bên dưới cho tới 100 rồi báo xong, 2,6 giây sau về lại idle. Khi href là tệp thật và trang chạy qua máy chủ thì trình duyệt tải thật như cũ;
+   mở bằng file:/// trình duyệt bỏ qua download và CHUYỂN TRANG nên khi đó chỉ mô phỏng. Nút đang tải có aria-disabled (vẫn nằm trong thứ tự Tab); bấm lúc đó không làm gì.
+   Lời báo cho trình đọc màn hình nằm trong MỘT vùng role="status", nói ở mỗi phần mười và khi kết thúc. */
+(function () {
+  'use strict';
+  var host = document.querySelector('.ctv-pdf__acts ui-download-morph');
+  if (!host) { return; }
+  var link = host.querySelector('a'), card = host.closest('.ctv-pdf-card');
+  if (!link || !card) { return; }
+
+  var STEPS = [8, 12, 9, 15, 11, 14, 10, 13, 8], INTERVAL = 150, SHOW_DONE = 2600;
+  var name = 'tệp PDF điều khoản', idleLabel = link.getAttribute('aria-label'), timer = 0, back = 0;
+  var live = document.createElement('output');
+  live.className = 'sr-only';
+  live.setAttribute('role', 'status');
+  card.appendChild(live);
+  function say(words) { live.textContent = words; }
+
+  function show(state, label, busy) {
+    host.setAttribute('state', state);
+    link.setAttribute('aria-label', label);
+    if (busy) { link.setAttribute('aria-disabled', 'true'); } else { link.removeAttribute('aria-disabled'); }
+  }
+
+  function finish() {
+    window.clearInterval(timer);
+    timer = 0;
+    show('done', 'Đã tải xuống ' + name, false);
+    say('Đã tải xuống ' + name);
+    back = window.setTimeout(function () { show('idle', idleLabel, false); }, SHOW_DONE);
+  }
+
+  link.addEventListener('click', function (event) {
+    if (link.getAttribute('aria-disabled') === 'true') { event.preventDefault(); return; }
+    if (link.getAttribute('href') === '#' || window.location.protocol === 'file:') { event.preventDefault(); }
+    window.clearInterval(timer);
+    window.clearTimeout(back);
+    var value = 0, step = 0, told = 0;
+    host.setAttribute('value', '0'); /* giá trị được ghi TRƯỚC khi sang loading, để lần tải biết dung lượng không bắt đầu bằng cung quay */
+    show('loading', 'Đang tải xuống ' + name, true);
+    say('Đang tải xuống ' + name + ', 0 phần trăm');
+    timer = window.setInterval(function () {
+      if (value >= 100) { finish(); return; }
+      value = Math.min(100, value + STEPS[step % STEPS.length]);
+      step += 1;
+      host.setAttribute('value', String(value));
+      var tenth = Math.floor(value / 10) * 10;
+      if (tenth !== told && value < 100) { told = tenth; say('Đang tải xuống ' + name + ', ' + tenth + ' phần trăm'); }
+    }, INTERVAL);
+  });
+})();</script>
 </body>
 </html>

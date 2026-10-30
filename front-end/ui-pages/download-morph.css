@@ -1,0 +1,243 @@
+/* =====================================================================
+   <ui-download-morph> — nút tải xuống có biểu tượng biến hình (chủ dự án mô tả 2026-10-29).
+   Mũi tên trên khay thu nhỏ lại, vòng tròn được vẽ thế chỗ: đầy dần theo giá trị trang ghi (value 0–100), hoặc một cung quay khi trang
+   chưa biết dung lượng; xong thì vòng khép lại quanh dấu tích (done) hoặc dấu chéo (error). Mọi thay đổi là transition CSS, cung quay là
+   MỘT animation CSS; script chỉ ghi state, data-indeterminate và vị trí bắt đầu của vòng (--dm-off).
+   Phần tử KHÔNG ghi ARIA, KHÔNG nói gì với người đọc màn hình: trang giữ trạng thái, giá trị, tên nút và lời thông báo.
+   Script thường (không module) để mở được bằng file:///. Tệp đi kèm: download-morph.js.
+   ===================================================================== */
+ui-download-morph {
+  --dm-size: 24px;
+  --dm-duration: 700ms;
+  --dm-spin: 900ms;
+  --dm-ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --dm-success: currentColor;
+  --dm-error: currentColor;
+
+  display: inline-grid;
+}
+
+/* Hình vẽ 24×24, nét 2 theo màu chữ, đầu nét và góc tròn; không bao giờ là đích của con trỏ (bấm luôn rơi vào nút). */
+.dm__icon {
+  display: block;
+  flex: none;
+  inline-size: var(--dm-size);
+  block-size: var(--dm-size);
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  pointer-events: none;
+}
+
+/* Mũi tên chỉ thấy ở idle; các trạng thái khác nó co về một điểm giữa vòng (12, 11). Khay bên dưới luôn được vẽ. */
+.dm__arrow {
+  transform-box: view-box;
+  transform-origin: 12px 11px;
+  scale: 1;
+  opacity: 1;
+}
+
+ui-download-morph[state="loading"] .dm__arrow,
+ui-download-morph[state="done"] .dm__arrow,
+ui-download-morph[state="error"] .dm__arrow {
+  scale: 0;
+  opacity: 0;
+}
+
+/* Rãnh là cả vòng bằng nét mờ, để vòng mới vẽ một phần cho thấy còn bao xa; không thấy ở idle. */
+.dm__track {
+  stroke-opacity: 0.2;
+  opacity: 0;
+}
+
+ui-download-morph[state="loading"] .dm__track,
+ui-download-morph[state="done"] .dm__track,
+ui-download-morph[state="error"] .dm__track {
+  opacity: 1;
+}
+
+/* Cung quay: một vòng tròn pathLength="1", cung 0,3 và khe 0,7, xoay để bắt đầu ở đỉnh. Chỉ thấy khi loading mà chưa biết dung lượng. */
+.dm__spinner {
+  stroke-dasharray: 0.3 0.7;
+  opacity: 0;
+}
+
+ui-download-morph[state="loading"][data-indeterminate] .dm__spinner {
+  opacity: 1;
+}
+
+/* Quay bằng cách dời nét đứt đúng một độ dài đường đi, tức một vòng không có mối nối. */
+ui-download-morph[data-enhanced][state="loading"][data-indeterminate] .dm__spinner {
+  animation: dm-spin var(--dm-spin) linear infinite;
+}
+
+@keyframes dm-spin {
+  from {
+    stroke-dashoffset: 0;
+  }
+
+  to {
+    stroke-dashoffset: -1;
+  }
+}
+
+/* Vòng đầy dần: nét đứt dài 1 dời 1,02 nằm hẳn ngoài đường đi nên không vẽ gì, không để lại chấm ở đầu nét tròn. Khi loading và đã biết dung lượng,
+   script ghi --dm-off (1,03 khi chưa có tiến độ, phần còn lại của vòng nếu có). Ở done và error không dời nét đứt: cả vòng. */
+.dm__arc {
+  --dm-off: 1.03;
+
+  stroke-dasharray: 1 2;
+  stroke-dashoffset: 1.02;
+  opacity: 0;
+}
+
+ui-download-morph[state="loading"]:not([data-indeterminate]) .dm__arc {
+  stroke-dashoffset: var(--dm-off, 1.03);
+}
+
+ui-download-morph[state="done"] .dm__arc,
+ui-download-morph[state="error"] .dm__arc {
+  stroke-dashoffset: 0;
+}
+
+ui-download-morph[state="loading"] .dm__arc,
+ui-download-morph[state="done"] .dm__arc,
+ui-download-morph[state="error"] .dm__arc {
+  opacity: 1;
+}
+
+.dm__tick {
+  stroke-dasharray: 1 2;
+  stroke-dashoffset: 1.02;
+}
+
+/* Dấu chéo là hai nét trong một đường; trình duyệt bắt đầu lại nét đứt ở đầu mỗi nét, nên nét đứt 1 sẽ vẽ cả hai nét khi mới đi nửa đường.
+   Nét đứt 0,5 (độ dài một nét) được vẽ dần suốt chặng, và để ngoài đường đi bằng 0,52 chứ không phải 1,02. */
+.dm__cross {
+  stroke-dasharray: 0.5 2;
+  stroke-dashoffset: 0.52;
+}
+
+ui-download-morph[state="done"] .dm__tick,
+ui-download-morph[state="error"] .dm__cross {
+  stroke-dashoffset: 0;
+}
+
+/* Vòng và dấu của kết quả lấy màu của kết quả; kết quả còn được nói bằng hình dạng, không chỉ bằng màu. */
+ui-download-morph[state="done"] .dm__arc,
+ui-download-morph[state="done"] .dm__tick {
+  stroke: var(--dm-success);
+}
+
+ui-download-morph[state="error"] .dm__arc,
+ui-download-morph[state="error"] .dm__cross {
+  stroke: var(--dm-error);
+}
+
+/* Không khai báo transition nào trước khi script chạy, nên trạng thái có sẵn lúc nạp trang hiện ngay. Thời gian là phần của --dm-duration
+   (chế độ chậm vẫn giữ nguyên hình). Transition lấy thời gian theo kiểu đích đến. Các luật này là đường về idle: dấu đi trước,
+   vòng gỡ ra và rãnh đi theo sau, mũi tên quay lại cuối cùng; cung chỉ được cất đi khi đã gỡ xong. */
+ui-download-morph[data-enhanced] .dm__arrow {
+  transition:
+    scale calc(var(--dm-duration) * 0.4) var(--dm-ease) calc(var(--dm-duration) * 0.3),
+    opacity calc(var(--dm-duration) * 0.4) var(--dm-ease) calc(var(--dm-duration) * 0.3);
+}
+
+ui-download-morph[data-enhanced] .dm__track {
+  transition: opacity calc(var(--dm-duration) * 0.5) var(--dm-ease) calc(var(--dm-duration) * 0.2);
+}
+
+ui-download-morph[data-enhanced] .dm__spinner {
+  transition: opacity calc(var(--dm-duration) * 0.5) var(--dm-ease) calc(var(--dm-duration) * 0.2);
+}
+
+ui-download-morph[data-enhanced] .dm__arc {
+  transition:
+    stroke-dashoffset calc(var(--dm-duration) * 0.5) var(--dm-ease) calc(var(--dm-duration) * 0.2),
+    stroke calc(var(--dm-duration) * 0.4) var(--dm-ease),
+    opacity 0s linear calc(var(--dm-duration) * 0.7);
+}
+
+ui-download-morph[data-enhanced] .dm__tick,
+ui-download-morph[data-enhanced] .dm__cross {
+  transition:
+    stroke-dashoffset calc(var(--dm-duration) * 0.3) var(--dm-ease),
+    stroke calc(var(--dm-duration) * 0.4) var(--dm-ease);
+}
+
+/* Đường đến trạng thái có vòng: mũi tên co trước, rãnh vào, rồi vòng vào sau. */
+ui-download-morph[data-enhanced][state="loading"] .dm__arrow,
+ui-download-morph[data-enhanced][state="done"] .dm__arrow,
+ui-download-morph[data-enhanced][state="error"] .dm__arrow {
+  transition:
+    scale calc(var(--dm-duration) * 0.4) var(--dm-ease),
+    opacity calc(var(--dm-duration) * 0.4) var(--dm-ease);
+}
+
+ui-download-morph[data-enhanced][state="loading"] .dm__track,
+ui-download-morph[data-enhanced][state="done"] .dm__track,
+ui-download-morph[data-enhanced][state="error"] .dm__track {
+  transition: opacity calc(var(--dm-duration) * 0.3) var(--dm-ease) calc(var(--dm-duration) * 0.1);
+}
+
+ui-download-morph[data-enhanced][state="loading"] .dm__spinner,
+ui-download-morph[data-enhanced][state="done"] .dm__spinner,
+ui-download-morph[data-enhanced][state="error"] .dm__spinner {
+  transition: opacity calc(var(--dm-duration) * 0.3) var(--dm-ease);
+}
+
+ui-download-morph[data-enhanced][state="loading"][data-indeterminate] .dm__spinner {
+  transition: opacity calc(var(--dm-duration) * 0.3) var(--dm-ease) calc(var(--dm-duration) * 0.2);
+}
+
+/* Vòng hiện sau khi mũi tên bắt đầu co; ở loading nó chạy theo giá trị mới trong 0,35 và không chờ gì, để một lần tải báo tiến độ mỗi phần mười
+   giây vẫn được theo kịp. Ở done và error vòng được vẽ trọn trong 0,4 rồi mới vẽ dấu. */
+ui-download-morph[data-enhanced][state="loading"] .dm__arc {
+  transition:
+    stroke-dashoffset calc(var(--dm-duration) * 0.35) var(--dm-ease),
+    stroke calc(var(--dm-duration) * 0.4) var(--dm-ease),
+    opacity calc(var(--dm-duration) * 0.3) var(--dm-ease) calc(var(--dm-duration) * 0.2);
+}
+
+ui-download-morph[data-enhanced][state="done"] .dm__arc,
+ui-download-morph[data-enhanced][state="error"] .dm__arc {
+  transition:
+    stroke-dashoffset calc(var(--dm-duration) * 0.4) var(--dm-ease),
+    stroke calc(var(--dm-duration) * 0.4) var(--dm-ease),
+    opacity calc(var(--dm-duration) * 0.3) var(--dm-ease) calc(var(--dm-duration) * 0.2);
+}
+
+ui-download-morph[data-enhanced][state="done"] .dm__tick,
+ui-download-morph[data-enhanced][state="error"] .dm__cross {
+  transition:
+    stroke-dashoffset calc(var(--dm-duration) * 0.4) var(--dm-ease) calc(var(--dm-duration) * 0.4),
+    stroke calc(var(--dm-duration) * 0.4) var(--dm-ease);
+}
+
+/* Giảm chuyển động: đổi hình ngay, cung không quay (thành một cung đứng yên). */
+@media (prefers-reduced-motion: reduce) {
+  ui-download-morph .dm__arrow,
+  ui-download-morph .dm__track,
+  ui-download-morph .dm__spinner,
+  ui-download-morph .dm__arc,
+  ui-download-morph .dm__tick,
+  ui-download-morph .dm__cross {
+    transition: none !important;
+  }
+
+  ui-download-morph .dm__spinner {
+    animation: none !important;
+  }
+}
+
+/* Bảng màu cưỡng bức không phân biệt xanh với đỏ: vòng và dấu vẽ bằng màu chữ, kết quả vẫn khác nhau bằng hình dạng. */
+@media (forced-colors: active) {
+  ui-download-morph[state] .dm__arc,
+  ui-download-morph[state] .dm__tick,
+  ui-download-morph[state] .dm__cross,
+  ui-download-morph[state] .dm__spinner {
+    stroke: currentColor;
+  }
+}

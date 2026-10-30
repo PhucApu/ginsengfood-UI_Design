@@ -1,0 +1,132 @@
+/* Biểu tượng "thêm vào giỏ" biến hình, vẽ bởi phần tử <ui-cart-morph> (cart-morph.js).
+   Lúc nghỉ ("empty") là chiếc giỏ có dấu cộng trong lòng giỏ. Sang "added": dấu cộng xoay một phần tư vòng và thu nhỏ về 0, rồi dấu tích được vẽ ra đúng chỗ đó,
+   phình hơn cỡ gốc một chút rồi lắng lại. Về "empty": dấu tích được thu lại ngay, dấu cộng xoay vào lại. Giỏ và hai bánh xe không bao giờ di chuyển.
+   Mọi chuyển động chỉ là bốn transition CSS (scale và rotate của dấu cộng, scale của nhóm dấu tích, stroke-dashoffset của nét tích): không @keyframes, không animation, không bộ đếm giờ.
+   Phần tử không viết ARIA, không đặt tên nút, không báo kết quả: trang sở hữu trạng thái, tên nút và lời thông báo. */
+
+/* Bốn biến tuỳ chỉnh đặt ngay trên phần tử: cỡ biểu tượng, thời lượng một lần đổi, đường cong thường và đường cong duy nhất có vọt quá (chỉ dấu tích khi sang "added"). */
+ui-cart-morph {
+  --ct-size: 24px;
+  --ct-duration: 600ms;
+  --ct-ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --ct-pop: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  display: inline-grid;
+}
+
+/* Một hình vẽ trong hộp 24 đơn vị, vẽ bằng màu chữ của nút nên theo màu nút và theo bảng màu cưỡng bức. */
+.ct__icon {
+  display: block;
+  flex: none;
+  inline-size: var(--ct-size);
+  block-size: var(--ct-size);
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  pointer-events: none;
+}
+
+/* Hai bánh xe là hai chấm đặc, phần duy nhất không phải nét vẽ. Giỏ không có luật riêng vì không gì đặt hay làm nó chuyển động. */
+.ct__wheel {
+  fill: currentColor;
+  stroke: none;
+}
+
+/* Dấu cộng và dấu tích xoay, phóng quanh tâm lòng giỏ (13,5; 10,5) theo hộp 24, nên gốc được viết theo hộp chứ không theo từng phần.
+   Trạng thái "empty" được viết đầy đủ để mọi thuộc tính đều có số để đi từ đó: dấu cộng nguyên vẹn thẳng đứng (không có scale/rotate),
+   nhóm dấu tích ở 0,6, nét tích là một đoạn nét 1 trong danh sách "1 2" đẩy tới 1,02 nên không có phần nào nằm trên đường (kể cả chấm của đầu tròn). */
+.ct__plus,
+.ct__mark {
+  transform-box: view-box;
+  transform-origin: 13.5px 10.5px;
+}
+
+.ct__mark {
+  scale: 0.6;
+}
+
+.ct__tick {
+  stroke-dasharray: 1 2;
+  stroke-dashoffset: 1.02;
+}
+
+/* Trạng thái "added": dấu cộng đã xoay 90 độ và thu về 0, nhóm dấu tích đầy cỡ với cả nét tích được vẽ. */
+ui-cart-morph[state="added"] .ct__plus {
+  scale: 0;
+  rotate: 90deg;
+}
+
+ui-cart-morph[state="added"] .ct__mark {
+  scale: 1;
+}
+
+ui-cart-morph[state="added"] .ct__tick {
+  stroke-dashoffset: 0;
+}
+
+/* Chưa khai báo transition nào trước khi script chạy, nên trạng thái có sẵn lúc nạp trang được hiện ngay, không chuyển động. */
+ui-cart-morph[data-enhanced] .ct__plus {
+  transition-property: scale, rotate;
+  transition-timing-function: var(--ct-ease);
+}
+
+ui-cart-morph[data-enhanced] .ct__mark {
+  transition-property: scale;
+}
+
+ui-cart-morph[data-enhanced] .ct__tick {
+  transition-property: stroke-dashoffset;
+  transition-timing-function: var(--ct-ease);
+}
+
+/* Thời gian là tỷ lệ của --ct-duration (đổi thời lượng thì giữ nguyên hình). Transition lấy thời gian từ kiểu nó đi TỚI, nên luật của "added" mô tả đường sang "added":
+   dấu cộng xoay đi trong 0,4 đầu, rồi nét tích được vẽ từ 0,4 đến 0,9 trong khi nhóm dấu tích phình từ 0,4 đến 1 theo đường cong vọt quá. */
+ui-cart-morph[data-enhanced][state="added"] .ct__plus {
+  transition-duration: calc(var(--ct-duration) * 0.4);
+  transition-delay: 0s;
+}
+
+ui-cart-morph[data-enhanced][state="added"] .ct__tick {
+  transition-duration: calc(var(--ct-duration) * 0.5);
+  transition-delay: calc(var(--ct-duration) * 0.4);
+}
+
+ui-cart-morph[data-enhanced][state="added"] .ct__mark {
+  transition-duration: calc(var(--ct-duration) * 0.6);
+  transition-timing-function: var(--ct-pop);
+  transition-delay: calc(var(--ct-duration) * 0.4);
+}
+
+/* Luật của "empty" mô tả đường quay về: nét tích và nhóm dấu tích thu lại ngay trong 0,35, rồi dấu cộng xoay vào từ 0,5 đến 1, không vọt quá. Mọi lần đổi đều kết thúc đúng ở 1. */
+ui-cart-morph[data-enhanced][state="empty"] .ct__tick {
+  transition-duration: calc(var(--ct-duration) * 0.35);
+  transition-delay: 0s;
+}
+
+ui-cart-morph[data-enhanced][state="empty"] .ct__mark {
+  transition-duration: calc(var(--ct-duration) * 0.35);
+  transition-timing-function: var(--ct-ease);
+  transition-delay: 0s;
+}
+
+ui-cart-morph[data-enhanced][state="empty"] .ct__plus {
+  transition-duration: calc(var(--ct-duration) * 0.5);
+  transition-delay: calc(var(--ct-duration) * 0.5);
+}
+
+/* Giảm chuyển động: hình được đổi ngay, không chuyển động ở giữa. */
+@media (prefers-reduced-motion: reduce) {
+  ui-cart-morph .ct__plus {
+    transition: none !important;
+  }
+
+  ui-cart-morph .ct__mark {
+    transition: none !important;
+  }
+
+  ui-cart-morph .ct__tick {
+    transition: none !important;
+  }
+}

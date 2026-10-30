@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="description" content="Tháng Chín, những luống sâm trên bãi cát Thạnh Phú bắt đầu cho củ. Theo chân tổ canh tác suốt một ngày thu hoạch, từ lúc rửa cát đến khi dán mã lô.">
   <meta name="theme-color" content="#072A4E">
-  <title>Vào vụ sâm mới ở vùng cát biển Thạnh Phú – Tin tức Ginsengfood</title>
+  <title>Ginsengfood – Vào vụ sâm mới ở vùng cát biển Thạnh Phú</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -139,7 +139,7 @@
     .link-more .icon { width: 18px; height: 18px; }
 
     /* Section furniture */
-    .section { padding: 0 0 52px; scroll-margin-top: var(--header-h); }
+    .section { padding: 0 0 52px; scroll-margin-top: calc(var(--header-h) + var(--catbar-h)); }
     .eyebrow {
       display: inline-flex; align-items: center; gap: 10px; font-size: 12.5px; font-weight: 700;
       letter-spacing: .12em; text-transform: uppercase; color: var(--gf-gold-text);
@@ -351,7 +351,7 @@
     /* ---- Khung thân bài + cột phụ ---- */
     .artlayout { margin-top: 36px; display: grid; grid-template-columns: minmax(0, 1fr) 316px; gap: 56px; align-items: start; }
     .artmain { min-width: 0; }
-    .aside--sticky { position: sticky; top: calc(var(--header-h) + 24px); }
+    .aside--sticky { position: sticky; top: calc(var(--header-h) + var(--catbar-h) + 24px); }
 
     /* ---- Thân bài: một cột đọc, chữ và ảnh cùng độ rộng, không đổi giữa các khối ---- */
     .prose { container: prose / inline-size; max-width: 720px; font-size: 17px; line-height: 1.85; color: var(--gf-text); }
@@ -360,9 +360,9 @@
     .blk p { text-wrap: pretty; }
     .blk h2 {
       font-family: var(--font-serif); font-size: 29px; font-weight: 700; line-height: 1.25; color: var(--gf-navy);
-      padding-top: 16px; scroll-margin-top: calc(var(--header-h) + 20px);
+      padding-top: 16px; scroll-margin-top: calc(var(--header-h) + var(--catbar-h) + 20px);
     }
-    .blk h3 { font-size: 20px; font-weight: 700; line-height: 1.35; color: var(--gf-text); padding-top: 8px; scroll-margin-top: calc(var(--header-h) + 20px); }
+    .blk h3 { font-size: 20px; font-weight: 700; line-height: 1.35; color: var(--gf-text); padding-top: 8px; scroll-margin-top: calc(var(--header-h) + var(--catbar-h) + 20px); }
     .blk a { color: var(--gf-navy-700); text-decoration: underline; text-decoration-thickness: 1.5px; text-underline-offset: 3px; font-weight: 500; }
     .blk a:hover { color: var(--gf-navy); }
     .blk ul, .blk ol { display: flex; flex-direction: column; gap: 10px; padding-left: 4px; }
@@ -518,6 +518,17 @@
     .viewer__btn:focus-visible, .viewer__nav:focus-visible { outline: 2px solid var(--gf-gold); outline-offset: 2px; box-shadow: none; }
     .viewer__btn .icon { width: 20px; height: 20px; }
     .viewer__btn--text { min-width: 64px; font-variant-numeric: tabular-nums; }
+    /* Nút tải ảnh trong khung xem ảnh (<ui-download-morph>, download-morph.css; chủ dự án 2026-10-29): nút chỉ có icon nên phần "nội dung" đổi là tên nút (aria-label do script đặt) và màu nền: xanh lá khi xong (--gf-ok), đỏ khi lỗi; viền sáng giữ cho nút còn rõ trên nền navy đậm của khung xem. Biểu tượng vẽ bằng màu chữ (trắng). */
+    .viewer__tools ui-download-morph { --dm-size: 22px; }
+    .viewer__tools ui-download-morph > .viewer__btn { transition: background-color calc(var(--dm-duration) * 0.4) var(--dm-ease), border-color calc(var(--dm-duration) * 0.4) var(--dm-ease), color calc(var(--dm-duration) * 0.4) var(--dm-ease); }
+    .viewer__tools ui-download-morph > .viewer__btn[aria-disabled="true"] { cursor: progress; }
+    .viewer__tools ui-download-morph[state="done"] > .viewer__btn { border-color: #86EFAC; background: var(--gf-ok); color: #fff; }
+    .viewer__tools ui-download-morph[state="done"] > .viewer__btn:hover { border-color: #86EFAC; background: #245A3C; }
+    .viewer__tools ui-download-morph[state="error"] > .viewer__btn { border-color: #FFC4B8; background: #B42318; color: #fff; }
+    .viewer__tools ui-download-morph[state="error"] > .viewer__btn:hover { border-color: #FFC4B8; background: #912018; }
+    @media (prefers-reduced-motion: reduce) {
+      .viewer__tools ui-download-morph > .viewer__btn { transition: none; }
+    }
     .viewer__stage { position: relative; display: grid; place-items: center; overflow: hidden; touch-action: pan-y; cursor: grab; min-height: 0; }
     .viewer__stage.is-zoomed { cursor: grab; touch-action: none; }
     .viewer__stage.is-dragging { cursor: grabbing; }
@@ -780,73 +791,186 @@
           padding-block: 40px 48px; background: var(--gf-cream); border-bottom: 1px solid var(--gf-border);
         }
     .golden-section__inner { width: 100%; max-width: calc(var(--container) + var(--gutter) * 2); margin: 0 auto; padding: 0 var(--gutter); min-width: 0; }
-    .golden-section .book-section__eyebrow { display: flex; margin: 0 0 14px; line-height: 1.35; }
     .golden {
-          position: relative; isolation: isolate; display: grid; grid-template-columns: minmax(0, 1.45fr) auto minmax(0, 1fr); align-items: stretch;
-          border-radius: 20px; overflow: hidden; color: var(--gf-gold-soft);
-          background: radial-gradient(120% 160% at 50% 50%, #A5221A 0%, #8D1B12 55%, #6E110C 100%);
-          border: 1px solid rgba(232,201,121,.35); box-shadow: 0 14px 34px -18px rgba(109,17,12,.55);
-        }
-    @media (min-width: 1280px) {
-    .golden { grid-template-columns: minmax(0, 1.75fr) auto minmax(0, .9fr); }
+      position: relative; isolation: isolate; display: grid; grid-template-columns: minmax(0, 1.5fr) 1fr; align-items: stretch;
+      border-radius: 20px; overflow: hidden; color: var(--gf-gold-soft);
+      background: radial-gradient(120% 160% at 50% 50%, #A5221A 0%, #8D1B12 55%, #6E110C 100%);
+      border: 1px solid rgba(232,201,121,.35); box-shadow: 0 14px 34px -18px rgba(109,17,12,.55);
     }
+    /* Hai cột (chủ dự án đổi bố cục 2026-10-26): trái = chữ + nút mời nằm ngay dưới dòng "Số lượng có hạn…", phải = đồng hồ đếm ngược. Tỉ lệ 1,5 : 1; cột phải là 1fr (= minmax(auto, 1fr)) nên không bao giờ hẹp hơn nội dung đồng hồ. */
     .golden .icon { stroke-width: 2.4; }
     .golden__deco { position: absolute; pointer-events: none; z-index: 0; }
     .golden__deco--blossom { left: -22px; bottom: -30px; width: 132px; height: auto; opacity: .42; }
     .golden__deco--lantern { right: 34px; top: -6px; width: 44px; height: auto; }
     .golden__deco--wave { right: -20px; bottom: -22px; width: 220px; height: auto; opacity: .16; }
-    .golden__main, .golden__timer, .golden__cta { position: relative; z-index: 1; }
-    .golden__main { padding: 34px 26px 16px; display: flex; flex-direction: column; justify-content: flex-start; gap: 8px; }
-    .golden__headline { display: flex; flex-wrap: wrap; align-items: baseline; column-gap: 14px; }
+    .golden__main, .golden__timer { position: relative; z-index: 1; }
+    .golden__main { padding: 34px 26px 28px; display: flex; flex-direction: column; justify-content: center; gap: 8px; }
+    /* Tiêu đề "Giờ vàng hôm nay" và mức giảm cùng cỡ chữ, cùng kiểu chữ và cùng một sóng sáng chạy ngang (letter-index của mức giảm nối tiếp tiêu đề). Nằm ở đầu cột phải, trên dòng "Mở phiên sau":
+       từ 1024px xếp HAI DÒNG (tiêu đề trên, mức giảm dưới, căn giữa) để không phụ thuộc bề rộng cột; dưới 1024px (một cột) chung một hàng nếu đủ chỗ, thiếu thì mức giảm xuống dòng. */
+    .golden__headline { display: flex; flex-direction: column; align-items: center; row-gap: 2px; margin-bottom: 6px; text-align: center; }
     .golden .golden__headline, .golden .golden__brand, .golden .golden__offer { --flare-cycle: 4.2s; --flare-lead: .2s; --flare-step: .1s; }
     .golden__brand, .golden__offer {
-          margin: 0; font-family: var(--font-serif); font-size: 32px; font-weight: 700; line-height: 1.15; white-space: nowrap;
-          background: linear-gradient(180deg, #F8E3A0 0%, #E8C979 55%, #D2A43C 100%); -webkit-background-clip: text; background-clip: text; color: transparent;
-        }
-    .golden__points { display: grid; gap: 7px; margin: 6px 0 0; padding: 0; list-style: none; }
-    .golden__points li { display: flex; align-items: flex-start; gap: 9px; color: #F3E3B8; font-size: 15px; font-weight: 500; line-height: 1.4; }
+      margin: 0; font-family: var(--font-serif); font-size: 32px; font-weight: 700; line-height: 1.15; white-space: nowrap;
+      background: linear-gradient(180deg, #F8E3A0 0%, #E8C979 55%, #D2A43C 100%); -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+    /* Tiêu đề khối quyền lợi "Đặc Quyền dành cho thành viên" (chủ dự án 2026-10-27): cùng họ chữ serif, độ đậm 700 và dải vàng chuyển sắc với "Giờ vàng hôm nay" nhưng nhỏ hơn một chút (26px so với 32px từ 1280px); chữ tĩnh, không có sóng sáng. */
+    .golden__perks-title {
+      margin: 0 0 8px; font-family: var(--font-serif); font-size: 26px; font-weight: 700; line-height: 1.2; text-align: center; text-wrap: balance;
+      background: linear-gradient(180deg, #F8E3A0 0%, #E8C979 55%, #D2A43C 100%); -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+    .golden__perks-title + .golden__points { margin-top: 0; }
+    @media (forced-colors: active) { .golden__perks-title { background: none; color: CanvasText; } }
+    /* Ba dòng quyền lợi dưới tiêu đề "Đặc Quyền dành cho thành viên" (chủ dự án chọn phương án B "danh sách đầy cột", 2026-10-27): mỗi dòng một hàng đầy bề ngang cột trái, icon nằm trong vòng tròn vàng,
+       vạch kẻ mảnh ở giữa các hàng (và dưới hàng cuối); chữ tĩnh, chỉ con số "10 – 25 phút" đậm lên. */
+    .golden__points { display: grid; gap: 0; width: 100%; margin: 6px 0 0; padding: 0; list-style: none; }
+    .golden__points li { display: flex; align-items: center; gap: 14px; padding: 9px 0; border-top: 1px solid rgba(232, 201, 121, .22); color: #F3E3B8; font-size: 15px; font-weight: 500; line-height: 1.4; }
+    .golden__points li:last-child { border-bottom: 1px solid rgba(232, 201, 121, .22); }
     .golden__points li.golden__lead { color: #FFF3DC; font-weight: 700; }
     .golden__points li > span { text-wrap: balance; }
     .golden__points b { color: #FFF3DC; font-variant-numeric: tabular-nums; font-weight: 700; white-space: nowrap; }
-    .golden__points .icon { width: 18px; height: 18px; flex: 0 0 auto; margin-top: 1px; color: var(--gf-gold-soft); }
+    .golden__points .icon { width: 34px; height: 34px; flex: 0 0 auto; padding: 8px; box-sizing: border-box; color: var(--gf-gold-soft); border: 1px solid rgba(232, 201, 121, .55); border-radius: 50%; background: rgba(232, 201, 121, .12); }
+    /* Câu nhấn "Chỉ Thành viên được mua sớm": nằm dòng riêng ngay dưới "Quyền mua sớm giờ vàng 10 – 25 phút", nghiêng và dịu hơn để phân cấp. */
+    .golden__quote { display: block; margin-top: 2px; color: var(--gf-gold-soft); font-style: italic; font-weight: 500; }
+    /* Phải: đếm ngược nổi bật, nằm giữa chiều cao card (card cao theo cột chữ bên trái). Từ 1024px: vạch mảnh ngăn với cột chữ (cùng màu vạch ngăn của bố cục một cột ở dưới 1024px) và hoa mai trang trí dời sang góc dưới trái của cột này
+       (60% = bề rộng cột chữ theo tỉ lệ 1,5 : 1) vì góc dưới trái của card nay là chỗ của nút mời. Đặt sau luật gốc của .golden__deco--blossom vì cùng độ ưu tiên. */
     .golden__timer { align-self: stretch; padding: 24px 28px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; }
-    @media (min-width: 1320px) {
-    .golden { grid-template-columns: minmax(0, 2.1fr) auto minmax(0, 1fr); }
-    .golden__main { padding-right: 10px; }
-    .golden__timer { padding-inline: 18px; }
-    }
+    /* Trong DOM khối đồng hồ (kèm tiêu đề) đứng trước cột chữ nên từ 1024px đặt tường minh: chữ ở cột 1, đồng hồ ở cột 2. */
+    @media (min-width: 1024px) { .golden__main { grid-column: 1; grid-row: 1; } .golden__timer { grid-column: 2; grid-row: 1; border-left: 1px solid rgba(232, 201, 121, .22); } .golden__deco--blossom { left: calc(60% + 12px); } }
     .golden__label { display: inline-flex; align-items: baseline; gap: 8px; font-size: 12.5px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; white-space: nowrap; color: #F3E3B8; }
     .golden__label .icon { width: 17px; height: 17px; color: var(--gf-gold-soft); position: relative; top: 2px; }
     .golden__label-rule { width: 26px; height: 1px; background: rgba(232,201,121,.6); align-self: center; }
+    /* Nhãn không được làm rộng cột đồng hồ ("Thời gian đếm ngược" dài hơn "Kết thúc sau": ở 1024–1279px cột phình 38px và nút "Gửi thông báo cho tôi" tràn sang ô đồng hồ, đồng bộ storefront 14/10/2026): nhãn lấy đúng bề rộng cột, hai vạch hai bên tự co lại. */
     .golden__label { width: 0; min-width: 100%; justify-content: center; }
     .golden__label-rule { flex: 0 1 26px; min-width: 0; }
-    .countdown { display: flex; gap: 12px; }
-    .countdown__cell {
-          display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; width: 78px; height: 78px; border-radius: 14px;
-          background: linear-gradient(180deg, #B22A1D 0%, #7C150F 100%); border: 1px solid rgba(232,201,121,.6); box-shadow: inset 0 1px 0 rgba(255,255,255,.12);
-        }
-    .countdown__cell b { font-size: 34px; line-height: 1; color: #FFF3DC; font-variant-numeric: tabular-nums; }
-    .countdown__cell span { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--gf-gold-soft); }
-    .golden__cta { padding: 30px 18px 0; display: flex; flex-direction: column; align-items: flex-end; justify-content: center; }
-    .golden__cta-stack { display: flex; flex-direction: column; align-items: stretch; gap: 8px; }
+    .golden .countdown { display: flex; gap: 12px; }
+    /* Ô đếm ngược nổi khối 3D, đồng bộ storefront (`.home-golden__cell`, chủ dự án 2026-10-19): khung vàng vát cạnh (viền 2px trong suốt + lớp nền thứ ba cắt theo border-box),
+       mặt đỏ có điểm sáng vòm ở góc trên trái, cạnh dày 5px bằng năm bóng cứng, bóng mờ dưới đáy. Kích thước ô giữ nguyên (78 / 70 / 68px), không chuyển động. */
+    .golden .countdown__cell {
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; width: 78px; height: 78px; border-radius: 14px;
+      border: 2px solid transparent;
+      background:
+        radial-gradient(ellipse 70% 55% at 24% 0%, rgba(255,255,255,.2) 0%, rgba(255,255,255,0) 100%) padding-box,
+        linear-gradient(180deg, #C63A2A 0%, #A12218 46%, #861810 100%) padding-box,
+        linear-gradient(145deg, #FFF0B8 0%, #E8C979 26%, #B98A2B 60%, #7A5516 100%) border-box;
+      box-shadow:
+        inset 0 2px 0 rgba(255,255,255,.3), inset 0 -10px 12px -6px rgba(0,0,0,.35),
+        0 1px 0 #6F130C, 0 2px 0 #650F09, 0 3px 0 #5A0D08, 0 4px 0 #4F0B07, 0 5px 0 #440906,
+        0 12px 14px -4px rgba(0,0,0,.55);
+    }
+    .golden .countdown__cell b { font-size: 34px; line-height: 1; color: #FFF3DC; font-variant-numeric: tabular-nums; text-shadow: 0 2px 0 rgba(60,8,4,.55), 0 4px 6px rgba(0,0,0,.35); } /* số nổi khỏi mặt ô */
+    .golden .countdown__cell span { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--gf-gold-soft); text-shadow: 0 1px 0 rgba(40,6,3,.5); }
+    @media (forced-colors: active) { .golden .countdown__cell { border-color: CanvasText; } }
+    /* Nút theo trạng thái (khách: mời trở thành thành viên; đã đăng nhập: "Gửi thông báo cho tôi" + chip "Sắp mở"), nằm trong cột chữ ngay dưới dòng "Số lượng có hạn…" (chủ dự án 2026-10-26); trước đây là cột thứ ba bên phải đồng hồ. */
+    .golden__cta { display: flex; flex-direction: column; align-items: center; max-width: 100%; margin-top: 14px; } /* nút ghép co theo nội dung, căn giữa cột chữ (cùng trục với tiêu đề); dưới 1024px: khối tối đa 560px; ≤480px: nút rộng hết khối */
+    .golden__cta-stack { display: flex; flex-direction: column; align-items: stretch; gap: 8px; max-width: 100%; }
     .golden__btn {
-          display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 44px; padding: 0 12px; border: 1.5px solid var(--gf-gold-soft); border-radius: var(--radius-pill); cursor: pointer;
-          background: linear-gradient(180deg, #9A2016 0%, #8D1B12 100%); color: var(--gf-gold-soft); font-weight: 700; font-size: 13.5px; white-space: nowrap;
-          box-shadow: 0 8px 18px -8px rgba(40,6,4,.75), 0 0 0 4px rgba(232,201,121,.12), inset 0 1px 0 rgba(255,255,255,.16);
-          transition: background var(--motion-base) var(--ease-standard), color var(--motion-base) var(--ease-standard), box-shadow var(--motion-base) var(--ease-standard);
-        }
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 44px; padding: 0 12px; border: 1.5px solid var(--gf-gold-soft); border-radius: var(--radius-pill); cursor: pointer;
+      background: linear-gradient(180deg, #9A2016 0%, #8D1B12 100%); color: var(--gf-gold-soft); font-weight: 700; font-size: 13.5px; white-space: nowrap;
+      box-shadow: 0 8px 18px -8px rgba(40,6,4,.75), 0 0 0 4px rgba(232,201,121,.12), inset 0 1px 0 rgba(255,255,255,.16);
+      transition: background var(--motion-base) var(--ease-standard), color var(--motion-base) var(--ease-standard), box-shadow var(--motion-base) var(--ease-standard), transform var(--motion-base) var(--ease-standard);
+    }
     .golden__btn:not(:disabled):hover { background: linear-gradient(180deg, #A8261B 0%, #94201A 100%); color: #F3D98A; border-color: #F3D98A; box-shadow: 0 10px 22px -8px rgba(40,6,4,.8), 0 0 0 5px rgba(232,201,121,.18), inset 0 1px 0 rgba(255,255,255,.2); }
     .golden__btn:disabled { cursor: not-allowed; }
     .golden__btn-icon { flex: 0 0 auto; display: grid; place-items: center; height: 100%; padding: 0 10px 0 0; border-right: 1px solid rgba(232,201,121,.45); }
     .golden__btn-icon .icon { width: 17px; height: 17px; }
     .golden__btn-text { flex: 1 1 auto; text-align: center; }
+    /* Chip "Sắp mở" trong nút "Gửi thông báo cho tôi" (chưa có hạ tầng nhắc lịch nên nút đang khoá). */
     .golden__btn-soon { flex: 0 0 auto; padding: 2px 8px; border-radius: 999px; background: #FFF3DC; color: #7B5614; font-size: 13px; font-weight: 700; line-height: 1.4; }
-    .golden__btn.golden__btn--member { height: auto; min-height: 44px; padding: 4px 16px; line-height: 1.2; text-decoration: none; white-space: normal; }
+    /* Khách chưa đăng nhập: liên kết mời trở thành thành viên; chữ dài nên cho xuống dòng thay vì nowrap, chiều cao tự giãn. */
+    .golden__btn.golden__btn--member { height: auto; min-height: 44px; padding: 3.5px 16px; line-height: 1.2; text-decoration: none; white-space: normal; } /* viền 2px (khung vát cạnh 3D) nên đệm dọc 4 → 3,5px: nút vẫn cao đúng 44px */
     .golden__btn--member .golden__btn-text { text-wrap: balance; }
-    .golden__btn.golden__btn--member { border-color: #FFF3DC; background: linear-gradient(180deg, #F8E3A0 0%, #E8C979 55%, #D2A43C 100%); color: #6E110C; box-shadow: 0 8px 18px -8px rgba(40,6,4,.75), 0 0 0 4px rgba(232,201,121,.3), inset 0 1px 0 rgba(255,255,255,.6); }
+    /* Nút mời trở thành thành viên là nút bấm thật: nền vàng (cùng dải màu chữ "-38% đến -42%") và chữ đỏ rượu vang để nổi hẳn khỏi nền card đỏ và khác ô đồng hồ (đồng bộ storefront, chủ dự án chọn 14/10/2026).
+       Nút "Gửi thông báo cho tôi" đang khoá giữ kiểu tối. Viền focus trắng riêng vì viền focus chung (quầng xanh 28%) không thấy được trên nền đỏ và vàng, và còn ép góc về vuông. */
+    /* Nút mời nổi khối 3D như ba ô đồng hồ (storefront `.home-golden__btn--member`, chủ dự án 2026-10-19): giữ dải mặt vàng đã chọn, thêm khung vát cạnh, điểm sáng vòm, cạnh dày 5px bằng năm bóng cứng vàng đồng,
+       quầng sáng vàng mờ. Rê chuột nhấc 1px, nhấn lún 3px. */
+    .golden__btn.golden__btn--member {
+      border: 2px solid transparent;
+      background:
+        radial-gradient(ellipse 55% 90% at 16% 0%, rgba(255,255,255,.5) 0%, rgba(255,255,255,0) 100%) padding-box,
+        linear-gradient(180deg, #F8E3A0 0%, #E8C979 55%, #D2A43C 100%) padding-box,
+        linear-gradient(145deg, #FFFFFF 0%, #FFF3DC 22%, #E6C26A 55%, #A9781D 100%) border-box;
+      box-shadow:
+        inset 0 2px 0 rgba(255,255,255,.7), inset 0 -8px 10px -6px rgba(122,85,22,.45),
+        0 1px 0 #C09330, 0 2px 0 #B1862A, 0 3px 0 #A07623, 0 4px 0 #8F671D, 0 5px 0 #7D5817,
+        0 12px 14px -4px rgba(40,6,4,.7), 0 0 24px rgba(248,227,160,.3);
+      color: #6E110C; text-shadow: 0 1px 0 rgba(255,246,214,.7);
+    }
     .golden__btn--member .golden__btn-icon { border-right-color: rgba(110,17,12,.35); }
-    .golden__btn.golden__btn--member:not(:disabled):hover { border-color: #FFFFFF; background: linear-gradient(180deg, #FFF0BF 0%, #F3D98A 55%, #E0B44A 100%); color: #5A0D09; box-shadow: 0 10px 22px -8px rgba(40,6,4,.8), 0 0 0 5px rgba(232,201,121,.4), inset 0 1px 0 rgba(255,255,255,.6); }
+    .golden__btn.golden__btn--member:not(:disabled):hover {
+      border-color: transparent; /* luật rê chuột chung của nút đặt viền vàng nhạt và sẽ che khung vát cạnh */
+      background:
+        radial-gradient(ellipse 55% 90% at 16% 0%, rgba(255,255,255,.55) 0%, rgba(255,255,255,0) 100%) padding-box,
+        linear-gradient(180deg, #FFF0BF 0%, #F3D98A 55%, #E0B44A 100%) padding-box,
+        linear-gradient(145deg, #FFFFFF 0%, #FFFFFF 20%, #F3D98A 55%, #B98A2B 100%) border-box;
+      box-shadow:
+        inset 0 2px 0 rgba(255,255,255,.8), inset 0 -8px 10px -6px rgba(122,85,22,.4),
+        0 1px 0 #C09330, 0 2px 0 #B1862A, 0 3px 0 #A07623, 0 4px 0 #8F671D, 0 5px 0 #7D5817, 0 6px 0 #6B4912,
+        0 16px 18px -4px rgba(40,6,4,.75), 0 0 30px rgba(248,227,160,.4);
+      color: #5A0D09; transform: translateY(-1px);
+    }
+    /* Nhấn: đặt SAU luật rê chuột để thắng khi vừa rê vừa nhấn; cạnh co còn 2px, nút lún 3px. */
+    .golden__btn.golden__btn--member:not(:disabled):active {
+      box-shadow:
+        inset 0 2px 0 rgba(255,255,255,.6), inset 0 -6px 8px -6px rgba(122,85,22,.45),
+        0 1px 0 #C09330, 0 2px 0 #B1862A, 0 5px 8px -3px rgba(40,6,4,.6);
+      transform: translateY(3px);
+    }
+    @media (forced-colors: active) { .golden__btn.golden__btn--member, .golden__btn.golden__btn--member:not(:disabled):hover { border-color: LinkText; } } /* tương phản cao bỏ ảnh nền nên viền trong suốt sẽ mất khung nút: dùng màu viền hệ thống, cả khi rê chuột */
     .golden__btn.golden__btn--member:focus-visible { outline: 3px solid #FFFFFF; outline-offset: 3px; border-radius: var(--radius-pill); }
+    /* Nút mời của khách là NÚT GHÉP (chủ dự án duyệt 2026-10-27): trái = dải thông điệp hai dòng (đỏ đậm, viền + chữ vàng nhạt), phải = nút tròn vàng 3D "Đăng ký ngay" cao hơn dải, đè lên đầu dải cho liền khối.
+       Nút tròn dùng cùng công thức nổi khối với nút vàng cũ và ba ô đồng hồ (khung vát cạnh, điểm sáng vòm, cạnh dày 5px bằng năm bóng cứng); rê chuột nhấc 1px, nhấn lún 3px, Tab có viền trắng 3px.
+       Các luật .golden__btn* ở trên giữ lại cho nút "Gửi thông báo cho tôi" của bản hội viên (trang này chỉ còn dùng .golden__combo). */
+    .golden__combo { position: relative; display: inline-flex; align-items: center; max-width: 100%; text-decoration: none; border-radius: 999px; -webkit-tap-highlight-color: transparent; }
+    .golden__combo-msg {
+      position: relative; z-index: 1; flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; justify-content: center; min-height: 44px; padding: 4px 42px 4px 20px;
+      border: 1.5px solid rgba(232,201,121,.7); border-radius: 999px;
+      background: linear-gradient(180deg, #7A140D 0%, #5E0E09 100%);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.14), inset 0 -6px 10px -6px rgba(0,0,0,.45), 0 8px 16px -8px rgba(40,6,4,.7);
+      color: #F8E3A0; font-weight: 700; font-size: 14px; line-height: 1.25; text-wrap: balance;
+      transition: border-color var(--motion-base) var(--ease-standard), box-shadow var(--motion-base) var(--ease-standard);
+    }
+    .golden__combo-line { display: block; } /* "quyền lợi thành viên" luôn xuống dòng thứ hai */
+    .golden__combo-knob {
+      position: relative; z-index: 2; flex: 0 0 auto; display: grid; place-items: center; width: 68px; height: 68px; margin-left: -28px; padding: 0 3px; text-align: center;
+      border: 2px solid transparent; border-radius: 50%;
+      background:
+        radial-gradient(ellipse 60% 55% at 30% 6%, rgba(255,255,255,.55) 0%, rgba(255,255,255,0) 100%) padding-box,
+        linear-gradient(180deg, #F8E3A0 0%, #E8C979 55%, #D2A43C 100%) padding-box,
+        linear-gradient(145deg, #FFFFFF 0%, #FFF3DC 22%, #E6C26A 55%, #A9781D 100%) border-box;
+      box-shadow:
+        inset 0 2px 0 rgba(255,255,255,.7), inset 0 -8px 10px -6px rgba(122,85,22,.45),
+        0 1px 0 #C09330, 0 2px 0 #B1862A, 0 3px 0 #A07623, 0 4px 0 #8F671D, 0 5px 0 #7D5817,
+        0 12px 14px -4px rgba(40,6,4,.7), 0 0 24px rgba(248,227,160,.3);
+      color: #6E110C; text-shadow: 0 1px 0 rgba(255,246,214,.7); font-weight: 800; font-size: 13.5px; line-height: 1.12;
+      transition: background var(--motion-base) var(--ease-standard), box-shadow var(--motion-base) var(--ease-standard), transform var(--motion-base) var(--ease-standard), color var(--motion-base) var(--ease-standard);
+    }
+    .golden__combo:hover .golden__combo-msg { border-color: #F3D98A; box-shadow: inset 0 1px 0 rgba(255,255,255,.2), inset 0 -6px 10px -6px rgba(0,0,0,.45), 0 10px 20px -8px rgba(40,6,4,.8); }
+    .golden__combo:hover .golden__combo-knob {
+      background:
+        radial-gradient(ellipse 60% 55% at 30% 6%, rgba(255,255,255,.6) 0%, rgba(255,255,255,0) 100%) padding-box,
+        linear-gradient(180deg, #FFF0BF 0%, #F3D98A 55%, #E0B44A 100%) padding-box,
+        linear-gradient(145deg, #FFFFFF 0%, #FFFFFF 20%, #F3D98A 55%, #B98A2B 100%) border-box;
+      box-shadow:
+        inset 0 2px 0 rgba(255,255,255,.8), inset 0 -8px 10px -6px rgba(122,85,22,.4),
+        0 1px 0 #C09330, 0 2px 0 #B1862A, 0 3px 0 #A07623, 0 4px 0 #8F671D, 0 5px 0 #7D5817, 0 6px 0 #6B4912,
+        0 16px 18px -4px rgba(40,6,4,.75), 0 0 30px rgba(248,227,160,.4);
+      color: #5A0D09; transform: translateY(-1px);
+    }
+    /* Nhấn: đặt SAU luật rê chuột để thắng khi vừa rê vừa nhấn; cạnh co còn 2px, nút tròn lún 3px. */
+    .golden__combo:active .golden__combo-knob {
+      box-shadow: inset 0 2px 0 rgba(255,255,255,.6), inset 0 -6px 8px -6px rgba(122,85,22,.45), 0 1px 0 #C09330, 0 2px 0 #B1862A, 0 5px 8px -3px rgba(40,6,4,.6);
+      transform: translateY(3px);
+    }
+    .golden__combo:focus-visible { outline: 3px solid #FFFFFF; outline-offset: 4px; } /* viền focus chung (quầng xanh 28%) không thấy được trên nền đỏ */
+    @media (forced-colors: active) { .golden__combo-msg, .golden__combo-knob { border-color: LinkText; } } /* tương phản cao bỏ ảnh nền: viền trong suốt sẽ mất khung nút */
+    @media (prefers-reduced-motion: reduce) { .golden__combo-msg, .golden__combo-knob { transition: none; } }
+    @media (max-width: 480px) { .golden .golden__cta { align-items: stretch; } .golden__combo { width: 100%; } } /* điện thoại: dải giãn hết khối chữ, nút tròn nằm cuối bên phải */
+    @media (max-width: 359px) { .golden__combo-msg { padding-left: 14px; font-size: 13px; } .golden__combo-knob { width: 64px; height: 64px; font-size: 13px; } }
+    /* Phối màu navy của nút ghép cho khung "Đăng ký để kích hoạt quyền lợi thành viên" (card navy, chủ dự án 2026-10-27): dải navy đậm viền vàng, nút tròn vàng giữ nguyên, chữ trong nút tròn đổi sang navy như nút "Đăng ký" ở header.
+       Nút vàng cũ (a.btn--primary trong .tiers__actions) không còn dùng ở trang này; CSS của nó giữ lại ở khối cuối trang. */
+    .golden__combo--navy .golden__combo-msg { background: linear-gradient(180deg, #0C2A52 0%, #061D3C 100%); border-color: rgba(232,201,121,.75); text-align: center; } /* chữ trên dải ("Đăng ký để kích hoạt / quyền lợi thành viên", chủ dự án 2026-10-27) căn giữa dải */
+    .golden__combo--navy .golden__combo-knob { color: #072A4E; }
+    .golden__combo--navy:hover .golden__combo-knob { color: #041A33; }
     .gh-slider { position: relative; margin-top: 16px; }
     .gh-cards { display: flex; gap: 24px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; padding: 4px; margin: 0 -4px; scroll-padding: 4px; cursor: grab; }
     .gh-cards::-webkit-scrollbar { display: none; }
@@ -865,53 +989,59 @@
     .gh-card__name a:hover { text-decoration: underline; }
     .gh-card__quota { margin: 0; font-size: 13px; color: var(--gf-muted); font-variant-numeric: tabular-nums; }
     .gh-card__quota[data-tone="low"], .gh-card__quota[data-tone="out"] { color: var(--gf-burgundy); font-weight: 700; }
+
     @media (max-width: 1279px) {
-    .golden__main { padding: 32px 22px 16px; }
-    .golden__brand, .golden__offer { font-size: clamp(20px, 2.05vw, 26px); white-space: normal; }
-    .golden__headline { column-gap: 12px; }
-    .golden__points li { font-size: 14px; }
-    .golden__timer { padding: 22px 20px; }
-    .countdown { gap: 8px; }
-    .countdown__cell { width: 70px; height: 70px; }
-    .countdown__cell b { font-size: 28px; }
-    .golden__cta { padding: 28px 14px 0; }
-    .golden__btn { height: 42px; gap: 6px; padding: 0 12px; font-size: 13.5px; }
-    .golden__btn-icon { padding: 0 8px 0 0; }
-    .golden__btn.golden__btn--member { min-height: 42px; padding: 3px 12px; }
-    .golden__deco--lantern { right: 18px; width: 36px; }
+      .golden__main { padding: 32px 22px 26px; }
+      .golden__perks-title { font-size: clamp(18px, 1.75vw, 22px); }
+      .golden__brand, .golden__offer { font-size: clamp(20px, 2.05vw, 26px); white-space: normal; } /* hai cột: cỡ chữ co theo bề ngang để tiêu đề và mức ưu đãi vẫn cùng một hàng */
+      .golden__headline { column-gap: 12px; }
+      .golden__points li { font-size: 14px; }
+      .golden__timer { padding: 22px 20px; }
+      .golden .countdown { gap: 8px; }
+      .golden .countdown__cell { width: 70px; height: 70px; }
+      .golden .countdown__cell b { font-size: 28px; }
+      .golden__btn { height: 42px; gap: 6px; padding: 0 12px; font-size: 13.5px; }
+      .golden__btn-icon { padding: 0 8px 0 0; }
+      .golden__btn.golden__btn--member { min-height: 42px; padding: 2.5px 12px; }
+      .golden__deco--lantern { right: 18px; width: 36px; }
     }
     @media (max-width: 1023px) {
-    .golden { grid-template-columns: 1fr; }
-    .golden__main { align-items: center; padding: 18px 22px 16px; text-align: center; }
-    .golden__points { justify-items: start; }
-    .golden__headline { justify-content: center; }
-    .golden__brand, .golden__offer { font-size: 26px; }
-    .golden__points li { max-width: 560px; text-align: left; }
-    .golden__timer { padding: 16px 22px; border-top: 1px solid rgba(232, 201, 121, .22); }
-    .golden__cta { align-items: center; padding: 16px 22px; border-top: 1px solid rgba(232, 201, 121, .22); }
-    .golden__deco--blossom { width: 130px; }
-    .golden__deco--wave { display: none; }
+      .golden { grid-template-columns: 1fr; }
+      .golden__main { align-items: center; padding: 20px 22px 24px; text-align: center; }
+      .golden__points { justify-items: stretch; max-width: 560px; }
+      .golden__headline { flex-direction: row; flex-wrap: wrap; justify-content: center; align-items: baseline; margin-bottom: 0; }
+      .golden__perks-title { font-size: 22px; }
+      .golden__brand, .golden__offer { font-size: 26px; }
+      .golden__points li { text-align: left; }
+      .golden__timer { padding: 26px 22px 20px; border-bottom: 1px solid rgba(232, 201, 121, .22); } /* một cột: tiêu đề + đồng hồ đứng đầu card, vạch ngăn nằm dưới nó */
+      .golden__cta { width: 100%; max-width: 560px; }
+      .golden__deco--blossom { width: 130px; }
+      .golden__deco--wave { display: none; }
+    }
+    @media (max-width: 1023px) {
     .gh-card { flex-basis: calc((100% - 24px - 8px) / 2); }
     }
     @media (max-width: 767px) {
     .golden-section { padding-block: 20px 24px; }
-    .golden { border-radius: 16px; }
-    .golden__main { gap: 8px; padding: 44px 16px 14px; }
-    .golden__brand, .golden__offer { max-width: none; font-size: clamp(17px, 5.1vw, 23px); }
-    .golden__headline { column-gap: 10px; }
-    .golden__points { gap: 6px; }
-    .golden__points li { gap: 8px; font-size: 13.5px; }
-    .golden__points .icon { width: 16px; height: 16px; }
-    .golden__timer { gap: 8px; padding: 12px 14px; }
-    .golden__label { font-size: 11px; }
-    .countdown { width: 100%; gap: 8px; }
-    .countdown__cell { width: auto; height: 68px; flex: 1 1 0; }
-    .countdown__cell b { font-size: 26px; }
-    .golden__cta { align-items: stretch; padding: 14px; }
-    .golden__btn { height: 46px; font-size: 14px; }
-    .golden__btn.golden__btn--member { min-height: 46px; padding: 4px 16px; }
-    .golden__deco--blossom { display: none; }
-    .golden__deco--lantern { right: 12px; width: 30px; }
+    }
+    @media (max-width: 767px) {
+      .golden { border-radius: 16px; }
+      .golden__main { gap: 8px; padding: 18px 16px 18px; }
+      .golden__perks-title { font-size: clamp(16px, 4.4vw, 20px); }
+      .golden__brand, .golden__offer { max-width: none; font-size: clamp(17px, 5.1vw, 23px); }
+      .golden__headline { column-gap: 10px; }
+      .golden__points li { gap: 12px; font-size: 13.5px; }
+      .golden__timer { gap: 8px; padding: 44px 14px 14px; } /* đệm trên 44px để hàng tiêu đề + mức giảm nằm dưới chiếc đèn lồng ở góc phải card */
+      .golden__label { font-size: 11px; }
+      .golden .countdown { width: 100%; gap: 8px; }
+      .golden .countdown__cell { width: auto; height: 68px; flex: 1 1 0; }
+      .golden .countdown__cell b { font-size: 26px; }
+      .golden__btn { height: 46px; font-size: 14px; }
+      .golden__btn.golden__btn--member { min-height: 46px; padding: 4px 16px; }
+      .golden__deco--blossom { display: none; }
+      .golden__deco--lantern { right: 12px; width: 30px; }
+    }
+    @media (max-width: 767px) {
     .gh-slider { margin-top: 12px; }
     .gh-cards { gap: 12px; }
     .gh-slider__btn { display: none; }
@@ -922,16 +1052,62 @@
     /* Điện thoại rất hẹp (320px): câu mời "Đăng ký trở thành thành viên Ginsengfood ngay hôm nay" (chủ dự án đổi 14/10/2026) dài hơn câu cũ nên thu đệm ngang của nút mời
        (16 → 10px) để chữ vẫn nằm trong hai dòng, nút cao 46px như nút thông báo thay vì rớt xuống ba dòng. Đúng như storefront. */
     @media (max-width: 359px) { .golden__btn.golden__btn--member { padding-inline: 10px; } }
+    /* Card Giờ Vàng GỌN (chủ dự án chọn phương án A ngày 2026-10-27): giữ nguyên bố cục (hai cột trên máy tính, một cột ở khổ nhỏ), chỉ thu khoảng đệm, cỡ chữ, icon, ô đồng hồ và nút ghép
+       để card thấp lại (máy tính 371 → 255px, điện thoại 550 → 440px). Đặt SAU các luật .golden* và @media của chúng ở trên; dùng .golden-section .golden … (đặc hiệu cao hơn) nên không phải sửa từng luật cũ.
+       Chỉ áp trong card: nút ghép ở khối "Quyền lợi thành viên" (.tiers__foot) vẫn giữ cỡ cũ. */
+    @media (min-width: 1024px) {
+      .golden-section .golden .golden__main { padding: 18px 26px 14px; gap: 4px; }
+      .golden-section .golden .golden__perks-title { margin: 0; font-size: clamp(18px, 1.75vw, 21px); }
+      .golden-section .golden .golden__points { margin: 2px 0 0; }
+      .golden-section .golden .golden__points li { gap: 11px; padding: 4px 0; font-size: 14px; }
+      .golden-section .golden .golden__points .icon { width: 26px; height: 26px; padding: 6px; }
+      .golden-section .golden .golden__quote { margin-top: 0; }
+      .golden-section .golden .golden__cta { margin-top: 8px; }
+      .golden-section .golden .golden__timer { gap: 7px; padding: 14px 22px; }
+      .golden-section .golden .golden__headline { margin-bottom: 9px; } /* tiêu đề + mức giảm cách dòng "Mở phiên sau" 16px (chủ dự án muốn thoáng hơn, 2026-10-27) */
+      .golden-section .golden .countdown__cell { width: 60px; height: 60px; }
+      .golden-section .golden .countdown__cell b { font-size: 26px; }
+      .golden-section .golden .golden__combo-msg { min-height: 38px; padding: 3px 36px 3px 17px; font-size: 12px; }
+      .golden-section .golden .golden__combo-knob { width: 58px; height: 58px; margin-left: -24px; padding: 0 2px; font-size: 11.5px; }
+    }
+    @media (min-width: 1280px) { .golden-section .golden .golden__brand, .golden-section .golden .golden__offer { font-size: 27px; } } /* 1024–1279px giữ cỡ co theo bề ngang (clamp) của luật cũ */
+    @media (max-width: 1023px) { /* một cột: tiêu đề + đồng hồ ở trên, quyền lợi + nút ở dưới */
+      .golden-section .golden .golden__timer { gap: 6px; padding: 22px 22px 12px; }
+      .golden-section .golden .golden__headline { margin-bottom: 6px; } /* một cột: tiêu đề cách "Mở phiên sau" 12px */
+      .golden-section .golden .golden__label { font-size: 11px; }
+      .golden-section .golden .countdown { gap: 8px; }
+      .golden-section .golden .countdown__cell { width: 64px; height: 56px; }
+      .golden-section .golden .countdown__cell b { font-size: 24px; }
+      .golden-section .golden .golden__main { padding: 14px 22px 16px; gap: 6px; }
+      .golden-section .golden .golden__perks-title { margin: 0; font-size: 18px; }
+      .golden-section .golden .golden__points { margin: 2px 0 0; }
+      .golden-section .golden .golden__points li { gap: 11px; padding: 5px 0; font-size: 13.5px; }
+      .golden-section .golden .golden__points .icon { width: 26px; height: 26px; padding: 6px; }
+      .golden-section .golden .golden__quote { margin-top: 0; }
+      .golden-section .golden .golden__cta { margin-top: 8px; }
+      .golden-section .golden .golden__combo-msg { min-height: 39px; padding: 3.5px 37px 3.5px 18px; font-size: 12.3px; }
+      .golden-section .golden .golden__combo-knob { width: 60px; height: 60px; margin-left: -25px; padding: 0 3px; font-size: 11.9px; }
+    }
+    @media (max-width: 767px) { /* điện thoại: đệm trên 32px để hàng tiêu đề + mức giảm vẫn nằm dưới chiếc đèn lồng ở góc phải card */
+      .golden-section .golden .golden__timer { padding: 32px 14px 10px; }
+      .golden-section .golden .golden__label { font-size: 10.5px; }
+      .golden-section .golden .countdown { gap: 6px; }
+      .golden-section .golden .countdown__cell { width: auto; height: 54px; }
+      .golden-section .golden .countdown__cell b { font-size: 22px; }
+      .golden-section .golden .golden__main { padding: 12px 14px 14px; }
+      .golden-section .golden .golden__perks-title { font-size: 16px; }
+      .golden-section .golden .golden__points li { gap: 10px; padding: 5px 0; font-size: 13px; }
+    }
+    @media (max-width: 359px) {
+      .golden-section .golden .golden__combo-msg { padding-left: 12px; font-size: 11.5px; }
+      .golden-section .golden .golden__combo-knob { width: 56px; height: 56px; font-size: 11.5px; }
+    }
     @media (prefers-reduced-motion: reduce) {
-    .golden__btn, .gh-slider__btn { transition: none; }
+      .golden__btn, .gh-slider__btn { transition: none; }
     }
     @media (max-width: 767px) {
-    .golden-section .book-section__eyebrow { font-size: 14px; }
-    .golden-section .book-section__eyebrow .eyebrow__rule { width: 34px; }
     }
-    @supports ((-webkit-background-clip: text) or (background-clip: text)) {
-    .golden__brand, .golden__offer { background: none; }
-    }
+    @supports ((-webkit-background-clip: text) or (background-clip: text)) { .golden__brand, .golden__offer { background: none; } }
     .gh-card article { gap: 8px; }
     .gh-card__badge { top: 12px; left: 12px; padding: 4px 10px; }
     .gh-card__name { min-height: 0; font-size: 16px; line-height: 1.3; }
@@ -1978,7 +2154,375 @@ html { scrollbar-gutter: stable; }
   .storefront-reference-shell .mobile-nav > * { animation: none !important; }
 }
 </style>
+<style id="home-header-fit">
+/* Thêm mục "Khởi nghiệp cùng Ssavigroup" làm menu có sáu mục, rộng 773px (chữ 15px, khe 16px). Khung header từ 1280px trở lên chỉ có
+   1240px nội dung nên menu đè lên cụm nút bên phải: 21px ở 1280px, 159px từ 1440px (khi ô tìm kiếm 208px nằm ngang).
+   Từ 1280px: chữ menu 15 → 14px, khe 16 → 12px (menu còn 707px, chừa tối thiểu 45px so với cụm nút bên phải).
+   Từ 1440px: ô tìm kiếm quay về nút kính lúp + bảng thả như dải 1280–1439px (dùng lại đúng mã #searchToggle có sẵn). */
+@media (min-width: 1280px) {
+  .storefront-reference-shell .desktop-nav { gap: 12px; }
+  .storefront-reference-shell .desktop-nav > a { font-size: 14px; }
+}
+@media (min-width: 1440px) {
+  .storefront-reference-shell .search-region,
+  .storefront-reference-shell .search-region.open,
+  .storefront-reference-shell .search-region.is-open {
+    position: absolute;
+    right: 0;
+    left: 0;
+    width: auto;
+    flex: 0 1 auto;
+  }
+  .storefront-reference-shell .search-inner { display: grid; padding: 12px 40px 16px; }
+  .storefront-reference-shell .search-box { height: auto; min-height: 44px; }
+  .storefront-reference-shell .search-box input { font-size: 15px; }
+  .storefront-reference-shell .reference-search-dropdown { right: 0; left: 0; width: auto; }
+  .storefront-reference-shell #searchToggle { display: flex; }
+}
+</style>
+<!-- search-motion: hiệu ứng mở/đóng thanh tìm kiếm như trang chủ khách (chép từ trang-chu.html, 2026-10-21), đặt NGOÀI khối gf-shell:css để lớp vỏ dùng chung giữ nguyên -->
+<style id="home-search-motion">
+/* Trước đây bảng tìm kiếm chỉ đổi display none → block nên hiện ra trong đúng một khung hình (kèm cả ô gợi ý), và khoá cuộn làm thanh
+   cuộn biến mất nên cả header nhảy ngang ~8px (Windows có thanh cuộn thật). Bây giờ:
+   · nền navy trải xuống từ mép dưới header (scaleY, 260ms + --ease-entrance có sẵn của trang), bóng đổ hiện dần;
+   · ô tìm kiếm trôi xuống nhẹ + hiện dần (trễ 60ms), khung gợi ý hiện sau cùng (trễ 120ms); đóng thì nhanh hơn và không so le;
+   · chỉ dùng transform/opacity (chạy trên GPU), không đổi chiều cao nên không kéo bố cục;
+   · html giữ chỗ thanh cuộn (scrollbar-gutter) để khoá cuộn không làm trang nhảy ngang;
+   · bật "giảm chuyển động" thì hiện/ẩn tức thì như cũ. Luôn display:block, ẩn bằng visibility để chuyển động được. */
+html { scrollbar-gutter: stable; }
+
+.storefront-reference-shell .search-region,
+.storefront-reference-shell .search-region.open,
+.storefront-reference-shell .search-region.is-open {
+  display: block;
+  border-top: 1px solid transparent;
+  background: none;
+  box-shadow: none;
+}
+.storefront-reference-shell .search-region {
+  visibility: hidden;
+  pointer-events: none;
+  transition: visibility 0s linear 240ms;
+}
+.storefront-reference-shell .search-region.open,
+.storefront-reference-shell .search-region.is-open {
+  visibility: visible;
+  pointer-events: auto;
+  transition-delay: 0s;
+}
+
+/* Nền navy + vạch vàng mảnh (::before) trải xuống từ mép header; bóng đổ (::after) hiện dần riêng để không bị cắt cứng. */
+.storefront-reference-shell .search-region::before,
+.storefront-reference-shell .search-region::after {
+  content: "";
+  position: absolute;
+  top: -1px;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  pointer-events: none;
+}
+.storefront-reference-shell .search-region::before {
+  z-index: -1;
+  border-top: 1px solid rgba(198, 154, 43, 0.4);
+  background: var(--storefront-header-surface);
+  transform: scaleY(0);
+  transform-origin: top center;
+  transition: transform var(--motion-base) var(--ease-standard) 40ms;
+}
+.storefront-reference-shell .search-region::after {
+  z-index: -2;
+  box-shadow: 0 18px 32px rgba(7, 42, 78, 0.3);
+  opacity: 0;
+  transition: opacity var(--motion-base) var(--ease-standard);
+}
+.storefront-reference-shell .search-region.open::before,
+.storefront-reference-shell .search-region.is-open::before {
+  transform: none;
+  transition: transform var(--motion-medium) var(--ease-entrance);
+}
+.storefront-reference-shell .search-region.open::after,
+.storefront-reference-shell .search-region.is-open::after {
+  opacity: 1;
+  transition: opacity var(--motion-medium) var(--ease-standard) 60ms;
+}
+
+/* Ô tìm kiếm: trôi xuống nhẹ + hiện dần, trễ 60ms sau nền. */
+.storefront-reference-shell .search-inner {
+  opacity: 0;
+  transform: translateY(-8px);
+  transition: opacity var(--motion-fast) var(--ease-standard), transform var(--motion-base) var(--ease-standard);
+}
+.storefront-reference-shell .search-region.open .search-inner,
+.storefront-reference-shell .search-region.is-open .search-inner {
+  opacity: 1;
+  transform: none;
+  transition: opacity var(--motion-medium) var(--ease-standard) 60ms, transform 320ms var(--ease-entrance) 60ms;
+}
+
+/* Khung gợi ý (hiện khi ô nhập có tiêu điểm): hiện sau cùng. */
+.storefront-reference-shell .reference-search-dropdown {
+  display: block;
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(-6px);
+  pointer-events: none;
+  transition: opacity var(--motion-fast) var(--ease-standard), transform var(--motion-base) var(--ease-standard), visibility 0s linear var(--motion-base);
+}
+.storefront-reference-shell .reference-search-form:focus-within .reference-search-dropdown {
+  visibility: inherit;
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+  transition: opacity var(--motion-medium) var(--ease-standard) 120ms, transform 320ms var(--ease-entrance) 120ms, visibility 0s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .storefront-reference-shell .search-region,
+  .storefront-reference-shell .search-region::before,
+  .storefront-reference-shell .search-region::after,
+  .storefront-reference-shell .search-inner,
+  .storefront-reference-shell .reference-search-dropdown { transition: none !important; }
+}
+</style>
+<!-- guest-cta: nút "Đăng ký" của khách ở header như trang chủ khách (chép từ trang-chu.html, 2026-10-21), đặt NGOÀI khối gf-shell:css để lớp vỏ dùng chung giữ nguyên -->
+<style id="home-guest-cta">
+/* Nút "Đăng ký" của khách ở header (chủ dự án yêu cầu 2026-10-20: gộp icon người và chữ "Đăng ký" thành MỘT nút, làm nổi bật hơn).
+   Trước đây nút trong suốt, chỉ có icon + chữ màu ngà nên đọc ra như hai thứ rời nhau và chìm giữa các nút tròn viền vàng. Bây giờ:
+   · một viên thuốc vàng đặc, icon người và chữ nằm chung trong nút, cùng màu navy #072A4E (tương phản từ 6:1 trên phần vàng đậm nhất của nút, #CDA130);
+   · nổi lên nhờ quầng sáng vàng quanh nút; cứ 6 giây một lượt: vệt sáng chéo lướt qua nút rồi một vòng viền vàng mảnh lan ra mờ dần;
+   · rê chuột hoặc dùng bàn phím: nút nâng nhẹ, sáng hơn, quầng sáng đậm hơn, icon nhích lên; nhấn: nhún xuống;
+   · bật "giảm chuyển động": chỉ còn nút tĩnh, không vệt sáng, không vòng viền, không nâng khi rê;
+   · dưới 1280px nút nằm trong menu mở ra (bảng nền sáng): cùng kiểu, rộng hết bảng (tối đa 360px), cao 48px, chữ 16px.
+   Không đổi mã HTML của lớp vỏ: chỉ ghi đè style của .header-guest-btn (cả hai bản: hàng header và menu điện thoại). */
+.storefront-reference-shell .storefront-header .header-account-slot .diamond-member-btn.header-member-btn.header-guest-btn {
+  --guest-cta-ring: rgba(240, 214, 138, 0.95);
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-height: 42px;
+  padding: 0 17px 0 13px;
+  border: 0;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #F6E3A5 0%, #E8C979 46%, #CDA130 100%);
+  background-color: #E8C979;
+  color: #072A4E;
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: 0.01em;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.42);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.7),
+    inset 0 -2px 0 rgba(139, 98, 12, 0.26),
+    0 7px 16px -6px rgba(198, 154, 43, 0.8),
+    0 0 22px rgba(232, 201, 121, 0.3);
+  filter: none;
+  transition: transform 180ms cubic-bezier(0.2, 0.74, 0.18, 1), box-shadow 180ms cubic-bezier(0.2, 0.74, 0.18, 1), filter 180ms cubic-bezier(0.2, 0.74, 0.18, 1);
+}
+.storefront-reference-shell .storefront-header .header-account-slot .diamond-member-btn.header-member-btn.header-guest-btn:hover,
+.storefront-reference-shell .storefront-header .header-account-slot .diamond-member-btn.header-member-btn.header-guest-btn:focus-visible {
+  background: linear-gradient(180deg, #F6E3A5 0%, #E8C979 46%, #CDA130 100%);
+  background-color: #E8C979;
+  color: #072A4E;
+  transform: translateY(-1px);
+  filter: brightness(1.07) saturate(1.05);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.8),
+    inset 0 -2px 0 rgba(139, 98, 12, 0.24),
+    0 10px 20px -6px rgba(198, 154, 43, 0.9),
+    0 0 30px rgba(232, 201, 121, 0.45);
+}
+.storefront-reference-shell .storefront-header .header-account-slot .diamond-member-btn.header-member-btn.header-guest-btn:active {
+  transform: translateY(0) scale(0.97);
+}
+
+/* Icon người: bỏ ô tròn viền navy của menu điện thoại, đặt thẳng trên nền vàng, nét đặc cho dễ đọc. */
+.storefront-reference-shell .storefront-header .header-account-slot .diamond-member-btn.header-member-btn.header-guest-btn .material-symbols-outlined {
+  display: inline-flex;
+  flex: 0 0 auto;
+  width: auto;
+  height: auto;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  color: currentcolor;
+  filter: none;
+  font-size: 20px;
+  font-variation-settings: "FILL" 1, "wght" 600, "GRAD" 0, "opsz" 20;
+  transition: transform 180ms cubic-bezier(0.2, 0.74, 0.18, 1);
+}
+.storefront-reference-shell .storefront-header .header-account-slot .diamond-member-btn.header-member-btn.header-guest-btn:hover .material-symbols-outlined,
+.storefront-reference-shell .storefront-header .header-account-slot .diamond-member-btn.header-member-btn.header-guest-btn:focus-visible .material-symbols-outlined {
+  transform: translateY(-1px) scale(1.1);
+}
+.storefront-reference-shell .storefront-header .header-account-slot .diamond-member-btn.header-member-btn.header-guest-btn .header-member-label {
+  font: inherit;
+  letter-spacing: inherit;
+}
+
+/* Vệt sáng chéo (::before) và vòng viền lan ra (::after); đứng yên khi chưa bật chuyển động. */
+.storefront-reference-shell .storefront-header .header-account-slot .diamond-member-btn.header-member-btn.header-guest-btn::before {
+  content: "";
+  display: block;
+  position: absolute;
+  inset: 0;
+  width: auto;
+  height: auto;
+  border-radius: inherit;
+  pointer-events: none;
+  transform: none;
+  background: linear-gradient(105deg, rgba(255, 255, 255, 0) 42%, rgba(255, 255, 255, 0.85) 50%, rgba(255, 255, 255, 0) 58%) 0 0 / 300% 100% no-repeat;
+  animation: none;
+}
+.storefront-reference-shell .storefront-header .header-account-slot .diamond-member-btn.header-member-btn.header-guest-btn::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  outline: 2px solid transparent;
+  outline-offset: 0;
+}
+@keyframes guestCtaShine {
+  0% { background-position: 0% 0; }
+  22%, 100% { background-position: 100% 0; }
+}
+@keyframes guestCtaPulse {
+  0%, 18% { outline-color: transparent; outline-offset: 0; }
+  20% { outline-color: var(--guest-cta-ring); outline-offset: 0; }
+  46%, 100% { outline-color: transparent; outline-offset: 12px; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .storefront-reference-shell .storefront-header .header-account-slot .diamond-member-btn.header-member-btn.header-guest-btn::before { animation: guestCtaShine 6s ease-in-out 0.9s infinite; }
+  .storefront-reference-shell .storefront-header .header-account-slot .diamond-member-btn.header-member-btn.header-guest-btn::after { animation: guestCtaPulse 6s ease-out 0.9s infinite; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .storefront-reference-shell .storefront-header .header-account-slot .diamond-member-btn.header-member-btn.header-guest-btn:hover,
+  .storefront-reference-shell .storefront-header .header-account-slot .diamond-member-btn.header-member-btn.header-guest-btn:focus-visible,
+  .storefront-reference-shell .storefront-header .header-account-slot .diamond-member-btn.header-member-btn.header-guest-btn:active { transform: none; }
+  .storefront-reference-shell .storefront-header .header-account-slot .diamond-member-btn.header-member-btn.header-guest-btn:hover .material-symbols-outlined,
+  .storefront-reference-shell .storefront-header .header-account-slot .diamond-member-btn.header-member-btn.header-guest-btn:focus-visible .material-symbols-outlined { transform: none; }
+}
+
+/* 1280–1439px: menu chính chiếm nhiều chỗ hơn nên thu đệm nút để còn khe thở giữa menu và cụm nút bên phải. */
+@media (min-width: 1280px) and (max-width: 1439px) {
+  .storefront-reference-shell .storefront-header .header-account-slot .diamond-member-btn.header-member-btn.header-guest-btn {
+    gap: 6px;
+    padding: 0 14px 0 11px;
+  }
+}
+
+/* Dưới 1280px: nút nằm trong menu mở ra (nền sáng) nên bỏ quầng sáng, vòng viền đậm hơn, nút rộng hết bảng và cao 48px. */
+@media (max-width: 1279px) {
+  .storefront-reference-shell .storefront-header .mobile-nav-actions .header-account-slot .diamond-member-btn.header-member-btn.header-guest-btn {
+    --guest-cta-ring: rgba(198, 154, 43, 0.9);
+    width: 100%;
+    max-width: 360px;
+    min-height: 48px;
+    gap: 10px;
+    padding: 0 22px;
+    font-size: 16px;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.7),
+      inset 0 -2px 0 rgba(139, 98, 12, 0.26),
+      0 0 0 1px rgba(198, 154, 43, 0.4),
+      0 8px 16px -8px rgba(198, 154, 43, 0.85);
+  }
+  .storefront-reference-shell .storefront-header .mobile-nav-actions .header-account-slot .diamond-member-btn.header-member-btn.header-guest-btn:hover,
+  .storefront-reference-shell .storefront-header .mobile-nav-actions .header-account-slot .diamond-member-btn.header-member-btn.header-guest-btn:focus-visible {
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.8),
+      inset 0 -2px 0 rgba(139, 98, 12, 0.24),
+      0 0 0 1px rgba(198, 154, 43, 0.55),
+      0 10px 18px -8px rgba(198, 154, 43, 0.95);
+  }
+  .storefront-reference-shell .storefront-header .mobile-nav-actions .header-account-slot .diamond-member-btn.header-member-btn.header-guest-btn:focus-visible { outline-color: #072A4E; }
+  .storefront-reference-shell .storefront-header .mobile-nav-actions .header-account-slot .diamond-member-btn.header-member-btn.header-guest-btn .material-symbols-outlined { font-size: 22px; }
+}
+
+/* Chế độ tương phản cao: bỏ nền gradient và hiệu ứng, dùng màu hệ thống để chữ luôn đọc được. */
+@media (forced-colors: active) {
+  .storefront-reference-shell .storefront-header .header-account-slot .diamond-member-btn.header-member-btn.header-guest-btn {
+    border: 1px solid ButtonText;
+    background: ButtonFace;
+    color: ButtonText;
+    box-shadow: none;
+    text-shadow: none;
+  }
+  .storefront-reference-shell .storefront-header .header-account-slot .diamond-member-btn.header-member-btn.header-guest-btn::before,
+  .storefront-reference-shell .storefront-header .header-account-slot .diamond-member-btn.header-member-btn.header-guest-btn::after { display: none; }
+}
+</style>
 <!-- gf-contact-rail:css:begin -->
+<style id="home-golden-sync">
+/* Tiêu đề "Số lượng có hạn" (chủ dự án 2026-10-19): đề mục căn giữa cùng kiểu các đề mục khác của trang (chữ hoa, hai gạch vàng), nằm dưới card Giờ Vàng và trên dải card sản phẩm. Chép từ trang chi tiết sản phẩm (khách). */
+.gh-limited { display: flex; margin: 30px 0 0; gap: 10px; font-family: var(--font-sans); letter-spacing: .12em; line-height: 1.35; }
+.gh-limited .eyebrow__rule { width: 26px; }
+.gh-limited + .gh-slider { margin-top: 18px; }
+@media (max-width: 767px) {
+  .gh-limited { margin-top: 22px; }
+  .gh-limited .eyebrow__rule { width: 18px; }
+  .gh-limited + .gh-slider { margin-top: 14px; }
+}
+
+/* Viền thẻ đậm một nấc (#D9C79C thay #E8DDC3) như trang chủ (phương án D 2026-10-19). Biến này ở trang chi tiết chỉ có trong phạm vi vỏ trang nên ngoài đó rỗng. */
+:root { --gf-border-strong: #D9C79C; }
+
+/* Card sản phẩm Giờ Vàng: vạch đỏ 4px cạnh trên (như trang chủ). */
+.gh-card article { border-color: var(--gf-border-strong); box-shadow: inset 0 4px 0 0 #C63A2A, 0 10px 24px -18px rgba(16, 48, 95, .45); }
+
+/* Chế độ tương phản cao: ô đồng hồ dùng màu hệ thống (như trang chủ). */
+@media (forced-colors: active) { .golden .countdown__cell { border-color: CanvasText; } }
+</style>
+<style id="home-collections-sync">
+/* Khu "Chương trình bán hàng 24/7": khoảng đệm trên/dưới, tiêu đề và dòng mô tả (như trang chủ). Trang chủ còn chứa thanh nhóm trong khu này; trang chi tiết thì thanh luôn nằm ở đầu trang. Chép từ trang chi tiết sản phẩm (khách). */
+#he-mo-rong { padding-top: 46px; }
+#he-mo-rong { padding-bottom: 36px; }
+@media (max-width: 767px) {
+  #he-mo-rong { padding-top: 26px; }
+  #he-mo-rong { padding-top: 32px; padding-bottom: 30px; }
+}
+.section__title.eco__title { margin: 0; text-align: center; font-size: 32px; line-height: 1.2; }
+@media (max-width: 767px) {
+  .section__title.eco__title { font-size: 24px; }
+}
+.eco__lead { text-align: center; }
+
+/* Thẻ trắng nhấn cạnh (phương án D 2026-10-19, như trang chủ): viền đậm một nấc + vạch màu nhóm 4px cạnh trên của thẻ sản phẩm, thẻ xem trước và khối rỗng. */
+.collection .card article { border-color: var(--gf-border-strong); box-shadow: inset 0 4px 0 0 var(--cat-accent, var(--gf-gold)), var(--shadow-card); }
+.collection .preview-card, .collection .empty { border-color: var(--gf-border-strong); box-shadow: inset 0 4px 0 0 var(--cat-accent, var(--gf-gold)); }
+
+/* Cùng trang chi tiết (khách): chữ trong khu 24/7 + nhóm co 1,5 dòng; nhóm "sắp ra mắt" ẩn bằng thuộc tính hidden (trang này chưa có thanh lọc nên không hiện); dải card có khe trên 20px; nút điều hướng bị khoá giữ viền xanh. */
+.tiers, .golden-section, #he-mo-rong, #collections { line-height: 1.5; }
+.collection[hidden] { display: none !important; }
+.cards { margin-top:20px; display:flex; gap:24px; overflow-x:auto; scroll-snap-type:x mandatory; scrollbar-width:none; padding:4px; margin-left:-4px; margin-right:-4px; scroll-padding:4px; cursor:grab; }
+@media (max-width: 767px) { .cards { gap: 12px; } } /* luật .cards ở trên đứng sau @media cũ nên phải nhắc lại khe 12px của điện thoại */
+.card__actions .iconbtn.is-added { background:var(--gf-navy); border-color:var(--gf-navy); color:#fff; }
+.card .iconbtn:disabled, .collection__nav .iconbtn:disabled { opacity: unset; border-color: var(--gf-navy); color: var(--gf-navy); cursor: default; } /* nút trượt hết đầu/cuối vẫn xanh như trang chủ (chỉ đổi con trỏ); luật cũ ở khối đầu trang đặt viền be + chữ nhạt */
+
+/* Bổ sung theo trang chủ (khu nhóm + card): nút trượt nhóm 30px viền xanh, giá niêm yết ở card không gạch ngang, nút giỏ không viền, khe trên hàng nút; tiêu đề khu 24/7 màu vàng nâu và dòng dẫn rộng 660px. Chép từ trang chủ. */
+.collection__nav .iconbtn { position:relative; width:30px; height:30px; border-color:var(--gf-navy); background:#fff; color:var(--gf-navy); transition:background var(--motion-fast) var(--ease-standard); }
+.collection__nav .iconbtn::before { content:""; position:absolute; inset:-7px; border-radius:999px; }
+.collection__nav .iconbtn .icon { width:15px; height:15px; stroke-width:2; }
+.collection__nav .iconbtn:hover:not(:disabled) { background:var(--gf-cream); }
+.price__row--listed dd { text-decoration:none; }
+.card__actions .iconbtn { border:0; }
+.card__actions { padding-top:4px; }
+.tiers__lead { max-width:660px; margin:12px auto 0; font-size:15px; line-height:1.65; color:var(--gf-muted); }
+@media (max-width: 767px) { .tiers__lead { font-size:13.5px; margin-top:10px; } }
+#ecoTitle { color: var(--gf-gold-text); }
+
+/* Thẻ "SẮP RA MẮT" của bốn nhóm chưa mở bán (đang ẩn vì trang này không có thanh lọc; giữ sẵn kiểu để khi bật vẫn đúng như trang chủ). Chép từ trang chủ. */
+.legalgate { margin-top:20px; display:flex; align-items:center; gap:16px; padding:18px 22px; background:#FFF3CC; border:1px solid #C89723; border-radius:var(--radius-lg); }
+.legalgate__badge { flex:0 0 auto; font-size:11.5px; font-weight:700; letter-spacing:.08em; padding:5px 11px; border-radius:var(--radius-pill); background:var(--gf-gold-text); color:#fff; }
+.legalgate__text { font-size:14px; font-weight:600; color:var(--gf-gold-text); }
+@media (max-width: 767px) { .legalgate { flex-wrap:wrap; gap:10px; padding:14px 16px; } }
+/* Đề mục "Số lượng có hạn" ở điện thoại: chữ 11px như các nhãn nhỏ của trang chủ (trang chủ đặt 11px cho mọi .eyebrow ≤767px; trang này giữ 14px cho nhãn khác nên chỉ đặt riêng cho đề mục này). */
+@media (max-width: 767px) { .gh-limited { font-size: 11px; } }
+</style>
 <style id="gf-contact-rail-css">
 /* Thanh liên hệ nhanh của trang chủ storefront (ReferenceFooter → .reference-social-shell). Chép từ
    referenceHomeSupplementalCss + nền .social-* của bộ mẫu; nút đóng/mở dùng ô chọn ẩn + nhãn (CSS thuần, không JS).
@@ -2291,6 +2835,7 @@ html { scrollbar-gutter: stable; }
 .storefront-reference-shell .nav-sub__note { display: block; margin-top: 2px; font-size: 13px; font-weight: 500; line-height: 1.4; color: #667085; }
 .storefront-reference-shell .mobile-nav > a.mobile-sub { min-height: 44px; padding-left: 36px; font-size: 15px; font-weight: 500; }
 .storefront-reference-shell .mobile-nav > a.mobile-sub::before { content: ""; position: absolute; top: 50%; left: 16px; width: 10px; height: 2px; border-radius: 999px; background: var(--storefront-header-gold, #C9A227); transform: translateY(-50%); }
+@media (min-width: 1280px) and (max-width: 1299px) { .storefront-reference-shell .desktop-nav { gap: 9px; } }
 </style>
 <!-- Menu ☰ phương án A (chủ dự án chọn 2026-10-23, chép từ storefrontHeaderMobileMenuCss.ts của web chính; phần cuối là bổ sung riêng của bản mẫu). Đặt cuối <head> để thắng cùng độ ưu tiên với khối gf-shell:css. -->
 <style id="gf-mobile-menu-a">
@@ -2728,6 +3273,9 @@ html { scrollbar-gutter: stable; }
     .storefront-reference-shell .mobile-nav-actions .header-member-menu-item.is-danger.is-full-md { grid-column: 1 / -1; }
   }
 </style>
+<link rel="stylesheet" href="download-morph.css">
+<link rel="stylesheet" href="menu-close-morph.css">
+<link rel="stylesheet" href="topic-bar.css">
 </head>
 
 <body>
@@ -2766,7 +3314,10 @@ html { scrollbar-gutter: stable; }
   <symbol id="i-volume" viewBox="0 0 24 24"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 010 6M18 6.5a7.5 7.5 0 010 11"/></symbol>
   <symbol id="i-expand" viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></symbol>
   <symbol id="i-gift" viewBox="0 0 24 24"><path d="M4 11h16v9H4z"/><path d="M3 7h18v4H3z"/><path d="M12 7v13"/><path d="M12 7c-1.5-3-5-3.5-5-1.5S10.5 7 12 7zm0 0c1.5-3 5-3.5 5-1.5S13.5 7 12 7z"/></symbol>
-  <symbol id="i-alarm" viewBox="0 0 24 24"><circle cx="12" cy="13" r="7"/><path d="M12 9.5V13l2.5 1.5"/><path d="M4.5 5.5L7 7.5M19.5 5.5L17 7.5"/><path d="M7.5 19.5L6 21.5M16.5 19.5L18 21.5"/></symbol>
+  <symbol id="i-percent" viewBox="0 0 24 24"><circle cx="7.2" cy="7.2" r="2.6"/><circle cx="16.8" cy="16.8" r="2.6"/><path d="M18.5 5.5l-13 13"/></symbol>
+<symbol id="i-stopwatch" viewBox="0 0 24 24"><circle cx="12" cy="13.5" r="7.5"/><path d="M12 13.5V9.8"/><path d="M9.5 3h5"/><path d="M12 3v3"/><path d="M18.3 7.2l1.6-1.6"/></symbol>
+<symbol id="i-hourglass" viewBox="0 0 24 24"><path d="M6.5 3.5h11"/><path d="M6.5 20.5h11"/><path d="M7.5 3.5c0 4.2 2.4 5.6 4.5 8.5-2.1 2.9-4.5 4.3-4.5 8.5"/><path d="M16.5 3.5c0 4.2-2.4 5.6-4.5 8.5 2.1 2.9 4.5 4.3 4.5 8.5"/></symbol>
+<symbol id="i-alarm" viewBox="0 0 24 24"><circle cx="12" cy="13" r="7"/><path d="M12 9.5V13l2.5 1.5"/><path d="M4.5 5.5L7 7.5M19.5 5.5L17 7.5"/><path d="M7.5 19.5L6 21.5M16.5 19.5L18 21.5"/></symbol>
   <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 16V11a6 6 0 0112 0v5l1.5 2h-15z"/><path d="M10 20a2 2 0 004 0"/></symbol>
   <symbol id="i-pouch" viewBox="0 0 24 24"><path d="M7 4h10l1 3v13H6V7z"/><path d="M6 7h12"/><path d="M9.5 11.5l5 5M14.5 11.5l-5 5"/></symbol>
   <symbol id="i-chev-down" viewBox="0 0 24 24"><path d="M6.5 10l5.5 5.5L17.5 10"/></symbol>
@@ -2779,7 +3330,7 @@ html { scrollbar-gutter: stable; }
 <header class="header storefront-reference-shell" id="header" data-stuck="false">
 <div class="storefront-header">
 <div class="header-grid">
-<button id="navToggle" class="icon-btn menu-trigger" type="button" aria-label="Mở menu điều hướng" aria-controls="mobileNav" aria-expanded="false"><span class="material-symbols-outlined" aria-hidden="true">menu</span><svg class="gf-js-icon" aria-hidden="true" focusable="false"><use href="#i-menu"/></svg></button>
+<ui-menu-close-morph><button id="navToggle" class="icon-btn menu-trigger" type="button" aria-label="Mở menu điều hướng" aria-controls="mobileNav" aria-expanded="false"></button><script src="menu-close-morph.js"></script></ui-menu-close-morph>
 <a class="brand-logo header__logo" aria-label="Về trang chủ Ginsengfood" href="trang-chu-theo-doi-tuong/trang-chu.html">
 <img src="../public/home-webp-v1/logo-header-v2.w360.webp" srcset="../public/home-webp-v1/logo-header-v2.w120.webp 120w, ../public/home-webp-v1/logo-header-v2.w240.webp 240w, ../public/home-webp-v1/logo-header-v2.w360.webp 360w" sizes="(max-width: 767px) 136px, 176px" alt="Biểu trưng Ginsengfood" width="186" height="67" decoding="async">
 </a>
@@ -2792,6 +3343,7 @@ html { scrollbar-gutter: stable; }
 </div>
 <a aria-current="page" href="tin-tuc.html">Tin tức</a>
 <a href="tra-cuu-don-hang.html">Tra cứu đơn hàng</a>
+<a href="trang-chu-theo-doi-tuong/dieu-khoan-cong-tac-vien.html">Khởi nghiệp cùng Ssavigroup</a>
 <a href="trang-chu-theo-doi-tuong/dai-ly-nha-phan-phoi.html">Đại lý nhà phân phối</a>
 </nav>
 <div class="header-actions">
@@ -2809,9 +3361,9 @@ html { scrollbar-gutter: stable; }
 <div id="reference-search-results" class="reference-search-dropdown" role="listbox" aria-label="Gợi ý tìm kiếm sản phẩm">
 <div class="reference-search-result-group">
 <p class="reference-search-heading">Gợi ý</p>
-<a class="reference-search-group" role="option" aria-selected="false" aria-label="Nhóm Cháo Sâm Theo Mùa" href="trang-chu-theo-doi-tuong/trang-chu.html#col-seasonal"><span class="material-symbols-outlined" aria-hidden="true">category</span><span>Cháo Sâm Theo Mùa</span></a>
-<a class="reference-search-group" role="option" aria-selected="false" aria-label="Nhóm Cháo Sâm Chức Năng" href="trang-chu-theo-doi-tuong/trang-chu.html#col-functional"><span class="material-symbols-outlined" aria-hidden="true">category</span><span>Cháo Sâm Chức Năng</span></a>
-<a class="reference-search-group" role="option" aria-selected="false" aria-label="Nhóm Cháo Sâm Bổ Dưỡng" href="trang-chu-theo-doi-tuong/trang-chu.html#col-nourishing"><span class="material-symbols-outlined" aria-hidden="true">category</span><span>Cháo Sâm Bổ Dưỡng</span></a>
+<a class="reference-search-group" role="option" aria-selected="false" aria-label="Nhóm Cháo sâm theo mùa" href="trang-chu-theo-doi-tuong/trang-chu.html#col-seasonal"><span class="material-symbols-outlined" aria-hidden="true">category</span><span>Cháo sâm theo mùa</span></a>
+<a class="reference-search-group" role="option" aria-selected="false" aria-label="Nhóm Cháo sâm theo yêu cầu" href="trang-chu-theo-doi-tuong/trang-chu.html#col-functional"><span class="material-symbols-outlined" aria-hidden="true">category</span><span>Cháo sâm theo yêu cầu</span></a>
+<a class="reference-search-group" role="option" aria-selected="false" aria-label="Nhóm Cháo sâm bổ dưỡng" href="trang-chu-theo-doi-tuong/trang-chu.html#col-nourishing"><span class="material-symbols-outlined" aria-hidden="true">category</span><span>Cháo sâm bổ dưỡng</span></a>
 </div>
 </div>
 </form>
@@ -2835,6 +3387,7 @@ html { scrollbar-gutter: stable; }
 <a class="mobile-sub" href="ve-san-pham.html">Về sản phẩm</a>
 <a aria-current="page" href="tin-tuc.html"><span class="material-symbols-outlined" aria-hidden="true">newspaper</span>Tin tức</a>
 <a href="tra-cuu-don-hang.html"><span class="material-symbols-outlined" aria-hidden="true">receipt_long</span>Tra cứu đơn hàng</a>
+<a href="trang-chu-theo-doi-tuong/dieu-khoan-cong-tac-vien.html"><span class="material-symbols-outlined" aria-hidden="true">rocket_launch</span>Khởi nghiệp cùng Ssavigroup</a>
 <a href="trang-chu-theo-doi-tuong/dai-ly-nha-phan-phoi.html"><span class="material-symbols-outlined" aria-hidden="true">storefront</span>Đại lý nhà phân phối</a>
 </nav>
 </div>
@@ -2842,6 +3395,25 @@ html { scrollbar-gutter: stable; }
 <div class="readbar" aria-hidden="true"><span class="readbar__fill" id="readFill"></span></div>
 </header>
 <!-- gf-shell:header:end -->
+
+<!-- Thanh "Chủ đề" dính ngay dưới header (đồng bộ HomeTopicBar của storefront; bản chuẩn là trang chi-tiet-san-pham.html): tiêu đề không liên kết + 5 badge nhiều màu (data-hue), mỗi badge là một chuyên mục của mục Tin tức.
+     CSS/JS dùng chung: topic-bar.css, topic-bar.js. Điện thoại: thu thành nút mang tên tiêu đề, bấm mở bảng thả xuống. Phải là phần tử anh-em liền sau header (luật bóng đổ). -->
+<div class="catbar" data-topic-bar>
+  <div class="container catbar__inner">
+    <button type="button" class="catbar__toggle" id="catToggle" aria-expanded="false" aria-controls="catNav" aria-label="Mở bảng chủ đề">
+      <span class="catbar__toggle-label">Siêu trí tuệ tri thức y dược học:</span>
+      <svg class="icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M6 9.5l6 6 6-6"/></svg>
+    </button>
+    <span class="catbar__label catbar__title">Siêu trí tuệ tri thức y dược học:</span>
+    <nav class="catbar__tabs" id="catNav" aria-label="Chủ đề">
+      <a href="tin-tuc.html?categorySlug=nghien-cuu-khoa-hoc" data-hue="0">Nghiên cứu khoa học</a>
+      <a href="tin-tuc.html?categorySlug=bai-thuoc-co" data-hue="1">Bài thuốc cổ</a>
+      <a href="tin-tuc.html?categorySlug=thuoc-dan-gian" data-hue="2">Thuốc dân gian</a>
+      <a href="tin-tuc.html?categorySlug=y-duoc-hoc" data-hue="4">Y dược học</a>
+      <a href="tin-tuc.html?categorySlug=duoc-dien" data-hue="5">Dược điển</a>
+    </nav>
+  </div>
+</div>
 
 <!-- Màn che phía sau menu di động và bảng tìm kiếm -->
 <div class="nav-scrim" id="navScrim"></div>
@@ -3245,22 +3817,16 @@ html { scrollbar-gutter: stable; }
           <path d="M0 88c30-30 60-30 90 0s60 30 90 0 40-20 60-10"/><path d="M0 70c30-30 60-30 90 0s60 30 90 0 40-20 60-10"/><path d="M0 52c30-30 60-30 90 0s60 30 90 0 40-20 60-10"/>
         </svg>
 
-        <!-- Ba phần (quyết định chủ dự án): trái = "Giờ Vàng Tri Ân" (tiêu đề chính, cùng font và cỡ với dòng giảm giá) + dòng giảm giá
-             + "Phiên sắp tới: giờ · Hôm nay" kèm tag trạng thái phía sau · giữa = đếm ngược · phải = nút, dưới nút là hai ưu điểm xếp chồng.
+        <!-- Hai phần (bố cục đổi theo yêu cầu chủ dự án 2026-10-27): phải = tiêu đề "Giờ vàng hôm nay" + mức giảm "-38% đến -42%" (dời từ cột chữ sang, nằm TRÊN dòng "Mở phiên sau")
+             rồi đếm ngược (nhãn + ba ô giờ · phút · giây) · trái = ba dòng quyền lợi có icon riêng, rồi nút mời đăng ký nằm ngay dưới dòng cuối.
+             Trong DOM khối bên phải đứng trước để tiêu đề (h2) được đọc đầu tiên; từ 1024px CSS đặt nó vào cột 2, dưới 1024px cả card xếp một cột: tiêu đề + đồng hồ rồi tới quyền lợi + nút.
              Chỉ hiện giờ của phiên sắp tới / đang diễn ra (JS tính theo giờ thật), không liệt kê lịch phiên trưa, phiên tối. -->
-        <div class="golden__main">
-          <!-- Tiêu đề và mức ưu đãi nằm chung một hàng, dùng chung một sóng sáng chạy ngang (chủ dự án chốt 2026-10-12) -->
-          <div class="golden__headline">
-            <h2 class="golden__brand" id="goldenTitle" aria-label="Giờ Vàng Tri Ân"><span class="home-preview-golden-word" aria-hidden="true"><span class="home-preview-golden-letter" style="--letter-index:0">G</span><span class="home-preview-golden-letter" style="--letter-index:1">i</span><span class="home-preview-golden-letter" style="--letter-index:2">ờ</span></span> <span class="home-preview-golden-word" aria-hidden="true"><span class="home-preview-golden-letter" style="--letter-index:3">V</span><span class="home-preview-golden-letter" style="--letter-index:4">à</span><span class="home-preview-golden-letter" style="--letter-index:5">n</span><span class="home-preview-golden-letter" style="--letter-index:6">g</span></span> <span class="home-preview-golden-word" aria-hidden="true"><span class="home-preview-golden-letter" style="--letter-index:7">T</span><span class="home-preview-golden-letter" style="--letter-index:8">r</span><span class="home-preview-golden-letter" style="--letter-index:9">i</span></span> <span class="home-preview-golden-word" aria-hidden="true"><span class="home-preview-golden-letter" style="--letter-index:10">Â</span><span class="home-preview-golden-letter" style="--letter-index:11">n</span></span></h2>
-            <p class="golden__offer" aria-label="-38% đến -42%" role="img"><span class="golden__offer-value"><span class="home-preview-golden-word" aria-hidden="true"><span class="home-preview-golden-letter" style="--letter-index:12">-</span><span class="home-preview-golden-letter" style="--letter-index:13">3</span><span class="home-preview-golden-letter" style="--letter-index:14">8</span><span class="home-preview-golden-letter" style="--letter-index:15">%</span></span> <span class="home-preview-golden-word" aria-hidden="true"><span class="home-preview-golden-letter" style="--letter-index:16">đ</span><span class="home-preview-golden-letter" style="--letter-index:17">ế</span><span class="home-preview-golden-letter" style="--letter-index:18">n</span></span> <span class="home-preview-golden-word" aria-hidden="true"><span class="home-preview-golden-letter" style="--letter-index:19">-</span><span class="home-preview-golden-letter" style="--letter-index:20">4</span><span class="home-preview-golden-letter" style="--letter-index:21">2</span><span class="home-preview-golden-letter" style="--letter-index:22">%</span></span></span></p>
-          </div>
-          <ul class="golden__points">
-            <li class="golden__lead"><svg class="icon" aria-hidden="true"><use href="#i-crown"/></svg><span>Chương trình đặc biệt dành cho thành viên Ginsengfood</span></li>
-            <li><svg class="icon" aria-hidden="true"><use href="#i-shield"/></svg><span>Thành viên Ginsengfood có đặc quyền mua sớm <b>10 – 25 phút</b> so với khách mới</span></li>
-            <li><svg class="icon" aria-hidden="true"><use href="#i-pouch"/></svg><span>Số lượng có hạn, sẽ dừng ngay khi hết số lượng tri ân</span></li>
-          </ul>
-        </div>
         <div class="golden__timer">
+          <!-- Tiêu đề và mức giảm xếp hai dòng (từ 1024px) hoặc chung một hàng nếu đủ chỗ (một cột), dùng chung một sóng sáng chạy ngang (chủ dự án chốt 2026-10-12; chữ đổi "Giờ vàng hôm nay" 2026-10-27, mức giảm nối tiếp từ chữ cái thứ 13) -->
+          <div class="golden__headline">
+            <h2 class="golden__brand" id="goldenTitle" aria-label="Giờ vàng hôm nay"><span class="home-preview-golden-word" aria-hidden="true"><span class="home-preview-golden-letter" style="--letter-index:0">G</span><span class="home-preview-golden-letter" style="--letter-index:1">i</span><span class="home-preview-golden-letter" style="--letter-index:2">ờ</span></span> <span class="home-preview-golden-word" aria-hidden="true"><span class="home-preview-golden-letter" style="--letter-index:3">v</span><span class="home-preview-golden-letter" style="--letter-index:4">à</span><span class="home-preview-golden-letter" style="--letter-index:5">n</span><span class="home-preview-golden-letter" style="--letter-index:6">g</span></span> <span class="home-preview-golden-word" aria-hidden="true"><span class="home-preview-golden-letter" style="--letter-index:7">h</span><span class="home-preview-golden-letter" style="--letter-index:8">ô</span><span class="home-preview-golden-letter" style="--letter-index:9">m</span></span> <span class="home-preview-golden-word" aria-hidden="true"><span class="home-preview-golden-letter" style="--letter-index:10">n</span><span class="home-preview-golden-letter" style="--letter-index:11">a</span><span class="home-preview-golden-letter" style="--letter-index:12">y</span></span></h2>
+            <p class="golden__offer" aria-label="−38% đến −42%" role="img"><span class="golden__offer-value"><span class="home-preview-golden-word" aria-hidden="true"><span class="home-preview-golden-letter" style="--letter-index:13">−</span><span class="home-preview-golden-letter" style="--letter-index:14">3</span><span class="home-preview-golden-letter" style="--letter-index:15">8</span><span class="home-preview-golden-letter" style="--letter-index:16">%</span></span> <span class="home-preview-golden-word" aria-hidden="true"><span class="home-preview-golden-letter" style="--letter-index:17">đ</span><span class="home-preview-golden-letter" style="--letter-index:18">ế</span><span class="home-preview-golden-letter" style="--letter-index:19">n</span></span> <span class="home-preview-golden-word" aria-hidden="true"><span class="home-preview-golden-letter" style="--letter-index:20">−</span><span class="home-preview-golden-letter" style="--letter-index:21">4</span><span class="home-preview-golden-letter" style="--letter-index:22">2</span><span class="home-preview-golden-letter" style="--letter-index:23">%</span></span></span></p>
+          </div>
           <span class="golden__label" id="goldenLabel">
             <span class="golden__label-rule" aria-hidden="true"></span>
             <svg class="icon" aria-hidden="true"><use href="#i-alarm"/></svg>
@@ -3274,16 +3840,31 @@ html { scrollbar-gutter: stable; }
           </div>
           <p class="visually-hidden" id="countdownLive" aria-live="polite"></p>
         </div>
-        <div class="golden__cta">
-          <div class="golden__cta-stack">
-            <!-- Khách chưa đăng nhập: nút mời đăng ký trở thành thành viên (icon vương miện), dẫn tới trang đăng nhập/đăng ký. -->
-            <a class="golden__btn golden__btn--member" href="#">
-              <span class="golden__btn-icon" aria-hidden="true"><svg class="icon"><use href="#i-crown"/></svg></span>
-              <span class="golden__btn-text">Đăng ký trở thành thành viên Ginsengfood ngay hôm nay</span>
-            </a>
+        <div class="golden__main">
+          <!-- Tiêu đề khối quyền lợi (chủ dự án 2026-10-27): cùng họ chữ, độ đậm và màu vàng chuyển sắc với "Giờ vàng hôm nay", nhỏ hơn một chút; chữ tĩnh, không có sóng sáng. -->
+          <h3 class="golden__perks-title" id="goldenPerksTitle">Đặc Quyền dành cho thành viên</h3>
+          <ul class="golden__points" aria-labelledby="goldenPerksTitle">
+            <li class="golden__lead"><svg class="icon" aria-hidden="true"><use href="#i-percent"/></svg><span><b>−8% đến −20%</b> cho tất cả đơn hàng của chương trình bán hàng 24/7</span></li>
+            <li><svg class="icon" aria-hidden="true"><use href="#i-stopwatch"/></svg><span>Quyền mua sớm giờ vàng <b>10 – 25 phút</b> <span class="golden__quote">“Chỉ Thành viên được mua sớm”</span></span></li>
+            <li><svg class="icon" aria-hidden="true"><use href="#i-hourglass"/></svg><span>Chương trình giờ vàng tri ân số lượng có hạn</span></li>
+          </ul>
+          <!-- Nút mời đăng ký nằm ngay dưới dòng "Số lượng có hạn…" (chủ dự án 2026-10-26; trước đây là cột thứ ba bên phải đồng hồ).
+               Khách chưa đăng nhập: nút mời đăng ký trở thành thành viên (icon vương miện), dẫn tới trang đăng nhập/đăng ký. -->
+          <div class="golden__cta">
+            <div class="golden__cta-stack">
+              <!-- Nút ghép (chủ dự án duyệt 2026-10-27): dải thông điệp bên trái + nút tròn 3D "Đăng ký ngay" dính liền đầu bên phải; cả khối là MỘT liên kết.
+                   Thông điệp cố định hai dòng ("Đăng ký để kích hoạt" / "quyền lợi thành viên") để dải hẹp lại. Dấu cách trước span giữ tên truy cập đọc liền mạch. -->
+              <a class="golden__combo" href="#">
+                <span class="golden__combo-msg">Đăng ký để kích hoạt <span class="golden__combo-line">quyền lợi thành viên</span></span>
+                <span class="golden__combo-knob">Đăng ký ngay</span>
+              </a>
+            </div>
           </div>
         </div>
       </div>
+
+      <!-- Tiêu đề "Số lượng có hạn" (chủ dự án 2026-10-19): nằm dưới card Giờ Vàng và trên dải card sản phẩm. -->
+      <h3 class="eyebrow book-section__eyebrow gh-limited" id="ghLimitedTitle"><span class="eyebrow__rule" aria-hidden="true"></span>Số lượng có hạn<span class="eyebrow__rule" aria-hidden="true"></span></h3>
 
       <!-- Sản phẩm trong phiên: dải trượt ngang, snap từng card, kéo chuột được; giá Giờ Vàng đỏ, niêm yết gạch (mục 15.2) -->
       <div class="gh-slider">
@@ -3415,12 +3996,12 @@ html { scrollbar-gutter: stable; }
             <p class="gh-card__feedback" role="status" aria-live="polite" data-gh-note>Nút Mua ngay mở khi đến giờ vàng.</p>
           </article></li>
           <li class="gh-card" data-left="1130"><article>
-            <div class="gh-card__media"><img src="../public/home-webp-v1/products-image/b%C3%A0o%20ng%C6%B0.w1448.q90.webp" srcset="../public/home-webp-v1/products-image/b%C3%A0o%20ng%C6%B0.w480.q90.webp 480w, ../public/home-webp-v1/products-image/b%C3%A0o%20ng%C6%B0.w768.q90.webp 768w, ../public/home-webp-v1/products-image/b%C3%A0o%20ng%C6%B0.w1152.q90.webp 1152w, ../public/home-webp-v1/products-image/b%C3%A0o%20ng%C6%B0.w1448.q90.webp 1448w" sizes="(max-width: 767px) calc(76vw - 26px), (max-width: 1023px) calc((100vw - 96px) / 2 - 26px), (max-width: 1279px) calc((100vw - 120px) / 3 - 26px), (min-width: 1320px) 368.667px, calc((100vw - 136px) / 3 - 26px)" loading="lazy" decoding="async" width="1448" height="1086" alt="Tô Cháo Sâm với bào ngư"><span class="gh-card__badge">−38%</span></div>
+            <div class="gh-card__media"><img src="../public/home-webp-v1/products-image/b%C3%A0o%20ng%C6%B0.w1448.q90.webp" srcset="../public/home-webp-v1/products-image/b%C3%A0o%20ng%C6%B0.w480.q90.webp 480w, ../public/home-webp-v1/products-image/b%C3%A0o%20ng%C6%B0.w768.q90.webp 768w, ../public/home-webp-v1/products-image/b%C3%A0o%20ng%C6%B0.w1152.q90.webp 1152w, ../public/home-webp-v1/products-image/b%C3%A0o%20ng%C6%B0.w1448.q90.webp 1448w" sizes="(max-width: 767px) calc(76vw - 26px), (max-width: 1023px) calc((100vw - 96px) / 2 - 26px), (max-width: 1279px) calc((100vw - 120px) / 3 - 26px), (min-width: 1320px) 368.667px, calc((100vw - 136px) / 3 - 26px)" loading="lazy" decoding="async" width="1448" height="1086" alt="Tô Cháo Sâm với bào ngư"><span class="gh-card__badge">−42%</span></div>
             <h3 class="gh-card__name"><a href="#">Cháo Sâm – Bào ngư</a></h3>
             <p class="card__reason">Bổ dưỡng cao cấp – phục hồi thể lực – tăng sức bền</p>
             <dl class="price">
               <div class="price__row price__row--listed"><dt>Giá niêm yết</dt><dd><s>588.000đ</s></dd></div>
-              <div class="price__row price__row--final"><dt>Giá Giờ Vàng</dt><dd>364.560đ</dd></div>
+              <div class="price__row price__row--final"><dt>Giá Giờ Vàng</dt><dd>341.040đ</dd></div>
             </dl>
             <p class="gh-card__quota" data-tone="normal">Còn 1.130 suất</p>
             <details class="price__why">
@@ -3429,8 +4010,8 @@ html { scrollbar-gutter: stable; }
                 <p class="price__breakdown-title">Cấu thành giá</p>
                 <dl>
                   <div class="price__row"><dt>Giá niêm yết</dt><dd>588.000đ</dd></div>
-                  <div class="price__row"><dt>Giá Giờ Vàng</dt><dd>364.560đ</dd></div>
-                  <div class="price__row"><dt>Mức giảm</dt><dd>−38%</dd></div>
+                  <div class="price__row"><dt>Giá Giờ Vàng</dt><dd>341.040đ</dd></div>
+                  <div class="price__row"><dt>Mức giảm</dt><dd>−42%</dd></div>
                 </dl>
               </div>
             </details>
@@ -3440,12 +4021,12 @@ html { scrollbar-gutter: stable; }
             <p class="gh-card__feedback" role="status" aria-live="polite" data-gh-note>Nút Mua ngay mở khi đến giờ vàng.</p>
           </article></li>
           <li class="gh-card" data-left="640"><article>
-            <div class="gh-card__media"><img src="../public/home-webp-v1/products-image/h%C3%A0u%20bi%E1%BB%83n(2).w1448.q90.webp" srcset="../public/home-webp-v1/products-image/h%C3%A0u%20bi%E1%BB%83n(2).w480.q90.webp 480w, ../public/home-webp-v1/products-image/h%C3%A0u%20bi%E1%BB%83n(2).w768.q90.webp 768w, ../public/home-webp-v1/products-image/h%C3%A0u%20bi%E1%BB%83n(2).w1152.q90.webp 1152w, ../public/home-webp-v1/products-image/h%C3%A0u%20bi%E1%BB%83n(2).w1448.q90.webp 1448w" sizes="(max-width: 767px) calc(76vw - 26px), (max-width: 1023px) calc((100vw - 96px) / 2 - 26px), (max-width: 1279px) calc((100vw - 120px) / 3 - 26px), (min-width: 1320px) 368.667px, calc((100vw - 136px) / 3 - 26px)" loading="lazy" decoding="async" width="1448" height="1086" alt="Tô Cháo Sâm với hàu biển"><span class="gh-card__badge">−38%</span></div>
+            <div class="gh-card__media"><img src="../public/home-webp-v1/products-image/h%C3%A0u%20bi%E1%BB%83n(2).w1448.q90.webp" srcset="../public/home-webp-v1/products-image/h%C3%A0u%20bi%E1%BB%83n(2).w480.q90.webp 480w, ../public/home-webp-v1/products-image/h%C3%A0u%20bi%E1%BB%83n(2).w768.q90.webp 768w, ../public/home-webp-v1/products-image/h%C3%A0u%20bi%E1%BB%83n(2).w1152.q90.webp 1152w, ../public/home-webp-v1/products-image/h%C3%A0u%20bi%E1%BB%83n(2).w1448.q90.webp 1448w" sizes="(max-width: 767px) calc(76vw - 26px), (max-width: 1023px) calc((100vw - 96px) / 2 - 26px), (max-width: 1279px) calc((100vw - 120px) / 3 - 26px), (min-width: 1320px) 368.667px, calc((100vw - 136px) / 3 - 26px)" loading="lazy" decoding="async" width="1448" height="1086" alt="Tô Cháo Sâm với hàu biển"><span class="gh-card__badge">−42%</span></div>
             <h3 class="gh-card__name"><a href="#">Cháo Sâm – Hàu biển</a></h3>
             <p class="card__reason">Bổ thận – tăng cường sinh lực – hỗ trợ nội tiết nam</p>
             <dl class="price">
               <div class="price__row price__row--listed"><dt>Giá niêm yết</dt><dd><s>468.000đ</s></dd></div>
-              <div class="price__row price__row--final"><dt>Giá Giờ Vàng</dt><dd>290.160đ</dd></div>
+              <div class="price__row price__row--final"><dt>Giá Giờ Vàng</dt><dd>271.440đ</dd></div>
             </dl>
             <p class="gh-card__quota" data-tone="normal">Còn 640 suất</p>
             <details class="price__why">
@@ -3454,8 +4035,8 @@ html { scrollbar-gutter: stable; }
                 <p class="price__breakdown-title">Cấu thành giá</p>
                 <dl>
                   <div class="price__row"><dt>Giá niêm yết</dt><dd>468.000đ</dd></div>
-                  <div class="price__row"><dt>Giá Giờ Vàng</dt><dd>290.160đ</dd></div>
-                  <div class="price__row"><dt>Mức giảm</dt><dd>−38%</dd></div>
+                  <div class="price__row"><dt>Giá Giờ Vàng</dt><dd>271.440đ</dd></div>
+                  <div class="price__row"><dt>Mức giảm</dt><dd>−42%</dd></div>
                 </dl>
               </div>
             </details>
@@ -3501,60 +4082,14 @@ html { scrollbar-gutter: stable; }
 
   <section class="section" id="he-mo-rong" aria-labelledby="ecoTitle">
     <div class="container">
-      <h2 class="eyebrow book-section__eyebrow eco__heading" id="ecoTitle"><span class="eyebrow__rule" aria-hidden="true"></span>Nhóm sản phẩm<span class="eyebrow__rule" aria-hidden="true"></span></h2>
-      <!-- Dải card trượt ngang như Giờ Vàng: nút ‹ › hai đầu, kéo chuột được; bấm card → cuộn xuống các nhóm sản phẩm bên dưới -->
-      <div class="eco-slider">
-        <button type="button" class="fb-arrow gh-slider__btn gh-slider__btn--prev" data-scroll="prev" aria-label="Nhóm trước"><svg class="icon" aria-hidden="true"><use href="#i-chev-l"/></svg></button>
-      <ul class="eco">
-        <!-- Ba nhóm A/B/C của "Danh mục 19 SKU" rồi bốn nhóm mở rộng, cùng thứ tự và tên với dải nhãn "Nhóm sản phẩm" dưới header
-             (chủ dự án yêu cầu thêm lại bốn nhóm mở rộng). Bấm card → cuộn tới nhóm bên dưới. Nhóm mở rộng chưa mở bán nên ghi "Sắp ra mắt",
-             ảnh và mô tả lấy từ chính phần nhóm đó, không nêu công dụng. -->
+      <!-- Tiêu đề khu đổi từ "Nhóm sản phẩm" thành "Chương trình bán hàng 24/7" (chủ dự án 2026-10-19). Định dạng giống tiêu đề "Bốn hạng, quyền lợi tăng dần theo hành trình" (chữ serif đậm navy, căn giữa, không in hoa, không gạch vàng). Nhãn "Nhóm sản phẩm:" đầu thanh chip (2026-10-27) chỉ hiện khi thanh đang gắn dưới thanh Chủ đề; tại chỗ không có nhãn (nút mở bảng trên điện thoại vẫn giữ); mục "Nhóm sản phẩm" ở mục lục trái chưa đổi. -->
+      <h2 class="section__title eco__title" id="ecoTitle">Chương trình bán hàng 24/7</h2>
+      <!-- Dòng mô tả dưới tiêu đề (chủ dự án 2026-10-19: thêm cho giống khối "Bốn hạng, quyền lợi tăng dần theo hành trình"); chữ nháp chờ chủ dự án duyệt. -->
+      <p class="tiers__lead eco__lead">Đặt Cháo Sâm Ginsengfood bất cứ lúc nào trong ngày. Giá chương trình 24/7 hiển thị ngay trên từng sản phẩm, thành viên có thêm quyền lợi theo hạng.</p>
 
-        <li><a class="eco__item" href="#col-seasonal" style="--eco-accent: #3E7149; --eco-surface: #F2F7EF; --pos: 84% 50%;">
-          <div class="eco__media"><img src="../public/banner_hero_4.webp" loading="lazy" decoding="async" width="2470" height="637" alt="Hộp Cháo Sâm Mùa Hạ và tô cháo trên bãi biển"></div>
-          <span class="eco__mode">Nhóm A · 4 sản phẩm</span>
-          <span class="eco__name">Cháo Sâm Theo Mùa</span>
-          <span class="eco__note">Diêm mạch &amp; Hạt sen (Xuân) · Cá Basa (Hạ) · Lươn đồng (Thu) · Thịt cừu &amp; Táo tàu (Đông)</span>
-        </a></li>
-        <li><a class="eco__item" href="#col-functional" style="--eco-accent: #C96B22; --eco-surface: #FFF4EA; --pos: 50% 50%;">
-          <div class="eco__media"><img src="../public/home-webp-v1/step5.webp" loading="lazy" decoding="async" width="500" height="500" alt="Tô Cháo Sâm với rau củ"></div>
-          <span class="eco__mode">Nhóm B · 6 sản phẩm</span>
-          <span class="eco__name">Cháo Sâm Chức Năng</span>
-          <span class="eco__note">Rau má &amp; Đậu xanh · DHA Não bộ · Cá cơm &amp; Vừng · Thịt heo &amp; Da heo · Hàu biển · Gà ác</span>
-        </a></li>
-        <li><a class="eco__item" href="#col-nourishing" style="--eco-accent: #315E82; --eco-surface: #EEF6FC; --pos: 47% 50%;">
-          <div class="eco__media"><img src="../public/banner_hero_3.webp" loading="lazy" decoding="async" width="2470" height="637" alt="Tô Cháo Sâm nóng bên củ sâm giữa rừng tuyết"></div>
-          <span class="eco__mode">Nhóm C · 9 sản phẩm</span>
-          <span class="eco__name">Cháo Sâm Bổ Dưỡng</span>
-          <span class="eco__note">Bào ngư · Đông trùng hạ thảo · Nấm đông cô · Cua biển · Cá ngừ · Tôm &amp; Rong biển · Thịt gà · Thịt heo · Thịt bò</span>
-        </a></li>
-        <li><a class="eco__item" href="#col-functional-food" style="--eco-accent: #2F6F6A; --eco-surface: #EEF6F5; --pos: 50% 100%;">
-          <div class="eco__media"><img src="../public/home-webp-v1/9.webp" loading="lazy" decoding="async" width="1254" height="1254" alt="Củ sâm, tô cháo và nguyên liệu tươi trên cát biển"></div>
-          <span class="eco__mode">Sắp ra mắt · thực phẩm bổ sung</span>
-          <span class="eco__name">Thực phẩm chức năng</span>
-          <span class="eco__note">Viên và bột bổ sung dinh dưỡng, làm từ cùng nguồn sâm với Cháo Sâm</span>
-        </a></li>
-        <li><a class="eco__item" href="#col-cosmetics" style="--eco-accent: #9A4A6B; --eco-surface: #FBF0F4; --pos: 38% 50%;">
-          <div class="eco__media"><img src="../public/banner_hero_1.webp" loading="lazy" decoding="async" width="2470" height="637" alt="Vùng trồng sâm bên bờ biển"></div>
-          <span class="eco__mode">Sắp ra mắt · chăm sóc da</span>
-          <span class="eco__name">Mỹ phẩm</span>
-          <span class="eco__note">Dòng chăm sóc da từ chiết xuất Sâm vùng cát biển</span>
-        </a></li>
-        <li><a class="eco__item" href="#col-medicine" style="--eco-accent: #7B5614; --eco-surface: #FFF6E3; --pos: 44% 50%;">
-          <div class="eco__media"><img src="../public/banner_hero_2.webp" loading="lazy" decoding="async" width="2470" height="637" alt="Củ sâm, táo đỏ và các vị dược liệu bên lá phong mùa thu"></div>
-          <span class="eco__mode">Sắp ra mắt · dược liệu</span>
-          <span class="eco__name">Thuốc Y học cổ truyền</span>
-          <span class="eco__note">Bài thuốc từ dược liệu theo Y học cổ truyền, mở bán khi được cơ quan chức năng duyệt</span>
-        </a></li>
-        <li><a class="eco__item" href="#col-newgen" style="--eco-accent: #4B5E2A; --eco-surface: #F3F6EA; --pos: 30% 55%;">
-          <div class="eco__media"><img src="../public/banner_login.webp" loading="lazy" decoding="async" width="1920" height="1080" alt="Củ sâm khô trên nền cát vàng"></div>
-          <span class="eco__mode">Sắp ra mắt · dược liệu chuẩn hóa</span>
-          <span class="eco__name">Dược liệu thế hệ mới</span>
-          <span class="eco__note">Dược liệu sấy thăng hoa, giữ được hoạt chất và đo được hàm lượng trong từng mẻ</span>
-        </a></li>
-      </ul>
-        <button type="button" class="fb-arrow gh-slider__btn gh-slider__btn--next" data-scroll="next" aria-label="Nhóm tiếp theo"><svg class="icon" aria-hidden="true"><use href="#i-chev-r"/></svg></button>
-      </div>
+      <!-- Thanh "Nhóm sản phẩm" nằm dưới tiêu đề khu Chương trình bán hàng 24/7 (dời từ đáy khu Sản phẩm 2026-10-19; đồng bộ HomeProductGroupBar, chủ dự án chốt 2026-10-12): mỗi badge một màu riêng (data-hue, bảng màu trong CSS; sáu badge theo yêu cầu chủ dự án 2026-10-19); cuộn qua thì gắn dưới thanh Chủ đề (JS cuối trang). -->
+      
+      <!-- Dải 7 card nhóm sản phẩm (kèm nút ‹ ›) đã bỏ khỏi khu này (chủ dự án 2026-10-19): các nhóm vẫn bấm được ở thanh chip phía trên và nằm ở các khu bên dưới. CSS .eco-slider / .eco* còn nguyên nhưng không còn dùng. -->
     </div>
   </section>
 
@@ -3565,26 +4100,25 @@ html { scrollbar-gutter: stable; }
 
       <div class="collections">
 
+        <!-- Dòng nhãn phía trên tên mỗi nhóm ("Nhóm A/B/C · …" kèm số sản phẩm và "Sắp ra mắt · …") đã bỏ (chủ dự án 2026-10-19); CSS .collection__order còn nguyên nhưng không còn dùng. -->
+
         <!-- Nhóm A · seasonal (A. Cháo Sâm Theo Mùa — 4 SKU) -->
         <section class="collection" id="col-seasonal" data-collection="seasonal" aria-labelledby="seasonalTitle">
           <div class="collection__head">
             <div>
-              <p class="collection__order"><span>Nhóm A · Theo mùa<span class="collection__count"> · 4 sản phẩm</span></span></p>
-              <h3 class="collection__title" id="seasonalTitle">Cháo Sâm Theo Mùa</h3>
-              <p class="collection__goal">Xuân · Hạ · Thu · Đông, ưu tiên mùa đang hiệu lực</p>
+              <h3 class="collection__title" id="seasonalTitle">Cháo sâm theo mùa</h3>
+              <p class="collection__goal">Xuân · Hạ · Thu · Đông</p>
             </div>
             <div class="collection__nav">
-              <a class="link-more" href="#collections">Xem tất cả</a>
               <button type="button" class="iconbtn" data-scroll="prev" aria-label="Sản phẩm trước"><svg class="icon" aria-hidden="true"><use href="#i-chev-l"/></svg></button>
               <button type="button" class="iconbtn" data-scroll="next" aria-label="Sản phẩm tiếp theo"><svg class="icon" aria-hidden="true"><use href="#i-chev-r"/></svg></button>
             </div>
           </div>
           <ul class="cards">
-            <li class="card" data-sku="A2/CS/BASA"><article>
+            <li class="card" data-sku="A2/CS/BASA" data-packs="4"><article>
               <div class="card__media">
                 <img src="../public/home-webp-v1/products-image/c%C3%A1%20basa.w1448.q90.webp" srcset="../public/home-webp-v1/products-image/c%C3%A1%20basa.w480.q90.webp 480w, ../public/home-webp-v1/products-image/c%C3%A1%20basa.w768.q90.webp 768w, ../public/home-webp-v1/products-image/c%C3%A1%20basa.w1152.q90.webp 1152w, ../public/home-webp-v1/products-image/c%C3%A1%20basa.w1448.q90.webp 1448w" sizes="(max-width: 767px) calc(76vw - 30px), (max-width: 1279px) calc((100vw - 96px) / 2 - 30px), (min-width: 1320px) 364.667px, calc((100vw - 136px) / 3 - 30px)" loading="lazy" decoding="async" width="1448" height="1086" alt="Tô Cháo Sâm Mùa Hạ với cá basa">
                 <span class="card__type">Mặn</span>
-                <a class="card__compare" href="#">So sánh</a>
               </div>
               <h4 class="card__name"><a href="#">Cháo Sâm Mùa Hạ – Cá Basa</a></h4>
               <p class="card__reason">Thanh bổ – dễ tiêu – hỗ trợ chuyển hóa khi trời nóng</p>
@@ -3593,31 +4127,16 @@ html { scrollbar-gutter: stable; }
                 <div class="price__row"><dt>Giá chương trình 24/7</dt><dd>295.680đ</dd></div>
                 <div class="price__row price__row--final"><dt>Giá bạn thanh toán</dt><dd>295.680đ</dd></div>
               </dl>
-              <p class="price__serving">~73.920đ mỗi bữa · 4 gói</p>
-              <p class="price__preview">Thành viên Silver chỉ trả 280.896đ · <a href="#">Tìm hiểu</a></p>
-              <details class="price__why">
-                <summary>Vì sao tôi có giá này?</summary>
-                <div class="price__breakdown">
-                  <p class="price__breakdown-title">Cấu thành giá</p>
-                  <dl>
-                  <div class="price__row"><dt>Giá niêm yết</dt><dd>336.000đ</dd></div>
-                  <div class="price__row"><dt>Chương trình 24/7 · −12%</dt><dd>−40.320đ</dd></div>
-                  <div class="price__row"><dt>Quyền lợi thành viên</dt><dd>Chưa áp dụng</dd></div>
-                  <div class="price__row"><dt><b>Giá bạn thanh toán</b></dt><dd><b>295.680đ</b></dd></div>
-                </dl>
-                </div>
-              </details>
               <div class="card__actions">
                 <button type="button" class="btn btn--primary">Mua ngay</button>
                 <button type="button" class="iconbtn" aria-label="Thêm Cháo Sâm Mùa Hạ – Cá Basa vào giỏ"><svg class="icon" aria-hidden="true"><use href="#i-cart"/></svg></button>
               </div>
             </article></li>
 
-            <li class="card" data-sku="A3/CS/LUON"><article>
+            <li class="card" data-sku="A3/CS/LUON" data-packs="4"><article>
               <div class="card__media">
                 <img src="../public/home-webp-v1/products-image/l%C6%B0%C6%A1n%20%C4%91%E1%BB%93ng(2).w1448.q90.webp" srcset="../public/home-webp-v1/products-image/l%C6%B0%C6%A1n%20%C4%91%E1%BB%93ng(2).w480.q90.webp 480w, ../public/home-webp-v1/products-image/l%C6%B0%C6%A1n%20%C4%91%E1%BB%93ng(2).w768.q90.webp 768w, ../public/home-webp-v1/products-image/l%C6%B0%C6%A1n%20%C4%91%E1%BB%93ng(2).w1152.q90.webp 1152w, ../public/home-webp-v1/products-image/l%C6%B0%C6%A1n%20%C4%91%E1%BB%93ng(2).w1448.q90.webp 1448w" sizes="(max-width: 767px) calc(76vw - 30px), (max-width: 1279px) calc((100vw - 96px) / 2 - 30px), (min-width: 1320px) 364.667px, calc((100vw - 136px) / 3 - 30px)" loading="lazy" decoding="async" width="1448" height="1086" alt="Tô Cháo Sâm Mùa Thu với lươn đồng">
                 <span class="card__type">Mặn</span>
-                <a class="card__compare" href="#">So sánh</a>
               </div>
               <h4 class="card__name"><a href="#">Cháo Sâm Mùa Thu – Lươn đồng</a></h4>
               <p class="card__reason">Bổ huyết – dưỡng âm – tăng cường thể lực đầu thu</p>
@@ -3626,31 +4145,16 @@ html { scrollbar-gutter: stable; }
                 <div class="price__row"><dt>Giá chương trình 24/7</dt><dd>327.360đ</dd></div>
                 <div class="price__row price__row--final"><dt>Giá bạn thanh toán</dt><dd>327.360đ</dd></div>
               </dl>
-              <p class="price__serving">~81.840đ mỗi bữa · 4 gói</p>
-              <p class="price__preview">Thành viên Silver chỉ trả 310.992đ · <a href="#">Tìm hiểu</a></p>
-              <details class="price__why">
-                <summary>Vì sao tôi có giá này?</summary>
-                <div class="price__breakdown">
-                  <p class="price__breakdown-title">Cấu thành giá</p>
-                  <dl>
-                  <div class="price__row"><dt>Giá niêm yết</dt><dd>372.000đ</dd></div>
-                  <div class="price__row"><dt>Chương trình 24/7 · −12%</dt><dd>−44.640đ</dd></div>
-                  <div class="price__row"><dt>Quyền lợi thành viên</dt><dd>Chưa áp dụng</dd></div>
-                  <div class="price__row"><dt><b>Giá bạn thanh toán</b></dt><dd><b>327.360đ</b></dd></div>
-                </dl>
-                </div>
-              </details>
               <div class="card__actions">
                 <button type="button" class="btn btn--primary">Mua ngay</button>
                 <button type="button" class="iconbtn" aria-label="Thêm Cháo Sâm Mùa Thu – Lươn đồng vào giỏ"><svg class="icon" aria-hidden="true"><use href="#i-cart"/></svg></button>
               </div>
             </article></li>
 
-            <li class="card" data-sku="A4/CS/CUU"><article>
+            <li class="card" data-sku="A4/CS/CUU" data-packs="4"><article>
               <div class="card__media">
                 <img src="../public/home-webp-v1/products-image/th%E1%BB%8Bt%20c%E1%BB%ABu%20v%C3%A0%20t%C3%A1o%20t%C3%A0o.w1448.q90.webp" srcset="../public/home-webp-v1/products-image/th%E1%BB%8Bt%20c%E1%BB%ABu%20v%C3%A0%20t%C3%A1o%20t%C3%A0o.w480.q90.webp 480w, ../public/home-webp-v1/products-image/th%E1%BB%8Bt%20c%E1%BB%ABu%20v%C3%A0%20t%C3%A1o%20t%C3%A0o.w768.q90.webp 768w, ../public/home-webp-v1/products-image/th%E1%BB%8Bt%20c%E1%BB%ABu%20v%C3%A0%20t%C3%A1o%20t%C3%A0o.w1152.q90.webp 1152w, ../public/home-webp-v1/products-image/th%E1%BB%8Bt%20c%E1%BB%ABu%20v%C3%A0%20t%C3%A1o%20t%C3%A0o.w1448.q90.webp 1448w" sizes="(max-width: 767px) calc(76vw - 30px), (max-width: 1279px) calc((100vw - 96px) / 2 - 30px), (min-width: 1320px) 364.667px, calc((100vw - 136px) / 3 - 30px)" loading="lazy" decoding="async" width="1448" height="1086" alt="Tô Cháo Sâm Mùa Đông với thịt cừu và táo tàu">
                 <span class="card__type">Mặn</span>
-                <a class="card__compare" href="#">So sánh</a>
               </div>
               <h4 class="card__name"><a href="#">Cháo Sâm Mùa Đông – Thịt cừu &amp; Táo tàu</a></h4>
               <p class="card__reason">Ôn trung – trợ dương – giữ ấm cơ thể mùa lạnh</p>
@@ -3659,31 +4163,16 @@ html { scrollbar-gutter: stable; }
                 <div class="price__row"><dt>Giá chương trình 24/7</dt><dd>341.440đ</dd></div>
                 <div class="price__row price__row--final"><dt>Giá bạn thanh toán</dt><dd>341.440đ</dd></div>
               </dl>
-              <p class="price__serving">~85.360đ mỗi bữa · 4 gói</p>
-              <p class="price__preview">Thành viên Silver chỉ trả 324.368đ · <a href="#">Tìm hiểu</a></p>
-              <details class="price__why">
-                <summary>Vì sao tôi có giá này?</summary>
-                <div class="price__breakdown">
-                  <p class="price__breakdown-title">Cấu thành giá</p>
-                  <dl>
-                  <div class="price__row"><dt>Giá niêm yết</dt><dd>388.000đ</dd></div>
-                  <div class="price__row"><dt>Chương trình 24/7 · −12%</dt><dd>−46.560đ</dd></div>
-                  <div class="price__row"><dt>Quyền lợi thành viên</dt><dd>Chưa áp dụng</dd></div>
-                  <div class="price__row"><dt><b>Giá bạn thanh toán</b></dt><dd><b>341.440đ</b></dd></div>
-                </dl>
-                </div>
-              </details>
               <div class="card__actions">
                 <button type="button" class="btn btn--primary">Mua ngay</button>
                 <button type="button" class="iconbtn" aria-label="Thêm Cháo Sâm Mùa Đông – Thịt cừu &amp; Táo tàu vào giỏ"><svg class="icon" aria-hidden="true"><use href="#i-cart"/></svg></button>
               </div>
             </article></li>
 
-            <li class="card" data-sku="A1/CS/DM/HS"><article>
+            <li class="card" data-sku="A1/CS/DM/HS" data-packs="4"><article>
               <div class="card__media">
                 <img src="../public/home-webp-v1/products-image/di%C3%AAm%20m%E1%BA%A1ch%20h%E1%BA%A1t%20sen.w1448.q90.webp" srcset="../public/home-webp-v1/products-image/di%C3%AAm%20m%E1%BA%A1ch%20h%E1%BA%A1t%20sen.w480.q90.webp 480w, ../public/home-webp-v1/products-image/di%C3%AAm%20m%E1%BA%A1ch%20h%E1%BA%A1t%20sen.w768.q90.webp 768w, ../public/home-webp-v1/products-image/di%C3%AAm%20m%E1%BA%A1ch%20h%E1%BA%A1t%20sen.w1152.q90.webp 1152w, ../public/home-webp-v1/products-image/di%C3%AAm%20m%E1%BA%A1ch%20h%E1%BA%A1t%20sen.w1448.q90.webp 1448w" sizes="(max-width: 767px) calc(76vw - 30px), (max-width: 1279px) calc((100vw - 96px) / 2 - 30px), (min-width: 1320px) 364.667px, calc((100vw - 136px) / 3 - 30px)" loading="lazy" decoding="async" width="1448" height="1086" alt="Tô Cháo Sâm Mùa Xuân với diêm mạch và hạt sen">
                 <span class="card__type card__type--chay">Thuần chay</span>
-                <a class="card__compare" href="#">So sánh</a>
               </div>
               <h4 class="card__name"><a href="#">Cháo Sâm Mùa Xuân – Diêm mạch &amp; Hạt sen</a></h4>
               <p class="card__reason">Kiện tỳ – dưỡng khí – ổn định tiêu hóa sau mùa đông</p>
@@ -3692,20 +4181,6 @@ html { scrollbar-gutter: stable; }
                 <div class="price__row"><dt>Giá chương trình 24/7</dt><dd>260.480đ</dd></div>
                 <div class="price__row price__row--final"><dt>Giá bạn thanh toán</dt><dd>260.480đ</dd></div>
               </dl>
-              <p class="price__serving">~65.120đ mỗi bữa · 4 gói</p>
-              <p class="price__preview">Thành viên Silver chỉ trả 247.456đ · <a href="#">Tìm hiểu</a></p>
-              <details class="price__why">
-                <summary>Vì sao tôi có giá này?</summary>
-                <div class="price__breakdown">
-                  <p class="price__breakdown-title">Cấu thành giá</p>
-                  <dl>
-                  <div class="price__row"><dt>Giá niêm yết</dt><dd>296.000đ</dd></div>
-                  <div class="price__row"><dt>Chương trình 24/7 · −12%</dt><dd>−35.520đ</dd></div>
-                  <div class="price__row"><dt>Quyền lợi thành viên</dt><dd>Chưa áp dụng</dd></div>
-                  <div class="price__row"><dt><b>Giá bạn thanh toán</b></dt><dd><b>260.480đ</b></dd></div>
-                </dl>
-                </div>
-              </details>
               <div class="card__actions">
                 <button type="button" class="btn btn--primary">Mua ngay</button>
                 <button type="button" class="iconbtn" aria-label="Thêm Cháo Sâm Mùa Xuân – Diêm mạch &amp; Hạt sen vào giỏ"><svg class="icon" aria-hidden="true"><use href="#i-cart"/></svg></button>
@@ -3718,22 +4193,19 @@ html { scrollbar-gutter: stable; }
         <section class="collection" id="col-functional" data-collection="functional" aria-labelledby="functionalTitle">
           <div class="collection__head">
             <div>
-              <p class="collection__order"><span>Nhóm B · Chức năng<span class="collection__count"> · 6 sản phẩm</span></span></p>
-              <h3 class="collection__title" id="functionalTitle">Cháo Sâm Chức Năng</h3>
-              <p class="collection__goal">Sáu công thức theo công dụng: thanh nhiệt, não bộ, xương khớp, collagen, sinh lực, phục hồi</p>
+              <h3 class="collection__title" id="functionalTitle">Cháo sâm theo yêu cầu</h3>
+              <p class="collection__goal">Thanh nhiệt, Collagen tự nhiên, DHA tự nhiên, Canxi tự nhiên…</p>
             </div>
             <div class="collection__nav">
-              <a class="link-more" href="#collections">Xem tất cả</a>
               <button type="button" class="iconbtn" data-scroll="prev" aria-label="Sản phẩm trước"><svg class="icon" aria-hidden="true"><use href="#i-chev-l"/></svg></button>
               <button type="button" class="iconbtn" data-scroll="next" aria-label="Sản phẩm tiếp theo"><svg class="icon" aria-hidden="true"><use href="#i-chev-r"/></svg></button>
             </div>
           </div>
           <ul class="cards">
-            <li class="card" data-sku="B1/CS/RM/ĐX"><article>
+            <li class="card" data-sku="B1/CS/RM/ĐX" data-packs="4"><article>
               <div class="card__media">
                 <img src="../public/home-webp-v1/products-image/rau%20m%C3%A1%20%C4%91%E1%BA%ADu%20xanh(2).w1448.q90.webp" srcset="../public/home-webp-v1/products-image/rau%20m%C3%A1%20%C4%91%E1%BA%ADu%20xanh(2).w480.q90.webp 480w, ../public/home-webp-v1/products-image/rau%20m%C3%A1%20%C4%91%E1%BA%ADu%20xanh(2).w768.q90.webp 768w, ../public/home-webp-v1/products-image/rau%20m%C3%A1%20%C4%91%E1%BA%ADu%20xanh(2).w1152.q90.webp 1152w, ../public/home-webp-v1/products-image/rau%20m%C3%A1%20%C4%91%E1%BA%ADu%20xanh(2).w1448.q90.webp 1448w" sizes="(max-width: 767px) calc(76vw - 30px), (max-width: 1279px) calc((100vw - 96px) / 2 - 30px), (min-width: 1320px) 364.667px, calc((100vw - 136px) / 3 - 30px)" loading="lazy" decoding="async" width="1448" height="1086" alt="Tô Cháo Sâm với rau má và đậu xanh">
                 <span class="card__type card__type--chay">Thuần chay</span>
-                <a class="card__compare" href="#">So sánh</a>
               </div>
               <h4 class="card__name"><a href="#">Cháo Sâm – Rau má &amp; Đậu xanh</a></h4>
               <p class="card__reason">Thanh nhiệt – hỗ trợ giải độc – làm mát cơ thể</p>
@@ -3742,97 +4214,52 @@ html { scrollbar-gutter: stable; }
                 <div class="price__row"><dt>Giá chương trình 24/7</dt><dd>253.440đ</dd></div>
                 <div class="price__row price__row--final"><dt>Giá bạn thanh toán</dt><dd>253.440đ</dd></div>
               </dl>
-              <p class="price__serving">~63.360đ mỗi bữa · 4 gói</p>
-              <p class="price__preview">Thành viên Silver chỉ trả 240.768đ · <a href="#">Tìm hiểu</a></p>
-              <details class="price__why">
-                <summary>Vì sao tôi có giá này?</summary>
-                <div class="price__breakdown">
-                  <p class="price__breakdown-title">Cấu thành giá</p>
-                  <dl>
-                  <div class="price__row"><dt>Giá niêm yết</dt><dd>288.000đ</dd></div>
-                  <div class="price__row"><dt>Chương trình 24/7 · −12%</dt><dd>−34.560đ</dd></div>
-                  <div class="price__row"><dt>Quyền lợi thành viên</dt><dd>Chưa áp dụng</dd></div>
-                  <div class="price__row"><dt><b>Giá bạn thanh toán</b></dt><dd><b>253.440đ</b></dd></div>
-                </dl>
-                </div>
-              </details>
               <div class="card__actions">
                 <button type="button" class="btn btn--primary">Mua ngay</button>
                 <button type="button" class="iconbtn" aria-label="Thêm Cháo Sâm – Rau má &amp; Đậu xanh vào giỏ"><svg class="icon" aria-hidden="true"><use href="#i-cart"/></svg></button>
               </div>
             </article></li>
 
-            <li class="card" data-sku="B2/CS/DHA"><article>
+            <li class="card" data-sku="B2/CS/DHA" data-packs="4"><article>
               <div class="card__media">
                 <img src="../public/home-webp-v1/products-image/c%C3%A1%20h%E1%BB%93i(2).w1448.q90.webp" srcset="../public/home-webp-v1/products-image/c%C3%A1%20h%E1%BB%93i(2).w480.q90.webp 480w, ../public/home-webp-v1/products-image/c%C3%A1%20h%E1%BB%93i(2).w768.q90.webp 768w, ../public/home-webp-v1/products-image/c%C3%A1%20h%E1%BB%93i(2).w1152.q90.webp 1152w, ../public/home-webp-v1/products-image/c%C3%A1%20h%E1%BB%93i(2).w1448.q90.webp 1448w" sizes="(max-width: 767px) calc(76vw - 30px), (max-width: 1279px) calc((100vw - 96px) / 2 - 30px), (min-width: 1320px) 364.667px, calc((100vw - 136px) / 3 - 30px)" loading="lazy" decoding="async" width="1448" height="1086" alt="Tô Cháo Sâm DHA Não bộ với cá hồi">
                 <span class="card__type">Mặn</span>
-                <a class="card__compare" href="#">So sánh</a>
               </div>
               <h4 class="card__name"><a href="#">Cháo Sâm – DHA Não bộ</a></h4>
-              <p class="card__reason">Nuôi dưỡng não bộ – hỗ trợ trí nhớ – bền thần kinh</p>
+              <p class="card__reason">Bổ sung DHA tự nhiên từ cá hồi</p>
               <dl class="price">
                 <div class="price__row price__row--listed"><dt>Giá niêm yết</dt><dd>312.000đ</dd></div>
                 <div class="price__row"><dt>Giá chương trình 24/7</dt><dd>274.560đ</dd></div>
                 <div class="price__row price__row--final"><dt>Giá bạn thanh toán</dt><dd>274.560đ</dd></div>
               </dl>
-              <p class="price__serving">~68.640đ mỗi bữa · 4 gói</p>
-              <p class="price__preview">Thành viên Silver chỉ trả 260.832đ · <a href="#">Tìm hiểu</a></p>
-              <details class="price__why">
-                <summary>Vì sao tôi có giá này?</summary>
-                <div class="price__breakdown">
-                  <p class="price__breakdown-title">Cấu thành giá</p>
-                  <dl>
-                  <div class="price__row"><dt>Giá niêm yết</dt><dd>312.000đ</dd></div>
-                  <div class="price__row"><dt>Chương trình 24/7 · −12%</dt><dd>−37.440đ</dd></div>
-                  <div class="price__row"><dt>Quyền lợi thành viên</dt><dd>Chưa áp dụng</dd></div>
-                  <div class="price__row"><dt><b>Giá bạn thanh toán</b></dt><dd><b>274.560đ</b></dd></div>
-                </dl>
-                </div>
-              </details>
               <div class="card__actions">
                 <button type="button" class="btn btn--primary">Mua ngay</button>
                 <button type="button" class="iconbtn" aria-label="Thêm Cháo Sâm – DHA Não bộ vào giỏ"><svg class="icon" aria-hidden="true"><use href="#i-cart"/></svg></button>
               </div>
             </article></li>
 
-            <li class="card" data-sku="B3/CS/CACOM"><article>
+            <li class="card" data-sku="B3/CS/CACOM" data-packs="4"><article>
               <div class="card__media">
                 <img src="../public/home-webp-v1/products-image/c%C3%A1c%20c%C6%A1m%20v%C3%A0%20v%E1%BB%ABng.w1448.q90.webp" srcset="../public/home-webp-v1/products-image/c%C3%A1c%20c%C6%A1m%20v%C3%A0%20v%E1%BB%ABng.w480.q90.webp 480w, ../public/home-webp-v1/products-image/c%C3%A1c%20c%C6%A1m%20v%C3%A0%20v%E1%BB%ABng.w768.q90.webp 768w, ../public/home-webp-v1/products-image/c%C3%A1c%20c%C6%A1m%20v%C3%A0%20v%E1%BB%ABng.w1152.q90.webp 1152w, ../public/home-webp-v1/products-image/c%C3%A1c%20c%C6%A1m%20v%C3%A0%20v%E1%BB%ABng.w1448.q90.webp 1448w" sizes="(max-width: 767px) calc(76vw - 30px), (max-width: 1279px) calc((100vw - 96px) / 2 - 30px), (min-width: 1320px) 364.667px, calc((100vw - 136px) / 3 - 30px)" loading="lazy" decoding="async" width="1448" height="1086" alt="Tô Cháo Sâm với cá cơm và vừng">
                 <span class="card__type">Mặn</span>
-                <a class="card__compare" href="#">So sánh</a>
               </div>
               <h4 class="card__name"><a href="#">Cháo Sâm – Cá cơm &amp; Vừng</a></h4>
-              <p class="card__reason">Bổ sung khoáng – canxi tự nhiên – hỗ trợ xương khớp</p>
+              <p class="card__reason">Bổ sung Canxi tự nhiên từ cá cơm</p>
               <dl class="price">
                 <div class="price__row price__row--listed"><dt>Giá niêm yết</dt><dd>292.000đ</dd></div>
                 <div class="price__row"><dt>Giá chương trình 24/7</dt><dd>256.960đ</dd></div>
                 <div class="price__row price__row--final"><dt>Giá bạn thanh toán</dt><dd>256.960đ</dd></div>
               </dl>
-              <p class="price__serving">~64.240đ mỗi bữa · 4 gói</p>
-              <p class="price__preview">Thành viên Silver chỉ trả 244.112đ · <a href="#">Tìm hiểu</a></p>
-              <details class="price__why">
-                <summary>Vì sao tôi có giá này?</summary>
-                <div class="price__breakdown">
-                  <p class="price__breakdown-title">Cấu thành giá</p>
-                  <dl>
-                  <div class="price__row"><dt>Giá niêm yết</dt><dd>292.000đ</dd></div>
-                  <div class="price__row"><dt>Chương trình 24/7 · −12%</dt><dd>−35.040đ</dd></div>
-                  <div class="price__row"><dt>Quyền lợi thành viên</dt><dd>Chưa áp dụng</dd></div>
-                  <div class="price__row"><dt><b>Giá bạn thanh toán</b></dt><dd><b>256.960đ</b></dd></div>
-                </dl>
-                </div>
-              </details>
               <div class="card__actions">
                 <button type="button" class="btn btn--primary">Mua ngay</button>
                 <button type="button" class="iconbtn" aria-label="Thêm Cháo Sâm – Cá cơm &amp; Vừng vào giỏ"><svg class="icon" aria-hidden="true"><use href="#i-cart"/></svg></button>
               </div>
             </article></li>
 
-            <li class="card" data-sku="B4/CS/COLAGEN"><article>
+            <li class="card" data-sku="B4/CS/COLAGEN" data-packs="4"><article>
               <div class="card__media">
                 <img src="../public/home-webp-v1/products-image/th%E1%BB%8Bt%20heo%20v%C3%A0%20da%20heo.w1448.q90.webp" srcset="../public/home-webp-v1/products-image/th%E1%BB%8Bt%20heo%20v%C3%A0%20da%20heo.w480.q90.webp 480w, ../public/home-webp-v1/products-image/th%E1%BB%8Bt%20heo%20v%C3%A0%20da%20heo.w768.q90.webp 768w, ../public/home-webp-v1/products-image/th%E1%BB%8Bt%20heo%20v%C3%A0%20da%20heo.w1152.q90.webp 1152w, ../public/home-webp-v1/products-image/th%E1%BB%8Bt%20heo%20v%C3%A0%20da%20heo.w1448.q90.webp 1448w" sizes="(max-width: 767px) calc(76vw - 30px), (max-width: 1279px) calc((100vw - 96px) / 2 - 30px), (min-width: 1320px) 364.667px, calc((100vw - 136px) / 3 - 30px)" loading="lazy" decoding="async" width="1448" height="1086" alt="Tô Cháo Sâm với thịt heo và da heo">
                 <span class="card__type">Mặn</span>
-                <a class="card__compare" href="#">So sánh</a>
               </div>
               <h4 class="card__name"><a href="#">Cháo Sâm – Thịt heo &amp; Da heo</a></h4>
               <p class="card__reason">Collagen tự nhiên – phục hồi da, gân, khớp</p>
@@ -3841,31 +4268,16 @@ html { scrollbar-gutter: stable; }
                 <div class="price__row"><dt>Giá chương trình 24/7</dt><dd>288.640đ</dd></div>
                 <div class="price__row price__row--final"><dt>Giá bạn thanh toán</dt><dd>288.640đ</dd></div>
               </dl>
-              <p class="price__serving">~72.160đ mỗi bữa · 4 gói</p>
-              <p class="price__preview">Thành viên Silver chỉ trả 274.208đ · <a href="#">Tìm hiểu</a></p>
-              <details class="price__why">
-                <summary>Vì sao tôi có giá này?</summary>
-                <div class="price__breakdown">
-                  <p class="price__breakdown-title">Cấu thành giá</p>
-                  <dl>
-                  <div class="price__row"><dt>Giá niêm yết</dt><dd>328.000đ</dd></div>
-                  <div class="price__row"><dt>Chương trình 24/7 · −12%</dt><dd>−39.360đ</dd></div>
-                  <div class="price__row"><dt>Quyền lợi thành viên</dt><dd>Chưa áp dụng</dd></div>
-                  <div class="price__row"><dt><b>Giá bạn thanh toán</b></dt><dd><b>288.640đ</b></dd></div>
-                </dl>
-                </div>
-              </details>
               <div class="card__actions">
                 <button type="button" class="btn btn--primary">Mua ngay</button>
                 <button type="button" class="iconbtn" aria-label="Thêm Cháo Sâm – Thịt heo &amp; Da heo vào giỏ"><svg class="icon" aria-hidden="true"><use href="#i-cart"/></svg></button>
               </div>
             </article></li>
 
-            <li class="card" data-sku="B5/CS/SINHLUC"><article>
+            <li class="card" data-sku="B5/CS/SINHLUC" data-packs="3"><article>
               <div class="card__media">
                 <img src="../public/home-webp-v1/products-image/h%C3%A0u%20bi%E1%BB%83n(2).w1448.q90.webp" srcset="../public/home-webp-v1/products-image/h%C3%A0u%20bi%E1%BB%83n(2).w480.q90.webp 480w, ../public/home-webp-v1/products-image/h%C3%A0u%20bi%E1%BB%83n(2).w768.q90.webp 768w, ../public/home-webp-v1/products-image/h%C3%A0u%20bi%E1%BB%83n(2).w1152.q90.webp 1152w, ../public/home-webp-v1/products-image/h%C3%A0u%20bi%E1%BB%83n(2).w1448.q90.webp 1448w" sizes="(max-width: 767px) calc(76vw - 30px), (max-width: 1279px) calc((100vw - 96px) / 2 - 30px), (min-width: 1320px) 364.667px, calc((100vw - 136px) / 3 - 30px)" loading="lazy" decoding="async" width="1448" height="1086" alt="Tô Cháo Sâm với hàu biển">
                 <span class="card__type">Mặn</span>
-                <a class="card__compare" href="#">So sánh</a>
               </div>
               <h4 class="card__name"><a href="#">Cháo Sâm – Hàu biển</a></h4>
               <p class="card__reason">Bổ thận – tăng cường sinh lực – hỗ trợ nội tiết nam</p>
@@ -3874,31 +4286,16 @@ html { scrollbar-gutter: stable; }
                 <div class="price__row"><dt>Giá chương trình 24/7</dt><dd>411.840đ</dd></div>
                 <div class="price__row price__row--final"><dt>Giá bạn thanh toán</dt><dd>411.840đ</dd></div>
               </dl>
-              <p class="price__serving">~137.280đ mỗi bữa · 3 gói</p>
-              <p class="price__preview">Thành viên Silver chỉ trả 391.248đ · <a href="#">Tìm hiểu</a></p>
-              <details class="price__why">
-                <summary>Vì sao tôi có giá này?</summary>
-                <div class="price__breakdown">
-                  <p class="price__breakdown-title">Cấu thành giá</p>
-                  <dl>
-                  <div class="price__row"><dt>Giá niêm yết</dt><dd>468.000đ</dd></div>
-                  <div class="price__row"><dt>Chương trình 24/7 · −12%</dt><dd>−56.160đ</dd></div>
-                  <div class="price__row"><dt>Quyền lợi thành viên</dt><dd>Chưa áp dụng</dd></div>
-                  <div class="price__row"><dt><b>Giá bạn thanh toán</b></dt><dd><b>411.840đ</b></dd></div>
-                </dl>
-                </div>
-              </details>
               <div class="card__actions">
                 <button type="button" class="btn btn--primary">Mua ngay</button>
                 <button type="button" class="iconbtn" aria-label="Thêm Cháo Sâm – Hàu biển vào giỏ"><svg class="icon" aria-hidden="true"><use href="#i-cart"/></svg></button>
               </div>
             </article></li>
 
-            <li class="card" data-sku="B6/CS/GAAC"><article>
+            <li class="card" data-sku="B6/CS/GAAC" data-packs="3"><article>
               <div class="card__media">
                 <img src="../public/home-webp-v1/products-image/g%C3%A0%20%C3%A1c(2).w1448.q90.webp" srcset="../public/home-webp-v1/products-image/g%C3%A0%20%C3%A1c(2).w480.q90.webp 480w, ../public/home-webp-v1/products-image/g%C3%A0%20%C3%A1c(2).w768.q90.webp 768w, ../public/home-webp-v1/products-image/g%C3%A0%20%C3%A1c(2).w1152.q90.webp 1152w, ../public/home-webp-v1/products-image/g%C3%A0%20%C3%A1c(2).w1448.q90.webp 1448w" sizes="(max-width: 767px) calc(76vw - 30px), (max-width: 1279px) calc((100vw - 96px) / 2 - 30px), (min-width: 1320px) 364.667px, calc((100vw - 136px) / 3 - 30px)" loading="lazy" decoding="async" width="1448" height="1086" alt="Tô Cháo Sâm với gà ác">
                 <span class="card__type">Mặn</span>
-                <a class="card__compare" href="#">So sánh</a>
               </div>
               <h4 class="card__name"><a href="#">Cháo Sâm – Gà ác</a></h4>
               <p class="card__reason">Bổ huyết – dưỡng âm – phục hồi thể trạng suy nhược</p>
@@ -3907,20 +4304,6 @@ html { scrollbar-gutter: stable; }
                 <div class="price__row"><dt>Giá chương trình 24/7</dt><dd>464.640đ</dd></div>
                 <div class="price__row price__row--final"><dt>Giá bạn thanh toán</dt><dd>464.640đ</dd></div>
               </dl>
-              <p class="price__serving">~154.880đ mỗi bữa · 3 gói</p>
-              <p class="price__preview">Thành viên Silver chỉ trả 441.408đ · <a href="#">Tìm hiểu</a></p>
-              <details class="price__why">
-                <summary>Vì sao tôi có giá này?</summary>
-                <div class="price__breakdown">
-                  <p class="price__breakdown-title">Cấu thành giá</p>
-                  <dl>
-                  <div class="price__row"><dt>Giá niêm yết</dt><dd>528.000đ</dd></div>
-                  <div class="price__row"><dt>Chương trình 24/7 · −12%</dt><dd>−63.360đ</dd></div>
-                  <div class="price__row"><dt>Quyền lợi thành viên</dt><dd>Chưa áp dụng</dd></div>
-                  <div class="price__row"><dt><b>Giá bạn thanh toán</b></dt><dd><b>464.640đ</b></dd></div>
-                </dl>
-                </div>
-              </details>
               <div class="card__actions">
                 <button type="button" class="btn btn--primary">Mua ngay</button>
                 <button type="button" class="iconbtn" aria-label="Thêm Cháo Sâm – Gà ác vào giỏ"><svg class="icon" aria-hidden="true"><use href="#i-cart"/></svg></button>
@@ -3933,22 +4316,19 @@ html { scrollbar-gutter: stable; }
         <section class="collection" id="col-nourishing" data-collection="nourishing" aria-labelledby="nourishTitle">
           <div class="collection__head">
             <div>
-              <p class="collection__order"><span>Nhóm C · Bổ dưỡng<span class="collection__count"> · 9 sản phẩm</span></span></p>
-              <h3 class="collection__title" id="nourishTitle">Cháo Sâm Bổ Dưỡng</h3>
-              <p class="collection__goal">Chín công thức bồi bổ từ hải sản, nấm dược liệu và thịt</p>
+              <h3 class="collection__title" id="nourishTitle">Cháo sâm bổ dưỡng</h3>
+              <p class="collection__goal">Công thức bổ dưỡng tinh túy theo ẩm thực phương Đông</p>
             </div>
             <div class="collection__nav">
-              <a class="link-more" href="#collections">Xem tất cả</a>
               <button type="button" class="iconbtn" data-scroll="prev" aria-label="Sản phẩm trước"><svg class="icon" aria-hidden="true"><use href="#i-chev-l"/></svg></button>
               <button type="button" class="iconbtn" data-scroll="next" aria-label="Sản phẩm tiếp theo"><svg class="icon" aria-hidden="true"><use href="#i-chev-r"/></svg></button>
             </div>
           </div>
           <ul class="cards">
-            <li class="card" data-sku="C1/CS/BAONGU"><article>
+            <li class="card" data-sku="C1/CS/BAONGU" data-packs="3"><article>
               <div class="card__media">
                 <img src="../public/home-webp-v1/products-image/b%C3%A0o%20ng%C6%B0.w1448.q90.webp" srcset="../public/home-webp-v1/products-image/b%C3%A0o%20ng%C6%B0.w480.q90.webp 480w, ../public/home-webp-v1/products-image/b%C3%A0o%20ng%C6%B0.w768.q90.webp 768w, ../public/home-webp-v1/products-image/b%C3%A0o%20ng%C6%B0.w1152.q90.webp 1152w, ../public/home-webp-v1/products-image/b%C3%A0o%20ng%C6%B0.w1448.q90.webp 1448w" sizes="(max-width: 767px) calc(76vw - 30px), (max-width: 1279px) calc((100vw - 96px) / 2 - 30px), (min-width: 1320px) 364.667px, calc((100vw - 136px) / 3 - 30px)" loading="lazy" decoding="async" width="1448" height="1086" alt="Tô Cháo Sâm với bào ngư">
                 <span class="card__type">Mặn</span>
-                <a class="card__compare" href="#">So sánh</a>
               </div>
               <h4 class="card__name"><a href="#">Cháo Sâm – Bào ngư</a></h4>
               <p class="card__reason">Bổ dưỡng cao cấp – phục hồi thể lực – tăng sức bền</p>
@@ -3957,31 +4337,16 @@ html { scrollbar-gutter: stable; }
                 <div class="price__row"><dt>Giá chương trình 24/7</dt><dd>517.440đ</dd></div>
                 <div class="price__row price__row--final"><dt>Giá bạn thanh toán</dt><dd>517.440đ</dd></div>
               </dl>
-              <p class="price__serving">~172.480đ mỗi bữa · 3 gói</p>
-              <p class="price__preview">Thành viên Silver chỉ trả 491.568đ · <a href="#">Tìm hiểu</a></p>
-              <details class="price__why">
-                <summary>Vì sao tôi có giá này?</summary>
-                <div class="price__breakdown">
-                  <p class="price__breakdown-title">Cấu thành giá</p>
-                  <dl>
-                  <div class="price__row"><dt>Giá niêm yết</dt><dd>588.000đ</dd></div>
-                  <div class="price__row"><dt>Chương trình 24/7 · −12%</dt><dd>−70.560đ</dd></div>
-                  <div class="price__row"><dt>Quyền lợi thành viên</dt><dd>Chưa áp dụng</dd></div>
-                  <div class="price__row"><dt><b>Giá bạn thanh toán</b></dt><dd><b>517.440đ</b></dd></div>
-                </dl>
-                </div>
-              </details>
               <div class="card__actions">
                 <button type="button" class="btn btn--primary">Mua ngay</button>
                 <button type="button" class="iconbtn" aria-label="Thêm Cháo Sâm – Bào ngư vào giỏ"><svg class="icon" aria-hidden="true"><use href="#i-cart"/></svg></button>
               </div>
             </article></li>
 
-            <li class="card" data-sku="C2/CS/DONGTRUNG"><article>
+            <li class="card" data-sku="C2/CS/DONGTRUNG" data-packs="3"><article>
               <div class="card__media">
                 <img src="../public/home-webp-v1/products-image/%C4%91%C3%B4ng%20tr%C3%B9ng%20h%E1%BA%A1%20th%E1%BA%A3o(2).w1448.q90.webp" srcset="../public/home-webp-v1/products-image/%C4%91%C3%B4ng%20tr%C3%B9ng%20h%E1%BA%A1%20th%E1%BA%A3o(2).w480.q90.webp 480w, ../public/home-webp-v1/products-image/%C4%91%C3%B4ng%20tr%C3%B9ng%20h%E1%BA%A1%20th%E1%BA%A3o(2).w768.q90.webp 768w, ../public/home-webp-v1/products-image/%C4%91%C3%B4ng%20tr%C3%B9ng%20h%E1%BA%A1%20th%E1%BA%A3o(2).w1152.q90.webp 1152w, ../public/home-webp-v1/products-image/%C4%91%C3%B4ng%20tr%C3%B9ng%20h%E1%BA%A1%20th%E1%BA%A3o(2).w1448.q90.webp 1448w" sizes="(max-width: 767px) calc(76vw - 30px), (max-width: 1279px) calc((100vw - 96px) / 2 - 30px), (min-width: 1320px) 364.667px, calc((100vw - 136px) / 3 - 30px)" loading="lazy" decoding="async" width="1448" height="1086" alt="Tô Cháo Sâm với đông trùng hạ thảo">
                 <span class="card__type card__type--chay">Thuần chay</span>
-                <a class="card__compare" href="#">So sánh</a>
               </div>
               <h4 class="card__name"><a href="#">Cháo Sâm – Đông trùng hạ thảo</a></h4>
               <p class="card__reason">Tăng cường miễn dịch – phục hồi sinh lực – nâng sức bền</p>
@@ -3990,31 +4355,16 @@ html { scrollbar-gutter: stable; }
                 <div class="price__row"><dt>Giá chương trình 24/7</dt><dd>485.760đ</dd></div>
                 <div class="price__row price__row--final"><dt>Giá bạn thanh toán</dt><dd>485.760đ</dd></div>
               </dl>
-              <p class="price__serving">~161.920đ mỗi bữa · 3 gói</p>
-              <p class="price__preview">Thành viên Silver chỉ trả 461.472đ · <a href="#">Tìm hiểu</a></p>
-              <details class="price__why">
-                <summary>Vì sao tôi có giá này?</summary>
-                <div class="price__breakdown">
-                  <p class="price__breakdown-title">Cấu thành giá</p>
-                  <dl>
-                  <div class="price__row"><dt>Giá niêm yết</dt><dd>552.000đ</dd></div>
-                  <div class="price__row"><dt>Chương trình 24/7 · −12%</dt><dd>−66.240đ</dd></div>
-                  <div class="price__row"><dt>Quyền lợi thành viên</dt><dd>Chưa áp dụng</dd></div>
-                  <div class="price__row"><dt><b>Giá bạn thanh toán</b></dt><dd><b>485.760đ</b></dd></div>
-                </dl>
-                </div>
-              </details>
               <div class="card__actions">
                 <button type="button" class="btn btn--primary">Mua ngay</button>
                 <button type="button" class="iconbtn" aria-label="Thêm Cháo Sâm – Đông trùng hạ thảo vào giỏ"><svg class="icon" aria-hidden="true"><use href="#i-cart"/></svg></button>
               </div>
             </article></li>
 
-            <li class="card" data-sku="C3/CS/NAMDONGCO"><article>
+            <li class="card" data-sku="C3/CS/NAMDONGCO" data-packs="4"><article>
               <div class="card__media">
                 <img src="../public/home-webp-v1/products-image/n%E1%BA%A5m%20%C4%91%C3%B4ng%20c%C3%B4(2).w1448.q90.webp" srcset="../public/home-webp-v1/products-image/n%E1%BA%A5m%20%C4%91%C3%B4ng%20c%C3%B4(2).w480.q90.webp 480w, ../public/home-webp-v1/products-image/n%E1%BA%A5m%20%C4%91%C3%B4ng%20c%C3%B4(2).w768.q90.webp 768w, ../public/home-webp-v1/products-image/n%E1%BA%A5m%20%C4%91%C3%B4ng%20c%C3%B4(2).w1152.q90.webp 1152w, ../public/home-webp-v1/products-image/n%E1%BA%A5m%20%C4%91%C3%B4ng%20c%C3%B4(2).w1448.q90.webp 1448w" sizes="(max-width: 767px) calc(76vw - 30px), (max-width: 1279px) calc((100vw - 96px) / 2 - 30px), (min-width: 1320px) 364.667px, calc((100vw - 136px) / 3 - 30px)" loading="lazy" decoding="async" width="1448" height="1086" alt="Tô Cháo Sâm với nấm đông cô">
                 <span class="card__type card__type--chay">Thuần chay</span>
-                <a class="card__compare" href="#">So sánh</a>
               </div>
               <h4 class="card__name"><a href="#">Cháo Sâm – Nấm đông cô</a></h4>
               <p class="card__reason">Thanh bổ – hỗ trợ miễn dịch – dễ tiêu</p>
@@ -4023,31 +4373,16 @@ html { scrollbar-gutter: stable; }
                 <div class="price__row"><dt>Giá chương trình 24/7</dt><dd>267.520đ</dd></div>
                 <div class="price__row price__row--final"><dt>Giá bạn thanh toán</dt><dd>267.520đ</dd></div>
               </dl>
-              <p class="price__serving">~66.880đ mỗi bữa · 4 gói</p>
-              <p class="price__preview">Thành viên Silver chỉ trả 254.144đ · <a href="#">Tìm hiểu</a></p>
-              <details class="price__why">
-                <summary>Vì sao tôi có giá này?</summary>
-                <div class="price__breakdown">
-                  <p class="price__breakdown-title">Cấu thành giá</p>
-                  <dl>
-                  <div class="price__row"><dt>Giá niêm yết</dt><dd>304.000đ</dd></div>
-                  <div class="price__row"><dt>Chương trình 24/7 · −12%</dt><dd>−36.480đ</dd></div>
-                  <div class="price__row"><dt>Quyền lợi thành viên</dt><dd>Chưa áp dụng</dd></div>
-                  <div class="price__row"><dt><b>Giá bạn thanh toán</b></dt><dd><b>267.520đ</b></dd></div>
-                </dl>
-                </div>
-              </details>
               <div class="card__actions">
                 <button type="button" class="btn btn--primary">Mua ngay</button>
                 <button type="button" class="iconbtn" aria-label="Thêm Cháo Sâm – Nấm đông cô vào giỏ"><svg class="icon" aria-hidden="true"><use href="#i-cart"/></svg></button>
               </div>
             </article></li>
 
-            <li class="card" data-sku="C4/CS/CUABIEN"><article>
+            <li class="card" data-sku="C4/CS/CUABIEN" data-packs="3"><article>
               <div class="card__media">
                 <img src="../public/home-webp-v1/products-image/cua%20bi%E1%BB%83n(2).w1448.q90.webp" srcset="../public/home-webp-v1/products-image/cua%20bi%E1%BB%83n(2).w480.q90.webp 480w, ../public/home-webp-v1/products-image/cua%20bi%E1%BB%83n(2).w768.q90.webp 768w, ../public/home-webp-v1/products-image/cua%20bi%E1%BB%83n(2).w1152.q90.webp 1152w, ../public/home-webp-v1/products-image/cua%20bi%E1%BB%83n(2).w1448.q90.webp 1448w" sizes="(max-width: 767px) calc(76vw - 30px), (max-width: 1279px) calc((100vw - 96px) / 2 - 30px), (min-width: 1320px) 364.667px, calc((100vw - 136px) / 3 - 30px)" loading="lazy" decoding="async" width="1448" height="1086" alt="Tô Cháo Sâm với cua biển">
                 <span class="card__type">Mặn</span>
-                <a class="card__compare" href="#">So sánh</a>
               </div>
               <h4 class="card__name"><a href="#">Cháo Sâm – Cua biển</a></h4>
               <p class="card__reason">Bổ sung khoáng – phục hồi thể lực – hỗ trợ xương khớp</p>
@@ -4056,31 +4391,16 @@ html { scrollbar-gutter: stable; }
                 <div class="price__row"><dt>Giá chương trình 24/7</dt><dd>438.240đ</dd></div>
                 <div class="price__row price__row--final"><dt>Giá bạn thanh toán</dt><dd>438.240đ</dd></div>
               </dl>
-              <p class="price__serving">~146.080đ mỗi bữa · 3 gói</p>
-              <p class="price__preview">Thành viên Silver chỉ trả 416.328đ · <a href="#">Tìm hiểu</a></p>
-              <details class="price__why">
-                <summary>Vì sao tôi có giá này?</summary>
-                <div class="price__breakdown">
-                  <p class="price__breakdown-title">Cấu thành giá</p>
-                  <dl>
-                  <div class="price__row"><dt>Giá niêm yết</dt><dd>498.000đ</dd></div>
-                  <div class="price__row"><dt>Chương trình 24/7 · −12%</dt><dd>−59.760đ</dd></div>
-                  <div class="price__row"><dt>Quyền lợi thành viên</dt><dd>Chưa áp dụng</dd></div>
-                  <div class="price__row"><dt><b>Giá bạn thanh toán</b></dt><dd><b>438.240đ</b></dd></div>
-                </dl>
-                </div>
-              </details>
               <div class="card__actions">
                 <button type="button" class="btn btn--primary">Mua ngay</button>
                 <button type="button" class="iconbtn" aria-label="Thêm Cháo Sâm – Cua biển vào giỏ"><svg class="icon" aria-hidden="true"><use href="#i-cart"/></svg></button>
               </div>
             </article></li>
 
-            <li class="card" data-sku="C5/CS/CANGU"><article>
+            <li class="card" data-sku="C5/CS/CANGU" data-packs="4"><article>
               <div class="card__media">
                 <img src="../public/home-webp-v1/products-image/c%C3%A1%20ng%E1%BB%AB(2).w1448.q90.webp" srcset="../public/home-webp-v1/products-image/c%C3%A1%20ng%E1%BB%AB(2).w480.q90.webp 480w, ../public/home-webp-v1/products-image/c%C3%A1%20ng%E1%BB%AB(2).w768.q90.webp 768w, ../public/home-webp-v1/products-image/c%C3%A1%20ng%E1%BB%AB(2).w1152.q90.webp 1152w, ../public/home-webp-v1/products-image/c%C3%A1%20ng%E1%BB%AB(2).w1448.q90.webp 1448w" sizes="(max-width: 767px) calc(76vw - 30px), (max-width: 1279px) calc((100vw - 96px) / 2 - 30px), (min-width: 1320px) 364.667px, calc((100vw - 136px) / 3 - 30px)" loading="lazy" decoding="async" width="1448" height="1086" alt="Tô Cháo Sâm với cá ngừ">
                 <span class="card__type">Mặn</span>
-                <a class="card__compare" href="#">So sánh</a>
               </div>
               <h4 class="card__name"><a href="#">Cháo Sâm – Cá ngừ</a></h4>
               <p class="card__reason">Bổ khí huyết – tăng sức bền – hỗ trợ tim mạch</p>
@@ -4089,31 +4409,16 @@ html { scrollbar-gutter: stable; }
                 <div class="price__row"><dt>Giá chương trình 24/7</dt><dd>313.280đ</dd></div>
                 <div class="price__row price__row--final"><dt>Giá bạn thanh toán</dt><dd>313.280đ</dd></div>
               </dl>
-              <p class="price__serving">~78.320đ mỗi bữa · 4 gói</p>
-              <p class="price__preview">Thành viên Silver chỉ trả 297.616đ · <a href="#">Tìm hiểu</a></p>
-              <details class="price__why">
-                <summary>Vì sao tôi có giá này?</summary>
-                <div class="price__breakdown">
-                  <p class="price__breakdown-title">Cấu thành giá</p>
-                  <dl>
-                  <div class="price__row"><dt>Giá niêm yết</dt><dd>356.000đ</dd></div>
-                  <div class="price__row"><dt>Chương trình 24/7 · −12%</dt><dd>−42.720đ</dd></div>
-                  <div class="price__row"><dt>Quyền lợi thành viên</dt><dd>Chưa áp dụng</dd></div>
-                  <div class="price__row"><dt><b>Giá bạn thanh toán</b></dt><dd><b>313.280đ</b></dd></div>
-                </dl>
-                </div>
-              </details>
               <div class="card__actions">
                 <button type="button" class="btn btn--primary">Mua ngay</button>
                 <button type="button" class="iconbtn" aria-label="Thêm Cháo Sâm – Cá ngừ vào giỏ"><svg class="icon" aria-hidden="true"><use href="#i-cart"/></svg></button>
               </div>
             </article></li>
 
-            <li class="card" data-sku="C6/CS/TOM/RONGBIEN"><article>
+            <li class="card" data-sku="C6/CS/TOM/RONGBIEN" data-packs="4"><article>
               <div class="card__media">
                 <img src="../public/home-webp-v1/products-image/t%C3%B4m%20v%C3%A0%20r%C3%B4ng%20bi%E1%BB%83n.w1448.q90.webp" srcset="../public/home-webp-v1/products-image/t%C3%B4m%20v%C3%A0%20r%C3%B4ng%20bi%E1%BB%83n.w480.q90.webp 480w, ../public/home-webp-v1/products-image/t%C3%B4m%20v%C3%A0%20r%C3%B4ng%20bi%E1%BB%83n.w768.q90.webp 768w, ../public/home-webp-v1/products-image/t%C3%B4m%20v%C3%A0%20r%C3%B4ng%20bi%E1%BB%83n.w1152.q90.webp 1152w, ../public/home-webp-v1/products-image/t%C3%B4m%20v%C3%A0%20r%C3%B4ng%20bi%E1%BB%83n.w1448.q90.webp 1448w" sizes="(max-width: 767px) calc(76vw - 30px), (max-width: 1279px) calc((100vw - 96px) / 2 - 30px), (min-width: 1320px) 364.667px, calc((100vw - 136px) / 3 - 30px)" loading="lazy" decoding="async" width="1448" height="1086" alt="Tô Cháo Sâm với tôm và rong biển">
                 <span class="card__type">Mặn</span>
-                <a class="card__compare" href="#">So sánh</a>
               </div>
               <h4 class="card__name"><a href="#">Cháo Sâm – Tôm &amp; Rong biển</a></h4>
               <p class="card__reason">Khoáng hóa tự nhiên – thanh bổ – cân bằng điện giải</p>
@@ -4122,31 +4427,16 @@ html { scrollbar-gutter: stable; }
                 <div class="price__row"><dt>Giá chương trình 24/7</dt><dd>320.320đ</dd></div>
                 <div class="price__row price__row--final"><dt>Giá bạn thanh toán</dt><dd>320.320đ</dd></div>
               </dl>
-              <p class="price__serving">~80.080đ mỗi bữa · 4 gói</p>
-              <p class="price__preview">Thành viên Silver chỉ trả 304.304đ · <a href="#">Tìm hiểu</a></p>
-              <details class="price__why">
-                <summary>Vì sao tôi có giá này?</summary>
-                <div class="price__breakdown">
-                  <p class="price__breakdown-title">Cấu thành giá</p>
-                  <dl>
-                  <div class="price__row"><dt>Giá niêm yết</dt><dd>364.000đ</dd></div>
-                  <div class="price__row"><dt>Chương trình 24/7 · −12%</dt><dd>−43.680đ</dd></div>
-                  <div class="price__row"><dt>Quyền lợi thành viên</dt><dd>Chưa áp dụng</dd></div>
-                  <div class="price__row"><dt><b>Giá bạn thanh toán</b></dt><dd><b>320.320đ</b></dd></div>
-                </dl>
-                </div>
-              </details>
               <div class="card__actions">
                 <button type="button" class="btn btn--primary">Mua ngay</button>
                 <button type="button" class="iconbtn" aria-label="Thêm Cháo Sâm – Tôm &amp; Rong biển vào giỏ"><svg class="icon" aria-hidden="true"><use href="#i-cart"/></svg></button>
               </div>
             </article></li>
 
-            <li class="card" data-sku="C7/CS/THITGA"><article>
+            <li class="card" data-sku="C7/CS/THITGA" data-packs="4"><article>
               <div class="card__media">
                 <img src="../public/home-webp-v1/products-image/th%E1%BB%8Bt%20g%C3%A0(3).w1448.q90.webp" srcset="../public/home-webp-v1/products-image/th%E1%BB%8Bt%20g%C3%A0(3).w480.q90.webp 480w, ../public/home-webp-v1/products-image/th%E1%BB%8Bt%20g%C3%A0(3).w768.q90.webp 768w, ../public/home-webp-v1/products-image/th%E1%BB%8Bt%20g%C3%A0(3).w1152.q90.webp 1152w, ../public/home-webp-v1/products-image/th%E1%BB%8Bt%20g%C3%A0(3).w1448.q90.webp 1448w" sizes="(max-width: 767px) calc(76vw - 30px), (max-width: 1279px) calc((100vw - 96px) / 2 - 30px), (min-width: 1320px) 364.667px, calc((100vw - 136px) / 3 - 30px)" loading="lazy" decoding="async" width="1448" height="1086" alt="Tô Cháo Sâm với thịt gà">
                 <span class="card__type">Mặn</span>
-                <a class="card__compare" href="#">So sánh</a>
               </div>
               <h4 class="card__name"><a href="#">Cháo Sâm – Thịt gà</a></h4>
               <p class="card__reason">Bổ dưỡng điều hòa – kiện tỳ – dùng được hằng ngày</p>
@@ -4155,31 +4445,16 @@ html { scrollbar-gutter: stable; }
                 <div class="price__row"><dt>Giá chương trình 24/7</dt><dd>278.080đ</dd></div>
                 <div class="price__row price__row--final"><dt>Giá bạn thanh toán</dt><dd>278.080đ</dd></div>
               </dl>
-              <p class="price__serving">~69.520đ mỗi bữa · 4 gói</p>
-              <p class="price__preview">Thành viên Silver chỉ trả 264.176đ · <a href="#">Tìm hiểu</a></p>
-              <details class="price__why">
-                <summary>Vì sao tôi có giá này?</summary>
-                <div class="price__breakdown">
-                  <p class="price__breakdown-title">Cấu thành giá</p>
-                  <dl>
-                  <div class="price__row"><dt>Giá niêm yết</dt><dd>316.000đ</dd></div>
-                  <div class="price__row"><dt>Chương trình 24/7 · −12%</dt><dd>−37.920đ</dd></div>
-                  <div class="price__row"><dt>Quyền lợi thành viên</dt><dd>Chưa áp dụng</dd></div>
-                  <div class="price__row"><dt><b>Giá bạn thanh toán</b></dt><dd><b>278.080đ</b></dd></div>
-                </dl>
-                </div>
-              </details>
               <div class="card__actions">
                 <button type="button" class="btn btn--primary">Mua ngay</button>
                 <button type="button" class="iconbtn" aria-label="Thêm Cháo Sâm – Thịt gà vào giỏ"><svg class="icon" aria-hidden="true"><use href="#i-cart"/></svg></button>
               </div>
             </article></li>
 
-            <li class="card" data-sku="C8/CS/THITHEO"><article>
+            <li class="card" data-sku="C8/CS/THITHEO" data-packs="4"><article>
               <div class="card__media">
                 <img src="../public/home-webp-v1/products-image/th%E1%BB%8Bt%20heo(3).w1448.q90.webp" srcset="../public/home-webp-v1/products-image/th%E1%BB%8Bt%20heo(3).w480.q90.webp 480w, ../public/home-webp-v1/products-image/th%E1%BB%8Bt%20heo(3).w768.q90.webp 768w, ../public/home-webp-v1/products-image/th%E1%BB%8Bt%20heo(3).w1152.q90.webp 1152w, ../public/home-webp-v1/products-image/th%E1%BB%8Bt%20heo(3).w1448.q90.webp 1448w" sizes="(max-width: 767px) calc(76vw - 30px), (max-width: 1279px) calc((100vw - 96px) / 2 - 30px), (min-width: 1320px) 364.667px, calc((100vw - 136px) / 3 - 30px)" loading="lazy" decoding="async" width="1448" height="1086" alt="Tô Cháo Sâm với thịt heo">
                 <span class="card__type">Mặn</span>
-                <a class="card__compare" href="#">So sánh</a>
               </div>
               <h4 class="card__name"><a href="#">Cháo Sâm – Thịt heo</a></h4>
               <p class="card__reason">Bổ năng lượng – phục hồi thể lực – nuôi dưỡng mô</p>
@@ -4188,31 +4463,16 @@ html { scrollbar-gutter: stable; }
                 <div class="price__row"><dt>Giá chương trình 24/7</dt><dd>271.040đ</dd></div>
                 <div class="price__row price__row--final"><dt>Giá bạn thanh toán</dt><dd>271.040đ</dd></div>
               </dl>
-              <p class="price__serving">~67.760đ mỗi bữa · 4 gói</p>
-              <p class="price__preview">Thành viên Silver chỉ trả 257.488đ · <a href="#">Tìm hiểu</a></p>
-              <details class="price__why">
-                <summary>Vì sao tôi có giá này?</summary>
-                <div class="price__breakdown">
-                  <p class="price__breakdown-title">Cấu thành giá</p>
-                  <dl>
-                  <div class="price__row"><dt>Giá niêm yết</dt><dd>308.000đ</dd></div>
-                  <div class="price__row"><dt>Chương trình 24/7 · −12%</dt><dd>−36.960đ</dd></div>
-                  <div class="price__row"><dt>Quyền lợi thành viên</dt><dd>Chưa áp dụng</dd></div>
-                  <div class="price__row"><dt><b>Giá bạn thanh toán</b></dt><dd><b>271.040đ</b></dd></div>
-                </dl>
-                </div>
-              </details>
               <div class="card__actions">
                 <button type="button" class="btn btn--primary">Mua ngay</button>
                 <button type="button" class="iconbtn" aria-label="Thêm Cháo Sâm – Thịt heo vào giỏ"><svg class="icon" aria-hidden="true"><use href="#i-cart"/></svg></button>
               </div>
             </article></li>
 
-            <li class="card" data-sku="C9/CS/THITBO"><article>
+            <li class="card" data-sku="C9/CS/THITBO" data-packs="4"><article>
               <div class="card__media">
                 <img src="../public/home-webp-v1/products-image/th%E1%BB%8Bt%20b%C3%B2(2).w1448.q90.webp" srcset="../public/home-webp-v1/products-image/th%E1%BB%8Bt%20b%C3%B2(2).w480.q90.webp 480w, ../public/home-webp-v1/products-image/th%E1%BB%8Bt%20b%C3%B2(2).w768.q90.webp 768w, ../public/home-webp-v1/products-image/th%E1%BB%8Bt%20b%C3%B2(2).w1152.q90.webp 1152w, ../public/home-webp-v1/products-image/th%E1%BB%8Bt%20b%C3%B2(2).w1448.q90.webp 1448w" sizes="(max-width: 767px) calc(76vw - 30px), (max-width: 1279px) calc((100vw - 96px) / 2 - 30px), (min-width: 1320px) 364.667px, calc((100vw - 136px) / 3 - 30px)" loading="lazy" decoding="async" width="1448" height="1086" alt="Tô Cháo Sâm với thịt bò">
                 <span class="card__type">Mặn</span>
-                <a class="card__compare" href="#">So sánh</a>
               </div>
               <h4 class="card__name"><a href="#">Cháo Sâm – Thịt bò</a></h4>
               <p class="card__reason">Bổ khí huyết – tăng sức bền cơ bắp – phục hồi thể lực</p>
@@ -4221,20 +4481,6 @@ html { scrollbar-gutter: stable; }
                 <div class="price__row"><dt>Giá chương trình 24/7</dt><dd>348.480đ</dd></div>
                 <div class="price__row price__row--final"><dt>Giá bạn thanh toán</dt><dd>348.480đ</dd></div>
               </dl>
-              <p class="price__serving">~87.120đ mỗi bữa · 4 gói</p>
-              <p class="price__preview">Thành viên Silver chỉ trả 331.056đ · <a href="#">Tìm hiểu</a></p>
-              <details class="price__why">
-                <summary>Vì sao tôi có giá này?</summary>
-                <div class="price__breakdown">
-                  <p class="price__breakdown-title">Cấu thành giá</p>
-                  <dl>
-                  <div class="price__row"><dt>Giá niêm yết</dt><dd>396.000đ</dd></div>
-                  <div class="price__row"><dt>Chương trình 24/7 · −12%</dt><dd>−47.520đ</dd></div>
-                  <div class="price__row"><dt>Quyền lợi thành viên</dt><dd>Chưa áp dụng</dd></div>
-                  <div class="price__row"><dt><b>Giá bạn thanh toán</b></dt><dd><b>348.480đ</b></dd></div>
-                </dl>
-                </div>
-              </details>
               <div class="card__actions">
                 <button type="button" class="btn btn--primary">Mua ngay</button>
                 <button type="button" class="iconbtn" aria-label="Thêm Cháo Sâm – Thịt bò vào giỏ"><svg class="icon" aria-hidden="true"><use href="#i-cart"/></svg></button>
@@ -4247,11 +4493,12 @@ html { scrollbar-gutter: stable; }
              Nội dung, ảnh và trạng thái (preview + khối pháp lý / khối rỗng) giữ như nhom-san-pham.html; ảnh dùng bản webp sẵn có của trang chủ.
              Link "Tìm hiểu thêm", "Báo tôi khi có hàng"… là anchor mock; nút data-goto cuộn về nhóm đang bán. -->
 
-        <!-- Thực phẩm chức năng — PREVIEW -->
-        <section class="collection" id="col-functional-food" data-collection="extended" aria-labelledby="functionalFoodTitle">
+        <!-- Chủ dự án 2026-10-19: mỗi nhóm sắp ra mắt chỉ còn đầu nhóm (tên, mô tả, "Chưa mở bán") và thẻ "SẮP RA MẮT"; đã bỏ thẻ xem trước, khối chân preview và khối rỗng. CSS .preview-*, .previewfoot*, .empty* còn nguyên nhưng không còn dùng. Thuốc Y học cổ truyền giữ câu pháp lý riêng trong thẻ. -->
+
+        <!-- Thực phẩm chức năng — chỉ còn thẻ SẮP RA MẮT -->
+        <section class="collection" id="col-functional-food" data-collection="extended" aria-labelledby="functionalFoodTitle" hidden>
           <div class="collection__head">
             <div>
-              <p class="collection__order"><span>Sắp ra mắt · thực phẩm bổ sung</span></p>
               <h3 class="collection__title" id="functionalFoodTitle">Thực phẩm chức năng</h3>
               <p class="collection__goal">Các sản phẩm bổ sung dinh dưỡng dạng viên và dạng bột, làm từ cùng nguồn sâm với Cháo Sâm.</p>
             </div>
@@ -4261,68 +4508,28 @@ html { scrollbar-gutter: stable; }
             <span class="legalgate__badge">SẮP RA MẮT</span>
             <span class="legalgate__text">Nhóm này mới ở mức giới thiệu, chúng tôi chưa mở bán nên chưa có giá.</span>
           </div>
-          <div class="preview-grid">
-            <article class="preview-card">
-              <div class="preview-card__media" style="--pos: 50% 50%;"><img src="../public/home-webp-v1/step5.webp" loading="lazy" decoding="async" width="500" height="500" alt="Tô cháo và rau củ tươi"></div>
-              <span class="preview-card__tag">SẮP RA MẮT</span>
-              <h4 class="preview-card__name">Viên bổ sung Sâm cát biển</h4>
-              <p class="preview-card__note">Dạng viên nhỏ gọn, tiện mang theo cho những ngày không kịp ngồi xuống ăn một tô cháo.</p>
-              <a class="link-more" href="#">Tìm hiểu thêm <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-            </article>
-            <article class="preview-card">
-              <div class="preview-card__media" style="--pos: 50% 50%;"><img src="../public/home-webp-v1/12.webp" loading="lazy" decoding="async" width="1254" height="1254" alt="Sâm, hoài sơn và rau củ dùng làm bột dinh dưỡng"></div>
-              <span class="preview-card__tag">SẮP RA MẮT</span>
-              <h4 class="preview-card__name">Bột dinh dưỡng Sâm &amp; Hoài sơn</h4>
-              <p class="preview-card__note">Bột pha uống, nguyên liệu lấy từ chính vùng trồng làm nên Cháo Sâm.</p>
-              <a class="link-more" href="#">Tìm hiểu thêm <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-            </article>
-            <article class="preview-card">
-              <div class="preview-card__media" style="--pos: 50% 50%;"><img src="../public/home-webp-v1/9.webp" loading="lazy" decoding="async" width="1254" height="1254" alt="Củ sâm tươi trên cát biển"></div>
-              <span class="preview-card__tag">SẮP RA MẮT</span>
-              <h4 class="preview-card__name">Cao Sâm cát biển</h4>
-              <p class="preview-card__note">Cao đặc nấu từ sâm vùng cát biển, pha một thìa với nước ấm là dùng được.</p>
-              <a class="link-more" href="#">Tìm hiểu thêm <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-            </article>
-          </div>
-          <div class="previewfoot">
-            <span class="previewfoot__icon" aria-hidden="true"><svg class="icon"><use href="#i-shield"/></svg></span>
-            <span>
-              <span class="previewfoot__title">Chúng tôi đang hoàn tất thủ tục cho nhóm này</span><br>
-              <span class="previewfoot__note">Chỉ những thông tin đã được duyệt mới xuất hiện ở đây. Xong thủ tục, chúng tôi sẽ mở bán và báo bạn biết.</span>
-            </span>
-            <button type="button" class="btn btn--outline btn--sm" data-goto="col-seasonal">Xem nhóm Cháo Sâm</button>
-          </div>
         </section>
 
-        <!-- Mỹ phẩm — EMPTY -->
-        <section class="collection" id="col-cosmetics" data-collection="extended" aria-labelledby="cosmeticsTitle">
+        <!-- Mỹ phẩm — chỉ còn thẻ SẮP RA MẮT -->
+        <section class="collection" id="col-cosmetics" data-collection="extended" aria-labelledby="cosmeticsTitle" hidden>
           <div class="collection__head">
             <div>
-              <p class="collection__order"><span>Sắp ra mắt · chăm sóc da</span></p>
               <h3 class="collection__title" id="cosmeticsTitle">Mỹ phẩm</h3>
               <p class="collection__goal">Dòng chăm sóc da từ chiết xuất Sâm vùng cát biển.</p>
             </div>
             <p class="collection__note">Chưa mở bán</p>
           </div>
-          <div class="empty">
-            <div class="empty__media"><img src="../public/banner_hero_1.webp" loading="lazy" decoding="async" width="2470" height="637" alt="Vùng trồng sâm bên bờ biển"></div>
-            <div class="empty__copy">
-              <h4 class="empty__title">Chúng tôi đang chuẩn bị cho nhóm này</h4>
-              <p class="empty__body">Dòng mỹ phẩm từ sâm vẫn còn trên bàn thử nghiệm. Trong lúc chờ, mời bạn xem các nhóm Cháo Sâm đang bán, hoặc để lại email để chúng tôi báo bạn sớm nhất.</p>
-              <div class="empty__actions">
-                <button type="button" class="btn btn--primary" data-goto="col-seasonal">Xem nhóm đang bán</button>
-                <a class="btn btn--outline" href="#">Chọn món phù hợp với tôi</a>
-              </div>
-            </div>
+          <div class="legalgate">
+            <span class="legalgate__badge">SẮP RA MẮT</span>
+            <span class="legalgate__text">Nhóm này mới ở mức giới thiệu, chúng tôi chưa mở bán nên chưa có giá.</span>
           </div>
         </section>
 
-        <!-- Thuốc Y học cổ truyền — PREVIEW + LEGAL GATE -->
-        <section class="collection" id="col-medicine" data-collection="extended" aria-labelledby="medicineTitle">
+        <!-- Thuốc Y học cổ truyền — chỉ còn thẻ SẮP RA MẮT (câu pháp lý riêng) -->
+        <section class="collection" id="col-medicine" data-collection="extended" aria-labelledby="medicineTitle" hidden>
           <div class="collection__head">
             <div>
-              <p class="collection__order"><span>Sắp ra mắt · dược liệu</span></p>
-              <h3 class="collection__title" id="medicineTitle">Thuốc Y học cổ truyền</h3>
+              <h3 class="collection__title" id="medicineTitle">Thuốc y học cổ truyền</h3>
               <p class="collection__goal">Các bài thuốc từ dược liệu theo Y học cổ truyền. Chúng tôi chỉ nói những gì đã được cơ quan chức năng cho phép.</p>
             </div>
             <p class="collection__note">Chưa mở bán</p>
@@ -4331,59 +4538,20 @@ html { scrollbar-gutter: stable; }
             <span class="legalgate__badge">SẮP RA MẮT</span>
             <span class="legalgate__text">Thuốc cần được cơ quan chức năng duyệt trước khi bán, nên hiện chưa có giá.</span>
           </div>
-          <div class="preview-grid">
-            <article class="preview-card">
-              <div class="preview-card__media" style="--pos: 50% 50%;"><img src="../public/home-webp-v1/11.webp" loading="lazy" decoding="async" width="1254" height="1254" alt="Sâm và các vị dược liệu dùng làm viên hoàn"></div>
-              <span class="preview-card__tag">SẮP RA MẮT</span>
-              <h4 class="preview-card__name">Viên hoàn Sâm cát biển</h4>
-              <p class="preview-card__note">Viên hoàn làm theo bài thuốc cổ truyền, vo tay từ mẻ dược liệu cùng vùng trồng.</p>
-              <a class="link-more" href="#">Tìm hiểu thêm <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-            </article>
-            <article class="preview-card">
-              <div class="preview-card__media" style="--pos: 50% 50%;"><img src="../public/home-webp-v1/13.webp" loading="lazy" decoding="async" width="1254" height="1254" alt="Sâm và đương quy dùng làm trà"></div>
-              <span class="preview-card__tag">SẮP RA MẮT</span>
-              <h4 class="preview-card__name">Trà dược liệu Sâm &amp; Đương quy</h4>
-              <p class="preview-card__note">Trà túi lọc từ sâm và đương quy, hợp với người muốn dùng nhẹ nhàng mỗi ngày.</p>
-              <a class="link-more" href="#">Tìm hiểu thêm <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-            </article>
-            <article class="preview-card">
-              <div class="preview-card__media" style="--pos: 50% 50%;"><img src="../public/home-webp-v1/14.webp" loading="lazy" decoding="async" width="1254" height="1254" alt="Sâm và kỷ tử trên nền gỗ"></div>
-              <span class="preview-card__tag">SẮP RA MẮT</span>
-              <h4 class="preview-card__name">Cao dược liệu Sâm &amp; Kỷ tử</h4>
-              <p class="preview-card__note">Cao đặc theo công thức cổ truyền, cô lại từ mẻ dược liệu cùng vùng trồng.</p>
-              <a class="link-more" href="#">Tìm hiểu thêm <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-            </article>
-          </div>
-          <div class="previewfoot">
-            <span class="previewfoot__icon" aria-hidden="true"><svg class="icon"><use href="#i-shield"/></svg></span>
-            <span>
-              <span class="previewfoot__title">Thuốc và dược liệu cần được duyệt trước khi bán</span><br>
-              <span class="previewfoot__note">Chúng tôi không nói về công dụng khi chưa được cơ quan chức năng cho phép. Nhóm này sẽ mở bán khi có đủ giấy tờ.</span>
-            </span>
-            <button type="button" class="btn btn--outline btn--sm" data-goto="col-nourishing">Xem nhóm Bổ Dưỡng</button>
-          </div>
         </section>
 
-        <!-- Dược liệu thế hệ mới — EMPTY -->
-        <section class="collection" id="col-newgen" data-collection="extended" aria-labelledby="newgenTitle">
+        <!-- Thuốc dược liệu thế hệ mới — chỉ còn thẻ SẮP RA MẮT -->
+        <section class="collection" id="col-newgen" data-collection="extended" aria-labelledby="newgenTitle" hidden>
           <div class="collection__head">
             <div>
-              <p class="collection__order"><span>Sắp ra mắt · dược liệu chuẩn hóa</span></p>
               <h3 class="collection__title" id="newgenTitle">Thuốc dược liệu thế hệ mới</h3>
               <p class="collection__goal">Dược liệu sấy thăng hoa, giữ được hoạt chất và đo được hàm lượng trong từng mẻ.</p>
             </div>
             <p class="collection__note">Chưa mở bán</p>
           </div>
-          <div class="empty">
-            <div class="empty__media"><img src="../public/banner_hero_3.webp" loading="lazy" decoding="async" width="2470" height="637" alt="Củ sâm và nguyên liệu dược liệu giữa khung cảnh núi rừng"></div>
-            <div class="empty__copy">
-              <h4 class="empty__title">Nhóm này sắp có mặt</h4>
-              <p class="empty__body">Chúng tôi đang hoàn thiện phần chuẩn hóa hoạt chất cho dòng này. Sản phẩm đầu tiên sẽ xuất hiện ngay tại đây khi sẵn sàng.</p>
-              <div class="empty__actions">
-                <button type="button" class="btn btn--primary" data-goto="col-seasonal">Xem nhóm đang bán</button>
-                <a class="btn btn--outline" href="#">Báo tôi khi có hàng</a>
-              </div>
-            </div>
+          <div class="legalgate">
+            <span class="legalgate__badge">SẮP RA MẮT</span>
+            <span class="legalgate__text">Nhóm này mới ở mức giới thiệu, chúng tôi chưa mở bán nên chưa có giá.</span>
           </div>
         </section>
 
@@ -4457,7 +4625,7 @@ html { scrollbar-gutter: stable; }
       <button type="button" class="viewer__btn" id="vZoomOut" aria-label="Thu nhỏ"><svg class="icon" aria-hidden="true"><use href="#i-minus"/></svg></button>
       <button type="button" class="viewer__btn viewer__btn--text" id="vZoomReset" aria-label="Về cỡ ban đầu">100%</button>
       <button type="button" class="viewer__btn" id="vZoomIn" aria-label="Phóng to"><svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg></button>
-      <a class="viewer__btn" id="vDownload" href="#" download aria-label="Tải ảnh xuống"><svg class="icon" aria-hidden="true"><use href="#i-download"/></svg></a>
+      <ui-download-morph id="vDownloadMorph"><a class="viewer__btn" id="vDownload" href="#" download aria-label="Tải ảnh xuống"></a></ui-download-morph>
       <button type="button" class="viewer__btn" id="vClose" aria-label="Đóng"><svg class="icon" aria-hidden="true"><use href="#i-close"/></svg></button>
     </div>
   </div>
@@ -4614,7 +4782,7 @@ html { scrollbar-gutter: stable; }
     mobileNav.classList.toggle('is-open', open);
     navToggle.setAttribute('aria-expanded', String(open));
     navToggle.setAttribute('aria-label', open ? 'Đóng menu' : 'Mở menu');
-    navToggle.querySelector('use').setAttribute('href', open ? '#i-close' : '#i-menu');
+    var navMorph = navToggle.closest('ui-menu-close-morph'); if (navMorph) navMorph.state = open ? 'close' : 'menu';
     syncOverlay();
     if (open) mobileNav.querySelector('a').focus();
   }
@@ -5237,5 +5405,70 @@ html { scrollbar-gutter: stable; }
   });
 })();
 </script>
+<script src="download-morph.js"></script>
+<script id="gf-viewer-download-js">
+/* Nút tải ảnh trong khung xem ảnh: trang giữ trạng thái, giá trị, tên nút, aria-disabled và lời thông báo; <ui-download-morph> chỉ vẽ biểu tượng.
+   Nút chỉ có icon nên "nội dung" của nó là tên nút (aria-label) và màu nền (xanh lá khi xong, đỏ khi lỗi). Bản mẫu (không gọi API): trang mô phỏng tiến độ
+   mỗi 150 ms cho tới 100 rồi báo xong, 2,6 giây sau về lại idle. href do script của khung xem ảnh đặt theo ảnh đang xem; chạy qua máy chủ thì trình duyệt tải
+   thật như cũ, còn mở bằng file:/// (trình duyệt bỏ qua download và chuyển trang) hoặc href="#" thì chỉ mô phỏng. Đổi ảnh hoặc đóng khung xem thì nút về idle.
+   Lời báo nằm trong chính hộp thoại (nội dung ngoài hộp thoại đang mở bị vô hiệu với trình đọc màn hình). */
+(function () {
+  'use strict';
+  var host = document.getElementById('vDownloadMorph'), link = document.getElementById('vDownload'), viewer = document.getElementById('viewer'), count = document.getElementById('vCount');
+  if (!host || !link || !viewer) { return; }
+
+  var STEPS = [8, 12, 9, 15, 11, 14, 10, 13, 8], INTERVAL = 150, SHOW_DONE = 2600;
+  var idleLabel = link.getAttribute('aria-label'), timer = 0, back = 0;
+  var live = document.createElement('output');
+  live.className = 'visually-hidden';
+  live.setAttribute('role', 'status');
+  viewer.appendChild(live);
+  function say(words) { live.textContent = words; }
+  function which() { return count && count.textContent.trim() ? count.textContent.trim().toLowerCase() : 'ảnh'; }
+
+  function show(state, label, busy) {
+    host.setAttribute('state', state);
+    link.setAttribute('aria-label', label);
+    if (busy) { link.setAttribute('aria-disabled', 'true'); } else { link.removeAttribute('aria-disabled'); }
+  }
+
+  function reset() {
+    window.clearInterval(timer);
+    window.clearTimeout(back);
+    timer = 0;
+    if (host.getAttribute('state') !== 'idle') { show('idle', idleLabel, false); }
+  }
+
+  function finish(what) {
+    window.clearInterval(timer);
+    timer = 0;
+    show('done', 'Đã tải ảnh xuống', false);
+    say('Đã tải xuống ' + what);
+    back = window.setTimeout(function () { show('idle', idleLabel, false); }, SHOW_DONE);
+  }
+
+  link.addEventListener('click', function (event) {
+    if (link.getAttribute('aria-disabled') === 'true') { event.preventDefault(); return; }
+    if (link.getAttribute('href') === '#' || window.location.protocol === 'file:') { event.preventDefault(); }
+    window.clearInterval(timer);
+    window.clearTimeout(back);
+    var what = which(), value = 0, step = 0, told = 0;
+    host.setAttribute('value', '0'); /* giá trị được ghi TRƯỚC khi sang loading, để lần tải biết dung lượng không bắt đầu bằng cung quay */
+    show('loading', 'Đang tải ảnh xuống', true);
+    say('Đang tải xuống ' + what + ', 0 phần trăm');
+    timer = window.setInterval(function () {
+      if (value >= 100) { finish(what); return; }
+      value = Math.min(100, value + STEPS[step % STEPS.length]);
+      step += 1;
+      host.setAttribute('value', String(value));
+      var tenth = Math.floor(value / 10) * 10;
+      if (tenth !== told && value < 100) { told = tenth; say('Đang tải xuống ' + what + ', ' + tenth + ' phần trăm'); }
+    }, INTERVAL);
+  });
+
+  new MutationObserver(reset).observe(link, { attributes: true, attributeFilter: ['href'] });
+  viewer.addEventListener('close', reset);
+})();</script>
+<script src="topic-bar.js"></script>
 </body>
 </html>

@@ -1,0 +1,118 @@
+/* =====================================================================
+   <ui-menu-close-morph> — ba thanh của nút menu dịch lại và xoay thành dấu chéo đóng (chủ dự án mô tả 2026-10-29).
+   Phần tử là cái hộp mà nút nằm trong; ba thuộc tính tuỳ biến đặt TRÊN PHẦN TỬ (không đặt ở cha): --mc-size (cỡ biểu tượng), --mc-duration
+   (một lần đổi kéo dài bao lâu) và --mc-ease (đường cong). Mọi thay đổi là transition CSS trên các thanh; JS (menu-close-morph.js) chỉ thêm
+   biểu tượng và ghi state / data-enhanced. Không có phần "skin" nút: nút là của trang, biểu tượng vẽ bằng màu chữ của nút.
+   ===================================================================== */
+ui-menu-close-morph {
+  --mc-size: 24px;
+  --mc-duration: 320ms;
+  --mc-ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+
+  display: inline-grid;
+}
+
+/* Biểu tượng là một hình 24 × 24, nét theo màu chữ nên đi theo nút (rê chuột, bảng màu cưỡng bức). Không bao giờ là đích của con trỏ:
+   mọi lần bấm rơi vào nút. */
+.mc__icon {
+  display: block;
+  flex: none;
+  inline-size: var(--mc-size);
+  block-size: var(--mc-size);
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  pointer-events: none;
+}
+
+/* Mỗi thanh là một line, quay quanh chính giữa của nó; tâm quay viết bằng đơn vị của hình (không để hộp của line, vốn không có chiều cao, quyết định). */
+.mc__bar {
+  translate: 0 0;
+  rotate: 0deg;
+  transform-box: view-box;
+}
+
+.mc__bar--top {
+  transform-origin: 12px 7px;
+}
+
+.mc__bar--mid {
+  transform-origin: 12px 12px;
+}
+
+.mc__bar--bot {
+  transform-origin: 12px 17px;
+}
+
+/* Dấu chéo: hai thanh ngoài về giữa và xoay 45°, thanh giữa biến mất. Xoay trước, dịch sau (translate rồi rotate trong CSS), nên dịch nằm trên
+   trục của hình: thanh dài 16 xoay 45° chạm 5,657 mỗi phía, hai cánh chạy (6,343; 6,343)→(17,657; 17,657) và (6,343; 17,657)→(17,657; 6,343). */
+ui-menu-close-morph[state="close"] .mc__bar--top {
+  translate: 0 5px;
+  rotate: 45deg;
+}
+
+ui-menu-close-morph[state="close"] .mc__bar--mid {
+  opacity: 0;
+}
+
+ui-menu-close-morph[state="close"] .mc__bar--bot {
+  translate: 0 -5px;
+  rotate: -45deg;
+}
+
+/* Trước khi script chạy không khai báo transition nào, nên trạng thái có sẵn lúc nối vào hiện ngay. Thanh giữa được trả lại muộn, khi hai thanh ngoài
+   đã rời giữa, và đi sớm; cả hai tính bằng phần của --mc-duration nên chậm theo cùng (320ms: về menu 160ms sau 140ms, sang close 120ms). */
+ui-menu-close-morph[data-enhanced] .mc__bar--top,
+ui-menu-close-morph[data-enhanced] .mc__bar--bot {
+  transition:
+    translate var(--mc-duration) var(--mc-ease),
+    rotate var(--mc-duration) var(--mc-ease);
+}
+
+ui-menu-close-morph[data-enhanced] .mc__bar--mid {
+  transition: opacity calc(var(--mc-duration) * 0.5) ease-out calc(var(--mc-duration) * 0.4375);
+}
+
+ui-menu-close-morph[data-enhanced][state="close"] .mc__bar--mid {
+  transition: opacity calc(var(--mc-duration) * 0.375) ease-out;
+}
+
+/* Giảm chuyển động: hai hình được đổi chỗ, không có gì chạy giữa chúng. */
+@media (prefers-reduced-motion: reduce) {
+  ui-menu-close-morph .mc__bar {
+    transition: none !important;
+  }
+}
+
+/* ---------------------------------------------------------------------
+   Nút ☰ trong header của các trang ui-pages (.storefront-reference-shell).
+   Nút nay nằm trong phần tử nên luật gốc của header chọn "con trực tiếp" (.header-grid > .icon-btn) không còn khớp: các luật dưới chép lại ĐÚNG
+   các khai báo đó cho nút nằm trong phần tử. Phần tử không có hộp riêng (display: contents) để nút vẫn là phần tử flex của header-grid, nên từ
+   1280px trở lên, lúc luật gốc ẩn nút (.menu-trigger), không còn khe 24px nào chừa lại.
+   Cỡ biểu tượng giữ 24px mặc định: ba thanh dài 16 cộng đầu tròn là 18px ngang, cao 12px, y hệt ký tự Material "menu" đang dùng.
+   --------------------------------------------------------------------- */
+.storefront-reference-shell .header-grid > ui-menu-close-morph {
+  display: contents;
+}
+
+.storefront-reference-shell .header-grid > ui-menu-close-morph > .icon-btn {
+  border-color: rgba(198, 154, 43, 0.65);
+  background: rgba(255, 248, 234, 0.06);
+  color: var(--storefront-header-ink);
+  box-shadow: none;
+}
+
+.storefront-reference-shell .header-grid > ui-menu-close-morph > .icon-btn:hover,
+.storefront-reference-shell .header-grid > ui-menu-close-morph > .icon-btn:focus-visible,
+.storefront-reference-shell .header-grid > ui-menu-close-morph > .icon-btn[aria-expanded="true"] {
+  border-color: var(--storefront-header-accent-soft);
+  background: var(--storefront-header-accent);
+  color: var(--storefront-header-surface);
+  box-shadow: none;
+}
+
+.storefront-reference-shell .header-grid > ui-menu-close-morph > .icon-btn:focus-visible {
+  outline-color: var(--storefront-header-accent-soft);
+}

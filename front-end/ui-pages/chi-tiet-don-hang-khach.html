@@ -1742,7 +1742,7 @@
         status: 'shipping', placed: '10:24 12 thg 9, 2026',
         recipient: 'Nguyễn Minh Anh', phone: '0912345678', street: '12 Lê Lợi', ward: 'Phường Bến Thành', province: 'TP. Hồ Chí Minh',
         ship: { label: 'Giao tiêu chuẩn (2 – 4 ngày làm việc)', fee: 30000, carrier: 'Đối tác giao hàng tiêu chuẩn', tracking: 'VD2609124821' },
-        pay: { label: 'Chuyển khoản / quét mã QR', paid: true, note: 'Đã thanh toán' },
+        pay: { label: 'VNPAY', paid: true, note: 'Đã thanh toán' },
         items: [[P.basa, 1], [P.baongu, 1]],
         stepDates: ['10:24 12 thg 9, 2026', '10:40 12 thg 9, 2026', '09:10 13 thg 9, 2026', '14:05 15 thg 9, 2026', ''], current: 3,
         eta: { icon: 'i-truck', title: 'Đang giao hàng', desc: 'Cập nhật lúc 08:15 17 thg 9, 2026' },
@@ -1783,7 +1783,7 @@
         stepDates: ['09:02 2 thg 8, 2026', '09:15 2 thg 8, 2026', '19:30 2 thg 8, 2026'], current: -1,
         eta: { icon: 'i-close', title: 'Đơn hàng đã hủy.', desc: '' },
         events: [
-          ['Đơn hàng đã huỷ', 'Huỷ theo yêu cầu của khách hàng trước khi đóng gói. Không phát sinh thanh toán.', '19:30 · 02/08/2026', ''],
+          ['Đơn hàng đã hủy', 'Hủy theo yêu cầu của khách hàng trước khi đóng gói. Không phát sinh thanh toán.', '19:30 · 02/08/2026', ''],
           ['Đã xác nhận đơn hàng', 'Ginsengfood đã gọi xác nhận đơn thanh toán khi nhận hàng.', '09:15 · 02/08/2026', ''],
           ['Đã đặt hàng', 'Đơn hàng được tạo thành công.', '09:02 · 02/08/2026', ''],
         ],
@@ -1791,7 +1791,7 @@
     };
 
     var $ = function (id) { return document.getElementById(id); };
-    function money(n) { return n.toLocaleString('vi-VN') + '\u00a0₫'; }
+    function money(n) { return n.toLocaleString('vi-VN') + 'đ'; }
     function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
     function maskPhone(p) { return p.slice(0, 3) + '••••' + p.slice(-2); }
     var toast = $('toast'), toastTimer = 0;
@@ -1838,7 +1838,7 @@
       steps = [
         { label: 'Đã đặt hàng', icon: 'i-check', cls: 'is-done', date: o.stepDates[0] },
         { label: 'Đã xác nhận', icon: 'i-check', cls: 'is-done', date: o.stepDates[1] },
-        { label: 'Đã huỷ', icon: 'i-close', cls: 'is-cancel', date: o.stepDates[2] },
+        { label: 'Đã hủy', icon: 'i-close', cls: 'is-cancel', date: o.stepDates[2] },
       ];
     } else {
       steps = STEP_LABELS.map(function (label, i) {
@@ -1858,7 +1858,7 @@
       ? '<div><p class="carrier__k">Đơn vị vận chuyển</p><p class="carrier__v">' + esc(o.ship.carrier) + '</p></div>'
         + '<div><p class="carrier__k">Mã vận đơn</p><div class="carrier__track"><p class="carrier__v">' + esc(o.ship.tracking) + '</p>'
         + '<button type="button" class="copy" id="odCopyTrack" aria-label="Sao chép mã vận đơn" title="Sao chép mã vận đơn"><svg class="icon" aria-hidden="true"><use href="#i-copy"/></svg></button></div></div>'
-      : '<div><p class="carrier__k">Đơn vị vận chuyển</p><p class="carrier__v">Chưa tạo vận đơn (đơn đã huỷ trước khi bàn giao)</p></div>';
+      : '<div><p class="carrier__k">Đơn vị vận chuyển</p><p class="carrier__v">Chưa tạo vận đơn (đơn đã hủy trước khi bàn giao)</p></div>';
     if ($('odCopyTrack')) $('odCopyTrack').addEventListener('click', function () { copyText(o.ship.tracking, function () { notify('Đã sao chép mã vận đơn'); }); });
 
     /* Dòng thời gian: hiện 4 mốc mới nhất, bấm để xem toàn bộ */
@@ -1908,8 +1908,8 @@
     /* Thanh toán */
     $('odPay').innerHTML = '<div><dt>Phương thức</dt><dd>' + esc(o.pay.label) + '<span class="paid ' + (o.pay.paid ? 'paid--yes' : 'paid--no') + '">' + esc(o.pay.note) + '</span></dd></div>';
     var total = sub + o.ship.fee;
-    $('odTotals').innerHTML = '<div><dt>Tiền hàng</dt><dd>' + money(sub) + '</dd></div>'
-      + '<div><dt>Giảm giá</dt><dd>' + (save ? '-' : '') + money(save) + '</dd></div>'
+    $('odTotals').innerHTML = '<div><dt>Tiền hàng</dt><dd>' + money(sub + save) + '</dd></div>'
+      + '<div><dt>Giảm giá</dt><dd>' + (save ? '\u2212' : '') + money(save) + '</dd></div>'
       + '<div><dt>Phí giao hàng</dt><dd>' + money(o.ship.fee) + '</dd></div>'
       + '<div class="totals__grand"><dt>Thành tiền</dt><dd>' + money(total) + '</dd></div>';
 

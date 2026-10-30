@@ -1,0 +1,120 @@
+/* =====================================================================
+   <ui-icon-draw> — họ biểu tượng "vẽ nét" đi cùng <ui-trend-draw> (trend-draw.css): cùng công thức chuyển động, chỉ khác hình (chủ dự án chọn
+   hai phương án 1A và 2A ngày 2026-10-29). Thuộc tính kind chọn hình:
+   · link   — hai mắt xích lúc nghỉ rời nhau 2,4 đơn vị theo đường chéo; ở state="drawn" cùng trượt vào, hơi vọt quá chỗ khớp rồi về đúng chỗ.
+   · camera — thân máy quay luôn có; ống kính mờ được vẽ đủ mực từ trái sang, rồi chấm ghi hình bật ra giữa thân (hơi vọt quá cỡ rồi về đúng 1).
+   Mọi thay đổi là transition CSS — không @keyframes, không animation, không timer. Tệp đi kèm: icon-draw.js.
+   ===================================================================== */
+ui-icon-draw {
+  --id-size: 24px;
+  --id-duration: 1000ms;
+  --id-ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --id-pop: cubic-bezier(0.34, 1.56, 0.64, 1);
+  /* Mắt xích lao vào: xuất phát chậm, vọt qua chỗ khớp khoảng 0,7 đơn vị rồi quay về đúng 0. */
+  --id-snap: cubic-bezier(0.6, 0, 0.3, 2);
+  /* Mỗi mắt xích lúc nghỉ lệch khỏi chỗ khớp bấy nhiêu theo cả hai trục, ngược chiều nhau (đơn vị của hình 24, co giãn theo --id-size). */
+  --id-hook: 2.4px;
+
+  display: inline-grid;
+}
+
+/* Hình vẽ trong hộp 24: một màu theo chữ, nét 2, đầu nét và góc tròn; không bao giờ là đích của con trỏ. Thân máy quay (.id__body) không có luật
+   riêng: cùng màu mực của biểu tượng, luôn được vẽ ở cả hai trạng thái. */
+.id__icon {
+  display: block;
+  flex: none;
+  inline-size: var(--id-size);
+  block-size: var(--id-size);
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  pointer-events: none;
+}
+
+/* Nét "sẽ được vẽ": cùng đường, cùng màu mực, chỉ mờ đi, luôn hiện. */
+.id__ghost {
+  stroke-opacity: 0.25;
+}
+
+/* Nét được vẽ là MỘT path pathLength="1". Nét đứt dài 1 dời tới 1,02 nằm hẳn trước điểm đầu đường và khe 2 dài hơn cả đường nên không vẽ gì,
+   cũng không để lại chấm ở đầu nét tròn. Về 0 thì nét đứt phủ cả đường, từ trái sang. */
+.id__line {
+  stroke-dasharray: 1 2;
+  stroke-dashoffset: 1.02;
+}
+
+/* Chấm ghi hình: lúc nghỉ không thấy và nhỏ hơn lúc đã vào; lớn lên quanh đúng tâm của nó. */
+.id__dot {
+  fill: currentColor;
+  stroke: none;
+  transform-box: fill-box;
+  transform-origin: center;
+  opacity: 0;
+  scale: 0.6;
+}
+
+/* Hai mắt xích lúc nghỉ: mỗi mắt lệch khỏi chỗ khớp một đoạn --id-hook theo đường chéo, ngược chiều nhau. */
+.id__hook--a {
+  translate: var(--id-hook) calc(var(--id-hook) * -1);
+}
+
+.id__hook--b {
+  translate: calc(var(--id-hook) * -1) var(--id-hook);
+}
+
+ui-icon-draw[state="drawn"] .id__line {
+  stroke-dashoffset: 0;
+}
+
+ui-icon-draw[state="drawn"] .id__dot {
+  opacity: 1;
+  scale: 1;
+}
+
+ui-icon-draw[state="drawn"] .id__hook {
+  translate: 0 0;
+}
+
+/* Chưa chạy script thì chưa khai báo transition nào, nên trạng thái có sẵn lúc nối vào trang hiện ngay. Thời gian là phần của --id-duration để
+   chế độ chậm giữ nguyên hình dạng chuyển động; transition lấy thời gian từ kiểu nó ĐI TỚI. Đây là đường về `flat`: chấm đi trước (mờ 0,2 và nhỏ 0,2),
+   nét rút về trong 0,5 sau 0,1, mắt xích tách ra trong 0,5 sau 0,1. */
+ui-icon-draw[data-enhanced] .id__line {
+  transition: stroke-dashoffset calc(var(--id-duration) * 0.5) var(--id-ease) calc(var(--id-duration) * 0.1);
+}
+
+ui-icon-draw[data-enhanced] .id__dot {
+  transition:
+    opacity calc(var(--id-duration) * 0.2) var(--id-ease),
+    scale calc(var(--id-duration) * 0.2) var(--id-ease);
+}
+
+ui-icon-draw[data-enhanced] .id__hook {
+  transition: translate calc(var(--id-duration) * 0.5) var(--id-ease) calc(var(--id-duration) * 0.1);
+}
+
+/* Đường tới `drawn`: nét được vẽ trong 0,7; chấm vào đúng lúc nét xong — mờ trong 0,2 và lớn trong 0,3, đều sau 0,6 (cỡ chạy theo đường cong hơi
+   vọt nên chấm lớn hơn 1 một thoáng rồi về đúng 1); mắt xích trượt vào trong 0,8 sau 0,1 theo --id-snap. */
+ui-icon-draw[data-enhanced][state="drawn"] .id__line {
+  transition: stroke-dashoffset calc(var(--id-duration) * 0.7) var(--id-ease);
+}
+
+ui-icon-draw[data-enhanced][state="drawn"] .id__dot {
+  transition:
+    opacity calc(var(--id-duration) * 0.2) var(--id-ease) calc(var(--id-duration) * 0.6),
+    scale calc(var(--id-duration) * 0.3) var(--id-pop) calc(var(--id-duration) * 0.6);
+}
+
+ui-icon-draw[data-enhanced][state="drawn"] .id__hook {
+  transition: translate calc(var(--id-duration) * 0.8) var(--id-snap) calc(var(--id-duration) * 0.1);
+}
+
+/* Giảm chuyển động: hai hình được đổi chỗ, không có gì chạy giữa chúng. Cần !important vì luật chung của trang cũng đặt transition-duration. */
+@media (prefers-reduced-motion: reduce) {
+  ui-icon-draw .id__line,
+  ui-icon-draw .id__dot,
+  ui-icon-draw .id__hook {
+    transition: none !important;
+  }
+}

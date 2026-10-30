@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="description" content="Danh mục sản phẩm Ginsengfood: ba nhóm Cháo Sâm sấy thăng hoa – Theo Mùa, Chức Năng, Bổ Dưỡng. Giá minh bạch, truy xuất theo lô sản xuất.">
+  <meta name="description" content="Danh mục sản phẩm Ginsengfood: ba nhóm Cháo Sâm sấy thăng hoa – theo mùa, theo yêu cầu, bổ dưỡng. Giá minh bạch, truy xuất theo lô sản xuất.">
   <meta name="theme-color" content="#072A4E">
-  <title>Sản phẩm Ginsengfood – Cháo Sâm</title>
+  <title>Ginsengfood – Nhóm sản phẩm Cháo Sâm</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -65,7 +65,7 @@
       --sticky-h: 70px;
 
       --cat-accent: #3E7149; --cat-surface: #F2F7EF;
-      --catbar-h: 55px; /* giá trị gần đúng cho lần vẽ đầu; JS đo chiều cao thật của dải nhãn rồi ghi đè */
+      --grpbar-h: 55px; /* giá trị gần đúng cho lần vẽ đầu; JS đo chiều cao thật của dải nhãn rồi ghi đè */
     }
     /* Màu phân nhóm sản phẩm — mục 4.3 */
     [data-collection="seasonal"]   { --cat-accent: #3E7149; --cat-surface: #F2F7EF; }
@@ -234,35 +234,35 @@
     /* Dải nhóm sản phẩm dính dưới header, theo thanh "Nhóm sản phẩm" ở trang chủ storefront: chữ "Nhóm sản phẩm:" + một nhãn cho mỗi nhóm đang bán.
        Mỗi nhãn một màu theo thứ tự nhóm (data-hue: nền nhạt, viền vừa, chữ đậm cùng sắc); nhãn của nhóm đang xem (aria-current, do JS)
        đổi sang nền đặc, chữ trắng. Bấm một nhãn chỉ cuộn tới nhóm đó. Điện thoại (≤767px) thu thành nút mở bảng nhãn.
-       Chiều cao thật của dải do JS ghi vào --catbar-h để chừa lề cuộn. */
-    .catbar {
+       Chiều cao thật của dải do JS ghi vào --grpbar-h để chừa lề cuộn. */
+    .grpbar {
       position: sticky; top: var(--header-h); z-index: 80; margin-bottom: 44px;
       padding: 6px 0; display: flex; align-items: center; background: var(--gf-cream); border-bottom: 1px solid var(--gf-border);
     }
-    .catbar__inner { display: flex; align-items: flex-start; gap: 8px; width: 100%; min-width: 0; }
-    .catbar__toggle { display: none; } /* nút mở bảng nhãn chỉ dùng trên điện thoại, xem ≤767px */
-    .catbar__label { flex: 0 0 auto; display: flex; align-items: center; min-height: 36px; margin-left: 24px; font-size: 13.5px; font-weight: 600; color: var(--gf-muted); white-space: nowrap; }
-    .catbar__tabs { flex: 1 1 auto; min-width: 0; display: flex; flex-wrap: wrap; gap: 6px 5px; }
-    .catbar__tabs a {
+    .grpbar__inner { display: flex; align-items: flex-start; gap: 8px; width: 100%; min-width: 0; }
+    .grpbar__toggle { display: none; } /* nút mở bảng nhãn chỉ dùng trên điện thoại, xem ≤767px */
+    .grpbar__label { flex: 0 0 auto; display: flex; align-items: center; min-height: 36px; margin-left: 24px; font-size: 13.5px; font-weight: 600; color: var(--gf-muted); white-space: nowrap; }
+    .grpbar__tabs { flex: 1 1 auto; min-width: 0; display: flex; flex-wrap: wrap; gap: 6px 5px; }
+    .grpbar__tabs a {
       flex: 0 0 auto; display: inline-flex; align-items: center; min-height: 36px; padding: 0 10px;
       font-size: 13px; font-weight: 600; white-space: nowrap; color: var(--chip-ink, var(--gf-text));
       border-radius: var(--radius-pill); background: var(--chip-bg, #fff); border: 1px solid var(--chip-border, var(--gf-border));
       transition: background var(--motion-base) var(--ease-standard), border-color var(--motion-base) var(--ease-standard), box-shadow var(--motion-base) var(--ease-standard);
     }
-    .catbar__tabs a:hover { border-color: var(--chip-ink, var(--gf-navy-700)); box-shadow: 0 3px 10px -4px var(--chip-ink, transparent); }
-    .catbar__tabs a[aria-current="true"] { border-color: var(--chip-ink, var(--gf-navy)); background: var(--chip-ink, var(--gf-navy)); color: #fff; }
-    .catbar__tabs a:focus-visible { border-radius: var(--radius-pill); }
-    .catbar__tabs a[data-hue="0"] { --chip-bg: #E8EEF8; --chip-border: #A9BEDC; --chip-ink: #10305F; }
-    .catbar__tabs a[data-hue="1"] { --chip-bg: #E6F3EA; --chip-border: #9FCBAB; --chip-ink: #1F5030; }
-    .catbar__tabs a[data-hue="2"] { --chip-bg: #F8EAE3; --chip-border: #E1B8A5; --chip-ink: #7A3A22; }
+    .grpbar__tabs a:hover { border-color: var(--chip-ink, var(--gf-navy-700)); box-shadow: 0 3px 10px -4px var(--chip-ink, transparent); }
+    .grpbar__tabs a[aria-current="true"] { border-color: var(--chip-ink, var(--gf-navy)); background: var(--chip-ink, var(--gf-navy)); color: #fff; }
+    .grpbar__tabs a:focus-visible { border-radius: var(--radius-pill); }
+    .grpbar__tabs a[data-hue="0"] { --chip-bg: #E8EEF8; --chip-border: #A9BEDC; --chip-ink: #10305F; }
+    .grpbar__tabs a[data-hue="1"] { --chip-bg: #E6F3EA; --chip-border: #9FCBAB; --chip-ink: #1F5030; }
+    .grpbar__tabs a[data-hue="2"] { --chip-bg: #F8EAE3; --chip-border: #E1B8A5; --chip-ink: #7A3A22; }
 
     /* =====================================================================
        8. NHÓM SẢN PHẨM VÀ LƯỚI CARD (mục 14.1, 14.3)
        ===================================================================== */
     /* Mọi nhóm đổ hết ra trang, xếp dọc; mỗi nhóm là một dải trượt ngang (cuộn, kéo chuột hoặc nút ‹ ›) như khu nhóm sản phẩm ở trang chủ storefront.
-       Chừa lề cuộn cho header dính + dải nhóm dính (--catbar-h do JS đo) */
+       Chừa lề cuộn cho header dính + dải nhóm dính (--grpbar-h do JS đo) */
     .collections { display: flex; flex-direction: column; gap: 44px; line-height: 1.5; }
-    .collection { scroll-margin-top: calc(var(--header-h) + var(--catbar-h) + 16px); }
+    .collection { scroll-margin-top: calc(var(--header-h) + var(--grpbar-h) + 16px); }
     .collection__head { display: flex; align-items: flex-end; justify-content: space-between; gap: 20px; }
     .collection__order { display: inline-flex; align-items: center; gap: 10px; font-size: 12px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--cat-accent); }
     .collection__order::before { content: ""; width: 22px; height: 2px; background: var(--cat-accent); }
@@ -352,7 +352,7 @@
     }
 
     @media (max-width: 767px) {
-      :root { --gutter: 16px; --header-h: 64px; --catbar-h: 48px; }
+      :root { --gutter: 16px; --header-h: 64px; --grpbar-h: 48px; }
       body { padding-bottom: calc(var(--sticky-h) + env(safe-area-inset-bottom)); }
       .section { padding-bottom: 26px; }
 
@@ -361,23 +361,23 @@
       .cathero { padding: 12px 0 20px; }
       .cathero__title { font-size: 27px; }
       .cathero__lead { font-size: 14.5px; }
-      .catbar { height: 48px; padding: 0; margin-bottom: 32px; }
-      .catbar__toggle {
+      .grpbar { height: 48px; padding: 0; margin-bottom: 32px; }
+      .grpbar__toggle {
         display: flex; align-items: center; gap: 8px; width: 100%; min-height: 36px; padding: 0 12px 0 14px;
         border: 1px solid var(--gf-border); border-radius: var(--radius-pill); background: #fff; color: var(--gf-text); text-align: left;
       }
-      .catbar__toggle-label { flex: 0 0 auto; font-size: 12.5px; font-weight: 600; color: var(--gf-muted); }
-      .catbar__toggle-value { flex: 1 1 auto; min-width: 0; font-size: 13px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-      .catbar__toggle .icon { width: 18px; height: 18px; color: var(--gf-navy); transition: transform var(--motion-base) var(--ease-standard); }
-      .catbar.is-open .catbar__toggle .icon { transform: rotate(180deg); }
-      .catbar__toggle:focus-visible { border-radius: var(--radius-pill); }
-      .catbar__label { display: none; }
-      .catbar__tabs {
+      .grpbar__toggle-label { flex: 0 0 auto; font-size: 12.5px; font-weight: 600; color: var(--gf-muted); }
+      .grpbar__toggle-value { flex: 1 1 auto; min-width: 0; font-size: 13px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+      .grpbar__toggle .icon { width: 18px; height: 18px; color: var(--gf-navy); transition: transform var(--motion-base) var(--ease-standard); }
+      .grpbar.is-open .grpbar__toggle .icon { transform: rotate(180deg); }
+      .grpbar__toggle:focus-visible { border-radius: var(--radius-pill); }
+      .grpbar__label { display: none; }
+      .grpbar__tabs {
         position: absolute; left: 0; right: 0; top: 100%; display: none; flex-wrap: wrap; justify-content: flex-start; gap: 8px;
         padding: 10px var(--gutter) 14px; background: var(--gf-cream); border-bottom: 1px solid var(--gf-border); box-shadow: 0 16px 28px -18px rgba(16, 48, 95, .35);
       }
-      .catbar.is-open .catbar__tabs { display: flex; }
-      .catbar__tabs a { min-height: 38px; padding: 0 12px; }
+      .grpbar.is-open .grpbar__tabs { display: flex; }
+      .grpbar__tabs a { min-height: 38px; padding: 0 12px; }
       .collections { gap: 32px; }
 
       .cards { gap: 12px; }
@@ -1441,6 +1441,308 @@ html { scrollbar-gutter: stable; }
   .storefront-reference-shell .mobile-nav > * { animation: none !important; }
 }
 </style>
+<style id="home-header-fit">
+/* Thêm mục "Khởi nghiệp cùng Ssavigroup" làm menu có sáu mục, rộng 773px (chữ 15px, khe 16px). Khung header từ 1280px trở lên chỉ có
+   1240px nội dung nên menu đè lên cụm nút bên phải: 21px ở 1280px, 159px từ 1440px (khi ô tìm kiếm 208px nằm ngang).
+   Từ 1280px: chữ menu 15 → 14px, khe 16 → 12px (menu còn 707px, chừa tối thiểu 45px so với cụm nút bên phải).
+   Từ 1440px: ô tìm kiếm quay về nút kính lúp + bảng thả như dải 1280–1439px (dùng lại đúng mã #searchToggle có sẵn). */
+@media (min-width: 1280px) {
+  .storefront-reference-shell .desktop-nav { gap: 12px; }
+  .storefront-reference-shell .desktop-nav > a { font-size: 14px; }
+}
+@media (min-width: 1440px) {
+  .storefront-reference-shell .search-region,
+  .storefront-reference-shell .search-region.open,
+  .storefront-reference-shell .search-region.is-open {
+    position: absolute;
+    right: 0;
+    left: 0;
+    width: auto;
+    flex: 0 1 auto;
+  }
+  .storefront-reference-shell .search-inner { display: grid; padding: 12px 40px 16px; }
+  .storefront-reference-shell .search-box { height: auto; min-height: 44px; }
+  .storefront-reference-shell .search-box input { font-size: 15px; }
+  .storefront-reference-shell .reference-search-dropdown { right: 0; left: 0; width: auto; }
+  .storefront-reference-shell #searchToggle { display: flex; }
+}
+</style>
+<!-- search-motion: hiệu ứng mở/đóng thanh tìm kiếm như trang chủ khách (chép từ trang-chu.html, 2026-10-21), đặt NGOÀI khối gf-shell:css để lớp vỏ dùng chung giữ nguyên -->
+<style id="home-search-motion">
+/* Trước đây bảng tìm kiếm chỉ đổi display none → block nên hiện ra trong đúng một khung hình (kèm cả ô gợi ý), và khoá cuộn làm thanh
+   cuộn biến mất nên cả header nhảy ngang ~8px (Windows có thanh cuộn thật). Bây giờ:
+   · nền navy trải xuống từ mép dưới header (scaleY, 260ms + --ease-entrance có sẵn của trang), bóng đổ hiện dần;
+   · ô tìm kiếm trôi xuống nhẹ + hiện dần (trễ 60ms), khung gợi ý hiện sau cùng (trễ 120ms); đóng thì nhanh hơn và không so le;
+   · chỉ dùng transform/opacity (chạy trên GPU), không đổi chiều cao nên không kéo bố cục;
+   · html giữ chỗ thanh cuộn (scrollbar-gutter) để khoá cuộn không làm trang nhảy ngang;
+   · bật "giảm chuyển động" thì hiện/ẩn tức thì như cũ. Luôn display:block, ẩn bằng visibility để chuyển động được. */
+html { scrollbar-gutter: stable; }
+
+.storefront-reference-shell .search-region,
+.storefront-reference-shell .search-region.open,
+.storefront-reference-shell .search-region.is-open {
+  display: block;
+  border-top: 1px solid transparent;
+  background: none;
+  box-shadow: none;
+}
+.storefront-reference-shell .search-region {
+  visibility: hidden;
+  pointer-events: none;
+  transition: visibility 0s linear 240ms;
+}
+.storefront-reference-shell .search-region.open,
+.storefront-reference-shell .search-region.is-open {
+  visibility: visible;
+  pointer-events: auto;
+  transition-delay: 0s;
+}
+
+/* Nền navy + vạch vàng mảnh (::before) trải xuống từ mép header; bóng đổ (::after) hiện dần riêng để không bị cắt cứng. */
+.storefront-reference-shell .search-region::before,
+.storefront-reference-shell .search-region::after {
+  content: "";
+  position: absolute;
+  top: -1px;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  pointer-events: none;
+}
+.storefront-reference-shell .search-region::before {
+  z-index: -1;
+  border-top: 1px solid rgba(198, 154, 43, 0.4);
+  background: var(--storefront-header-surface);
+  transform: scaleY(0);
+  transform-origin: top center;
+  transition: transform var(--motion-base) var(--ease-standard) 40ms;
+}
+.storefront-reference-shell .search-region::after {
+  z-index: -2;
+  box-shadow: 0 18px 32px rgba(7, 42, 78, 0.3);
+  opacity: 0;
+  transition: opacity var(--motion-base) var(--ease-standard);
+}
+.storefront-reference-shell .search-region.open::before,
+.storefront-reference-shell .search-region.is-open::before {
+  transform: none;
+  transition: transform var(--motion-medium) var(--ease-entrance);
+}
+.storefront-reference-shell .search-region.open::after,
+.storefront-reference-shell .search-region.is-open::after {
+  opacity: 1;
+  transition: opacity var(--motion-medium) var(--ease-standard) 60ms;
+}
+
+/* Ô tìm kiếm: trôi xuống nhẹ + hiện dần, trễ 60ms sau nền. */
+.storefront-reference-shell .search-inner {
+  opacity: 0;
+  transform: translateY(-8px);
+  transition: opacity var(--motion-fast) var(--ease-standard), transform var(--motion-base) var(--ease-standard);
+}
+.storefront-reference-shell .search-region.open .search-inner,
+.storefront-reference-shell .search-region.is-open .search-inner {
+  opacity: 1;
+  transform: none;
+  transition: opacity var(--motion-medium) var(--ease-standard) 60ms, transform 320ms var(--ease-entrance) 60ms;
+}
+
+/* Khung gợi ý (hiện khi ô nhập có tiêu điểm): hiện sau cùng. */
+.storefront-reference-shell .reference-search-dropdown {
+  display: block;
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(-6px);
+  pointer-events: none;
+  transition: opacity var(--motion-fast) var(--ease-standard), transform var(--motion-base) var(--ease-standard), visibility 0s linear var(--motion-base);
+}
+.storefront-reference-shell .reference-search-form:focus-within .reference-search-dropdown {
+  visibility: inherit;
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+  transition: opacity var(--motion-medium) var(--ease-standard) 120ms, transform 320ms var(--ease-entrance) 120ms, visibility 0s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .storefront-reference-shell .search-region,
+  .storefront-reference-shell .search-region::before,
+  .storefront-reference-shell .search-region::after,
+  .storefront-reference-shell .search-inner,
+  .storefront-reference-shell .reference-search-dropdown { transition: none !important; }
+}
+</style>
+<!-- guest-cta: nút "Đăng ký" của khách ở header như trang chủ khách (chép từ trang-chu.html, 2026-10-21), đặt NGOÀI khối gf-shell:css để lớp vỏ dùng chung giữ nguyên -->
+<style id="home-guest-cta">
+/* Nút "Đăng ký" của khách ở header (chủ dự án yêu cầu 2026-10-20: gộp icon người và chữ "Đăng ký" thành MỘT nút, làm nổi bật hơn).
+   Trước đây nút trong suốt, chỉ có icon + chữ màu ngà nên đọc ra như hai thứ rời nhau và chìm giữa các nút tròn viền vàng. Bây giờ:
+   · một viên thuốc vàng đặc, icon người và chữ nằm chung trong nút, cùng màu navy #072A4E (tương phản từ 6:1 trên phần vàng đậm nhất của nút, #CDA130);
+   · nổi lên nhờ quầng sáng vàng quanh nút; cứ 6 giây một lượt: vệt sáng chéo lướt qua nút rồi một vòng viền vàng mảnh lan ra mờ dần;
+   · rê chuột hoặc dùng bàn phím: nút nâng nhẹ, sáng hơn, quầng sáng đậm hơn, icon nhích lên; nhấn: nhún xuống;
+   · bật "giảm chuyển động": chỉ còn nút tĩnh, không vệt sáng, không vòng viền, không nâng khi rê;
+   · dưới 1280px nút nằm trong menu mở ra (bảng nền sáng): cùng kiểu, rộng hết bảng (tối đa 360px), cao 48px, chữ 16px.
+   Không đổi mã HTML của lớp vỏ: chỉ ghi đè style của .header-guest-btn (cả hai bản: hàng header và menu điện thoại). */
+.storefront-reference-shell .storefront-header .header-account-slot .diamond-member-btn.header-member-btn.header-guest-btn {
+  --guest-cta-ring: rgba(240, 214, 138, 0.95);
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-height: 42px;
+  padding: 0 17px 0 13px;
+  border: 0;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #F6E3A5 0%, #E8C979 46%, #CDA130 100%);
+  background-color: #E8C979;
+  color: #072A4E;
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: 0.01em;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.42);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.7),
+    inset 0 -2px 0 rgba(139, 98, 12, 0.26),
+    0 7px 16px -6px rgba(198, 154, 43, 0.8),
+    0 0 22px rgba(232, 201, 121, 0.3);
+  filter: none;
+  transition: transform 180ms cubic-bezier(0.2, 0.74, 0.18, 1), box-shadow 180ms cubic-bezier(0.2, 0.74, 0.18, 1), filter 180ms cubic-bezier(0.2, 0.74, 0.18, 1);
+}
+.storefront-reference-shell .storefront-header .header-account-slot .diamond-member-btn.header-member-btn.header-guest-btn:hover,
+.storefront-reference-shell .storefront-header .header-account-slot .diamond-member-btn.header-member-btn.header-guest-btn:focus-visible {
+  background: linear-gradient(180deg, #F6E3A5 0%, #E8C979 46%, #CDA130 100%);
+  background-color: #E8C979;
+  color: #072A4E;
+  transform: translateY(-1px);
+  filter: brightness(1.07) saturate(1.05);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.8),
+    inset 0 -2px 0 rgba(139, 98, 12, 0.24),
+    0 10px 20px -6px rgba(198, 154, 43, 0.9),
+    0 0 30px rgba(232, 201, 121, 0.45);
+}
+.storefront-reference-shell .storefront-header .header-account-slot .diamond-member-btn.header-member-btn.header-guest-btn:active {
+  transform: translateY(0) scale(0.97);
+}
+
+/* Icon người: bỏ ô tròn viền navy của menu điện thoại, đặt thẳng trên nền vàng, nét đặc cho dễ đọc. */
+.storefront-reference-shell .storefront-header .header-account-slot .diamond-member-btn.header-member-btn.header-guest-btn .material-symbols-outlined {
+  display: inline-flex;
+  flex: 0 0 auto;
+  width: auto;
+  height: auto;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  color: currentcolor;
+  filter: none;
+  font-size: 20px;
+  font-variation-settings: "FILL" 1, "wght" 600, "GRAD" 0, "opsz" 20;
+  transition: transform 180ms cubic-bezier(0.2, 0.74, 0.18, 1);
+}
+.storefront-reference-shell .storefront-header .header-account-slot .diamond-member-btn.header-member-btn.header-guest-btn:hover .material-symbols-outlined,
+.storefront-reference-shell .storefront-header .header-account-slot .diamond-member-btn.header-member-btn.header-guest-btn:focus-visible .material-symbols-outlined {
+  transform: translateY(-1px) scale(1.1);
+}
+.storefront-reference-shell .storefront-header .header-account-slot .diamond-member-btn.header-member-btn.header-guest-btn .header-member-label {
+  font: inherit;
+  letter-spacing: inherit;
+}
+
+/* Vệt sáng chéo (::before) và vòng viền lan ra (::after); đứng yên khi chưa bật chuyển động. */
+.storefront-reference-shell .storefront-header .header-account-slot .diamond-member-btn.header-member-btn.header-guest-btn::before {
+  content: "";
+  display: block;
+  position: absolute;
+  inset: 0;
+  width: auto;
+  height: auto;
+  border-radius: inherit;
+  pointer-events: none;
+  transform: none;
+  background: linear-gradient(105deg, rgba(255, 255, 255, 0) 42%, rgba(255, 255, 255, 0.85) 50%, rgba(255, 255, 255, 0) 58%) 0 0 / 300% 100% no-repeat;
+  animation: none;
+}
+.storefront-reference-shell .storefront-header .header-account-slot .diamond-member-btn.header-member-btn.header-guest-btn::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  outline: 2px solid transparent;
+  outline-offset: 0;
+}
+@keyframes guestCtaShine {
+  0% { background-position: 0% 0; }
+  22%, 100% { background-position: 100% 0; }
+}
+@keyframes guestCtaPulse {
+  0%, 18% { outline-color: transparent; outline-offset: 0; }
+  20% { outline-color: var(--guest-cta-ring); outline-offset: 0; }
+  46%, 100% { outline-color: transparent; outline-offset: 12px; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .storefront-reference-shell .storefront-header .header-account-slot .diamond-member-btn.header-member-btn.header-guest-btn::before { animation: guestCtaShine 6s ease-in-out 0.9s infinite; }
+  .storefront-reference-shell .storefront-header .header-account-slot .diamond-member-btn.header-member-btn.header-guest-btn::after { animation: guestCtaPulse 6s ease-out 0.9s infinite; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .storefront-reference-shell .storefront-header .header-account-slot .diamond-member-btn.header-member-btn.header-guest-btn:hover,
+  .storefront-reference-shell .storefront-header .header-account-slot .diamond-member-btn.header-member-btn.header-guest-btn:focus-visible,
+  .storefront-reference-shell .storefront-header .header-account-slot .diamond-member-btn.header-member-btn.header-guest-btn:active { transform: none; }
+  .storefront-reference-shell .storefront-header .header-account-slot .diamond-member-btn.header-member-btn.header-guest-btn:hover .material-symbols-outlined,
+  .storefront-reference-shell .storefront-header .header-account-slot .diamond-member-btn.header-member-btn.header-guest-btn:focus-visible .material-symbols-outlined { transform: none; }
+}
+
+/* 1280–1439px: menu chính chiếm nhiều chỗ hơn nên thu đệm nút để còn khe thở giữa menu và cụm nút bên phải. */
+@media (min-width: 1280px) and (max-width: 1439px) {
+  .storefront-reference-shell .storefront-header .header-account-slot .diamond-member-btn.header-member-btn.header-guest-btn {
+    gap: 6px;
+    padding: 0 14px 0 11px;
+  }
+}
+
+/* Dưới 1280px: nút nằm trong menu mở ra (nền sáng) nên bỏ quầng sáng, vòng viền đậm hơn, nút rộng hết bảng và cao 48px. */
+@media (max-width: 1279px) {
+  .storefront-reference-shell .storefront-header .mobile-nav-actions .header-account-slot .diamond-member-btn.header-member-btn.header-guest-btn {
+    --guest-cta-ring: rgba(198, 154, 43, 0.9);
+    width: 100%;
+    max-width: 360px;
+    min-height: 48px;
+    gap: 10px;
+    padding: 0 22px;
+    font-size: 16px;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.7),
+      inset 0 -2px 0 rgba(139, 98, 12, 0.26),
+      0 0 0 1px rgba(198, 154, 43, 0.4),
+      0 8px 16px -8px rgba(198, 154, 43, 0.85);
+  }
+  .storefront-reference-shell .storefront-header .mobile-nav-actions .header-account-slot .diamond-member-btn.header-member-btn.header-guest-btn:hover,
+  .storefront-reference-shell .storefront-header .mobile-nav-actions .header-account-slot .diamond-member-btn.header-member-btn.header-guest-btn:focus-visible {
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.8),
+      inset 0 -2px 0 rgba(139, 98, 12, 0.24),
+      0 0 0 1px rgba(198, 154, 43, 0.55),
+      0 10px 18px -8px rgba(198, 154, 43, 0.95);
+  }
+  .storefront-reference-shell .storefront-header .mobile-nav-actions .header-account-slot .diamond-member-btn.header-member-btn.header-guest-btn:focus-visible { outline-color: #072A4E; }
+  .storefront-reference-shell .storefront-header .mobile-nav-actions .header-account-slot .diamond-member-btn.header-member-btn.header-guest-btn .material-symbols-outlined { font-size: 22px; }
+}
+
+/* Chế độ tương phản cao: bỏ nền gradient và hiệu ứng, dùng màu hệ thống để chữ luôn đọc được. */
+@media (forced-colors: active) {
+  .storefront-reference-shell .storefront-header .header-account-slot .diamond-member-btn.header-member-btn.header-guest-btn {
+    border: 1px solid ButtonText;
+    background: ButtonFace;
+    color: ButtonText;
+    box-shadow: none;
+    text-shadow: none;
+  }
+  .storefront-reference-shell .storefront-header .header-account-slot .diamond-member-btn.header-member-btn.header-guest-btn::before,
+  .storefront-reference-shell .storefront-header .header-account-slot .diamond-member-btn.header-member-btn.header-guest-btn::after { display: none; }
+}
+</style>
 <!-- gf-contact-rail:css:begin -->
 <style id="gf-contact-rail-css">
 /* Thanh liên hệ nhanh của trang chủ storefront (ReferenceFooter → .reference-social-shell). Chép từ
@@ -1754,6 +2056,7 @@ html { scrollbar-gutter: stable; }
 .storefront-reference-shell .nav-sub__note { display: block; margin-top: 2px; font-size: 13px; font-weight: 500; line-height: 1.4; color: #667085; }
 .storefront-reference-shell .mobile-nav > a.mobile-sub { min-height: 44px; padding-left: 36px; font-size: 15px; font-weight: 500; }
 .storefront-reference-shell .mobile-nav > a.mobile-sub::before { content: ""; position: absolute; top: 50%; left: 16px; width: 10px; height: 2px; border-radius: 999px; background: var(--storefront-header-gold, #C9A227); transform: translateY(-50%); }
+@media (min-width: 1280px) and (max-width: 1299px) { .storefront-reference-shell .desktop-nav { gap: 9px; } }
 </style>
 <!-- Menu ☰ phương án A (chủ dự án chọn 2026-10-23, chép từ storefrontHeaderMobileMenuCss.ts của web chính; phần cuối là bổ sung riêng của bản mẫu). Đặt cuối <head> để thắng cùng độ ưu tiên với khối gf-shell:css. -->
 <style id="gf-mobile-menu-a">
@@ -2191,6 +2494,17 @@ html { scrollbar-gutter: stable; }
     .storefront-reference-shell .mobile-nav-actions .header-member-menu-item.is-danger.is-full-md { grid-column: 1 / -1; }
   }
 </style>
+<link rel="stylesheet" href="menu-close-morph.css">
+<style id="gf-grpbar-stack">
+/* Dải nhóm của trang nằm DƯỚI thanh "Siêu trí tuệ…" (.catbar, topic-bar.css), cùng kiểu dải nhóm của trang chi tiết sản phẩm: nền xanh nhạt, nhãn đậm màu navy, căn giữa từ 768px.
+   Dính ở header + chiều cao thanh chủ đề; các nhóm chừa chỗ cho cả hai dải khi cuộn tới. */
+.grpbar { --grpbar-bg: #E5EDF8; --grpbar-line: #BFD0E8; top: calc(var(--header-h) + var(--catbar-h)); z-index: 81; background: var(--grpbar-bg); border-bottom-color: var(--grpbar-line); }
+.grpbar__label { font-weight: 700; color: var(--gf-navy); }
+.collection { scroll-margin-top: calc(var(--header-h) + var(--catbar-h) + var(--grpbar-h) + 16px); }
+@media (min-width: 768px) { .grpbar__inner { justify-content: center; } .grpbar__label { margin-left: 0; } .grpbar__tabs { flex: 0 1 auto; justify-content: center; } }
+@media (max-width: 767px) { .grpbar__toggle { background: #F6F9FD; border-color: #A9BEDC; } .grpbar__toggle-label { color: var(--gf-navy); } .grpbar__tabs { background: var(--grpbar-bg); border-bottom-color: var(--grpbar-line); } }
+</style>
+<link rel="stylesheet" href="topic-bar.css">
 </head>
 
 <body>
@@ -2230,7 +2544,7 @@ html { scrollbar-gutter: stable; }
 <header class="header storefront-reference-shell" id="header" data-stuck="false">
 <div class="storefront-header">
 <div class="header-grid">
-<button id="navToggle" class="icon-btn menu-trigger" type="button" aria-label="Mở menu điều hướng" aria-controls="mobileNav" aria-expanded="false"><span class="material-symbols-outlined" aria-hidden="true">menu</span><svg class="gf-js-icon" aria-hidden="true" focusable="false"><use href="#i-menu"/></svg></button>
+<ui-menu-close-morph><button id="navToggle" class="icon-btn menu-trigger" type="button" aria-label="Mở menu điều hướng" aria-controls="mobileNav" aria-expanded="false"></button><script src="menu-close-morph.js"></script></ui-menu-close-morph>
 <a class="brand-logo header__logo" aria-label="Về trang chủ Ginsengfood" href="trang-chu-theo-doi-tuong/trang-chu.html">
 <img src="../public/home-webp-v1/logo-header-v2.w360.webp" srcset="../public/home-webp-v1/logo-header-v2.w120.webp 120w, ../public/home-webp-v1/logo-header-v2.w240.webp 240w, ../public/home-webp-v1/logo-header-v2.w360.webp 360w" sizes="(max-width: 767px) 136px, 176px" alt="Biểu trưng Ginsengfood" width="186" height="67" decoding="async">
 </a>
@@ -2243,6 +2557,7 @@ html { scrollbar-gutter: stable; }
 </div>
 <a href="tin-tuc.html">Tin tức</a>
 <a href="tra-cuu-don-hang.html">Tra cứu đơn hàng</a>
+<a href="trang-chu-theo-doi-tuong/dieu-khoan-cong-tac-vien.html">Khởi nghiệp cùng Ssavigroup</a>
 <a href="trang-chu-theo-doi-tuong/dai-ly-nha-phan-phoi.html">Đại lý nhà phân phối</a>
 </nav>
 <div class="header-actions">
@@ -2260,9 +2575,9 @@ html { scrollbar-gutter: stable; }
 <div id="reference-search-results" class="reference-search-dropdown" role="listbox" aria-label="Gợi ý tìm kiếm sản phẩm">
 <div class="reference-search-result-group">
 <p class="reference-search-heading">Gợi ý</p>
-<a class="reference-search-group" role="option" aria-selected="false" aria-label="Nhóm Cháo Sâm Theo Mùa" href="trang-chu-theo-doi-tuong/trang-chu.html#col-seasonal"><span class="material-symbols-outlined" aria-hidden="true">category</span><span>Cháo Sâm Theo Mùa</span></a>
-<a class="reference-search-group" role="option" aria-selected="false" aria-label="Nhóm Cháo Sâm Chức Năng" href="trang-chu-theo-doi-tuong/trang-chu.html#col-functional"><span class="material-symbols-outlined" aria-hidden="true">category</span><span>Cháo Sâm Chức Năng</span></a>
-<a class="reference-search-group" role="option" aria-selected="false" aria-label="Nhóm Cháo Sâm Bổ Dưỡng" href="trang-chu-theo-doi-tuong/trang-chu.html#col-nourishing"><span class="material-symbols-outlined" aria-hidden="true">category</span><span>Cháo Sâm Bổ Dưỡng</span></a>
+<a class="reference-search-group" role="option" aria-selected="false" aria-label="Nhóm Cháo sâm theo mùa" href="trang-chu-theo-doi-tuong/trang-chu.html#col-seasonal"><span class="material-symbols-outlined" aria-hidden="true">category</span><span>Cháo sâm theo mùa</span></a>
+<a class="reference-search-group" role="option" aria-selected="false" aria-label="Nhóm Cháo sâm theo yêu cầu" href="trang-chu-theo-doi-tuong/trang-chu.html#col-functional"><span class="material-symbols-outlined" aria-hidden="true">category</span><span>Cháo sâm theo yêu cầu</span></a>
+<a class="reference-search-group" role="option" aria-selected="false" aria-label="Nhóm Cháo sâm bổ dưỡng" href="trang-chu-theo-doi-tuong/trang-chu.html#col-nourishing"><span class="material-symbols-outlined" aria-hidden="true">category</span><span>Cháo sâm bổ dưỡng</span></a>
 </div>
 </div>
 </form>
@@ -2286,6 +2601,7 @@ html { scrollbar-gutter: stable; }
 <a class="mobile-sub" href="ve-san-pham.html">Về sản phẩm</a>
 <a href="tin-tuc.html"><span class="material-symbols-outlined" aria-hidden="true">newspaper</span>Tin tức</a>
 <a href="tra-cuu-don-hang.html"><span class="material-symbols-outlined" aria-hidden="true">receipt_long</span>Tra cứu đơn hàng</a>
+<a href="trang-chu-theo-doi-tuong/dieu-khoan-cong-tac-vien.html"><span class="material-symbols-outlined" aria-hidden="true">rocket_launch</span>Khởi nghiệp cùng Ssavigroup</a>
 <a href="trang-chu-theo-doi-tuong/dai-ly-nha-phan-phoi.html"><span class="material-symbols-outlined" aria-hidden="true">storefront</span>Đại lý nhà phân phối</a>
 </nav>
 </div>
@@ -2293,13 +2609,36 @@ html { scrollbar-gutter: stable; }
 </header>
 <!-- gf-shell:header:end -->
 
+<!-- Thanh "Chủ đề" dính ngay dưới header (đồng bộ HomeTopicBar của storefront; bản chuẩn là trang chi-tiet-san-pham.html): tiêu đề không liên kết + 5 badge nhiều màu (data-hue), mỗi badge là một chuyên mục của mục Tin tức.
+     CSS/JS dùng chung: topic-bar.css, topic-bar.js. Điện thoại: thu thành nút mang tên tiêu đề, bấm mở bảng thả xuống. Phải là phần tử anh-em liền sau header (luật bóng đổ). -->
+<div class="catbar" data-topic-bar>
+  <div class="container catbar__inner">
+    <button type="button" class="catbar__toggle" id="catToggle" aria-expanded="false" aria-controls="catNav" aria-label="Mở bảng chủ đề">
+      <span class="catbar__toggle-label">Siêu trí tuệ tri thức y dược học:</span>
+      <svg class="icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M6 9.5l6 6 6-6"/></svg>
+    </button>
+    <span class="catbar__label catbar__title">Siêu trí tuệ tri thức y dược học:</span>
+    <nav class="catbar__tabs" id="catNav" aria-label="Chủ đề">
+      <a href="tin-tuc.html?categorySlug=nghien-cuu-khoa-hoc" data-hue="0">Nghiên cứu khoa học</a>
+      <a href="tin-tuc.html?categorySlug=bai-thuoc-co" data-hue="1">Bài thuốc cổ</a>
+      <a href="tin-tuc.html?categorySlug=thuoc-dan-gian" data-hue="2">Thuốc dân gian</a>
+      <a href="tin-tuc.html?categorySlug=y-duoc-hoc" data-hue="4">Y dược học</a>
+      <a href="tin-tuc.html?categorySlug=duoc-dien" data-hue="5">Dược điển</a>
+    </nav>
+  </div>
+</div>
+
+<!-- Màn che phía sau menu di động và bảng tìm kiếm -->
+<div class="nav-scrim" id="navScrim"></div>
+
+
 <main id="noi-dung">
 
   <div class="container">
     <nav aria-label="Đường dẫn trang">
       <ol class="crumb">
         <li><a href="trang-chu-theo-doi-tuong/trang-chu.html">Trang chủ</a></li>
-        <li><span aria-current="page">Sản phẩm</span></li>
+        <li><span aria-current="page">Thực phẩm</span></li>
       </ol>
     </nav>
   </div>
@@ -2307,15 +2646,15 @@ html { scrollbar-gutter: stable; }
   <!-- =================================================================== -->
   <!-- DẪN NHẬP DANH MỤC                                                    -->
   <!-- =================================================================== -->
-  <section class="cathero" aria-labelledby="catTitle">
+  <section class="cathero" aria-labelledby="grpTitle">
     <div class="container cathero__grid">
       <div class="cathero__copy">
         <p class="eyebrow"><span class="eyebrow__rule" aria-hidden="true"></span>Danh mục sản phẩm</p>
-        <h1 class="cathero__title" id="catTitle">Cháo Sâm Ginsengfood</h1>
+        <h1 class="cathero__title" id="grpTitle">Cháo Sâm Ginsengfood</h1>
         <p class="cathero__lead">Mười chín công thức Cháo Sâm sấy thăng hoa, chia theo mùa, theo công dụng và theo nhu cầu bồi bổ. Mọi mức giá bên dưới đã trừ sẵn ưu đãi 24/7, bạn không cần nhập mã.</p>
         <ul class="cathero__stats">
           <li><svg class="icon" aria-hidden="true"><use href="#i-leaf"/></svg>19 sản phẩm đang bán</li>
-          <li><svg class="icon" aria-hidden="true"><use href="#i-clock"/></svg>Hoàn nguyên 3–4 phút</li>
+          <li><svg class="icon" aria-hidden="true"><use href="#i-clock"/></svg>Hoàn nguyên 3 phút</li>
           <li><svg class="icon" aria-hidden="true"><use href="#i-shield"/></svg>Truy xuất theo lô sản xuất</li>
         </ul>
       </div>
@@ -2341,19 +2680,19 @@ html { scrollbar-gutter: stable; }
     <h2 class="visually-hidden" id="catalogTitle">Danh mục sản phẩm Ginsengfood</h2>
 
     <!-- Dải nhãn nhóm: dính dưới header, như thanh "Nhóm sản phẩm" ở trang chủ storefront; bấm một nhãn thì cuộn tới nhóm tương ứng bên dưới -->
-    <div class="catbar">
-      <div class="container catbar__inner">
+    <div class="grpbar">
+      <div class="container grpbar__inner">
         <!-- Điện thoại: nút mở bảng nhãn, hiện tên nhóm đang xem (ẩn từ 768px) -->
-        <button type="button" class="catbar__toggle" id="catToggle" aria-expanded="false" aria-controls="catNav">
-          <span class="catbar__toggle-label">Nhóm sản phẩm:</span>
-          <span class="catbar__toggle-value" id="catCurrent">Chọn nhóm</span>
+        <button type="button" class="grpbar__toggle" id="grpToggle" aria-expanded="false" aria-controls="grpNav">
+          <span class="grpbar__toggle-label">Nhóm sản phẩm:</span>
+          <span class="grpbar__toggle-value" id="grpCurrent">Chọn nhóm</span>
           <svg class="icon" aria-hidden="true"><use href="#i-chev-down"/></svg>
         </button>
-        <span class="catbar__label" aria-hidden="true">Nhóm sản phẩm:</span>
-        <nav class="catbar__tabs" id="catNav" aria-label="Nhóm sản phẩm">
-          <a href="#col-seasonal" data-hue="0" aria-current="true">Cháo Sâm Theo Mùa</a>
-          <a href="#col-functional" data-hue="1">Cháo Sâm Chức Năng</a>
-          <a href="#col-nourishing" data-hue="2">Cháo Sâm Bổ Dưỡng</a>
+        <span class="grpbar__label" aria-hidden="true">Nhóm sản phẩm:</span>
+        <nav class="grpbar__tabs" id="grpNav" aria-label="Nhóm sản phẩm">
+          <a href="#col-seasonal" data-hue="0" aria-current="true">Cháo sâm theo mùa</a>
+          <a href="#col-functional" data-hue="1">Cháo sâm theo yêu cầu</a>
+          <a href="#col-nourishing" data-hue="2">Cháo sâm bổ dưỡng</a>
         </nav>
       </div>
     </div>
@@ -2364,8 +2703,7 @@ html { scrollbar-gutter: stable; }
       <section class="collection" id="col-seasonal" data-collection="seasonal" aria-labelledby="title-seasonal">
         <div class="collection__head">
           <div>
-            <p class="collection__order"><span>Nhóm A · 4 sản phẩm</span></p>
-            <h3 class="collection__title" id="title-seasonal">Cháo Sâm Theo Mùa</h3>
+            <h3 class="collection__title" id="title-seasonal">Cháo sâm theo mùa</h3>
             <p class="collection__goal">Bốn công thức cho bốn mùa. Món hợp với mùa đang tới được xếp lên đầu để bạn chọn nhanh.</p>
           </div>
           <div class="collection__nav">
@@ -2375,7 +2713,7 @@ html { scrollbar-gutter: stable; }
         </div>
 
         <ul class="cards">
-          <li class="card" data-sku="A2/CS/BASA"><article>
+          <li class="card" data-sku="A2/CS/BASA" data-packs="4"><article>
             <a class="card__media" href="chi-tiet-san-pham.html">
               <img src="../public/products-image/cá%20basa.webp" loading="lazy" decoding="async" width="1448" height="1086" alt="Hộp và gói Cháo Sâm Mùa Hạ – Cá Basa bên củ sâm, cá basa phi lê và nguyên liệu tươi">
               <span class="card__type">Mặn</span>
@@ -2387,26 +2725,13 @@ html { scrollbar-gutter: stable; }
               <div class="price__row"><dt>Giá chương trình 24/7</dt><dd>295.680đ</dd></div>
               <div class="price__row price__row--final"><dt>Giá bạn thanh toán</dt><dd>295.680đ</dd></div>
             </dl>
-            <p class="price__serving">Chi phí mỗi bữa: <span>~73.920đ · 4 gói</span></p>
-            <p class="price__preview">Thành viên Silver chỉ trả 280.896đ · <a href="#">Tìm hiểu</a></p>
-            <details class="price__why">
-              <summary>Vì sao tôi có giá này?</summary>
-              <div class="price__breakdown">
-                <p class="price__breakdown-title">Cấu thành giá</p>
-                <dl>
-                  <div class="price__row"><dt>Giá niêm yết</dt><dd>336.000đ</dd></div>
-                  <div class="price__row"><dt>Giá chương trình 24/7</dt><dd>295.680đ</dd></div>
-                  <div class="price__row"><dt>Quyền lợi thành viên</dt><dd>Silver · 280.896đ</dd></div>
-                </dl>
-              </div>
-            </details>
             <div class="card__actions">
               <a class="btn btn--primary" href="chi-tiet-san-pham.html">Mua ngay</a>
               <button type="button" class="iconbtn" aria-label="Thêm Cháo Sâm Mùa Hạ – Cá Basa vào giỏ" title="Thêm Cháo Sâm Mùa Hạ – Cá Basa vào giỏ"><svg class="icon icon--fill" aria-hidden="true"><use href="#i-cart-shop"/></svg></button>
             </div>
           </article></li>
 
-          <li class="card" data-sku="A3/CS/LUON"><article>
+          <li class="card" data-sku="A3/CS/LUON" data-packs="4"><article>
             <a class="card__media" href="#">
               <img src="../public/products-image/lươn%20đồng(2).webp" loading="lazy" decoding="async" width="1448" height="1086" alt="Hộp và gói Cháo Sâm Mùa Thu – Lươn đồng bên củ sâm và nguyên liệu tươi">
               <span class="card__type">Mặn</span>
@@ -2418,26 +2743,13 @@ html { scrollbar-gutter: stable; }
               <div class="price__row"><dt>Giá chương trình 24/7</dt><dd>327.360đ</dd></div>
               <div class="price__row price__row--final"><dt>Giá bạn thanh toán</dt><dd>327.360đ</dd></div>
             </dl>
-            <p class="price__serving">Chi phí mỗi bữa: <span>~81.840đ · 4 gói</span></p>
-            <p class="price__preview">Thành viên Silver chỉ trả 310.992đ · <a href="#">Tìm hiểu</a></p>
-            <details class="price__why">
-              <summary>Vì sao tôi có giá này?</summary>
-              <div class="price__breakdown">
-                <p class="price__breakdown-title">Cấu thành giá</p>
-                <dl>
-                  <div class="price__row"><dt>Giá niêm yết</dt><dd>372.000đ</dd></div>
-                  <div class="price__row"><dt>Giá chương trình 24/7</dt><dd>327.360đ</dd></div>
-                  <div class="price__row"><dt>Quyền lợi thành viên</dt><dd>Silver · 310.992đ</dd></div>
-                </dl>
-              </div>
-            </details>
             <div class="card__actions">
               <button type="button" class="btn btn--primary">Mua ngay</button>
               <button type="button" class="iconbtn" aria-label="Thêm Cháo Sâm Mùa Thu – Lươn đồng vào giỏ" title="Thêm Cháo Sâm Mùa Thu – Lươn đồng vào giỏ"><svg class="icon icon--fill" aria-hidden="true"><use href="#i-cart-shop"/></svg></button>
             </div>
           </article></li>
 
-          <li class="card" data-sku="A4/CS/CUU"><article>
+          <li class="card" data-sku="A4/CS/CUU" data-packs="4"><article>
             <a class="card__media" href="#">
               <img src="../public/products-image/thịt%20cừu%20và%20táo%20tào.webp" loading="lazy" decoding="async" width="1448" height="1086" alt="Hộp và gói Cháo Sâm Mùa Đông – Thịt cừu và Táo tàu bên thịt cừu tươi, táo tàu và củ sâm">
               <span class="card__type">Mặn</span>
@@ -2449,26 +2761,13 @@ html { scrollbar-gutter: stable; }
               <div class="price__row"><dt>Giá chương trình 24/7</dt><dd>341.440đ</dd></div>
               <div class="price__row price__row--final"><dt>Giá bạn thanh toán</dt><dd>341.440đ</dd></div>
             </dl>
-            <p class="price__serving">Chi phí mỗi bữa: <span>~85.360đ · 4 gói</span></p>
-            <p class="price__preview">Thành viên Silver chỉ trả 324.368đ · <a href="#">Tìm hiểu</a></p>
-            <details class="price__why">
-              <summary>Vì sao tôi có giá này?</summary>
-              <div class="price__breakdown">
-                <p class="price__breakdown-title">Cấu thành giá</p>
-                <dl>
-                  <div class="price__row"><dt>Giá niêm yết</dt><dd>388.000đ</dd></div>
-                  <div class="price__row"><dt>Giá chương trình 24/7</dt><dd>341.440đ</dd></div>
-                  <div class="price__row"><dt>Quyền lợi thành viên</dt><dd>Silver · 324.368đ</dd></div>
-                </dl>
-              </div>
-            </details>
             <div class="card__actions">
               <button type="button" class="btn btn--primary">Mua ngay</button>
               <button type="button" class="iconbtn" aria-label="Thêm Cháo Sâm Mùa Đông – Thịt cừu và Táo tàu vào giỏ" title="Thêm Cháo Sâm Mùa Đông – Thịt cừu và Táo tàu vào giỏ"><svg class="icon icon--fill" aria-hidden="true"><use href="#i-cart-shop"/></svg></button>
             </div>
           </article></li>
 
-          <li class="card" data-sku="A1/CS/DM/HS"><article>
+          <li class="card" data-sku="A1/CS/DM/HS" data-packs="4"><article>
             <a class="card__media" href="#">
               <img src="../public/products-image/diêm%20mạch%20hạt%20sen.webp" loading="lazy" decoding="async" width="1448" height="1086" alt="Hộp và gói Cháo Sâm Mùa Xuân – Diêm mạch và Hạt sen bên hạt sen, diêm mạch và củ sâm">
               <span class="card__type card__type--chay">Thuần chay</span>
@@ -2480,19 +2779,6 @@ html { scrollbar-gutter: stable; }
               <div class="price__row"><dt>Giá chương trình 24/7</dt><dd>260.480đ</dd></div>
               <div class="price__row price__row--final"><dt>Giá bạn thanh toán</dt><dd>260.480đ</dd></div>
             </dl>
-            <p class="price__serving">Chi phí mỗi bữa: <span>~65.120đ · 4 gói</span></p>
-            <p class="price__preview">Thành viên Silver chỉ trả 247.456đ · <a href="#">Tìm hiểu</a></p>
-            <details class="price__why">
-              <summary>Vì sao tôi có giá này?</summary>
-              <div class="price__breakdown">
-                <p class="price__breakdown-title">Cấu thành giá</p>
-                <dl>
-                  <div class="price__row"><dt>Giá niêm yết</dt><dd>296.000đ</dd></div>
-                  <div class="price__row"><dt>Giá chương trình 24/7</dt><dd>260.480đ</dd></div>
-                  <div class="price__row"><dt>Quyền lợi thành viên</dt><dd>Silver · 247.456đ</dd></div>
-                </dl>
-              </div>
-            </details>
             <div class="card__actions">
               <button type="button" class="btn btn--primary">Mua ngay</button>
               <button type="button" class="iconbtn" aria-label="Thêm Cháo Sâm Mùa Xuân – Diêm mạch và Hạt sen vào giỏ" title="Thêm Cháo Sâm Mùa Xuân – Diêm mạch và Hạt sen vào giỏ"><svg class="icon icon--fill" aria-hidden="true"><use href="#i-cart-shop"/></svg></button>
@@ -2505,8 +2791,7 @@ html { scrollbar-gutter: stable; }
       <section class="collection" id="col-functional" data-collection="functional" aria-labelledby="title-functional">
         <div class="collection__head">
           <div>
-            <p class="collection__order"><span>Nhóm B · 6 sản phẩm</span></p>
-            <h3 class="collection__title" id="title-functional">Cháo Sâm Chức Năng</h3>
+            <h3 class="collection__title" id="title-functional">Cháo sâm theo yêu cầu</h3>
             <p class="collection__goal">Sáu công thức cho sáu nhu cầu quen thuộc: thanh nhiệt, não bộ, xương khớp, collagen, sinh lực và phục hồi.</p>
           </div>
           <div class="collection__nav">
@@ -2516,7 +2801,7 @@ html { scrollbar-gutter: stable; }
         </div>
 
         <ul class="cards">
-          <li class="card" data-sku="B1/CS/RM/DX"><article>
+          <li class="card" data-sku="B1/CS/RM/ĐX" data-packs="4"><article>
             <a class="card__media" href="#">
               <img src="../public/products-image/rau%20má%20đậu%20xanh(2).webp" loading="lazy" decoding="async" width="1448" height="1086" alt="Hộp và gói Cháo Sâm Rau má và Đậu xanh bên rau má, đậu xanh và củ sâm">
               <span class="card__type card__type--chay">Thuần chay</span>
@@ -2528,88 +2813,49 @@ html { scrollbar-gutter: stable; }
               <div class="price__row"><dt>Giá chương trình 24/7</dt><dd>253.440đ</dd></div>
               <div class="price__row price__row--final"><dt>Giá bạn thanh toán</dt><dd>253.440đ</dd></div>
             </dl>
-            <p class="price__serving">Chi phí mỗi bữa: <span>~63.360đ · 4 gói</span></p>
-            <p class="price__preview">Thành viên Silver chỉ trả 240.768đ · <a href="#">Tìm hiểu</a></p>
-            <details class="price__why">
-              <summary>Vì sao tôi có giá này?</summary>
-              <div class="price__breakdown">
-                <p class="price__breakdown-title">Cấu thành giá</p>
-                <dl>
-                  <div class="price__row"><dt>Giá niêm yết</dt><dd>288.000đ</dd></div>
-                  <div class="price__row"><dt>Giá chương trình 24/7</dt><dd>253.440đ</dd></div>
-                  <div class="price__row"><dt>Quyền lợi thành viên</dt><dd>Silver · 240.768đ</dd></div>
-                </dl>
-              </div>
-            </details>
             <div class="card__actions">
               <button type="button" class="btn btn--primary">Mua ngay</button>
               <button type="button" class="iconbtn" aria-label="Thêm Cháo Sâm – Rau má và Đậu xanh vào giỏ" title="Thêm Cháo Sâm – Rau má và Đậu xanh vào giỏ"><svg class="icon icon--fill" aria-hidden="true"><use href="#i-cart-shop"/></svg></button>
             </div>
           </article></li>
 
-          <li class="card" data-sku="B2/CS/DHA"><article>
+          <li class="card" data-sku="B2/CS/DHA" data-packs="4"><article>
             <a class="card__media" href="#" style="--pos: 0% 50%;">
               <img src="../public/background_products.png" loading="lazy" decoding="async" width="1448" height="1086" alt="Tô Cháo Sâm DHA Não bộ bên củ sâm tươi">
               <span class="card__type">Mặn</span>
             </a>
             <h4 class="card__name"><a href="#">Cháo Sâm – DHA Não bộ</a></h4>
-            <p class="card__reason">Nuôi dưỡng não bộ – hỗ trợ trí nhớ – bền thần kinh</p>
+            <p class="card__reason">Bổ sung DHA tự nhiên từ cá hồi</p>
             <dl class="price">
               <div class="price__row price__row--listed"><dt>Giá niêm yết</dt><dd>312.000đ</dd></div>
               <div class="price__row"><dt>Giá chương trình 24/7</dt><dd>274.560đ</dd></div>
               <div class="price__row price__row--final"><dt>Giá bạn thanh toán</dt><dd>274.560đ</dd></div>
             </dl>
-            <p class="price__serving">Chi phí mỗi bữa: <span>~68.640đ · 4 gói</span></p>
-            <p class="price__preview">Thành viên Silver chỉ trả 260.832đ · <a href="#">Tìm hiểu</a></p>
-            <details class="price__why">
-              <summary>Vì sao tôi có giá này?</summary>
-              <div class="price__breakdown">
-                <p class="price__breakdown-title">Cấu thành giá</p>
-                <dl>
-                  <div class="price__row"><dt>Giá niêm yết</dt><dd>312.000đ</dd></div>
-                  <div class="price__row"><dt>Giá chương trình 24/7</dt><dd>274.560đ</dd></div>
-                  <div class="price__row"><dt>Quyền lợi thành viên</dt><dd>Silver · 260.832đ</dd></div>
-                </dl>
-              </div>
-            </details>
             <div class="card__actions">
               <button type="button" class="btn btn--primary">Mua ngay</button>
               <button type="button" class="iconbtn" aria-label="Thêm Cháo Sâm – DHA Não bộ vào giỏ" title="Thêm Cháo Sâm – DHA Não bộ vào giỏ"><svg class="icon icon--fill" aria-hidden="true"><use href="#i-cart-shop"/></svg></button>
             </div>
           </article></li>
 
-          <li class="card" data-sku="B3/CS/CACOM"><article>
+          <li class="card" data-sku="B3/CS/CACOM" data-packs="4"><article>
             <a class="card__media" href="#">
               <img src="../public/products-image/các%20cơm%20và%20vừng.webp" loading="lazy" decoding="async" width="1448" height="1086" alt="Hộp và gói Cháo Sâm Cá cơm và Vừng bên cá cơm, vừng và củ sâm">
               <span class="card__type">Mặn</span>
             </a>
             <h4 class="card__name"><a href="#">Cháo Sâm – Cá cơm &amp; Vừng</a></h4>
-            <p class="card__reason">Bổ sung khoáng – canxi tự nhiên – hỗ trợ xương khớp</p>
+            <p class="card__reason">Bổ sung Canxi tự nhiên từ cá cơm</p>
             <dl class="price">
               <div class="price__row price__row--listed"><dt>Giá niêm yết</dt><dd>292.000đ</dd></div>
               <div class="price__row"><dt>Giá chương trình 24/7</dt><dd>256.960đ</dd></div>
               <div class="price__row price__row--final"><dt>Giá bạn thanh toán</dt><dd>256.960đ</dd></div>
             </dl>
-            <p class="price__serving">Chi phí mỗi bữa: <span>~64.240đ · 4 gói</span></p>
-            <p class="price__preview">Thành viên Silver chỉ trả 244.112đ · <a href="#">Tìm hiểu</a></p>
-            <details class="price__why">
-              <summary>Vì sao tôi có giá này?</summary>
-              <div class="price__breakdown">
-                <p class="price__breakdown-title">Cấu thành giá</p>
-                <dl>
-                  <div class="price__row"><dt>Giá niêm yết</dt><dd>292.000đ</dd></div>
-                  <div class="price__row"><dt>Giá chương trình 24/7</dt><dd>256.960đ</dd></div>
-                  <div class="price__row"><dt>Quyền lợi thành viên</dt><dd>Silver · 244.112đ</dd></div>
-                </dl>
-              </div>
-            </details>
             <div class="card__actions">
               <button type="button" class="btn btn--primary">Mua ngay</button>
               <button type="button" class="iconbtn" aria-label="Thêm Cháo Sâm – Cá cơm và Vừng vào giỏ" title="Thêm Cháo Sâm – Cá cơm và Vừng vào giỏ"><svg class="icon icon--fill" aria-hidden="true"><use href="#i-cart-shop"/></svg></button>
             </div>
           </article></li>
 
-          <li class="card" data-sku="B4/CS/COLAGEN"><article>
+          <li class="card" data-sku="B4/CS/COLAGEN" data-packs="4"><article>
             <a class="card__media" href="#">
               <img src="../public/products-image/thịt%20heo%20và%20da%20heo.webp" loading="lazy" decoding="async" width="1448" height="1086" alt="Hộp và gói Cháo Sâm Thịt heo và Da heo bên thịt heo tươi và củ sâm">
               <span class="card__type">Mặn</span>
@@ -2621,26 +2867,13 @@ html { scrollbar-gutter: stable; }
               <div class="price__row"><dt>Giá chương trình 24/7</dt><dd>288.640đ</dd></div>
               <div class="price__row price__row--final"><dt>Giá bạn thanh toán</dt><dd>288.640đ</dd></div>
             </dl>
-            <p class="price__serving">Chi phí mỗi bữa: <span>~72.160đ · 4 gói</span></p>
-            <p class="price__preview">Thành viên Silver chỉ trả 274.208đ · <a href="#">Tìm hiểu</a></p>
-            <details class="price__why">
-              <summary>Vì sao tôi có giá này?</summary>
-              <div class="price__breakdown">
-                <p class="price__breakdown-title">Cấu thành giá</p>
-                <dl>
-                  <div class="price__row"><dt>Giá niêm yết</dt><dd>328.000đ</dd></div>
-                  <div class="price__row"><dt>Giá chương trình 24/7</dt><dd>288.640đ</dd></div>
-                  <div class="price__row"><dt>Quyền lợi thành viên</dt><dd>Silver · 274.208đ</dd></div>
-                </dl>
-              </div>
-            </details>
             <div class="card__actions">
               <button type="button" class="btn btn--primary">Mua ngay</button>
               <button type="button" class="iconbtn" aria-label="Thêm Cháo Sâm – Thịt heo và Da heo vào giỏ" title="Thêm Cháo Sâm – Thịt heo và Da heo vào giỏ"><svg class="icon icon--fill" aria-hidden="true"><use href="#i-cart-shop"/></svg></button>
             </div>
           </article></li>
 
-          <li class="card" data-sku="B5/CS/SINHLUC"><article>
+          <li class="card" data-sku="B5/CS/SINHLUC" data-packs="3"><article>
             <a class="card__media" href="#">
               <img src="../public/products-image/hàu%20biển(2).webp" loading="lazy" decoding="async" width="1448" height="1086" alt="Hộp và gói Cháo Sâm Hàu biển bên hàu tươi và củ sâm">
               <span class="card__type">Mặn</span>
@@ -2652,26 +2885,13 @@ html { scrollbar-gutter: stable; }
               <div class="price__row"><dt>Giá chương trình 24/7</dt><dd>411.840đ</dd></div>
               <div class="price__row price__row--final"><dt>Giá bạn thanh toán</dt><dd>411.840đ</dd></div>
             </dl>
-            <p class="price__serving">Chi phí mỗi bữa: <span>~137.280đ · 3 gói</span></p>
-            <p class="price__preview">Thành viên Silver chỉ trả 391.248đ · <a href="#">Tìm hiểu</a></p>
-            <details class="price__why">
-              <summary>Vì sao tôi có giá này?</summary>
-              <div class="price__breakdown">
-                <p class="price__breakdown-title">Cấu thành giá</p>
-                <dl>
-                  <div class="price__row"><dt>Giá niêm yết</dt><dd>468.000đ</dd></div>
-                  <div class="price__row"><dt>Giá chương trình 24/7</dt><dd>411.840đ</dd></div>
-                  <div class="price__row"><dt>Quyền lợi thành viên</dt><dd>Silver · 391.248đ</dd></div>
-                </dl>
-              </div>
-            </details>
             <div class="card__actions">
               <button type="button" class="btn btn--primary">Mua ngay</button>
               <button type="button" class="iconbtn" aria-label="Thêm Cháo Sâm – Hàu biển vào giỏ" title="Thêm Cháo Sâm – Hàu biển vào giỏ"><svg class="icon icon--fill" aria-hidden="true"><use href="#i-cart-shop"/></svg></button>
             </div>
           </article></li>
 
-          <li class="card" data-sku="B6/CS/GAAC"><article>
+          <li class="card" data-sku="B6/CS/GAAC" data-packs="3"><article>
             <a class="card__media" href="#">
               <img src="../public/products-image/gà%20ác(2).webp" loading="lazy" decoding="async" width="1448" height="1086" alt="Hộp và gói Cháo Sâm Gà ác bên gà ác, nấm và củ sâm">
               <span class="card__type">Mặn</span>
@@ -2683,19 +2903,6 @@ html { scrollbar-gutter: stable; }
               <div class="price__row"><dt>Giá chương trình 24/7</dt><dd>464.640đ</dd></div>
               <div class="price__row price__row--final"><dt>Giá bạn thanh toán</dt><dd>464.640đ</dd></div>
             </dl>
-            <p class="price__serving">Chi phí mỗi bữa: <span>~154.880đ · 3 gói</span></p>
-            <p class="price__preview">Thành viên Silver chỉ trả 441.408đ · <a href="#">Tìm hiểu</a></p>
-            <details class="price__why">
-              <summary>Vì sao tôi có giá này?</summary>
-              <div class="price__breakdown">
-                <p class="price__breakdown-title">Cấu thành giá</p>
-                <dl>
-                  <div class="price__row"><dt>Giá niêm yết</dt><dd>528.000đ</dd></div>
-                  <div class="price__row"><dt>Giá chương trình 24/7</dt><dd>464.640đ</dd></div>
-                  <div class="price__row"><dt>Quyền lợi thành viên</dt><dd>Silver · 441.408đ</dd></div>
-                </dl>
-              </div>
-            </details>
             <div class="card__actions">
               <button type="button" class="btn btn--primary">Mua ngay</button>
               <button type="button" class="iconbtn" aria-label="Thêm Cháo Sâm – Gà ác vào giỏ" title="Thêm Cháo Sâm – Gà ác vào giỏ"><svg class="icon icon--fill" aria-hidden="true"><use href="#i-cart-shop"/></svg></button>
@@ -2708,8 +2915,7 @@ html { scrollbar-gutter: stable; }
       <section class="collection" id="col-nourishing" data-collection="nourishing" aria-labelledby="title-nourishing">
         <div class="collection__head">
           <div>
-            <p class="collection__order"><span>Nhóm C · 9 sản phẩm</span></p>
-            <h3 class="collection__title" id="title-nourishing">Cháo Sâm Bổ Dưỡng</h3>
+            <h3 class="collection__title" id="title-nourishing">Cháo sâm bổ dưỡng</h3>
             <p class="collection__goal">Chín công thức bồi bổ từ hải sản, nấm dược liệu và thịt. Dùng theo đợt khi cần lấy lại sức, hoặc ăn đều mỗi ngày.</p>
           </div>
           <div class="collection__nav">
@@ -2719,7 +2925,7 @@ html { scrollbar-gutter: stable; }
         </div>
 
         <ul class="cards">
-          <li class="card" data-sku="C1/CS/BAONGU"><article>
+          <li class="card" data-sku="C1/CS/BAONGU" data-packs="3"><article>
             <a class="card__media" href="#">
               <img src="../public/products-image/bào%20ngư.webp" loading="lazy" decoding="async" width="1448" height="1086" alt="Hộp và gói Cháo Sâm Bào ngư bên bào ngư tươi và củ sâm">
               <span class="card__type">Mặn</span>
@@ -2731,26 +2937,13 @@ html { scrollbar-gutter: stable; }
               <div class="price__row"><dt>Giá chương trình 24/7</dt><dd>517.440đ</dd></div>
               <div class="price__row price__row--final"><dt>Giá bạn thanh toán</dt><dd>517.440đ</dd></div>
             </dl>
-            <p class="price__serving">Chi phí mỗi bữa: <span>~172.480đ · 3 gói</span></p>
-            <p class="price__preview">Thành viên Silver chỉ trả 491.568đ · <a href="#">Tìm hiểu</a></p>
-            <details class="price__why">
-              <summary>Vì sao tôi có giá này?</summary>
-              <div class="price__breakdown">
-                <p class="price__breakdown-title">Cấu thành giá</p>
-                <dl>
-                  <div class="price__row"><dt>Giá niêm yết</dt><dd>588.000đ</dd></div>
-                  <div class="price__row"><dt>Giá chương trình 24/7</dt><dd>517.440đ</dd></div>
-                  <div class="price__row"><dt>Quyền lợi thành viên</dt><dd>Silver · 491.568đ</dd></div>
-                </dl>
-              </div>
-            </details>
             <div class="card__actions">
               <button type="button" class="btn btn--primary">Mua ngay</button>
               <button type="button" class="iconbtn" aria-label="Thêm Cháo Sâm – Bào ngư vào giỏ" title="Thêm Cháo Sâm – Bào ngư vào giỏ"><svg class="icon icon--fill" aria-hidden="true"><use href="#i-cart-shop"/></svg></button>
             </div>
           </article></li>
 
-          <li class="card" data-sku="C2/CS/DONGTRUNG"><article>
+          <li class="card" data-sku="C2/CS/DONGTRUNG" data-packs="3"><article>
             <a class="card__media" href="#">
               <img src="../public/products-image/đông%20trùng%20hạ%20thảo(2).webp" loading="lazy" decoding="async" width="1448" height="1086" alt="Hộp và gói Cháo Sâm Đông trùng hạ thảo bên đông trùng hạ thảo và củ sâm">
               <span class="card__type card__type--chay">Thuần chay</span>
@@ -2762,26 +2955,13 @@ html { scrollbar-gutter: stable; }
               <div class="price__row"><dt>Giá chương trình 24/7</dt><dd>485.760đ</dd></div>
               <div class="price__row price__row--final"><dt>Giá bạn thanh toán</dt><dd>485.760đ</dd></div>
             </dl>
-            <p class="price__serving">Chi phí mỗi bữa: <span>~161.920đ · 3 gói</span></p>
-            <p class="price__preview">Thành viên Silver chỉ trả 461.472đ · <a href="#">Tìm hiểu</a></p>
-            <details class="price__why">
-              <summary>Vì sao tôi có giá này?</summary>
-              <div class="price__breakdown">
-                <p class="price__breakdown-title">Cấu thành giá</p>
-                <dl>
-                  <div class="price__row"><dt>Giá niêm yết</dt><dd>552.000đ</dd></div>
-                  <div class="price__row"><dt>Giá chương trình 24/7</dt><dd>485.760đ</dd></div>
-                  <div class="price__row"><dt>Quyền lợi thành viên</dt><dd>Silver · 461.472đ</dd></div>
-                </dl>
-              </div>
-            </details>
             <div class="card__actions">
               <button type="button" class="btn btn--primary">Mua ngay</button>
               <button type="button" class="iconbtn" aria-label="Thêm Cháo Sâm – Đông trùng hạ thảo vào giỏ" title="Thêm Cháo Sâm – Đông trùng hạ thảo vào giỏ"><svg class="icon icon--fill" aria-hidden="true"><use href="#i-cart-shop"/></svg></button>
             </div>
           </article></li>
 
-          <li class="card" data-sku="C3/CS/NAMDONGCO"><article>
+          <li class="card" data-sku="C3/CS/NAMDONGCO" data-packs="4"><article>
             <a class="card__media" href="#">
               <img src="../public/products-image/nấm%20đông%20cô(2).webp" loading="lazy" decoding="async" width="1448" height="1086" alt="Hộp và gói Cháo Sâm Nấm đông cô bên nấm đông cô và củ sâm">
               <span class="card__type card__type--chay">Thuần chay</span>
@@ -2793,26 +2973,13 @@ html { scrollbar-gutter: stable; }
               <div class="price__row"><dt>Giá chương trình 24/7</dt><dd>267.520đ</dd></div>
               <div class="price__row price__row--final"><dt>Giá bạn thanh toán</dt><dd>267.520đ</dd></div>
             </dl>
-            <p class="price__serving">Chi phí mỗi bữa: <span>~66.880đ · 4 gói</span></p>
-            <p class="price__preview">Thành viên Silver chỉ trả 254.144đ · <a href="#">Tìm hiểu</a></p>
-            <details class="price__why">
-              <summary>Vì sao tôi có giá này?</summary>
-              <div class="price__breakdown">
-                <p class="price__breakdown-title">Cấu thành giá</p>
-                <dl>
-                  <div class="price__row"><dt>Giá niêm yết</dt><dd>304.000đ</dd></div>
-                  <div class="price__row"><dt>Giá chương trình 24/7</dt><dd>267.520đ</dd></div>
-                  <div class="price__row"><dt>Quyền lợi thành viên</dt><dd>Silver · 254.144đ</dd></div>
-                </dl>
-              </div>
-            </details>
             <div class="card__actions">
               <button type="button" class="btn btn--primary">Mua ngay</button>
               <button type="button" class="iconbtn" aria-label="Thêm Cháo Sâm – Nấm đông cô vào giỏ" title="Thêm Cháo Sâm – Nấm đông cô vào giỏ"><svg class="icon icon--fill" aria-hidden="true"><use href="#i-cart-shop"/></svg></button>
             </div>
           </article></li>
 
-          <li class="card" data-sku="C4/CS/CUABIEN"><article>
+          <li class="card" data-sku="C4/CS/CUABIEN" data-packs="3"><article>
             <a class="card__media" href="#">
               <img src="../public/products-image/cua%20biển(2).webp" loading="lazy" decoding="async" width="1448" height="1086" alt="Hộp và gói Cháo Sâm Cua biển bên cua biển tươi và củ sâm">
               <span class="card__type">Mặn</span>
@@ -2824,26 +2991,13 @@ html { scrollbar-gutter: stable; }
               <div class="price__row"><dt>Giá chương trình 24/7</dt><dd>438.240đ</dd></div>
               <div class="price__row price__row--final"><dt>Giá bạn thanh toán</dt><dd>438.240đ</dd></div>
             </dl>
-            <p class="price__serving">Chi phí mỗi bữa: <span>~146.080đ · 3 gói</span></p>
-            <p class="price__preview">Thành viên Silver chỉ trả 416.328đ · <a href="#">Tìm hiểu</a></p>
-            <details class="price__why">
-              <summary>Vì sao tôi có giá này?</summary>
-              <div class="price__breakdown">
-                <p class="price__breakdown-title">Cấu thành giá</p>
-                <dl>
-                  <div class="price__row"><dt>Giá niêm yết</dt><dd>498.000đ</dd></div>
-                  <div class="price__row"><dt>Giá chương trình 24/7</dt><dd>438.240đ</dd></div>
-                  <div class="price__row"><dt>Quyền lợi thành viên</dt><dd>Silver · 416.328đ</dd></div>
-                </dl>
-              </div>
-            </details>
             <div class="card__actions">
               <button type="button" class="btn btn--primary">Mua ngay</button>
               <button type="button" class="iconbtn" aria-label="Thêm Cháo Sâm – Cua biển vào giỏ" title="Thêm Cháo Sâm – Cua biển vào giỏ"><svg class="icon icon--fill" aria-hidden="true"><use href="#i-cart-shop"/></svg></button>
             </div>
           </article></li>
 
-          <li class="card" data-sku="C5/CS/CANGU"><article>
+          <li class="card" data-sku="C5/CS/CANGU" data-packs="4"><article>
             <a class="card__media" href="#">
               <img src="../public/products-image/cá%20ngừ(2).webp" loading="lazy" decoding="async" width="1448" height="1086" alt="Hộp và gói Cháo Sâm Cá ngừ bên cá ngừ tươi và củ sâm">
               <span class="card__type">Mặn</span>
@@ -2855,26 +3009,13 @@ html { scrollbar-gutter: stable; }
               <div class="price__row"><dt>Giá chương trình 24/7</dt><dd>313.280đ</dd></div>
               <div class="price__row price__row--final"><dt>Giá bạn thanh toán</dt><dd>313.280đ</dd></div>
             </dl>
-            <p class="price__serving">Chi phí mỗi bữa: <span>~78.320đ · 4 gói</span></p>
-            <p class="price__preview">Thành viên Silver chỉ trả 297.616đ · <a href="#">Tìm hiểu</a></p>
-            <details class="price__why">
-              <summary>Vì sao tôi có giá này?</summary>
-              <div class="price__breakdown">
-                <p class="price__breakdown-title">Cấu thành giá</p>
-                <dl>
-                  <div class="price__row"><dt>Giá niêm yết</dt><dd>356.000đ</dd></div>
-                  <div class="price__row"><dt>Giá chương trình 24/7</dt><dd>313.280đ</dd></div>
-                  <div class="price__row"><dt>Quyền lợi thành viên</dt><dd>Silver · 297.616đ</dd></div>
-                </dl>
-              </div>
-            </details>
             <div class="card__actions">
               <button type="button" class="btn btn--primary">Mua ngay</button>
               <button type="button" class="iconbtn" aria-label="Thêm Cháo Sâm – Cá ngừ vào giỏ" title="Thêm Cháo Sâm – Cá ngừ vào giỏ"><svg class="icon icon--fill" aria-hidden="true"><use href="#i-cart-shop"/></svg></button>
             </div>
           </article></li>
 
-          <li class="card" data-sku="C6/CS/TOM/RONGBIEN"><article>
+          <li class="card" data-sku="C6/CS/TOM/RONGBIEN" data-packs="4"><article>
             <a class="card__media" href="#">
               <img src="../public/products-image/tôm%20và%20rông%20biển.webp" loading="lazy" decoding="async" width="1448" height="1086" alt="Hộp và gói Cháo Sâm Tôm và Rong biển bên tôm tươi, rong biển và củ sâm">
               <span class="card__type">Mặn</span>
@@ -2886,26 +3027,13 @@ html { scrollbar-gutter: stable; }
               <div class="price__row"><dt>Giá chương trình 24/7</dt><dd>320.320đ</dd></div>
               <div class="price__row price__row--final"><dt>Giá bạn thanh toán</dt><dd>320.320đ</dd></div>
             </dl>
-            <p class="price__serving">Chi phí mỗi bữa: <span>~80.080đ · 4 gói</span></p>
-            <p class="price__preview">Thành viên Silver chỉ trả 304.304đ · <a href="#">Tìm hiểu</a></p>
-            <details class="price__why">
-              <summary>Vì sao tôi có giá này?</summary>
-              <div class="price__breakdown">
-                <p class="price__breakdown-title">Cấu thành giá</p>
-                <dl>
-                  <div class="price__row"><dt>Giá niêm yết</dt><dd>364.000đ</dd></div>
-                  <div class="price__row"><dt>Giá chương trình 24/7</dt><dd>320.320đ</dd></div>
-                  <div class="price__row"><dt>Quyền lợi thành viên</dt><dd>Silver · 304.304đ</dd></div>
-                </dl>
-              </div>
-            </details>
             <div class="card__actions">
               <button type="button" class="btn btn--primary">Mua ngay</button>
               <button type="button" class="iconbtn" aria-label="Thêm Cháo Sâm – Tôm và Rong biển vào giỏ" title="Thêm Cháo Sâm – Tôm và Rong biển vào giỏ"><svg class="icon icon--fill" aria-hidden="true"><use href="#i-cart-shop"/></svg></button>
             </div>
           </article></li>
 
-          <li class="card" data-sku="C7/CS/THITGA"><article>
+          <li class="card" data-sku="C7/CS/THITGA" data-packs="4"><article>
             <a class="card__media" href="#">
               <img src="../public/products-image/thịt%20gà(3).webp" loading="lazy" decoding="async" width="1448" height="1086" alt="Hộp và gói Cháo Sâm Thịt gà bên thịt gà tươi và củ sâm">
               <span class="card__type">Mặn</span>
@@ -2917,26 +3045,13 @@ html { scrollbar-gutter: stable; }
               <div class="price__row"><dt>Giá chương trình 24/7</dt><dd>278.080đ</dd></div>
               <div class="price__row price__row--final"><dt>Giá bạn thanh toán</dt><dd>278.080đ</dd></div>
             </dl>
-            <p class="price__serving">Chi phí mỗi bữa: <span>~69.520đ · 4 gói</span></p>
-            <p class="price__preview">Thành viên Silver chỉ trả 264.176đ · <a href="#">Tìm hiểu</a></p>
-            <details class="price__why">
-              <summary>Vì sao tôi có giá này?</summary>
-              <div class="price__breakdown">
-                <p class="price__breakdown-title">Cấu thành giá</p>
-                <dl>
-                  <div class="price__row"><dt>Giá niêm yết</dt><dd>316.000đ</dd></div>
-                  <div class="price__row"><dt>Giá chương trình 24/7</dt><dd>278.080đ</dd></div>
-                  <div class="price__row"><dt>Quyền lợi thành viên</dt><dd>Silver · 264.176đ</dd></div>
-                </dl>
-              </div>
-            </details>
             <div class="card__actions">
               <button type="button" class="btn btn--primary">Mua ngay</button>
               <button type="button" class="iconbtn" aria-label="Thêm Cháo Sâm – Thịt gà vào giỏ" title="Thêm Cháo Sâm – Thịt gà vào giỏ"><svg class="icon icon--fill" aria-hidden="true"><use href="#i-cart-shop"/></svg></button>
             </div>
           </article></li>
 
-          <li class="card" data-sku="C8/CS/THITHEO"><article>
+          <li class="card" data-sku="C8/CS/THITHEO" data-packs="4"><article>
             <a class="card__media" href="#">
               <img src="../public/products-image/thịt%20heo(3).webp" loading="lazy" decoding="async" width="1448" height="1086" alt="Hộp và gói Cháo Sâm Thịt heo bên thịt heo tươi và củ sâm">
               <span class="card__type">Mặn</span>
@@ -2948,26 +3063,13 @@ html { scrollbar-gutter: stable; }
               <div class="price__row"><dt>Giá chương trình 24/7</dt><dd>271.040đ</dd></div>
               <div class="price__row price__row--final"><dt>Giá bạn thanh toán</dt><dd>271.040đ</dd></div>
             </dl>
-            <p class="price__serving">Chi phí mỗi bữa: <span>~67.760đ · 4 gói</span></p>
-            <p class="price__preview">Thành viên Silver chỉ trả 257.488đ · <a href="#">Tìm hiểu</a></p>
-            <details class="price__why">
-              <summary>Vì sao tôi có giá này?</summary>
-              <div class="price__breakdown">
-                <p class="price__breakdown-title">Cấu thành giá</p>
-                <dl>
-                  <div class="price__row"><dt>Giá niêm yết</dt><dd>308.000đ</dd></div>
-                  <div class="price__row"><dt>Giá chương trình 24/7</dt><dd>271.040đ</dd></div>
-                  <div class="price__row"><dt>Quyền lợi thành viên</dt><dd>Silver · 257.488đ</dd></div>
-                </dl>
-              </div>
-            </details>
             <div class="card__actions">
               <button type="button" class="btn btn--primary">Mua ngay</button>
               <button type="button" class="iconbtn" aria-label="Thêm Cháo Sâm – Thịt heo vào giỏ" title="Thêm Cháo Sâm – Thịt heo vào giỏ"><svg class="icon icon--fill" aria-hidden="true"><use href="#i-cart-shop"/></svg></button>
             </div>
           </article></li>
 
-          <li class="card" data-sku="C9/CS/THITBO"><article>
+          <li class="card" data-sku="C9/CS/THITBO" data-packs="4"><article>
             <a class="card__media" href="#">
               <img src="../public/products-image/thịt%20bò(2).webp" loading="lazy" decoding="async" width="1448" height="1086" alt="Hộp và gói Cháo Sâm Thịt bò bên thịt bò tươi và củ sâm">
               <span class="card__type">Mặn</span>
@@ -2979,19 +3081,6 @@ html { scrollbar-gutter: stable; }
               <div class="price__row"><dt>Giá chương trình 24/7</dt><dd>348.480đ</dd></div>
               <div class="price__row price__row--final"><dt>Giá bạn thanh toán</dt><dd>348.480đ</dd></div>
             </dl>
-            <p class="price__serving">Chi phí mỗi bữa: <span>~87.120đ · 4 gói</span></p>
-            <p class="price__preview">Thành viên Silver chỉ trả 331.056đ · <a href="#">Tìm hiểu</a></p>
-            <details class="price__why">
-              <summary>Vì sao tôi có giá này?</summary>
-              <div class="price__breakdown">
-                <p class="price__breakdown-title">Cấu thành giá</p>
-                <dl>
-                  <div class="price__row"><dt>Giá niêm yết</dt><dd>396.000đ</dd></div>
-                  <div class="price__row"><dt>Giá chương trình 24/7</dt><dd>348.480đ</dd></div>
-                  <div class="price__row"><dt>Quyền lợi thành viên</dt><dd>Silver · 331.056đ</dd></div>
-                </dl>
-              </div>
-            </details>
             <div class="card__actions">
               <button type="button" class="btn btn--primary">Mua ngay</button>
               <button type="button" class="iconbtn" aria-label="Thêm Cháo Sâm – Thịt bò vào giỏ" title="Thêm Cháo Sâm – Thịt bò vào giỏ"><svg class="icon icon--fill" aria-hidden="true"><use href="#i-cart-shop"/></svg></button>
@@ -3314,42 +3403,91 @@ html { scrollbar-gutter: stable; }
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
 
-  /* Menu di động */
+  /* Menu di động và bảng tìm kiếm: mở/đóng bằng lớp is-open (CSS lo chuyển động), có màn che,
+     khoá cuộn nền và giữ tiêu điểm trong lớp phủ — cùng một hệ với trang-chu.html */
   var navToggle = document.getElementById('navToggle');
   var mobileNav = document.getElementById('mobileNav');
+  var navScrim = document.getElementById('navScrim');
+  var searchToggle = document.getElementById('searchToggle');
+  var searchPanel = document.getElementById('searchPanel');
+  var searchInput = document.getElementById('searchPanelInput');
+  var mqTabs = window.matchMedia('(max-width: 1023px)');
+  var mqCompact = window.matchMedia('(max-width: 1279px)');
+  function navIsOpen() { return mobileNav.classList.contains('is-open'); }
+  function searchIsOpen() { return searchPanel.classList.contains('is-open'); }
+  /* Màn che và khoá cuộn dùng chung cho cả menu lẫn bảng tìm kiếm */
+  function syncOverlay() {
+    var on = navIsOpen() || searchIsOpen();
+    navScrim.classList.toggle('is-on', on);
+    document.body.classList.toggle('is-nav-open', on);
+  }
   function setNav(open) {
+    if (open === navIsOpen()) return;
+    if (open) setSearch(false);   /* hai lớp phủ cùng bám mép header, không mở đồng thời */
     mobileNav.classList.toggle('is-open', open);
     navToggle.setAttribute('aria-expanded', String(open));
     navToggle.setAttribute('aria-label', open ? 'Đóng menu' : 'Mở menu');
-    navToggle.querySelector('use').setAttribute('href', open ? '#i-close' : '#i-menu');
+    var navMorph = navToggle.closest('ui-menu-close-morph'); if (navMorph) navMorph.state = open ? 'close' : 'menu';
+    syncOverlay();
     if (open) mobileNav.querySelector('a').focus();
   }
-  navToggle.addEventListener('click', function () { setNav(!mobileNav.classList.contains('is-open')); });
+  function setSearch(open) {
+    if (open === searchIsOpen()) return;
+    if (open) setNav(false);
+    searchPanel.classList.toggle('is-open', open);
+    searchToggle.setAttribute('aria-expanded', String(open));
+    searchToggle.setAttribute('aria-label', open ? 'Đóng tìm kiếm' : 'Mở tìm kiếm');
+    searchToggle.querySelector('use').setAttribute('href', open ? '#i-close' : '#i-search');
+    syncOverlay();
+    if (open) searchInput.focus();
+  }
+  navToggle.addEventListener('click', function () { setNav(!navIsOpen()); });
+  searchToggle.addEventListener('click', function () { setSearch(!searchIsOpen()); });
+  document.getElementById('searchCancel').addEventListener('click', function () { setSearch(false); searchToggle.focus(); });
+  searchPanel.querySelector('form').addEventListener('submit', function (e) { e.preventDefault(); setSearch(false); }); /* mock: chưa có trang kết quả */
+  searchPanel.addEventListener('click', function (e) { if (e.target.closest('a')) setSearch(false); });
+  navScrim.addEventListener('click', function () {
+    if (searchIsOpen()) { setSearch(false); searchToggle.focus(); }
+    if (navIsOpen()) { setNav(false); navToggle.focus(); }
+  });
   document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape' && mobileNav.classList.contains('is-open')) { setNav(false); navToggle.focus(); }
+    var openPanel = navIsOpen() ? mobileNav : (searchIsOpen() ? searchPanel : null);
+    if (!openPanel) return;
+    var trigger = openPanel === mobileNav ? navToggle : searchToggle;
+    var close = openPanel === mobileNav ? setNav : setSearch;
+    if (e.key === 'Escape') { close(false); trigger.focus(); return; }
+    if (e.key !== 'Tab') return;
+    /* Giữ tiêu điểm trong lớp phủ: nền đã bị màn che, Tab không nên đi ra sau lưng nó */
+    var f = [trigger].concat(Array.prototype.slice.call(openPanel.querySelectorAll('a, button, input')));
+    var first = f[0], last = f[f.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
   });
   mobileNav.addEventListener('click', function (e) { if (e.target.closest('a')) setNav(false); });
+  /* Nới màn hình qua mốc desktop thì nút mở tương ứng biến mất, phải đóng kẻo lớp phủ kẹt lại */
+  mqTabs.addEventListener('change', function (e) { if (!e.matches) setNav(false); });
+  mqCompact.addEventListener('change', function (e) { if (!e.matches) setSearch(false); });
 
   /* Dải nhãn nhóm. Mọi nhóm đã đổ sẵn ra trang nên nhãn chỉ là liên kết neo:
      việc cuộn do chính trình duyệt lo (scroll-behavior: smooth + scroll-margin-top của .collection).
-     JS ở đây chỉ đánh dấu nhãn của nhóm đang xem, mở/đóng bảng nhãn trên điện thoại và đo chiều cao dải (--catbar-h). */
+     JS ở đây chỉ đánh dấu nhãn của nhóm đang xem, mở/đóng bảng nhãn trên điện thoại và đo chiều cao dải (--grpbar-h). */
   function scrollToGroup(id) {
     var target = document.getElementById(id);
     if (target) target.scrollIntoView({ block: 'start', behavior: reduceMotion ? 'auto' : 'smooth' });
   }
   (function () {
-    var nav = document.getElementById('catNav');
+    var nav = document.getElementById('grpNav');
     if (!nav) return;
-    var currentText = document.getElementById('catCurrent');
+    var currentText = document.getElementById('grpCurrent');
     var links = Array.prototype.slice.call(nav.querySelectorAll('a[href^="#col-"]'));
     var groups = links.map(function (a) { return document.getElementById(a.getAttribute('href').slice(1)); });
-    var bar = document.querySelector('.catbar');
+    var bar = document.querySelector('.grpbar'); var topBar = document.querySelector('.catbar[data-topic-bar]');
     var current = -1, raf = 0;
 
     /* Vạch mốc đặt thấp hơn chỗ nhóm đậu sau khi nhảy (scroll-margin-top) vài pixel,
        để nhóm vừa nhảy tới chắc chắn nằm trên vạch, không bị làm tròn lẻ đẩy sang nhóm trước. */
     function anchorLine() {
-      return window.scrollY + (header ? header.offsetHeight : 0) + (bar ? bar.offsetHeight : 0) + 28;
+      return window.scrollY + (header ? header.offsetHeight : 0) + ((topBar ? topBar.offsetHeight : 0) + (bar ? bar.offsetHeight : 0)) + 28;
     }
     function update() {
       var line = anchorLine(), idx = 0;
@@ -3371,7 +3509,7 @@ html { scrollbar-gutter: stable; }
     window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('resize', update);
     /* Điện thoại (≤767px): bấm nút mở/đóng bảng nhãn. Chọn nhãn, bấm ra ngoài dải, Esc hoặc nới màn qua 768px thì đóng. */
-    var toggle = document.getElementById('catToggle');
+    var toggle = document.getElementById('grpToggle');
     function setOpen(open) {
       bar.classList.toggle('is-open', open);
       if (toggle) toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
@@ -3383,7 +3521,7 @@ html { scrollbar-gutter: stable; }
       document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && bar.classList.contains('is-open')) { setOpen(false); toggle.focus(); } });
       window.matchMedia('(max-width: 767px)').addEventListener('change', function (e) { if (!e.matches) setOpen(false); });
     }
-    function syncHeight() { document.documentElement.style.setProperty('--catbar-h', bar.offsetHeight + 'px'); }
+    function syncHeight() { document.documentElement.style.setProperty('--grpbar-h', bar.offsetHeight + 'px'); }
     if ('ResizeObserver' in window) new ResizeObserver(syncHeight).observe(bar); else window.addEventListener('resize', syncHeight);
     syncHeight();
     update();
@@ -3583,5 +3721,6 @@ html { scrollbar-gutter: stable; }
   });
 })();
 </script>
+<script src="topic-bar.js"></script>
 </body>
 </html>

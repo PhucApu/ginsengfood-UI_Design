@@ -1670,7 +1670,7 @@
             <input id="inMail" name="email" type="email" autocomplete="email" placeholder="ban@email.com" aria-describedby="erMail">
             <p class="field__error" id="erMail"><svg class="icon" aria-hidden="true"><use href="#i-warning"/></svg>Email chưa đúng định dạng.</p>
           </div>
-          <div class="note"><p class="note__title">Có mã giới thiệu hội viên?</p><p>Hãy liên kết một lần tại trang Thành viên để hệ thống ghi nhận quyền lợi nếu đủ điều kiện.</p><a href="tai-khoan.html">Mở trang Thành viên</a></div>
+          <div class="note"><p class="note__title">Có mã giới thiệu thành viên?</p><p>Hãy liên kết một lần tại trang Thành viên để hệ thống ghi nhận quyền lợi nếu đủ điều kiện.</p><a href="tai-khoan.html">Mở trang Thành viên</a></div>
         </section>
 
         <!-- 2. Địa chỉ: hai cấp tỉnh/thành phố và phường/xã theo địa giới hành chính hiện hành -->
@@ -1702,7 +1702,7 @@
           </div>
           <div class="field" id="fAddress">
             <label class="field__label" for="inAddress">Địa chỉ cụ thể</label>
-            <input id="inAddress" name="address" type="text" autocomplete="street-address" placeholder="Số nhà, tên đường, toà nhà…" aria-describedby="hiAddress erAddress">
+            <input id="inAddress" name="address" type="text" autocomplete="street-address" placeholder="Số nhà, tên đường, tòa nhà…" aria-describedby="hiAddress erAddress">
             <p class="field__hint" id="hiAddress">Ghi rõ số nhà và tên đường để giao nhanh, đúng chỗ.</p>
             <p class="field__error" id="erAddress"><svg class="icon" aria-hidden="true"><use href="#i-warning"/></svg>Nhập số nhà và tên đường.</p>
           </div>
@@ -1787,7 +1787,7 @@
             <p>Link mời đã được ghi nhận. Hệ thống sẽ kiểm tra quyền lợi phù hợp khi đơn đủ điều kiện.</p>
           </div>
 
-          <p class="member-tip"><svg class="icon" aria-hidden="true"><use href="#i-gift"/></svg><span>Thành viên được hưởng đặc quyền tri ân từ <b>5% – 20%</b> theo hạng. <a href="dang-nhap.html">Đăng nhập hoặc đăng ký thành viên</a>.</span></p>
+          <p class="member-tip"><svg class="icon" aria-hidden="true"><use href="#i-gift"/></svg><span>Thành viên được hưởng đặc quyền tri ân từ <b>8% – 20%</b> theo hạng. <a href="dang-nhap.html">Đăng nhập hoặc đăng ký thành viên</a>.</span></p>
 
           <dl class="totals">
             <div><dt>Tạm tính</dt><dd id="sumSub">0đ</dd></div>
@@ -1923,7 +1923,7 @@
       { sku: 'A2/CS/BASA', name: 'Cháo Sâm Mùa Hạ – Cá Basa', img: '../public/home-webp-v1/products-image/c%C3%A1%20basa.w480.q90.webp', price: 295680, listed: 336000, pack: 'Hộp 4 gói', qty: 1 },
       { sku: 'C1/CS/BAONGU', name: 'Cháo Sâm – Bào ngư', img: '../public/home-webp-v1/products-image/b%C3%A0o%20ng%C6%B0.w480.q90.webp', price: 517440, listed: 588000, pack: 'Hộp 3 gói', qty: 1 },
     ];
-    function money(n) { return Math.round(n).toLocaleString('vi-VN') + '\u00a0₫'; }
+    function money(n) { return Math.round(n).toLocaleString('vi-VN') + 'đ'; }
     function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
     /* Giỏ từ drawer ở trang chủ (sessionStorage), chỉ nhận dữ liệu đúng dạng; ảnh chỉ nhận đường dẫn trong ../public/ */
     function loadItems() {

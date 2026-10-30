@@ -1,0 +1,153 @@
+/* Vai trò cộng tác viên ở các trang mua hàng theo hạng (chủ dự án chọn phương án A, 2026-10-29).
+   Phần 1 = viên vàng nổi bật của menu (chép nguyên từ khối #ctv-nav-feature của trang-chu-cong-tac-vien-v2.html, dùng cho mục "Trang nhà khởi nghiệp của bạn").
+   Phần 2 = ẩn/hiện theo vai trò: ../ctv-role.js đặt html[data-role="ctv"] khi người dùng đang là cộng tác viên; thành viên thường chỉ thấy mục "Khởi nghiệp cùng Ssavigroup" (mời đăng ký). */
+/* Mục "Trung tâm nhà khởi nghiệp" trong menu header (chủ dự án yêu cầu 2026-10-21: làm nổi bật mục này; chọn phương án A trong bốn kiểu A–D).
+   Trước đây mục chỉ là chữ ngà như bốn mục còn lại. Bây giờ là một viên thuốc vàng đặc, cùng dải vàng với nút "Đăng ký" của trang chủ khách,
+   để lối vào Trung tâm cộng tác viên là thứ dễ thấy nhất trên header:
+   · icon tên lửa (khởi nghiệp) và chữ navy #072A4E đậm trên nền vàng (tương phản từ 6:1 trên phần vàng đậm nhất của nút, #CDA130);
+   · nổi lên nhờ quầng sáng vàng quanh nút; cứ 6 giây một lượt có vệt sáng chéo lướt qua nút (nằm dưới chữ, không làm mờ chữ);
+   · rê chuột hoặc dùng bàn phím: nút nâng nhẹ, sáng hơn, tên lửa nhích chếch lên; nhấn: nhún xuống;
+   · bật "giảm chuyển động": chỉ còn nút tĩnh, không vệt sáng, không nâng khi rê; chế độ tương phản cao: viền và màu hệ thống;
+   · từ 1280px nút nằm trong hàng menu, cao 38px như các mục khác nên chữ trong nút thẳng hàng với bốn mục còn lại;
+   · dưới 1280px nút nằm trong menu mở ra (nền sáng): cùng kiểu, rộng hết bảng (tối đa 360px), cao 48px, chữ 16px.
+   Mã HTML chỉ thêm class nav-feature và icon (aria-hidden) vào hai liên kết (menu máy tính và menu điện thoại); chữ và đích liên kết không đổi. */
+.storefront-reference-shell .desktop-nav > a.nav-feature {
+  position: relative;
+  isolation: isolate;
+  gap: 7px;
+  min-height: 38px;
+  padding: 0 16px 0 12px;
+  border: 0;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #F6E3A5 0%, #E8C979 46%, #CDA130 100%);
+  background-color: #E8C979;
+  color: #072A4E;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.42);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.7),
+    inset 0 -2px 0 rgba(139, 98, 12, 0.26),
+    0 7px 16px -6px rgba(198, 154, 43, 0.8),
+    0 0 22px rgba(232, 201, 121, 0.3);
+  transition: transform 180ms cubic-bezier(0.2, 0.74, 0.18, 1), box-shadow 180ms cubic-bezier(0.2, 0.74, 0.18, 1), filter 180ms cubic-bezier(0.2, 0.74, 0.18, 1);
+}
+.storefront-reference-shell .desktop-nav > a.nav-feature:hover,
+.storefront-reference-shell .desktop-nav > a.nav-feature:focus-visible {
+  background: linear-gradient(180deg, #F6E3A5 0%, #E8C979 46%, #CDA130 100%);
+  background-color: #E8C979;
+  color: #072A4E;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.42);
+  transform: translateY(-1px);
+  filter: brightness(1.07) saturate(1.05);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.8),
+    inset 0 -2px 0 rgba(139, 98, 12, 0.24),
+    0 10px 20px -6px rgba(198, 154, 43, 0.9),
+    0 0 30px rgba(232, 201, 121, 0.45);
+}
+.storefront-reference-shell .desktop-nav > a.nav-feature:active { transform: translateY(0) scale(0.97); }
+
+/* Icon tên lửa: nét đặc, cùng màu chữ; rê chuột thì nhích chếch lên như sắp cất cánh. */
+.storefront-reference-shell .nav-feature .material-symbols-outlined {
+  flex: 0 0 auto;
+  color: currentcolor;
+  font-size: 19px;
+  font-variation-settings: "FILL" 1, "wght" 600, "GRAD" 0, "opsz" 20;
+  transition: transform 180ms cubic-bezier(0.2, 0.74, 0.18, 1);
+}
+.storefront-reference-shell .nav-feature:hover .material-symbols-outlined,
+.storefront-reference-shell .nav-feature:focus-visible .material-symbols-outlined { transform: translate(1.5px, -1.5px) scale(1.08); }
+
+/* Gạch chân vàng của mục menu bị ẩn (trên nền vàng không còn thấy); vệt sáng chéo (::before) nằm dưới chữ nhờ isolation: isolate ở liên kết. */
+.storefront-reference-shell .desktop-nav > a.nav-feature::after,
+.storefront-reference-shell .mobile-nav > a.nav-feature::after { display: none; }
+.storefront-reference-shell .desktop-nav > a.nav-feature::before,
+.storefront-reference-shell .mobile-nav > a.nav-feature::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  pointer-events: none;
+  background: linear-gradient(105deg, rgba(255, 255, 255, 0) 42%, rgba(255, 255, 255, 0.85) 50%, rgba(255, 255, 255, 0) 58%) 0 0 / 300% 100% no-repeat;
+}
+@keyframes navFeatureShine {
+  0% { background-position: 0% 0; }
+  22%, 100% { background-position: 100% 0; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .storefront-reference-shell .desktop-nav > a.nav-feature::before,
+  .storefront-reference-shell .mobile-nav > a.nav-feature::before { animation: navFeatureShine 6s ease-in-out 0.9s infinite; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .storefront-reference-shell .desktop-nav > a.nav-feature:hover,
+  .storefront-reference-shell .desktop-nav > a.nav-feature:focus-visible,
+  .storefront-reference-shell .desktop-nav > a.nav-feature:active { transform: none; }
+  .storefront-reference-shell .nav-feature:hover .material-symbols-outlined,
+  .storefront-reference-shell .nav-feature:focus-visible .material-symbols-outlined { transform: none; }
+}
+
+/* Dưới 1280px: mục nằm trong menu mở ra (nền sáng), viên thuốc rộng hết bảng nhưng không quá 360px, cao 48px, chữ 16px. */
+@media (max-width: 1279px) {
+  .storefront-reference-shell .mobile-nav > a.nav-feature {
+    position: relative;
+    isolation: isolate;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    max-width: 360px;
+    min-height: 48px;
+    margin: 6px 0;
+    padding: 0 22px;
+    border: 0;
+    border-radius: 999px;
+    background: linear-gradient(180deg, #F6E3A5 0%, #E8C979 46%, #CDA130 100%);
+    background-color: #E8C979;
+    color: #072A4E;
+    font-size: 16px;
+    font-weight: 800;
+    letter-spacing: 0.01em;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.42);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.7),
+      inset 0 -2px 0 rgba(139, 98, 12, 0.26),
+      0 0 0 1px rgba(198, 154, 43, 0.4),
+      0 8px 16px -8px rgba(198, 154, 43, 0.85);
+  }
+  .storefront-reference-shell .mobile-nav > a.nav-feature:hover,
+  .storefront-reference-shell .mobile-nav > a.nav-feature:focus-visible {
+    background: linear-gradient(180deg, #F6E3A5 0%, #E8C979 46%, #CDA130 100%);
+    background-color: #E8C979;
+    color: #072A4E;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.8),
+      inset 0 -2px 0 rgba(139, 98, 12, 0.24),
+      0 0 0 1px rgba(198, 154, 43, 0.55),
+      0 10px 18px -8px rgba(198, 154, 43, 0.95);
+  }
+  .storefront-reference-shell .mobile-nav > a.nav-feature .material-symbols-outlined { font-size: 22px; }
+}
+
+/* Chế độ tương phản cao: bỏ nền gradient và hiệu ứng, dùng màu hệ thống để chữ luôn đọc được. */
+@media (forced-colors: active) {
+  .storefront-reference-shell .desktop-nav > a.nav-feature,
+  .storefront-reference-shell .desktop-nav > a.nav-feature:hover,
+  .storefront-reference-shell .desktop-nav > a.nav-feature:focus-visible,
+  .storefront-reference-shell .mobile-nav > a.nav-feature,
+  .storefront-reference-shell .mobile-nav > a.nav-feature:hover,
+  .storefront-reference-shell .mobile-nav > a.nav-feature:focus-visible {
+    border: 1px solid ButtonText;
+    background: ButtonFace;
+    color: ButtonText;
+    box-shadow: none;
+    text-shadow: none;
+  }
+  .storefront-reference-shell .desktop-nav > a.nav-feature::before,
+  .storefront-reference-shell .mobile-nav > a.nav-feature::before { display: none; }
+}
+
+/* ---- Phần 2: ẩn/hiện theo vai trò ---- */
+html:not([data-role="ctv"]) .nav-ctv-home { display: none !important; }
+html[data-role="ctv"] .nav-ctv-join { display: none !important; }
+.mobile-nav > a.nav-ctv-home { text-wrap: balance; } /* menu ☰: chữ dài xuống 2 dòng cân nhau thay vì chừa một chữ lẻ */

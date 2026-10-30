@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="description" content="Ginsengfood – Trung tâm cộng tác viên: tổng quan kỳ đối soát, link chia sẻ, đơn từ link, hoa hồng và chi trả, kho tài nguyên quảng bá.">
+  <meta name="description" content="Ginsengfood – Trung tâm nhà khởi nghiệp: tổng quan kỳ đối soát, link chia sẻ, đơn từ link, hoa hồng và chi trả, kho tài nguyên quảng bá.">
   <meta name="theme-color" content="#072A4E">
-  <title>Ginsengfood – Trung tâm cộng tác viên</title>
+  <title>Ginsengfood – Trung tâm nhà khởi nghiệp</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -134,34 +134,45 @@
     [data-collaborator-center] .ctr-lead { margin: 4px 0 0; color: var(--gf-muted); font-size: 14.5px; }
     /* Khối trạng thái (đang tải, lỗi, chưa đăng nhập, không dùng được). */
     [data-collaborator-center] .ctr-state { max-width: 860px; margin: 0 auto; padding: 28px 28px 26px; border: 1px solid var(--gf-border); border-top: 3px solid var(--gf-navy); border-radius: 6px; background: var(--gf-white); box-shadow: 0 1px 2px rgba(16, 48, 95, 0.05), 0 14px 36px -22px rgba(16, 48, 95, 0.35); }
-    /* Thẻ cộng tác viên (bản mẫu .ctvid). Bố cục chủ dự án chọn 2026-10-21 (phương án A): dải navy ở trên (avatar, tên, ngày tham gia và trạng thái cùng một hàng), các thẻ tỷ lệ hoa hồng nằm ngay bên dưới. */
+    /* Thẻ cộng tác viên (bản mẫu .ctvid). Bố cục chủ dự án chọn 2026-10-21 (phương án A): dải ngà viền vàng ở trên (đổi từ navy ngày 2026-10-28 vì trùng màu thẻ 24/7 nền navy; từng thử vàng kim rồi chủ chọn nền ngà #FFF8EA + đường vàng 3px ở đáy dải; chữ, avatar và nhãn trạng thái dùng navy cho hợp nền sáng) (avatar, tên, ngày tham gia và trạng thái cùng một hàng), các thẻ tỷ lệ hoa hồng nằm ngay bên dưới. */
     [data-collaborator-center] .ctr-id { display: grid; grid-template-columns: minmax(0, 1fr); overflow: hidden; border: 1px solid var(--gf-border); border-radius: var(--gf-radius-xl); background: var(--gf-white); box-shadow: var(--gf-shadow-card); }
-    [data-collaborator-center] .ctr-id__me { display: flex; min-width: 0; flex-flow: row wrap; align-items: center; justify-content: space-between; gap: 10px 14px; padding: 16px 22px; background: var(--gf-navy); color: var(--gf-white); }
+    [data-collaborator-center] .ctr-id__me { display: flex; min-width: 0; flex-flow: row wrap; align-items: center; justify-content: space-between; gap: 10px 14px; padding: 16px 22px; background: var(--gf-ivory); color: var(--gf-navy); box-shadow: inset 0 -3px 0 var(--gf-gold); }
     [data-collaborator-center] .ctr-id__top { display: flex; min-width: 0; align-items: center; gap: 12px; }
-    [data-collaborator-center] .ctr-avatar { display: grid; width: 48px; height: 48px; flex: 0 0 auto; place-items: center; border: 1.5px solid var(--gf-gold); border-radius: 999px; background: #FFF3CC; color: var(--gf-gold-text); font-size: 16px; font-weight: 700; }
-    [data-collaborator-center] .ctr-id__name { margin: 0; color: var(--gf-white); font-size: 17px; font-weight: 700; overflow-wrap: anywhere; }
-    [data-collaborator-center] .ctr-id__since { margin: 0; color: #C9D3E0; font-size: 13px; }
+    [data-collaborator-center] .ctr-avatar { display: grid; width: 48px; height: 48px; flex: 0 0 auto; place-items: center; border: 1.5px solid var(--gf-white); border-radius: 999px; background: var(--gf-navy); color: #F8E3A0; font-size: 16px; font-weight: 700; }
+    [data-collaborator-center] .ctr-id__name { margin: 0; color: var(--gf-navy); font-size: 17px; font-weight: 700; overflow-wrap: anywhere; }
+    [data-collaborator-center] .ctr-id__since { margin: 0; color: #2A3F63; font-size: 13px; }
     [data-collaborator-center] .ctr-id__badges { display: flex; flex-wrap: wrap; gap: 8px; }
-    [data-collaborator-center] .ctr-pill { display: inline-flex; min-height: 28px; align-items: center; gap: 7px; padding: 0 12px; border: 1px solid rgba(232, 201, 121, 0.45); border-radius: 999px; background: rgba(232, 201, 121, 0.14); color: var(--gf-gold-soft); font-size: 13px; font-weight: 700; }
+    [data-collaborator-center] .ctr-pill { display: inline-flex; min-height: 28px; align-items: center; gap: 7px; padding: 0 12px; border: 1px solid rgba(16, 48, 95, 0.4); border-radius: 999px; background: rgba(16, 48, 95, 0.12); color: var(--gf-navy); font-size: 13px; font-weight: 700; }
     [data-collaborator-center] .ctr-pill::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
-    [data-collaborator-center] .ctr-pill[data-status="active"]::before { background: #5FD08A; }
-    [data-collaborator-center] .ctr-pill[data-status="suspended"], [data-collaborator-center] .ctr-pill[data-status="terms-required"] { border-color: rgba(255, 255, 255, 0.35); background: rgba(255, 255, 255, 0.12); color: var(--gf-white); }
-    [data-collaborator-center] .ctr-pill[data-status="suspended"]::before { background: #F5B949; }
-    [data-collaborator-center] .ctr-pill[data-status="terms-required"]::before { background: #F5B949; }
-    [data-collaborator-center] .ctr-pill[data-status="terminated"] { border-color: rgba(255, 255, 255, 0.25); background: rgba(255, 255, 255, 0.08); color: #C9D3E0; }
+    [data-collaborator-center] .ctr-pill[data-status="active"]::before { background: #1F7A4D; }
+    [data-collaborator-center] .ctr-pill[data-status="suspended"]::before { background: #8A4B00; }
+    [data-collaborator-center] .ctr-pill[data-status="terms-required"]::before { background: #8A4B00; }
+    [data-collaborator-center] .ctr-pill[data-status="terminated"] { border-color: rgba(16, 48, 95, 0.3); background: rgba(16, 48, 95, 0.08); color: #243553; }
     [data-collaborator-center] .ctr-id__rates { display: flex; min-width: 0; flex-direction: column; gap: 12px; padding: 18px 22px 20px; }
     [data-collaborator-center] .ctr-label { margin: 0; color: var(--gf-muted); font-size: 13px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; }
     [data-collaborator-center] .ctr-rates { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
     [data-collaborator-center] .ctr-rate { padding: 12px 14px; border: 1px solid var(--gf-border); border-radius: var(--gf-radius-md); background: var(--gf-cream); }
-    [data-collaborator-center] .ctr-rate[data-tone="golden"] { border-color: #EBD49B; background: #FFF6E5; }
+    /* Màu ba card (chủ dự án 2026-10-28, bộ màu 2 "đậm" do chủ chọn sau khi xem thử ba bộ): thẻ 24/7 nền navy, thẻ Giờ Vàng nền đỏ sẫm; nhãn trắng, số vàng nhạt, chú thích sáng; khung quyền lợi khách giữ vàng kem nên vẫn tách rõ hai thẻ đậm. Cùng ngày từng áp bộ màu 1 (xanh nhạt / hồng đỏ nhạt) rồi đổi sang bộ này; trước đó thẻ Giờ Vàng (#FFF6E5) và khung khách (#FFF8EA) gần như cùng màu vàng kem. */
+    [data-collaborator-center] .ctr-rate[data-tone="standard"] { border-color: var(--gf-navy); background: var(--gf-navy); }
+    [data-collaborator-center] .ctr-rate[data-tone="golden"] { border-color: var(--gf-burgundy); background: var(--gf-burgundy); }
+    [data-collaborator-center] .ctr-rate[data-tone="standard"] .ctr-rate__label, [data-collaborator-center] .ctr-rate[data-tone="golden"] .ctr-rate__label { color: var(--gf-white); }
     [data-collaborator-center] .ctr-rate__label { margin: 0 0 8px; color: var(--gf-text); font-size: 14px; font-weight: 600; line-height: 1.35; }
     [data-collaborator-center] .ctr-rate__rows { display: flex; flex-wrap: wrap; gap: 8px 18px; margin: 0; }
     [data-collaborator-center] .ctr-rate__rows > div { display: flex; min-width: 0; flex-direction: column-reverse; gap: 2px; }
-    [data-collaborator-center] .ctr-rate__rows dd { margin: 0; color: var(--gf-navy); font-family: var(--gf-font-serif), Georgia, serif; font-size: 28px; font-weight: 700; line-height: 1.1; font-variant-numeric: tabular-nums; }
-    [data-collaborator-center] .ctr-rate[data-tone="golden"] .ctr-rate__rows dd { color: var(--gf-burgundy); }
+    [data-collaborator-center] .ctr-rate__rows dd { margin: 0; color: #F8E3A0; font-family: var(--gf-font-serif), Georgia, serif; font-size: 28px; font-weight: 700; line-height: 1.1; font-variant-numeric: tabular-nums; }
     [data-collaborator-center] .ctr-rate__rows dt { color: var(--gf-muted); font-size: 13px; }
+    [data-collaborator-center] .ctr-rate[data-tone="standard"] .ctr-rate__rows dt { color: #C9D3E0; }
+    [data-collaborator-center] .ctr-rate[data-tone="golden"] .ctr-rate__rows dt { color: #F3D3CD; }
     [data-collaborator-center] .ctr-id__note { margin: 0; color: var(--gf-muted); font-size: 13px; line-height: 1.55; }
     [data-collaborator-center] .ctr-id__note a { color: var(--gf-navy); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
+    /* Quyền lợi của khách mua qua link (chủ dự án duyệt phương án A, 2026-10-28): khung vàng nhạt dưới ghi chú tỷ lệ, cùng chữ với card trang chủ CTV v2. Nền ngà, viền vàng mảnh + vạch vàng 4px mép trái như khung mời ở các trang khác; hai ý cạnh nhau, dưới 768px xếp dọc. */
+    [data-collaborator-center] .ctr-guest { display: flex; min-width: 0; flex-direction: column; gap: 10px; padding: 12px 16px 14px; border: 1px solid #EBD49B; border-left: 4px solid var(--gf-gold); border-radius: var(--gf-radius-md); background: var(--gf-ivory); }
+    [data-collaborator-center] .ctr-guest__title { margin: 0; display: flex; align-items: center; gap: 8px; color: var(--gf-gold-text); font-size: 14px; font-weight: 700; line-height: 1.35; }
+    [data-collaborator-center] .ctr-guest__title .ctr-icon { width: 18px; height: 18px; }
+    [data-collaborator-center] .ctr-guest__list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px 20px; margin: 0; padding: 0; list-style: none; }
+    [data-collaborator-center] .ctr-guest__list li { display: flex; min-width: 0; align-items: center; gap: 10px; color: var(--gf-text); font-size: 14px; line-height: 1.4; }
+    [data-collaborator-center] .ctr-guest__list .ctr-icon { width: 30px; height: 30px; padding: 6px; border: 1px solid #EBD49B; border-radius: 50%; background: var(--gf-white); color: var(--gf-gold-text); }
+    [data-collaborator-center] .ctr-guest__list b { color: var(--gf-navy); font-size: 15.5px; font-weight: 800; font-variant-numeric: tabular-nums; } /* cùng kiểu số ở card trang chủ CTV v2: chữ không chân của dòng, đậm 800, 15,5px; trước đó dùng chữ có chân 18px nên lệch phông với phần chữ còn lại */
     /* Thông báo khoá (chế độ chỉ xem lịch sử). */
     [data-collaborator-center] .ctr-locked { display: flex; align-items: flex-start; gap: 14px; padding: 16px 18px; border: 1px solid #E3C47A; border-radius: var(--gf-radius-md); background: var(--gf-ivory); }
     [data-collaborator-center] .ctr-locked__icon { display: grid; width: 40px; height: 40px; flex: 0 0 auto; place-items: center; border-radius: 12px; background: var(--gf-white); color: #B7791F; }
@@ -180,11 +191,21 @@
     [data-collaborator-center] .ctr-note { margin: 0; color: var(--gf-muted); font-size: 13px; line-height: 1.55; }
     /* Chip chọn tháng / trạng thái. */
     [data-collaborator-center] .ctr-chips { display: flex; flex-wrap: wrap; gap: 8px; }
-    [data-collaborator-center] .ctr-chip { display: inline-flex; min-height: 44px; align-items: center; gap: 8px; padding: 0 14px; border: 1px solid var(--gf-border); border-radius: 999px; background: var(--gf-white); color: var(--gf-text); cursor: pointer; font: inherit; font-size: 14px; font-weight: 600; white-space: nowrap; transition: background var(--gf-motion-base) var(--gf-ease-standard), border-color var(--gf-motion-base) var(--gf-ease-standard), color var(--gf-motion-base) var(--gf-ease-standard); }
+    [data-collaborator-center] .ctr-chip { display: inline-flex; min-height: 36px; align-items: center; gap: 6px; padding: 0 12px; border: 1px solid var(--gf-border); border-radius: 999px; background: var(--gf-white); color: var(--gf-text); cursor: pointer; font: inherit; font-size: 14px; font-weight: 600; white-space: nowrap; transition: background var(--gf-motion-base) var(--gf-ease-standard), border-color var(--gf-motion-base) var(--gf-ease-standard), color var(--gf-motion-base) var(--gf-ease-standard); }
     [data-collaborator-center] .ctr-chip:hover { border-color: var(--gf-navy-700); }
     [data-collaborator-center] .ctr-chip[aria-pressed="true"] { border-color: var(--gf-navy); background: var(--gf-navy); color: var(--gf-white); }
-    [data-collaborator-center] .ctr-chip__count { display: inline-grid; min-width: 24px; height: 24px; place-items: center; padding: 0 6px; border-radius: 999px; background: var(--gf-sand); color: var(--gf-text); font-size: 13px; font-variant-numeric: tabular-nums; }
+    [data-collaborator-center] .ctr-chip__count { display: inline-grid; min-width: 22px; height: 22px; place-items: center; padding: 0 6px; border-radius: 999px; background: var(--gf-sand); color: var(--gf-text); font-size: 13px; font-variant-numeric: tabular-nums; }
     [data-collaborator-center] .ctr-chip[aria-pressed="true"] .ctr-chip__count { background: rgba(255, 255, 255, 0.18); color: var(--gf-white); }
+    /* Chip (lọc trạng thái ở "Đơn từ link", tin nhắn gợi ý ở "Link chia sẻ", tab ở "Kho tài nguyên") cao 36px, ô đếm 22px (bản 44px / 24px bị chủ chê quá to, 29/10); trên màn hình cảm ứng vùng chạm vẫn đủ 44px nhờ phần mở rộng vô hình (inset -5px vì tính từ mép trong của viền 1px, tức nới 4px ra mỗi phía; các hàng chip cách nhau 8px nên vừa khít). */
+    @media (pointer: coarse) {
+      [data-collaborator-center] .ctr-chip { position: relative; }
+      [data-collaborator-center] .ctr-chip::after { content: ""; position: absolute; inset: -5px 0; }
+    }
+    /* Khổ hàng (từ 1280px): mọi ô của lưới lọc canh theo đáy hàng như hai nút bên phải; chip (36px) nâng 4px để cùng tâm với ô Tháng và nút (44px). */
+    @media (min-width: 1280px) {
+      [data-collaborator-center] .ctr-filter__grid { align-items: end; }
+      [data-collaborator-center] .ctr-filter .ctr-chips { margin-bottom: 4px; }
+    }
     /* Tổng quan. */
     [data-collaborator-center] .ctr-metrics { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 0; }
     [data-collaborator-center] .ctr-metric { display: flex; min-width: 0; flex-direction: column; gap: 4px; padding: 14px 16px; border: 1px solid var(--gf-border); border-radius: var(--gf-radius-lg); background: var(--gf-cream); }
@@ -348,6 +369,83 @@
     [data-collaborator-center] .ctr-chart__more[open] summary { margin-bottom: 4px; }
     [data-collaborator-center] .ctr-chart__more .ctr-table-wrap { background: var(--gf-white); }
     [data-collaborator-center] .ctr-chart__sr { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip-path: inset(50%); border: 0; white-space: nowrap; }
+    /* Thống kê theo tuần / theo tháng (khối Tổng quan): bảng trải hết bề ngang dưới hai biểu đồ, cột hoa hồng có thanh ngang để so các kỳ với nhau. Bảng do script dựng từ số có sẵn trong trang; từ 767px trở xuống mỗi hàng thành một thẻ nên không phải cuộn ngang (bảng cần tối thiểu khoảng 590px). */
+    [data-collaborator-center] .ctr-chart--stats { gap: 12px; }
+    [data-collaborator-center] .ctr-stats__head { display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: 10px 16px; }
+    [data-collaborator-center] .ctr-stats__head .ctr-chart__sub { max-width: 64ch; }
+    [data-collaborator-center] .ctr-stats__head > div:first-child { flex: 1 1 340px; min-width: 0; }
+    [data-collaborator-center] .ctr-stats__scope { display: inline-flex; max-width: 100%; align-items: center; align-self: flex-start; gap: 8px; margin: 0; padding: 7px 14px; border: 1px solid var(--gf-border-strong); border-radius: 18px; background: #EEF3F8; color: var(--gf-navy); font-size: 14px; font-weight: 600; line-height: 1.35; }
+    [data-collaborator-center] .ctr-stats__scope .ctr-icon { width: 16px; height: 16px; color: var(--gf-navy-700); }
+    [data-collaborator-center] .ctr-stats .ctr-table-wrap { background: var(--gf-white); }
+    [data-collaborator-center] .ctr-stats .ctr-table-wrap:focus-visible { outline: none; box-shadow: var(--gf-focus-ring); }
+    [data-collaborator-center] .ctr-stats-table { min-width: 540px; }
+    [data-collaborator-center] .ctr-stats-table thead th, [data-collaborator-center] .ctr-stats-table thead th.ctr-num { vertical-align: bottom; white-space: normal; letter-spacing: 0; line-height: 1.35; }
+    [data-collaborator-center] .ctr-stats-table thead th:nth-child(1) { width: 28%; }
+    [data-collaborator-center] .ctr-stats-table thead th:nth-child(2) { width: 10%; }
+    [data-collaborator-center] .ctr-stats-table thead th:nth-child(3) { width: 16%; }
+    [data-collaborator-center] .ctr-stats-table thead th:nth-child(4) { width: 34%; }
+    [data-collaborator-center] .ctr-stats-table thead th:nth-child(5) { width: 12%; }
+    [data-collaborator-center] .ctr-stats-table thead th, [data-collaborator-center] .ctr-stats-table tbody th, [data-collaborator-center] .ctr-stats-table tfoot th, [data-collaborator-center] .ctr-stats-table td { padding-left: 10px; padding-right: 10px; }
+    [data-collaborator-center] .ctr-stats-table tr > :first-child { padding-left: 14px; }
+    [data-collaborator-center] .ctr-stats-table tr > :last-child { padding-right: 14px; }
+    [data-collaborator-center] .ctr-stats-table tbody tr[data-open] > * { background: #FFFAEE; }
+    [data-collaborator-center] .ctr-stats-table tbody tr:hover > * { background: var(--gf-cream); }
+    [data-collaborator-center] .ctr-stats-table tbody tr[data-selected] > * { background: #EEF3F8; }
+    [data-collaborator-center] .ctr-stats-table tbody tr[data-selected] > :first-child { box-shadow: inset 4px 0 0 var(--gf-navy); }
+    /* Chữ xám phụ trên nền xanh nhạt của hàng đang chọn chỉ 4,46:1: đậm hơn để đạt 4,5. */
+    [data-collaborator-center] .ctr-stats-table tbody tr[data-selected] .ctr-stats__sub:not([data-tone="wait"]), [data-collaborator-center] .ctr-stats-table tbody tr[data-selected] .ctr-stats__zero { color: #5B6678; }
+    [data-collaborator-center] .ctr-stats__period { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 6px; }
+    [data-collaborator-center] .ctr-stats__name { color: var(--gf-navy); font-weight: 700; white-space: nowrap; }
+    [data-collaborator-center] .ctr-stats__sub { display: block; margin-top: 2px; color: var(--gf-muted); font-size: 13px; font-weight: 400; line-height: 1.4; }
+    [data-collaborator-center] .ctr-stats__sub[data-tone="wait"] { color: #8A5A0B; }
+    [data-collaborator-center] .ctr-stats__best { display: inline-flex; min-height: 22px; align-items: center; padding: 0 8px; border-radius: 999px; background: #FBEFC8; color: #6B4A06; font-size: 13px; font-weight: 700; line-height: 1; white-space: nowrap; }
+    [data-collaborator-center] .ctr-stats__comm { display: flex; align-items: center; justify-content: flex-end; gap: 10px; }
+    [data-collaborator-center] .ctr-stats__bar { flex: 1 1 auto; min-width: 44px; height: 12px; border-radius: 999px; background: var(--gf-sand); }
+    [data-collaborator-center] .ctr-stats__fill { display: block; height: 100%; box-sizing: border-box; border-radius: 999px; background: linear-gradient(90deg, var(--gf-navy-700), var(--gf-navy)); }
+    [data-collaborator-center] .ctr-stats__fill[data-open] { border: 1.5px dashed var(--gf-warning); background: linear-gradient(90deg, #FBE6AE, #F1BF55); }
+    [data-collaborator-center] .ctr-stats__val { flex: 0 0 auto; min-width: 82px; text-align: right; }
+    [data-collaborator-center] .ctr-stats__wait { color: #8A5A0B; font-weight: 700; }
+    [data-collaborator-center] .ctr-stats__zero { color: var(--gf-muted); }
+    [data-collaborator-center] .ctr-stats__empty { padding: 22px 14px; color: var(--gf-muted); text-align: center; }
+    @keyframes ctrStatsGrow { from { clip-path: inset(0 100% 0 0 round 999px); } to { clip-path: inset(0 0 0 0 round 999px); } }
+    @media (prefers-reduced-motion: no-preference) {
+      [data-collaborator-center] .ctr-stats__fill { animation: ctrStatsGrow 420ms var(--gf-ease-standard) both; }
+    }
+    @media (forced-colors: active) {
+      [data-collaborator-center] .ctr-stats__bar { border: 1px solid CanvasText; background: Canvas; }
+      [data-collaborator-center] .ctr-stats__fill, [data-collaborator-center] .ctr-stats__fill[data-open] { border-color: CanvasText; background: CanvasText; }
+      [data-collaborator-center] .ctr-stats__best { border: 1px solid CanvasText; }
+    }
+    /* Khổ hẹp: mỗi hàng là một thẻ (kỳ, hoa hồng kèm thanh ngay dưới, rồi đơn hợp lệ, đơn chờ, doanh số), mỗi chỉ số một dòng nhãn – giá trị. Hàng tiêu đề cột chỉ còn cho trình đọc màn hình (ẩn khỏi mắt nhìn), nhãn từng ô lấy từ data-label. */
+    @media (max-width: 767px) {
+      [data-collaborator-center] .ctr-stats .ctr-table-wrap { overflow: visible; border: 0; border-radius: 0; background: transparent; }
+      [data-collaborator-center] .ctr-stats-table { display: block; min-width: 0; }
+      [data-collaborator-center] .ctr-stats-table thead { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip-path: inset(50%); }
+      [data-collaborator-center] .ctr-stats-table tbody, [data-collaborator-center] .ctr-stats-table tfoot { display: grid; gap: 10px; }
+      [data-collaborator-center] .ctr-stats-table tfoot { margin-top: 10px; }
+      [data-collaborator-center] .ctr-stats-table tr { display: grid; grid-template-columns: minmax(0, 1fr); gap: 8px; padding: 12px 14px; border: 1px solid var(--gf-border); border-radius: var(--gf-radius-md); background: var(--gf-white); }
+      [data-collaborator-center] .ctr-stats-table tbody tr[data-open] { background: #FFFAEE; }
+      [data-collaborator-center] .ctr-stats-table tfoot tr { border-color: var(--gf-border-strong); background: var(--gf-cream); }
+      [data-collaborator-center] .ctr-stats-table tbody th, [data-collaborator-center] .ctr-stats-table tfoot th, [data-collaborator-center] .ctr-stats-table tfoot td, [data-collaborator-center] .ctr-stats-table td, [data-collaborator-center] .ctr-stats-table td.ctr-num, [data-collaborator-center] .ctr-stats-table tr > :first-child, [data-collaborator-center] .ctr-stats-table tr > :last-child { display: block; min-width: 0; padding: 0; border: 0; background: transparent; text-align: left; }
+      /* Nền hàng đang mở / đang trỏ / đang chọn của kiểu bảng chỉ bỏ nền; tách riêng khỏi luật trên vì độ ưu tiên của các bộ chọn này cao hơn luật xếp ô bên dưới (gộp chung sẽ ép ô về display: block). Thẻ đang chọn đổi nền + viền thẻ. */
+      [data-collaborator-center] .ctr-stats-table tbody tr[data-open] > *, [data-collaborator-center] .ctr-stats-table tbody tr:hover > *, [data-collaborator-center] .ctr-stats-table tbody tr[data-selected] > * { background: transparent; }
+      [data-collaborator-center] .ctr-stats-table tbody tr[data-selected] { border-color: var(--gf-navy-700); background: #EEF3F8; }
+      [data-collaborator-center] .ctr-stats-table tbody tr[data-selected] > :first-child { box-shadow: none; }
+      [data-collaborator-center] .ctr-stats-table tbody tr[data-selected] td[data-label]::before { color: #5B6678; }
+      [data-collaborator-center] .ctr-stats-table tbody th, [data-collaborator-center] .ctr-stats-table tfoot th { grid-column: 1 / -1; }
+      [data-collaborator-center] .ctr-stats-table td.ctr-num { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; font-size: 15px; font-weight: 600; }
+      [data-collaborator-center] .ctr-stats-table tfoot td.ctr-num, [data-collaborator-center] .ctr-stats-table td.ctr-comm { font-weight: 700; }
+      [data-collaborator-center] .ctr-stats-table td[data-label]::before { content: attr(data-label); color: var(--gf-muted); font-size: 14px; font-weight: 400; line-height: 1.35; white-space: normal; }
+      [data-collaborator-center] .ctr-stats-table td.ctr-num:nth-child(2) { order: 2; }
+      [data-collaborator-center] .ctr-stats-table td.ctr-num:nth-child(5) { order: 3; }
+      [data-collaborator-center] .ctr-stats-table td.ctr-num:nth-child(3) { grid-column: 1 / -1; order: 4; }
+      [data-collaborator-center] .ctr-stats-table td.ctr-num:nth-child(4) { display: grid; grid-column: 1 / -1; grid-template-columns: minmax(0, 1fr) auto; align-items: baseline; gap: 6px 10px; order: 1; }
+      [data-collaborator-center] .ctr-stats-table td:nth-child(4) .ctr-stats__comm { display: contents; }
+      [data-collaborator-center] .ctr-stats-table td:nth-child(4)::before { grid-column: 1; grid-row: 1; }
+      [data-collaborator-center] .ctr-stats-table td:nth-child(4) .ctr-stats__val { grid-column: 2; grid-row: 1; min-width: 0; font-size: 16px; }
+      [data-collaborator-center] .ctr-stats-table td:nth-child(4) .ctr-stats__bar { grid-column: 1 / -1; grid-row: 2; }
+      [data-collaborator-center] .ctr-stats-table td.ctr-stats__empty { display: block; grid-column: 1 / -1; padding: 18px 6px; font-weight: 400; text-align: center; }
+    }
     @media (max-width: 767px) {
       [data-collaborator-center] .ctr-chart { padding: 12px; }
     }
@@ -389,6 +487,7 @@
       [data-collaborator-center] .ctr-id__me, [data-collaborator-center] .ctr-id__rates { padding: 16px; }
       [data-collaborator-center] .ctr-rates { grid-template-columns: minmax(0, 1fr); }
       [data-collaborator-center] .ctr-rate__rows dd { font-size: 26px; }
+      [data-collaborator-center] .ctr-guest__list { grid-template-columns: minmax(0, 1fr); }
       [data-collaborator-center] .ctr-metrics { grid-template-columns: minmax(0, 1fr); gap: 8px; }
       [data-collaborator-center] .ctr-metric { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; column-gap: 12px; padding: 12px 14px; }
       [data-collaborator-center] .ctr-metric dt, [data-collaborator-center] .ctr-metric__note { grid-column: 1; }
@@ -475,7 +574,31 @@
     [data-collaborator-center] .ctr-asset__body { display: flex; min-width: 0; flex: 1 1 auto; flex-direction: column; gap: 4px; padding: 12px 14px 14px; }
     [data-collaborator-center] .ctr-asset__name { margin: 0; color: var(--gf-text); font-size: 14.5px; font-weight: 600; line-height: 1.35; overflow-wrap: anywhere; }
     [data-collaborator-center] .ctr-asset__meta { margin: 0; color: var(--gf-muted); font-size: 13px; }
-    [data-collaborator-center] .ctr-asset__acts { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+    [data-collaborator-center] .ctr-asset__acts { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: 8px; } /* hai nút Xem / Tải xuống căn giữa thẻ (chủ dự án 2026-10-29) */
+    /* Nút "Xem" / "Tải xuống" ở thẻ tài nguyên cao 36px (bản 44px bị chủ chê quá to, 29/10), cùng cỡ với chip tab của Kho tài nguyên; trên màn hình cảm ứng vùng chạm vẫn đủ 44px nhờ phần mở rộng vô hình (inset -5px = nới 4px mỗi phía; hai hàng nút cách nhau 8px nên vừa khít). */
+    [data-collaborator-center] .ctr-asset__acts .ctr-btn { min-height: 36px; padding: 0 14px; font-size: 14px; }
+    [data-collaborator-center] .ctr-asset__acts .ctr-btn .ctr-icon { width: 16px; height: 16px; }
+    @media (pointer: coarse) {
+      [data-collaborator-center] .ctr-asset__acts .ctr-btn { position: relative; }
+      [data-collaborator-center] .ctr-asset__acts .ctr-btn::after { content: ""; position: absolute; inset: -5px 0; }
+    }
+    /* Biểu tượng tải xuống biến hình (<ui-download-morph>, ../download-morph.css; chủ dự án mô tả 2026-10-29): 20px trong nút cao 36px; màu hoàn tất/thất bại chọn theo nền navy của nút (tương phản ≥4,5 ở cả nền thường lẫn khi rê chuột). Nút đang tải vẫn ở trong thứ tự Tab, báo bận bằng aria-disabled, nên không làm mờ như nút bị khoá thật. */
+    [data-collaborator-center] .ctr-asset__acts ui-download-morph { --dm-size: 20px; --dm-success: #86EFAC; --dm-error: #FFC4B8; }
+    [data-collaborator-center] .ctr-asset__acts .ctr-btn[aria-disabled="true"] { opacity: 1; cursor: progress; }
+    /* Nút Tải xuống đổi theo trạng thái, không chỉ biểu tượng (chủ dự án 2026-10-29): chữ "Tải xuống" → "Đang tải" → "Đã tải" (hoặc "Thử lại"), nền navy → xanh lá khi xong (--ctr-ok) / đỏ khi lỗi (--ctr-danger). Bốn nhãn xếp chồng trong một ô lưới (cái không dùng chỉ ẩn bằng visibility) nên nút luôn rộng bằng nhãn dài nhất: đổi chữ không làm lệch hàng hai nút đang căn giữa. Trên nền xanh/đỏ, vòng và dấu vẽ bằng màu chữ (trắng) để đủ tương phản. */
+    [data-collaborator-center] .ctr-dl__label { display: inline-grid; justify-items: center; }
+    [data-collaborator-center] .ctr-dl__label > span { grid-area: 1 / 1; visibility: hidden; }
+    [data-collaborator-center] .ctr-asset__acts ui-download-morph:not([state]) .ctr-dl__label > [data-for="idle"], [data-collaborator-center] .ctr-asset__acts ui-download-morph[state="idle"] .ctr-dl__label > [data-for="idle"], [data-collaborator-center] .ctr-asset__acts ui-download-morph[state="loading"] .ctr-dl__label > [data-for="loading"], [data-collaborator-center] .ctr-asset__acts ui-download-morph[state="done"] .ctr-dl__label > [data-for="done"], [data-collaborator-center] .ctr-asset__acts ui-download-morph[state="error"] .ctr-dl__label > [data-for="error"] { visibility: visible; }
+    [data-collaborator-center] .ctr-asset__acts ui-download-morph > a { transition: background-color calc(var(--dm-duration) * 0.4) var(--dm-ease), border-color calc(var(--dm-duration) * 0.4) var(--dm-ease), color calc(var(--dm-duration) * 0.4) var(--dm-ease); }
+    [data-collaborator-center] .ctr-asset__acts ui-download-morph[state="done"] { --dm-success: currentColor; }
+    [data-collaborator-center] .ctr-asset__acts ui-download-morph[state="done"] > a { border-color: var(--ctr-ok); background: var(--ctr-ok); }
+    [data-collaborator-center] .ctr-asset__acts ui-download-morph[state="done"] > a:hover { border-color: #245A3C; background: #245A3C; }
+    [data-collaborator-center] .ctr-asset__acts ui-download-morph[state="error"] { --dm-error: currentColor; }
+    [data-collaborator-center] .ctr-asset__acts ui-download-morph[state="error"] > a { border-color: var(--ctr-danger); background: var(--ctr-danger); }
+    [data-collaborator-center] .ctr-asset__acts ui-download-morph[state="error"] > a:hover { border-color: #912018; background: #912018; }
+    @media (prefers-reduced-motion: reduce) {
+      [data-collaborator-center] .ctr-asset__acts ui-download-morph > a { transition: none; }
+    }
     [data-collaborator-center] .ctr-comingsoon { display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 26px 14px; border: 1px dashed var(--gf-border-strong); border-radius: var(--gf-radius-lg); color: var(--gf-muted); font-size: 14px; text-align: center; }
     [data-collaborator-center] .ctr-comingsoon p { margin: 0; }
     [data-collaborator-center] .ctr-comingsoon__tag { display: inline-flex; height: 28px; align-items: center; padding: 0 12px; border: 1px solid var(--gf-border); border-radius: 999px; background: var(--gf-white); color: var(--gf-gold-text); font-size: 13px; font-weight: 700; }
@@ -564,6 +687,28 @@
     [data-collaborator-center] .ctr-select:focus-visible { outline: none; box-shadow: var(--gf-focus-ring); }
     [data-collaborator-center] .ctr-select .ctr-icon { width: 20px; height: 20px; color: var(--gf-muted); }
     [data-collaborator-center] select.ctr-select { display: block; padding-right: 40px; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23667085' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6.5 9.5L12 15l5.5-5.5'/%3E%3C/svg%3E"); background-position: right 12px center; background-repeat: no-repeat; background-size: 20px; }
+    /* Bộ lọc kỳ của Tổng quan: hai droplist Tháng + Tuần theo kiểu DropdownSelect dùng chung (dòng phụ mô tả + dấu tick ở dòng đang chọn). Tuần phụ thuộc tháng; dưới 600px hai ô xếp dọc. */
+    [data-collaborator-center] .ctr-period__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 280px)); gap: 12px 16px; }
+    [data-collaborator-center] .ctr-dd { position: relative; }
+    [data-collaborator-center] .ctr-select[aria-expanded="true"] { border-color: var(--gf-navy-700); box-shadow: var(--gf-focus-ring); }
+    [data-collaborator-center] .ctr-select[aria-expanded="true"] .ctr-icon { transform: rotate(180deg); }
+    [data-collaborator-center] .ctr-listbox { position: absolute; z-index: 30; top: calc(100% + 4px); left: 0; right: 0; max-height: 340px; overflow-y: auto; padding: 4px 0; border: 1px solid rgba(223, 191, 188, 0.3); border-radius: var(--gf-radius-sm); background: var(--gf-white); box-shadow: 0 20px 60px -15px rgba(27, 28, 26, 0.24); }
+    [data-collaborator-center] .ctr-option { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; min-height: 44px; padding: 8px 12px; color: #1B1C1A; font-family: Manrope, var(--gf-font-sans); font-size: 14px; line-height: 20px; cursor: pointer; }
+    [data-collaborator-center] .ctr-option:hover, [data-collaborator-center] .ctr-option:focus { background: #F5F3EF; outline: none; }
+    [data-collaborator-center] .ctr-option:focus-visible { box-shadow: inset 0 0 0 2px var(--gf-navy-700); }
+    [data-collaborator-center] .ctr-option[aria-selected="true"] { background: var(--gf-silver-surface); color: var(--gf-navy); }
+    [data-collaborator-center] .ctr-option__label { display: block; font-weight: 500; }
+    [data-collaborator-center] .ctr-option__desc { display: block; color: #5B6678; font-size: 13px; line-height: 18px; }
+    [data-collaborator-center] .ctr-option[data-tone="wait"] .ctr-option__desc { color: #8A5A0B; }
+    [data-collaborator-center] .ctr-option .ctr-icon { flex: 0 0 auto; width: 18px; height: 18px; margin-top: 2px; color: var(--gf-navy); visibility: hidden; }
+    [data-collaborator-center] .ctr-option[aria-selected="true"] .ctr-icon { visibility: visible; }
+    @media (max-width: 599px) {
+      [data-collaborator-center] .ctr-period__grid { grid-template-columns: minmax(0, 1fr); }
+    }
+    @media (forced-colors: active) {
+      [data-collaborator-center] .ctr-listbox { border-color: CanvasText; }
+      [data-collaborator-center] .ctr-option[aria-selected="true"] { outline: 2px solid Highlight; outline-offset: -2px; }
+    }
     /* Chip "Chưa tính" (DataGapChip) và nhãn trạng thái đơn (StateBadge). */
     [data-collaborator-center] .ctr-gap { display: inline-flex; width: fit-content; max-width: 100%; align-items: center; padding: 2px 10px; border-radius: 999px; background: var(--gf-silver-surface); color: var(--gf-silver-text); font-weight: 500; line-height: 1; }
     [data-collaborator-center] .ctr-status { display: inline-flex; width: fit-content; max-width: 100%; align-items: center; border-width: 1px; border-style: solid; border-radius: 999px; white-space: nowrap; }
@@ -1939,6 +2084,7 @@
   html[data-ctr-sheet="open"] .gf-cw__dock { visibility: hidden; }
 }
 </style>
+<link rel="stylesheet" href="../download-morph.css">
 </head>
 <body>
 
@@ -2012,12 +2158,16 @@
     <symbol id="c-reset" viewBox="0 0 24 24"><path d="M4.5 12a7.5 7.5 0 0113-5.1M19.5 12a7.5 7.5 0 01-13 5.1"/><path d="M17.5 3.5v4h-4M6.5 20.5v-4h4"/></symbol>
     <symbol id="c-chev" viewBox="0 0 24 24"><path d="M6.5 9.5L12 15l5.5-5.5"/></symbol>
     <symbol id="c-lock" viewBox="0 0 24 24"><rect x="5" y="10.5" width="14" height="9.5" rx="2.5"/><path d="M8.5 10.5V8a3.5 3.5 0 017 0v2.5"/></symbol>
+    <symbol id="c-percent" viewBox="0 0 24 24"><circle cx="7.2" cy="7.2" r="2.6"/><circle cx="16.8" cy="16.8" r="2.6"/><path d="M18.5 5.5l-13 13"/></symbol>
+    <symbol id="c-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></symbol>
+    <symbol id="c-gift" viewBox="0 0 24 24"><path d="M4 11h16v9H4z"/><path d="M3 7h18v4H3z"/><path d="M12 7v13"/><path d="M12 7c-1.5-3-5-3.5-5-1.5S10.5 7 12 7zm0 0c1.5-3 5-3.5 5-1.5S13.5 7 12 7z"/></symbol>
+    <symbol id="c-calendar" viewBox="0 0 24 24"><rect x="4" y="5.5" width="16" height="14.5" rx="2.5"/><path d="M4 10h16M8.5 3.5v4M15.5 3.5v4"/></symbol>
   </svg>
 
   <div class="ctr__inner">
     <!-- Menu trung tâm: bấm để cuộn tới từng khối; khối đang xem được tô sáng -->
     <aside class="ctr__side">
-      <nav class="ctr-side" aria-label="Trung tâm cộng tác viên">
+      <nav class="ctr-side" aria-label="Trung tâm nhà khởi nghiệp">
         <ul class="ctr-side__list" id="ctrSideList">
           <li><a class="ctr-side__link is-active" href="#tong-quan" aria-current="true" data-section="tong-quan"><svg class="ctr-icon" aria-hidden="true" focusable="false"><use href="#c-chart"/></svg><span class="ctr-side__label">Tổng quan</span></a></li>
           <li><a class="ctr-side__link" href="#hoa-hong" data-section="hoa-hong"><svg class="ctr-icon" aria-hidden="true" focusable="false"><use href="#c-coins"/></svg><span class="ctr-side__label">Hoa hồng</span></a></li>
@@ -2025,9 +2175,9 @@
           <li><a class="ctr-side__link" href="#don-hang" data-section="don-hang"><svg class="ctr-icon" aria-hidden="true" focusable="false"><use href="#c-box"/></svg><span class="ctr-side__label">Đơn từ link</span></a></li>
           <li><a class="ctr-side__link" href="#tai-nguyen" data-section="tai-nguyen"><svg class="ctr-icon" aria-hidden="true" focusable="false"><use href="#c-image"/></svg><span class="ctr-side__label">Kho tài nguyên quảng bá</span></a></li>
           <li><a class="ctr-side__link" href="#huong-dan" data-section="huong-dan"><svg class="ctr-icon" aria-hidden="true" focusable="false"><use href="#c-book"/></svg><span class="ctr-side__label">Hướng dẫn &amp; quy tắc</span></a></li>
-          <li><a class="ctr-side__link" href="#tu-cach" data-section="tu-cach"><svg class="ctr-icon" aria-hidden="true" focusable="false"><use href="#c-shield"/></svg><span class="ctr-side__label">Tư cách cộng tác viên</span></a></li>
+          <li><a class="ctr-side__link" href="#tu-cach" data-section="tu-cach"><svg class="ctr-icon" aria-hidden="true" focusable="false"><use href="#c-shield"/></svg><span class="ctr-side__label">Tư cách nhà khởi nghiệp</span></a></li>
           <li class="ctr-side__sep" aria-hidden="true"></li>
-          <li class="ctr-side__extra"><a class="ctr-side__link" href="dieu-khoan-cong-tac-vien.html"><svg class="ctr-icon" aria-hidden="true" focusable="false"><use href="#c-doc"/></svg><span class="ctr-side__label">Điều khoản cộng tác viên</span></a></li>
+          <li class="ctr-side__extra"><a class="ctr-side__link" href="dieu-khoan-cong-tac-vien.html"><svg class="ctr-icon" aria-hidden="true" focusable="false"><use href="#c-doc"/></svg><span class="ctr-side__label">Điều khoản nhà khởi nghiệp</span></a></li>
           <li class="ctr-side__extra"><a class="ctr-side__link" href="../tai-khoan.html"><svg class="ctr-icon" aria-hidden="true" focusable="false"><use href="#c-user"/></svg><span class="ctr-side__label">Tài khoản của tôi</span></a></li>
           <li class="ctr-side__fold"><button class="ctr-side__toggle" id="sideToggle" type="button" aria-expanded="true" aria-controls="ctrSideList" aria-label="Thu gọn menu" title="Thu gọn menu"><svg class="ctr-icon" aria-hidden="true" focusable="false"><use href="#c-collapse"/></svg><span class="ctr-side__toggle-label">Thu gọn menu</span></button></li>
         </ul>
@@ -2036,18 +2186,19 @@
 
     <div class="ctr__main">
       <div>
-        <h1 class="ctr-title">Trung tâm cộng tác viên</h1>
+        <h1 class="ctr-title">Trung tâm nhà khởi nghiệp</h1>
         <p class="ctr-lead">Theo dõi đơn hàng và hoa hồng phát sinh từ link của bạn.</p>
       </div>
 
       <!-- Thẻ cộng tác viên: tên, "Cộng tác viên từ …", trạng thái và tỷ lệ hoa hồng hiện hành (không hạng, không mã giới thiệu) -->
+      <!-- Tỷ lệ hoa hồng theo nguyên tắc của chủ dự án (2026-10-28): 24/7 = 15%, Giờ Vàng = 10%, không phân biệt khách mới và khách đã có tài khoản (trước đó trang ghi 15%/10% và 10%/7% theo loại khách). Dưới ghi chú là khung quyền lợi của khách mua qua link (giảm 5% cho 24/7, mua sớm 5 phút trước Giờ Vàng), cùng chữ với card trang chủ CTV v2. -->
       <section class="ctr-id" aria-labelledby="ctr-header-name" data-collaborator-header="active">
         <div class="ctr-id__me">
           <div class="ctr-id__top">
             <span class="ctr-avatar" aria-hidden="true">MA</span>
             <div>
               <h2 class="ctr-id__name" id="ctr-header-name">Minh Anh</h2>
-              <p class="ctr-id__since">Cộng tác viên từ 05/06/2026</p>
+              <p class="ctr-id__since">Nhà khởi nghiệp từ 05/06/2026</p>
             </div>
           </div>
           <div class="ctr-id__badges">
@@ -2060,11 +2211,11 @@
         <div class="ctr-id__rates">
           <div class="ctr-locked" data-collaborator-locked="suspended" data-variant="inline" data-only="suspended" role="note" hidden>
             <span aria-hidden="true" class="ctr-locked__icon"><svg class="ctr-icon" focusable="false"><use href="#c-lock"/></svg></span>
-            <div class="ctr-locked__body"><p class="ctr-locked__title">Tư cách cộng tác viên đang tạm ngưng</p><p class="ctr-locked__text">Tài khoản cộng tác viên đang tạm ngưng. Vui lòng liên hệ Ginsengfood.</p></div>
+            <div class="ctr-locked__body"><p class="ctr-locked__title">Tư cách nhà khởi nghiệp đang tạm ngưng</p><p class="ctr-locked__text">Tài khoản nhà khởi nghiệp đang tạm ngưng. Vui lòng liên hệ Ginsengfood.</p></div>
           </div>
           <div class="ctr-locked" data-collaborator-locked="terms-required" data-variant="inline" data-only="terms-required" role="note" hidden>
             <span aria-hidden="true" class="ctr-locked__icon"><svg class="ctr-icon" focusable="false"><use href="#c-lock"/></svg></span>
-            <div class="ctr-locked__body"><p class="ctr-locked__title">Cần đồng ý điều khoản mới</p><p class="ctr-locked__text">Bạn cần đồng ý điều khoản mới để tiếp tục dùng đầy đủ chức năng cộng tác viên. Lịch sử đơn hàng và hoa hồng vẫn xem được.</p><a class="ctr-btn ctr-btn--primary" href="dieu-khoan-cong-tac-vien.html">Xem và đồng ý</a></div>
+            <div class="ctr-locked__body"><p class="ctr-locked__title">Cần đồng ý điều khoản mới</p><p class="ctr-locked__text">Bạn cần đồng ý điều khoản mới để tiếp tục dùng đầy đủ chức năng nhà khởi nghiệp. Lịch sử đơn hàng và hoa hồng vẫn xem được.</p><a class="ctr-btn ctr-btn--primary" href="dieu-khoan-cong-tac-vien.html">Xem và đồng ý</a></div>
           </div>
           <div class="ctr-locked" data-collaborator-locked="terminated" data-variant="inline" data-only="terminated" role="note" hidden>
             <span aria-hidden="true" class="ctr-locked__icon"><svg class="ctr-icon" focusable="false"><use href="#c-lock"/></svg></span>
@@ -2075,19 +2226,25 @@
             <div class="ctr-rate" data-tone="standard">
               <p class="ctr-rate__label">Đơn mua theo giá 24/7</p>
               <dl class="ctr-rate__rows">
-                <div><dt>Khách mới</dt><dd>15%</dd></div>
-                <div><dt>Khách đã có tài khoản</dt><dd>10%</dd></div>
+                <div><dt>Hoa hồng</dt><dd>15%</dd></div>
               </dl>
             </div>
             <div class="ctr-rate" data-tone="golden">
               <p class="ctr-rate__label">Đơn trong phiên Giờ Vàng Tri Ân</p>
               <dl class="ctr-rate__rows">
-                <div><dt>Khách mới</dt><dd>10%</dd></div>
-                <div><dt>Khách đã có tài khoản</dt><dd>7%</dd></div>
+                <div><dt>Hoa hồng</dt><dd>10%</dd></div>
               </dl>
             </div>
           </div>
-          <p class="ctr-id__note" data-only="full">Tính trên giá trị hàng hoá khách thực trả, không gồm phí vận chuyển. Chỉ tính đơn mua qua link của bạn. <a href="dieu-khoan-cong-tac-vien.html#dieu-4">Điều 4 – Ghi nhận đơn hàng và hoa hồng</a></p>
+          <p class="ctr-id__note" data-only="full">Tính trên giá trị hàng hóa khách thực trả, không gồm phí vận chuyển. Chỉ tính đơn mua qua link của bạn. <a href="dieu-khoan-cong-tac-vien.html#dieu-4">Điều 4 – Ghi nhận đơn hàng và hoa hồng</a></p>
+          <!-- Quyền lợi của khách mua qua link (chủ dự án duyệt phương án A, 2026-10-28): chỉ hiện khi đang hoạt động như khối tỷ lệ phía trên; ẩn ở ba chế độ khoá (data-only). -->
+          <section class="ctr-guest" data-collaborator-buyer-benefits="true" data-only="full" aria-labelledby="ctr-guest-title">
+            <p class="ctr-guest__title" id="ctr-guest-title"><svg class="ctr-icon" aria-hidden="true" focusable="false"><use href="#c-gift"/></svg>Khách mua qua link giới thiệu của bạn được</p>
+            <ul class="ctr-guest__list">
+              <li><svg class="ctr-icon" aria-hidden="true" focusable="false"><use href="#c-percent"/></svg><span>Giảm <b>5%</b> cho chương trình 24/7</span></li>
+              <li><svg class="ctr-icon" aria-hidden="true" focusable="false"><use href="#c-clock"/></svg><span>Mua sớm <b>5&nbsp;phút</b> trước Giờ Vàng</span></li>
+            </ul>
+          </section>
         </div>
       </section>
 
@@ -2100,19 +2257,33 @@
             <span id="tqDesc" hidden></span>
           </div>
         </div>
-        <div class="ctr-chips" role="group" aria-label="Chọn tháng xem">
-          <button type="button" class="ctr-chip" data-period="2026-09" aria-pressed="true">Tháng 09/2026</button>
-          <button type="button" class="ctr-chip" data-period="2026-08" aria-pressed="false">Tháng 08/2026</button>
-          <button type="button" class="ctr-chip" data-period="2026-07" aria-pressed="false">Tháng 07/2026</button>
-          <button type="button" class="ctr-chip" data-period="2026-06" aria-pressed="false">Tháng 06/2026</button>
+        <!-- Kỳ xem: hai droplist Tháng + Tuần thay hàng chip tháng; tuần phụ thuộc tháng, mặc định "Cả tháng". Danh sách do script dựng ở mục 1b (tq). -->
+        <div class="ctr-filter ctr-period" role="group" aria-label="Chọn kỳ xem số liệu" data-testid="collaborator-center-period-filter">
+          <div class="ctr-period__grid">
+            <div class="ctr-formfield">
+              <label id="tqMonthLbl" for="tqMonth">Tháng</label>
+              <div class="ctr-dd">
+                <button type="button" class="ctr-select" id="tqMonth" aria-labelledby="tqMonthLbl tqMonth" aria-haspopup="listbox" aria-expanded="false" aria-controls="tqMonthList" data-testid="collaborator-center-month-select"><span>09/2026</span><svg class="ctr-icon" aria-hidden="true" focusable="false"><use href="#c-chev"/></svg></button>
+                <div class="ctr-listbox" id="tqMonthList" role="listbox" aria-labelledby="tqMonthLbl" hidden></div>
+              </div>
+            </div>
+            <div class="ctr-formfield">
+              <label id="tqWeekLbl" for="tqWeek">Tuần</label>
+              <div class="ctr-dd">
+                <button type="button" class="ctr-select" id="tqWeek" aria-labelledby="tqWeekLbl tqWeek" aria-haspopup="listbox" aria-expanded="false" aria-controls="tqWeekList" data-testid="collaborator-center-week-select"><span>Cả tháng</span><svg class="ctr-icon" aria-hidden="true" focusable="false"><use href="#c-chev"/></svg></button>
+                <div class="ctr-listbox" id="tqWeekList" role="listbox" aria-labelledby="tqWeekLbl" hidden></div>
+              </div>
+            </div>
+          </div>
         </div>
+        <p class="sr-only" id="tqStatus" role="status"></p>
         <dl class="ctr-metrics" aria-live="polite">
           <div class="ctr-metric" data-tone="wait"><dt>Đơn chờ xác nhận</dt><dd class="ctr-metric__value" data-m="pendingOrders">3</dd><dd class="ctr-metric__note">Hoa hồng sẽ được tính khi đơn được xác minh</dd></div>
           <div class="ctr-metric"><dt>Đơn hợp lệ</dt><dd class="ctr-metric__value" data-m="validOrders">7</dd><dd class="ctr-metric__note">Đơn đã được ghi nhận hoa hồng</dd></div>
           <div class="ctr-metric"><dt>Doanh số giới thiệu hợp lệ</dt><dd class="ctr-metric__value" data-m="revenue">2.167.120đ</dd><dd class="ctr-metric__note">Không tính vào doanh số hạng của bạn</dd></div>
-          <div class="ctr-metric" data-tone="ok"><dt>Hoa hồng đã ghi nhận</dt><dd class="ctr-metric__value" data-m="confirmedComm">304.360đ</dd><dd class="ctr-metric__note">Từ các đơn hợp lệ trong tháng</dd></div>
+          <div class="ctr-metric" data-tone="ok"><dt>Hoa hồng đã ghi nhận</dt><dd class="ctr-metric__value" data-m="confirmedComm">304.360đ</dd><dd class="ctr-metric__note">Từ các đơn hợp lệ trong <span data-scope-unit>tháng</span></dd></div>
         </dl>
-        <!-- Biểu đồ (khối Tổng quan): script vẽ từ cột "Hoa hồng đã ghi nhận" của bảng ở mục Hoa hồng ngay bên dưới và từ danh sách "Đơn từ link"; không có số liệu nhập riêng. Chưa có script thì khối này ẩn, bảng vẫn đủ. -->
+        <!-- Biểu đồ (khối Tổng quan): script vẽ từ cột "Hoa hồng đã ghi nhận" của bảng ở mục Hoa hồng ngay bên dưới và từ danh sách "Đơn từ link"; không có số liệu nhập riêng. Khối "Thống kê theo tuần và theo tháng" ở cuối cũng do script dựng thành bảng (tuần của tháng đã chốt là số mẫu, cộng lại đúng bằng số kỳ). Chưa có script thì khối này ẩn, bảng vẫn đủ. -->
         <div class="ctr-charts" id="commCharts" hidden>
           <figure class="ctr-chart" id="barChart">
             <figcaption>
@@ -2125,23 +2296,45 @@
           </figure>
           <figure class="ctr-chart" id="lineChart">
             <figcaption>
-              <h3 class="ctr-chart__title" id="lineTitle">Hoa hồng luỹ kế trong tháng</h3>
+              <h3 class="ctr-chart__title" id="lineTitle">Hoa hồng lũy kế trong tháng</h3>
               <p class="ctr-chart__sub" id="lineSub">Theo ngày đặt đơn, chỉ tính đơn hợp lệ.</p>
             </figcaption>
-            <div class="ctr-chart__frame" id="lineFrame" tabindex="0" role="group" aria-label="Biểu đồ đường hoa hồng luỹ kế trong tháng. Dùng phím mũi tên trái, phải để xem từng ngày có đơn; số liệu đầy đủ ở mục Xem dạng bảng."></div>
+            <div class="ctr-chart__frame" id="lineFrame" tabindex="0" role="group" aria-label="Biểu đồ đường hoa hồng lũy kế trong tháng. Dùng phím mũi tên trái, phải để xem từng ngày có đơn; số liệu đầy đủ ở mục Xem dạng bảng."></div>
             <p class="ctr-note" id="lineNote"></p>
             <details class="ctr-chart__more">
               <summary>Xem dạng bảng</summary>
               <div class="ctr-table-wrap">
-                <table class="ctr-table" id="cumTable" aria-label="Hoa hồng luỹ kế trong tháng theo ngày đặt đơn">
-                  <thead><tr><th scope="col">Ngày đặt</th><th class="ctr-num" scope="col">Ghi nhận thêm</th><th class="ctr-num" scope="col">Luỹ kế</th></tr></thead>
+                <table class="ctr-table" id="cumTable" aria-label="Hoa hồng lũy kế trong tháng theo ngày đặt đơn">
+                  <thead><tr><th scope="col">Ngày đặt</th><th class="ctr-num" scope="col">Ghi nhận thêm</th><th class="ctr-num" scope="col">Lũy kế</th></tr></thead>
                   <tbody id="cumRows"></tbody>
                 </table>
               </div>
             </details>
             <p class="ctr-chart__sr" id="lineStatus" role="status"></p>
           </figure>
-        </div>        <div class="ctr-overview__foot">
+        </div>
+        <!-- Khối thống kê nằm NGOÀI lưới hai biểu đồ (#commCharts): đặt trong lưới đó với grid-column: 1 / -1 thì lúc bề ngang đủ rộng cho 3 cột (ví dụ thu gọn thanh menu trái) lưới giữ cột thứ ba và hai biểu đồ chỉ chiếm 2/3. Ẩn cho đến khi script dựng xong. -->
+        <div class="ctr-chart ctr-chart--stats ctr-stats" id="statsBlock" data-testid="collaborator-center-stats" hidden>
+          <div class="ctr-stats__head">
+            <div>
+              <h3 class="ctr-chart__title" id="statsTitle">Thống kê theo tuần và theo tháng</h3>
+              <p class="ctr-chart__sub" id="statsSub"></p>
+            </div>
+            <p class="ctr-stats__scope" id="statsScope" data-testid="collaborator-center-stats-scope"><svg class="ctr-icon" aria-hidden="true" focusable="false"><use href="#c-calendar"/></svg><span><span class="sr-only">Kỳ đang xem: </span><span id="statsScopeText"></span></span></p>
+          </div>
+          <div class="ctr-table-wrap">
+            <table class="ctr-table ctr-stats-table" role="table">
+              <caption class="ctr-chart__sr" id="statsCaption"></caption>
+              <thead role="rowgroup">
+                <tr role="row"><th scope="col" role="columnheader" id="statsColPeriod">Tuần</th><th class="ctr-num" scope="col" role="columnheader">Đơn hợp&nbsp;lệ</th><th class="ctr-num" scope="col" role="columnheader">Doanh số giới&nbsp;thiệu hợp&nbsp;lệ</th><th class="ctr-num" scope="col" role="columnheader">Hoa hồng đã&nbsp;ghi&nbsp;nhận</th><th class="ctr-num" scope="col" role="columnheader">Đơn chờ&nbsp;xác&nbsp;nhận</th></tr>
+              </thead>
+              <tbody role="rowgroup" id="statsRows"></tbody>
+              <tfoot role="rowgroup"><tr role="row" id="statsFoot"></tr></tfoot>
+            </table>
+          </div>
+          <p class="ctr-note" id="statsNote"></p>
+        </div>
+        <div class="ctr-overview__foot">
           <span class="ctr-overview__updated">Cập nhật lúc 08:00, 17/09/2026</span>
           <div class="ctr-overview__acts">
             <button class="ctr-linkbtn" type="button"><svg class="ctr-icon" aria-hidden="true" focusable="false"><use href="#c-refresh"/></svg>Làm mới dữ liệu</button>
@@ -2188,11 +2381,11 @@
         </div>
         <div class="ctr-locked" data-collaborator-locked="suspended" data-variant="panel" data-only="suspended" role="note" hidden>
           <span aria-hidden="true" class="ctr-locked__icon"><svg class="ctr-icon" focusable="false"><use href="#c-lock"/></svg></span>
-          <div class="ctr-locked__body"><p class="ctr-locked__title">Tư cách cộng tác viên đang tạm ngưng</p><p class="ctr-locked__text">Tài khoản cộng tác viên đang tạm ngưng. Vui lòng liên hệ Ginsengfood.</p></div>
+          <div class="ctr-locked__body"><p class="ctr-locked__title">Tư cách nhà khởi nghiệp đang tạm ngưng</p><p class="ctr-locked__text">Tài khoản nhà khởi nghiệp đang tạm ngưng. Vui lòng liên hệ Ginsengfood.</p></div>
         </div>
         <div class="ctr-locked" data-collaborator-locked="terms-required" data-variant="panel" data-only="terms-required" role="note" hidden>
           <span aria-hidden="true" class="ctr-locked__icon"><svg class="ctr-icon" focusable="false"><use href="#c-lock"/></svg></span>
-          <div class="ctr-locked__body"><p class="ctr-locked__title">Cần đồng ý điều khoản mới</p><p class="ctr-locked__text">Bạn cần đồng ý điều khoản mới để tiếp tục dùng đầy đủ chức năng cộng tác viên. Lịch sử đơn hàng và hoa hồng vẫn xem được.</p><a class="ctr-btn ctr-btn--primary" href="dieu-khoan-cong-tac-vien.html">Xem và đồng ý</a></div>
+          <div class="ctr-locked__body"><p class="ctr-locked__title">Cần đồng ý điều khoản mới</p><p class="ctr-locked__text">Bạn cần đồng ý điều khoản mới để tiếp tục dùng đầy đủ chức năng nhà khởi nghiệp. Lịch sử đơn hàng và hoa hồng vẫn xem được.</p><a class="ctr-btn ctr-btn--primary" href="dieu-khoan-cong-tac-vien.html">Xem và đồng ý</a></div>
         </div>
         <div class="ctr-locked" data-collaborator-locked="terminated" data-variant="panel" data-only="terminated" role="note" hidden>
           <span aria-hidden="true" class="ctr-locked__icon"><svg class="ctr-icon" focusable="false"><use href="#c-lock"/></svg></span>
@@ -2254,7 +2447,7 @@
                 <button type="button" class="ctr-chip" data-filter="all" aria-pressed="true">Tất cả<span class="ctr-chip__count" data-count="all">11</span></button>
                 <button type="button" class="ctr-chip" data-filter="wait" aria-pressed="false">Chờ xác nhận<span class="ctr-chip__count" data-count="wait">3</span></button>
                 <button type="button" class="ctr-chip" data-filter="ok" aria-pressed="false">Hợp lệ<span class="ctr-chip__count" data-count="ok">7</span></button>
-                <button type="button" class="ctr-chip" data-filter="cancel" aria-pressed="false">Đã huỷ<span class="ctr-chip__count" data-count="cancel">1</span></button>
+                <button type="button" class="ctr-chip" data-filter="cancel" aria-pressed="false">Đã hủy<span class="ctr-chip__count" data-count="cancel">1</span></button>
               </div>
               <div class="ctr-formfield">
                 <label for="orderMonth">Tháng</label>
@@ -2297,11 +2490,11 @@
         </div>
         <div class="ctr-locked" data-collaborator-locked="suspended" data-variant="panel" data-only="suspended" role="note" hidden>
           <span aria-hidden="true" class="ctr-locked__icon"><svg class="ctr-icon" focusable="false"><use href="#c-lock"/></svg></span>
-          <div class="ctr-locked__body"><p class="ctr-locked__title">Tư cách cộng tác viên đang tạm ngưng</p><p class="ctr-locked__text">Tài khoản cộng tác viên đang tạm ngưng. Vui lòng liên hệ Ginsengfood.</p></div>
+          <div class="ctr-locked__body"><p class="ctr-locked__title">Tư cách nhà khởi nghiệp đang tạm ngưng</p><p class="ctr-locked__text">Tài khoản nhà khởi nghiệp đang tạm ngưng. Vui lòng liên hệ Ginsengfood.</p></div>
         </div>
         <div class="ctr-locked" data-collaborator-locked="terms-required" data-variant="panel" data-only="terms-required" role="note" hidden>
           <span aria-hidden="true" class="ctr-locked__icon"><svg class="ctr-icon" focusable="false"><use href="#c-lock"/></svg></span>
-          <div class="ctr-locked__body"><p class="ctr-locked__title">Cần đồng ý điều khoản mới</p><p class="ctr-locked__text">Bạn cần đồng ý điều khoản mới để tiếp tục dùng đầy đủ chức năng cộng tác viên. Lịch sử đơn hàng và hoa hồng vẫn xem được.</p><a class="ctr-btn ctr-btn--primary" href="dieu-khoan-cong-tac-vien.html">Xem và đồng ý</a></div>
+          <div class="ctr-locked__body"><p class="ctr-locked__title">Cần đồng ý điều khoản mới</p><p class="ctr-locked__text">Bạn cần đồng ý điều khoản mới để tiếp tục dùng đầy đủ chức năng nhà khởi nghiệp. Lịch sử đơn hàng và hoa hồng vẫn xem được.</p><a class="ctr-btn ctr-btn--primary" href="dieu-khoan-cong-tac-vien.html">Xem và đồng ý</a></div>
         </div>
         <div class="ctr-locked" data-collaborator-locked="terminated" data-variant="panel" data-only="terminated" role="note" hidden>
           <span aria-hidden="true" class="ctr-locked__icon"><svg class="ctr-icon" focusable="false"><use href="#c-lock"/></svg></span>
@@ -2331,32 +2524,32 @@
                 <article class="ctr-asset" data-collaborator-resource-file="image">
                   <div class="ctr-asset__media"><img class="ctr-asset__img" src="../../public/products-image/c%C3%A1%20basa.webp" width="1448" height="1086" loading="lazy" decoding="async" alt="Hộp, gói Cháo Sâm Mùa Hạ – Cá Basa và nguyên liệu"></div>
                   <div class="ctr-asset__body"><p class="ctr-asset__name" title="Cháo Sâm Mùa Hạ – Cá Basa">Cháo Sâm Mùa Hạ – Cá Basa</p><p class="ctr-asset__meta">Hình ảnh · 575,5 KB</p>
-                    <div class="ctr-asset__acts"><a class="ctr-btn ctr-btn--outline ctr-btn--sm" href="../../public/products-image/c%C3%A1%20basa.webp" target="_blank" rel="noopener" aria-label="Xem Cháo Sâm Mùa Hạ – Cá Basa"><svg class="ctr-icon" aria-hidden="true" focusable="false"><use href="#c-eye"/></svg>Xem</a><a class="ctr-btn ctr-btn--outline ctr-btn--sm" href="../../public/products-image/c%C3%A1%20basa.webp" download="ginsengfood-chao-sam-mua-ha-ca-basa.webp" aria-label="Tải Cháo Sâm Mùa Hạ – Cá Basa"><svg class="ctr-icon" aria-hidden="true" focusable="false"><use href="#c-download"/></svg>Tải xuống</a></div></div>
+                    <div class="ctr-asset__acts"><a class="ctr-btn ctr-btn--outline ctr-btn--sm" href="../../public/products-image/c%C3%A1%20basa.webp" target="_blank" rel="noopener" aria-label="Xem Cháo Sâm Mùa Hạ – Cá Basa"><svg class="ctr-icon" aria-hidden="true" focusable="false"><use href="#c-eye"/></svg>Xem</a><ui-download-morph><a class="ctr-btn ctr-btn--primary ctr-btn--sm" href="../../public/products-image/c%C3%A1%20basa.webp" download="ginsengfood-chao-sam-mua-ha-ca-basa.webp" aria-label="Tải Cháo Sâm Mùa Hạ – Cá Basa"><span class="ctr-dl__label"><span data-for="idle">Tải xuống</span><span data-for="loading">Đang tải</span><span data-for="done">Đã tải</span><span data-for="error">Thử lại</span></span></a></ui-download-morph></div></div>
                 </article>
                 <article class="ctr-asset" data-collaborator-resource-file="image">
                   <div class="ctr-asset__media"><img class="ctr-asset__img" src="../../public/products-image/b%C3%A0o%20ng%C6%B0.webp" width="1448" height="1086" loading="lazy" decoding="async" alt="Hộp, gói Cháo Sâm Bào ngư và nguyên liệu"></div>
                   <div class="ctr-asset__body"><p class="ctr-asset__name" title="Cháo Sâm – Bào ngư">Cháo Sâm – Bào ngư</p><p class="ctr-asset__meta">Hình ảnh · 653,5 KB</p>
-                    <div class="ctr-asset__acts"><a class="ctr-btn ctr-btn--outline ctr-btn--sm" href="../../public/products-image/b%C3%A0o%20ng%C6%B0.webp" target="_blank" rel="noopener" aria-label="Xem Cháo Sâm – Bào ngư"><svg class="ctr-icon" aria-hidden="true" focusable="false"><use href="#c-eye"/></svg>Xem</a><a class="ctr-btn ctr-btn--outline ctr-btn--sm" href="../../public/products-image/b%C3%A0o%20ng%C6%B0.webp" download="ginsengfood-chao-sam-bao-ngu.webp" aria-label="Tải Cháo Sâm – Bào ngư"><svg class="ctr-icon" aria-hidden="true" focusable="false"><use href="#c-download"/></svg>Tải xuống</a></div></div>
+                    <div class="ctr-asset__acts"><a class="ctr-btn ctr-btn--outline ctr-btn--sm" href="../../public/products-image/b%C3%A0o%20ng%C6%B0.webp" target="_blank" rel="noopener" aria-label="Xem Cháo Sâm – Bào ngư"><svg class="ctr-icon" aria-hidden="true" focusable="false"><use href="#c-eye"/></svg>Xem</a><ui-download-morph><a class="ctr-btn ctr-btn--primary ctr-btn--sm" href="../../public/products-image/b%C3%A0o%20ng%C6%B0.webp" download="ginsengfood-chao-sam-bao-ngu.webp" aria-label="Tải Cháo Sâm – Bào ngư"><span class="ctr-dl__label"><span data-for="idle">Tải xuống</span><span data-for="loading">Đang tải</span><span data-for="done">Đã tải</span><span data-for="error">Thử lại</span></span></a></ui-download-morph></div></div>
                 </article>
                 <article class="ctr-asset" data-collaborator-resource-file="image">
                   <div class="ctr-asset__media"><img class="ctr-asset__img" src="../../public/products-image/g%C3%A0%20%C3%A1c(2).webp" width="1448" height="1086" loading="lazy" decoding="async" alt="Hộp, gói Cháo Sâm Gà ác và nguyên liệu"></div>
                   <div class="ctr-asset__body"><p class="ctr-asset__name" title="Cháo Sâm – Gà ác">Cháo Sâm – Gà ác</p><p class="ctr-asset__meta">Hình ảnh · 2 MB</p>
-                    <div class="ctr-asset__acts"><a class="ctr-btn ctr-btn--outline ctr-btn--sm" href="../../public/products-image/g%C3%A0%20%C3%A1c(2).webp" target="_blank" rel="noopener" aria-label="Xem Cháo Sâm – Gà ác"><svg class="ctr-icon" aria-hidden="true" focusable="false"><use href="#c-eye"/></svg>Xem</a><a class="ctr-btn ctr-btn--outline ctr-btn--sm" href="../../public/products-image/g%C3%A0%20%C3%A1c(2).webp" download="ginsengfood-chao-sam-ga-ac.webp" aria-label="Tải Cháo Sâm – Gà ác"><svg class="ctr-icon" aria-hidden="true" focusable="false"><use href="#c-download"/></svg>Tải xuống</a></div></div>
+                    <div class="ctr-asset__acts"><a class="ctr-btn ctr-btn--outline ctr-btn--sm" href="../../public/products-image/g%C3%A0%20%C3%A1c(2).webp" target="_blank" rel="noopener" aria-label="Xem Cháo Sâm – Gà ác"><svg class="ctr-icon" aria-hidden="true" focusable="false"><use href="#c-eye"/></svg>Xem</a><ui-download-morph><a class="ctr-btn ctr-btn--primary ctr-btn--sm" href="../../public/products-image/g%C3%A0%20%C3%A1c(2).webp" download="ginsengfood-chao-sam-ga-ac.webp" aria-label="Tải Cháo Sâm – Gà ác"><span class="ctr-dl__label"><span data-for="idle">Tải xuống</span><span data-for="loading">Đang tải</span><span data-for="done">Đã tải</span><span data-for="error">Thử lại</span></span></a></ui-download-morph></div></div>
                 </article>
                 <article class="ctr-asset" data-collaborator-resource-file="image">
                   <div class="ctr-asset__media"><img class="ctr-asset__img" src="../../public/banner_hero_4_tablet.webp" width="1586" height="992" loading="lazy" decoding="async" alt="Hộp, gói Cháo Sâm Mùa Hạ và tô cháo trên bãi cát biển"></div>
                   <div class="ctr-asset__body"><p class="ctr-asset__name" title="Ảnh bối cảnh Mùa Hạ">Ảnh bối cảnh Mùa Hạ</p><p class="ctr-asset__meta">Hình ảnh · 80 KB</p>
-                    <div class="ctr-asset__acts"><a class="ctr-btn ctr-btn--outline ctr-btn--sm" href="../../public/banner_hero_4_tablet.webp" target="_blank" rel="noopener" aria-label="Xem Ảnh bối cảnh Mùa Hạ"><svg class="ctr-icon" aria-hidden="true" focusable="false"><use href="#c-eye"/></svg>Xem</a><a class="ctr-btn ctr-btn--outline ctr-btn--sm" href="../../public/banner_hero_4_tablet.webp" download="ginsengfood-boi-canh-mua-ha.webp" aria-label="Tải Ảnh bối cảnh Mùa Hạ"><svg class="ctr-icon" aria-hidden="true" focusable="false"><use href="#c-download"/></svg>Tải xuống</a></div></div>
+                    <div class="ctr-asset__acts"><a class="ctr-btn ctr-btn--outline ctr-btn--sm" href="../../public/banner_hero_4_tablet.webp" target="_blank" rel="noopener" aria-label="Xem Ảnh bối cảnh Mùa Hạ"><svg class="ctr-icon" aria-hidden="true" focusable="false"><use href="#c-eye"/></svg>Xem</a><ui-download-morph><a class="ctr-btn ctr-btn--primary ctr-btn--sm" href="../../public/banner_hero_4_tablet.webp" download="ginsengfood-boi-canh-mua-ha.webp" aria-label="Tải Ảnh bối cảnh Mùa Hạ"><span class="ctr-dl__label"><span data-for="idle">Tải xuống</span><span data-for="loading">Đang tải</span><span data-for="done">Đã tải</span><span data-for="error">Thử lại</span></span></a></ui-download-morph></div></div>
                 </article>
                 <article class="ctr-asset" data-collaborator-resource-file="image">
                   <div class="ctr-asset__media"><img class="ctr-asset__img" src="../../public/banner_hero_2_tablet.webp" width="1586" height="992" loading="lazy" decoding="async" alt="Hộp Cháo Sâm Mùa Thu và tô cháo trên bàn gỗ giữa rừng lá đỏ"></div>
                   <div class="ctr-asset__body"><p class="ctr-asset__name" title="Ảnh bối cảnh Mùa Thu">Ảnh bối cảnh Mùa Thu</p><p class="ctr-asset__meta">Hình ảnh · 116,7 KB</p>
-                    <div class="ctr-asset__acts"><a class="ctr-btn ctr-btn--outline ctr-btn--sm" href="../../public/banner_hero_2_tablet.webp" target="_blank" rel="noopener" aria-label="Xem Ảnh bối cảnh Mùa Thu"><svg class="ctr-icon" aria-hidden="true" focusable="false"><use href="#c-eye"/></svg>Xem</a><a class="ctr-btn ctr-btn--outline ctr-btn--sm" href="../../public/banner_hero_2_tablet.webp" download="ginsengfood-boi-canh-mua-thu.webp" aria-label="Tải Ảnh bối cảnh Mùa Thu"><svg class="ctr-icon" aria-hidden="true" focusable="false"><use href="#c-download"/></svg>Tải xuống</a></div></div>
+                    <div class="ctr-asset__acts"><a class="ctr-btn ctr-btn--outline ctr-btn--sm" href="../../public/banner_hero_2_tablet.webp" target="_blank" rel="noopener" aria-label="Xem Ảnh bối cảnh Mùa Thu"><svg class="ctr-icon" aria-hidden="true" focusable="false"><use href="#c-eye"/></svg>Xem</a><ui-download-morph><a class="ctr-btn ctr-btn--primary ctr-btn--sm" href="../../public/banner_hero_2_tablet.webp" download="ginsengfood-boi-canh-mua-thu.webp" aria-label="Tải Ảnh bối cảnh Mùa Thu"><span class="ctr-dl__label"><span data-for="idle">Tải xuống</span><span data-for="loading">Đang tải</span><span data-for="done">Đã tải</span><span data-for="error">Thử lại</span></span></a></ui-download-morph></div></div>
                 </article>
                 <article class="ctr-asset" data-collaborator-resource-file="image">
                   <div class="ctr-asset__media"><img class="ctr-asset__img" src="../../public/banner_hero_3_tablet.webp" width="1586" height="992" loading="lazy" decoding="async" alt="Hộp, gói Cháo Sâm Mùa Đông và tô cháo trên bàn gỗ giữa rừng tuyết"></div>
                   <div class="ctr-asset__body"><p class="ctr-asset__name" title="Ảnh bối cảnh Mùa Đông">Ảnh bối cảnh Mùa Đông</p><p class="ctr-asset__meta">Hình ảnh · 131,5 KB</p>
-                    <div class="ctr-asset__acts"><a class="ctr-btn ctr-btn--outline ctr-btn--sm" href="../../public/banner_hero_3_tablet.webp" target="_blank" rel="noopener" aria-label="Xem Ảnh bối cảnh Mùa Đông"><svg class="ctr-icon" aria-hidden="true" focusable="false"><use href="#c-eye"/></svg>Xem</a><a class="ctr-btn ctr-btn--outline ctr-btn--sm" href="../../public/banner_hero_3_tablet.webp" download="ginsengfood-boi-canh-mua-dong.webp" aria-label="Tải Ảnh bối cảnh Mùa Đông"><svg class="ctr-icon" aria-hidden="true" focusable="false"><use href="#c-download"/></svg>Tải xuống</a></div></div>
+                    <div class="ctr-asset__acts"><a class="ctr-btn ctr-btn--outline ctr-btn--sm" href="../../public/banner_hero_3_tablet.webp" target="_blank" rel="noopener" aria-label="Xem Ảnh bối cảnh Mùa Đông"><svg class="ctr-icon" aria-hidden="true" focusable="false"><use href="#c-eye"/></svg>Xem</a><ui-download-morph><a class="ctr-btn ctr-btn--primary ctr-btn--sm" href="../../public/banner_hero_3_tablet.webp" download="ginsengfood-boi-canh-mua-dong.webp" aria-label="Tải Ảnh bối cảnh Mùa Đông"><span class="ctr-dl__label"><span data-for="idle">Tải xuống</span><span data-for="loading">Đang tải</span><span data-for="done">Đã tải</span><span data-for="error">Thử lại</span></span></a></ui-download-morph></div></div>
                 </article>
               </div>
             </section>
@@ -2370,12 +2563,12 @@
                 <article class="ctr-asset" data-collaborator-resource-file="pdf">
                   <div class="ctr-asset__media" data-kind="pdf"><span class="ctr-asset__glyph" aria-hidden="true" data-kind="pdf"><svg class="ctr-icon" focusable="false"><use href="#c-file"/></svg></span></div>
                   <div class="ctr-asset__body"><p class="ctr-asset__name" title="Giới thiệu nhanh cho bạn bè.pdf">Giới thiệu nhanh cho bạn bè.pdf</p><p class="ctr-asset__meta">PDF · 240 KB</p>
-                    <div class="ctr-asset__acts"><a class="ctr-btn ctr-btn--outline ctr-btn--sm" href="#" aria-label="Xem Giới thiệu nhanh cho bạn bè.pdf"><svg class="ctr-icon" aria-hidden="true" focusable="false"><use href="#c-eye"/></svg>Xem</a><a class="ctr-btn ctr-btn--outline ctr-btn--sm" href="#" download="Giới thiệu nhanh cho bạn bè.pdf" aria-label="Tải Giới thiệu nhanh cho bạn bè.pdf"><svg class="ctr-icon" aria-hidden="true" focusable="false"><use href="#c-download"/></svg>Tải xuống</a></div></div>
+                    <div class="ctr-asset__acts"><a class="ctr-btn ctr-btn--outline ctr-btn--sm" href="#" aria-label="Xem Giới thiệu nhanh cho bạn bè.pdf"><svg class="ctr-icon" aria-hidden="true" focusable="false"><use href="#c-eye"/></svg>Xem</a><ui-download-morph><a class="ctr-btn ctr-btn--primary ctr-btn--sm" href="#" download="Giới thiệu nhanh cho bạn bè.pdf" aria-label="Tải Giới thiệu nhanh cho bạn bè.pdf"><span class="ctr-dl__label"><span data-for="idle">Tải xuống</span><span data-for="loading">Đang tải</span><span data-for="done">Đã tải</span><span data-for="error">Thử lại</span></span></a></ui-download-morph></div></div>
                 </article>
                 <article class="ctr-asset" data-collaborator-resource-file="pdf">
                   <div class="ctr-asset__media" data-kind="pdf"><span class="ctr-asset__glyph" aria-hidden="true" data-kind="pdf"><svg class="ctr-icon" focusable="false"><use href="#c-file"/></svg></span></div>
                   <div class="ctr-asset__body"><p class="ctr-asset__name" title="Giới thiệu theo mùa – Mùa Hạ.pdf">Giới thiệu theo mùa – Mùa Hạ.pdf</p><p class="ctr-asset__meta">PDF · 193,4 KB</p>
-                    <div class="ctr-asset__acts"><a class="ctr-btn ctr-btn--outline ctr-btn--sm" href="#" aria-label="Xem Giới thiệu theo mùa – Mùa Hạ.pdf"><svg class="ctr-icon" aria-hidden="true" focusable="false"><use href="#c-eye"/></svg>Xem</a><a class="ctr-btn ctr-btn--outline ctr-btn--sm" href="#" download="Giới thiệu theo mùa – Mùa Hạ.pdf" aria-label="Tải Giới thiệu theo mùa – Mùa Hạ.pdf"><svg class="ctr-icon" aria-hidden="true" focusable="false"><use href="#c-download"/></svg>Tải xuống</a></div></div>
+                    <div class="ctr-asset__acts"><a class="ctr-btn ctr-btn--outline ctr-btn--sm" href="#" aria-label="Xem Giới thiệu theo mùa – Mùa Hạ.pdf"><svg class="ctr-icon" aria-hidden="true" focusable="false"><use href="#c-eye"/></svg>Xem</a><ui-download-morph><a class="ctr-btn ctr-btn--primary ctr-btn--sm" href="#" download="Giới thiệu theo mùa – Mùa Hạ.pdf" aria-label="Tải Giới thiệu theo mùa – Mùa Hạ.pdf"><span class="ctr-dl__label"><span data-for="idle">Tải xuống</span><span data-for="loading">Đang tải</span><span data-for="done">Đã tải</span><span data-for="error">Thử lại</span></span></a></ui-download-morph></div></div>
                 </article>
               </div>
             </section>
@@ -2416,7 +2609,7 @@
             <div class="ctr-rules__col ctr-rules__col--do">
               <p class="ctr-rules__title"><svg class="ctr-icon" aria-hidden="true" focusable="false"><use href="#c-check"/></svg>Nên làm</p>
               <ul class="ctr-bul">
-                <li>Nói rõ bạn là cộng tác viên của Ginsengfood.</li>
+                <li>Nói rõ bạn là nhà khởi nghiệp của Ginsengfood.</li>
                 <li>Nêu đúng giá, ưu đãi đang hiển thị trên website.</li>
                 <li>Dùng hình ảnh, nội dung trong tài nguyên đã duyệt.</li>
               </ul>
@@ -2437,7 +2630,7 @@
       <section class="ctr-panel" id="tu-cach" aria-labelledby="ctr-section-tu-cach-title" tabindex="-1" data-testid="collaborator-center-section-tu-cach">
         <div class="ctr-panel__head">
           <div>
-            <h2 class="ctr-panel__title" id="ctr-section-tu-cach-title"><svg class="ctr-icon" aria-hidden="true" focusable="false"><use href="#c-shield"/></svg>Tư cách cộng tác viên</h2>
+            <h2 class="ctr-panel__title" id="ctr-section-tu-cach-title"><svg class="ctr-icon" aria-hidden="true" focusable="false"><use href="#c-shield"/></svg>Tư cách nhà khởi nghiệp</h2>
             <p class="ctr-panel__desc">Tình trạng tham gia chương trình và cách chấm dứt tham gia.</p>
           </div>
         </div>
@@ -2455,7 +2648,7 @@
 
   <div class="ctr-dialog" id="chap-dut-tham-gia" data-collaborator-terminate-dialog="true" role="presentation">
     <div class="ctr-dialog__panel" role="dialog" aria-modal="true" aria-labelledby="chap-dut-title" aria-describedby="chap-dut-desc" tabindex="-1">
-      <h3 class="ctr-dialog__title" id="chap-dut-title">Chấm dứt tham gia chương trình cộng tác viên?</h3>
+      <h3 class="ctr-dialog__title" id="chap-dut-title">Chấm dứt tham gia chương trình khởi nghiệp?</h3>
       <div class="ctr-dialog__desc" id="chap-dut-desc">
         <p>Khi chấm dứt tham gia:</p>
         <ul>
@@ -2508,7 +2701,7 @@
 <nav aria-label="Thành viên và quyền lợi" class="home-footer__col">
 <p class="home-footer__col-title">Thành viên và quyền lợi</p>
 <ul class="home-footer__links">
-<li><a href="trang-chu-cong-tac-vien-v2.html#quyen-loi">Chương trình thành viên</a></li>
+<li><a href="trang-chu-gold-v2.html?vai-tro=cong-tac-vien#quyen-loi">Chương trình thành viên</a></li>
 <li><a href="dieu-khoan-cong-tac-vien.html">Chương trình khởi nghiệp</a></li>
 <li><a href="dai-ly-nha-phan-phoi.html#hinh-thuc">Hệ thống Đại lý nhà phân phối</a></li>
 </ul>
@@ -2539,7 +2732,7 @@
 <label class="reference-social-toggle-input" for="rsState" title="Ẩn hoặc hiện kênh liên hệ nhanh" aria-hidden="true"></label>
 <div class="reference-social-mask">
 <div class="reference-social-rail" id="reference-social-rail" aria-label="Kênh liên hệ nhanh">
-<a class="social-pill" href="trang-chu-cong-tac-vien-v2.html#gio-vang" aria-label="Livestream" title="Livestream"><span class="social-dot live">LIVE</span><span class="social-label">Livestream</span></a>
+<a class="social-pill" href="trang-chu-gold-v2.html?vai-tro=cong-tac-vien#gio-vang" aria-label="Livestream" title="Livestream"><span class="social-dot live">LIVE</span><span class="social-label">Livestream</span></a>
 <a class="social-pill" href="trang-chu-cong-tac-vien-v2.html#cau-chuyen" aria-label="YouTube" title="YouTube"><span class="social-dot youtube"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" fill="#FF0000"/><path d="M9.545 15.568V8.432L15.818 12l-6.273 3.568Z" fill="#FFFFFF"/></svg></span><span class="social-label">YouTube</span></a>
 <a class="social-pill" href="trang-chu-cong-tac-vien-v2.html#about-us" aria-label="Facebook" title="Facebook"><span class="social-dot facebook"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><circle cx="12" cy="12" fill="#FFFFFF" r="11.5"/><path d="M9.101 23.691v-7.98H6.627v-3.667h2.474v-1.58c0-4.085 1.848-5.978 5.858-5.978.401 0 .955.042 1.468.103a8.68 8.68 0 0 1 1.141.195v3.325a8.623 8.623 0 0 0-.653-.036 26.805 26.805 0 0 0-.733-.009c-.707 0-1.259.096-1.675.309a1.686 1.686 0 0 0-.679.622c-.258.42-.374.995-.374 1.752v1.297h3.919l-.386 2.103-.287 1.564h-3.246v8.245C19.396 23.238 24 18.179 24 12.044c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.628 3.874 10.35 9.101 11.647Z" fill="#0866FF"/></svg></span><span class="social-label">Facebook</span></a>
 <a class="social-pill" href="trang-chu-cong-tac-vien-v2.html#about-us" aria-label="Zalo" title="Zalo"><span class="social-dot zalo"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><rect fill="#0068FF" height="24" rx="5.5" width="24"/><path d="M12.49 10.2722v-.4496h1.3467v6.3218h-.7704a.576.576 0 01-.5763-.5729l-.0006.0005a3.273 3.273 0 01-1.9372.6321c-1.8138 0-3.2844-1.4697-3.2844-3.2823 0-1.8125 1.4706-3.2822 3.2844-3.2822a3.273 3.273 0 011.9372.6321l.0006.0005zM6.9188 7.7896v.205c0 .3823-.051.6944-.2995 1.0605l-.03.0343c-.0542.0615-.1815.206-.2421.2843L2.024 14.8h4.8948v.7682a.5764.5764 0 01-.5767.5761H0v-.3622c0-.4436.1102-.6414.2495-.8476L4.8582 9.23H.1922V7.7896h6.7266zm8.5513 8.3548a.4805.4805 0 01-.4803-.4798v-7.875h1.4416v8.3548H15.47zM20.6934 9.6C22.52 9.6 24 11.0807 24 12.9044c0 1.8252-1.4801 3.306-3.3066 3.306-1.8264 0-3.3066-1.4808-3.3066-3.306 0-1.8237 1.4802-3.3044 3.3066-3.3044zm-10.1412 5.253c1.0675 0 1.9324-.8645 1.9324-1.9312 0-1.065-.865-1.9295-1.9324-1.9295s-1.9324.8644-1.9324 1.9295c0 1.0667.865 1.9312 1.9324 1.9312zm10.1412-.0033c1.0737 0 1.945-.8707 1.945-1.9453 0-1.073-.8713-1.9436-1.945-1.9436-1.0753 0-1.945.8706-1.945 1.9436 0 1.0746.8697 1.9453 1.945 1.9453z" fill="#FFFFFF" transform="translate(12 12) scale(0.8) translate(-12 -12)"/></svg></span><span class="social-label">Zalo</span></a>
@@ -2632,15 +2825,7 @@
       '2026-07': { desc: 'Kỳ đối soát tháng 07/2026 · đã chốt', pendingOrders: '0', pendingNote: 'kỳ đã chốt', validOrders: '9', revenue: '2.713.600đ', pendingComm: '0đ', confirmedComm: '389.984đ', payNote: 'đã chi trả ngày 14/08/2026' },
       '2026-06': { desc: 'Kỳ đối soát tháng 06/2026 · đã chốt', pendingOrders: '0', pendingNote: 'kỳ đã chốt', validOrders: '4', revenue: '1.195.520đ', pendingComm: '0đ', confirmedComm: '179.328đ', payNote: 'đã chi trả ngày 15/07/2026' }
     };
-    var periodBtns = [].slice.call(document.querySelectorAll('[data-period]'));
-    periodBtns.forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        var p = PERIODS[btn.getAttribute('data-period')];
-        periodBtns.forEach(function (b) { b.setAttribute('aria-pressed', String(b === btn)); });
-        document.getElementById('tqDesc').textContent = p.desc;
-        [].forEach.call(document.querySelectorAll('[data-m]'), function (el) { el.textContent = p[el.getAttribute('data-m')]; });
-      });
-    });
+    /* Chọn kỳ xem (droplist Tháng + Tuần, thay hàng chip tháng): xem mục 1b bên dưới, đặt sau danh sách ORDERS vì dùng cả PERIODS lẫn ORDERS. */
 
     /* ---- 2. Link chia sẻ ---- */
     function refUrl(page, params) {
@@ -2653,9 +2838,9 @@
     var linkInput = document.getElementById('refLink'), msgInput = document.getElementById('refMsg');
     /* Tin nhắn gợi ý: ba mẫu như storefront; {link} được thay bằng link giới thiệu của bạn */
     var MESSAGES = {
-      'quick': 'Dạo này mình hay dùng Cháo Sâm của Ginsengfood cho bữa sáng: sấy thăng hoa, pha nước sôi 3 phút là dùng được, mỗi lô đều tra cứu được hồ sơ sản xuất. Bạn muốn thử thì xem ở đây nhé: {link}\n(Mình là cộng tác viên của Ginsengfood.)',
-      'season': 'Mùa Hạ này Ginsengfood có Cháo Sâm Mùa Hạ – Cá Basa vị thanh, dễ dùng những ngày nóng. Hộp 4 gói, mỗi gói một bữa, chỉ cần pha nước sôi 3 phút. Xem và đặt hàng ở cửa hàng: {link}\n(Mình là cộng tác viên của Ginsengfood.)',
-      'golden-hour': 'Tối nay Ginsengfood có phiên Giờ Vàng Tri Ân, số lượng có hạn. Mình để link ở đây để bạn vào xem đúng giờ: {link}\n(Mình là cộng tác viên của Ginsengfood.)'
+      'quick': 'Dạo này mình hay dùng Cháo Sâm của Ginsengfood cho bữa sáng: sấy thăng hoa, pha nước sôi 3 phút là dùng được, mỗi lô đều tra cứu được hồ sơ sản xuất. Bạn muốn thử thì xem ở đây nhé: {link}\n(Mình là nhà khởi nghiệp của Ginsengfood.)',
+      'season': 'Mùa Hạ này Ginsengfood có Cháo Sâm Mùa Hạ – Cá Basa vị thanh, dễ dùng những ngày nóng. Hộp 4 gói, mỗi gói một bữa, chỉ cần pha nước sôi 3 phút. Xem và đặt hàng ở cửa hàng: {link}\n(Mình là nhà khởi nghiệp của Ginsengfood.)',
+      'golden-hour': 'Tối nay Ginsengfood có phiên Giờ Vàng Tri Ân, số lượng có hạn. Mình để link ở đây để bạn vào xem đúng giờ: {link}\n(Mình là nhà khởi nghiệp của Ginsengfood.)'
     };
     var messageId = 'quick';
     function renderLink() {
@@ -2726,7 +2911,7 @@
       ['3978', '02/09/2026', 'Cháo Sâm – Rau má & Đậu xanh × 2', '24/7', '506.880đ', 'ok', '76.032đ'],
       ['3914', '01/09/2026', 'Cháo Sâm Mùa Hạ – Cá Basa', '24/7', '295.680đ', 'ok', '44.352đ']
     ];
-    var STATUS = { wait: ['ctr-status--wait', 'Chờ xác nhận'], ok: ['ctr-status--ok', 'Hợp lệ'], cancel: ['ctr-status--cancel', 'Đã huỷ'] };
+    var STATUS = { wait: ['ctr-status--wait', 'Chờ xác nhận'], ok: ['ctr-status--ok', 'Hợp lệ'], cancel: ['ctr-status--cancel', 'Đã hủy'] };
     var rows = document.getElementById('orderRows');
     ORDERS.forEach(function (o) {
       var tr = document.createElement('tr');
@@ -2760,9 +2945,153 @@
       });
     });
 
+    /* ---- 1b. Kỳ xem của Tổng quan: droplist Tháng + Tuần (thay hàng chip tháng) ----
+       Tuần phụ thuộc tháng: "Cả tháng" + các tuần đã bắt đầu của tháng đó; đổi tháng thì tuần về "Cả tháng"; chọn tuần thì bốn ô số liệu hiện số của tuần đó.
+       Tuần 1 = ngày 1–7, tuần 2 = 8–14, … tuần cuối = các ngày còn lại của tháng, tính theo ngày đặt đơn. Mọi số lấy từ dữ liệu có sẵn trong trang: tháng ở PERIODS (cùng bốn ô Tổng quan),
+       tuần của tháng đang mở cộng từ danh sách ORDERS (đơn hợp lệ và đơn chờ xác nhận, đơn đã huỷ bỏ qua), tuần của tháng đã chốt là số mẫu CLOSED_WEEKS, mỗi tuần [đơn hợp lệ, doanh số, hoa hồng],
+       cộng lại đúng bằng số kỳ ở PERIODS (lệch thì console.warn). Khối Thống kê ở cuối Tổng quan đọc cùng nguồn này qua tq (kỳ đang chọn, các tuần, báo khi đổi kỳ). */
+    var tq = (function () {
+      var CLOSED_WEEKS = {
+        '2026-08': [[2, 641520, 96228], [3, 1091360, 154280], [3, 887040, 133056], [3, 767360, 97328], [1, 459120, 68868]],
+        '2026-07': [[2, 620080, 93012], [2, 463040, 60032], [2, 480000, 64368], [2, 735680, 110352], [1, 414800, 62220]],
+        '2026-06': [[1, 274560, 41184], [1, 348480, 52272], [0, 0, 0], [2, 572480, 85872], [0, 0, 0]]
+      };
+      var CHECK = '<svg class="ctr-icon" aria-hidden="true" focusable="false"><use href="#c-check"/></svg>';
+      function digitsOf(x) { return Number(String(x).replace(/\D/g, '')); }
+      function pad(n) { return (n < 10 ? '0' : '') + n; }
+      function moneyOf(n) { return String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, '.') + 'đ'; }
+      function monthName(k) { return k.slice(5, 7) + '/' + k.slice(0, 4); }
+      function keyOfLabel(label) { return label.slice(3) + '-' + label.slice(0, 2); }
+      /* Ngày cập nhật lấy từ dòng "Cập nhật lúc …" của khối Tổng quan; tháng chưa trọn lấy từ data-month-open của bảng Hoa hồng. */
+      var upd = document.querySelector('.ctr-overview__updated'), um = upd ? /(\d{2})\/(\d{2})\/(\d{4})/.exec(upd.textContent) : null;
+      var asOf = um ? { d: +um[1], m: +um[2], y: +um[3] } : null, asOfShort = um ? um[1] + '/' + um[2] : '';
+      var openKey = {}, listeners = [], dds = [], monthKeys = Object.keys(PERIODS).sort().reverse();
+      [].forEach.call(document.querySelectorAll('.ctr-commissions tbody tr[data-month-open="true"]'), function (tr) { openKey[keyOfLabel(tr.firstElementChild.textContent.trim())] = true; });
+      var ordersKey = ORDERS.length ? keyOfLabel(ORDERS[0][1].slice(3)) : '';
+      var scope = { month: monthKeys[0], week: 0 };
+      var lead = document.querySelector('#tong-quan .ctr-panel__desc'), leadBase = lead ? lead.textContent : '', tqDesc = document.getElementById('tqDesc'), statusEl = document.getElementById('tqStatus');
+      var unitEls = [].slice.call(document.querySelectorAll('[data-scope-unit]'));
+
+      /* Các tuần của một tháng, tuần mới nhất ở trên; null nếu chưa có số liệu theo tuần của tháng đó. Tháng đang mở chỉ liệt kê tuần đã bắt đầu tính đến ngày cập nhật. */
+      function weeks(k) {
+        var y = +k.slice(0, 4), mo = +k.slice(5, 7), dim = new Date(y, mo, 0).getDate(), cut = openKey[k] && asOf && asOf.y === y && asOf.m === mo ? asOf.d : 0, buckets = {}, rows = [], w, from, to, b;
+        if (k === ordersKey) {
+          ORDERS.forEach(function (o) {
+            var d = +o[1].slice(0, 2), n = Math.min(5, Math.floor((d - 1) / 7) + 1), q = buckets[n] || (buckets[n] = [0, 0, 0, 0]);
+            if (o[5] === 'ok') { q[0] += 1; q[1] += digitsOf(o[4]); q[2] += digitsOf(o[6]); } else if (o[5] === 'wait') q[3] += 1;
+          });
+        } else if (CLOSED_WEEKS[k]) {
+          CLOSED_WEEKS[k].forEach(function (r, i) { buckets[i + 1] = [r[0], r[1], r[2], 0]; });
+        } else return null;
+        for (w = 1; w <= 5; w++) {
+          from = (w - 1) * 7 + 1; to = w === 5 ? dim : w * 7;
+          if (from > dim || (cut && from > cut)) break;
+          b = buckets[w] || [0, 0, 0, 0];
+          rows.push({ no: w, name: 'Tuần ' + w, sub: pad(from) + (to > from ? '–' + pad(to) : '') + '/' + pad(mo), valid: b[0], rev: b[1], comm: b[2], pend: b[3], part: !!cut && to > cut });
+        }
+        return rows.reverse();
+      }
+      function currentWeek() { var rows = scope.week ? weeks(scope.month) || [] : []; return rows.filter(function (r) { return r.no === scope.week; })[0] || null; }
+
+      /* Bốn ô số liệu, dòng mô tả và ghi chú "trong tháng / tuần" theo kỳ đang chọn; announce = đọc thông báo cho trình đọc màn hình (chỉ khi người dùng đổi). */
+      function apply(announce) {
+        var p = PERIODS[scope.month], wk = currentWeek(), vals, text, say, year = scope.month.slice(0, 4);
+        if (scope.week && !wk) scope.week = 0;
+        vals = wk ? { pendingOrders: String(wk.pend), validOrders: String(wk.valid), revenue: moneyOf(wk.rev), confirmedComm: moneyOf(wk.comm) } : p;
+        [].forEach.call(document.querySelectorAll('[data-m]'), function (e) { e.textContent = vals[e.getAttribute('data-m')]; });
+        unitEls.forEach(function (e) { e.textContent = wk ? 'tuần' : 'tháng'; });
+        text = wk ? 'Số liệu ' + wk.name.toLowerCase() + ' (' + wk.sub + '/' + year + (wk.part ? ', đến ' + asOfShort : '') + ') của tháng ' + monthName(scope.month) + ', tính theo ngày đặt đơn; cập nhật theo trạng thái mới nhất của đơn.' : leadBase;
+        if (lead) lead.textContent = text;
+        if (tqDesc) tqDesc.textContent = wk ? text : p.desc;
+        say = wk ? 'Đang xem ' + wk.name.toLowerCase() + ' (' + wk.sub + '/' + year + ') của tháng ' + monthName(scope.month) + '.' : 'Đang xem cả tháng ' + monthName(scope.month) + '.';
+        if (announce && statusEl) statusEl.textContent = say;
+      }
+
+      /* Droplist theo kiểu DropdownSelect dùng chung (không dùng select gốc): bấm hoặc ↓ ↑ để mở, ↓ ↑ Home End chọn dòng, Enter / Space chọn, Esc đóng và trả tiêu điểm, Tab hoặc bấm ra ngoài thì đóng. */
+      function dropdown(id, getOptions, getValue, getText, onPick) {
+        var btn = document.getElementById(id), box = document.getElementById(id + 'List'), root = btn.parentNode, label = btn.querySelector('span'), items = [], cur = 0, api;
+        function isOpen() { return !box.hidden; }
+        function build() {
+          var sel = getValue();
+          box.textContent = ''; items = [];
+          getOptions().forEach(function (o, i) {
+            var el = document.createElement('div'), tx = document.createElement('span'), lb = document.createElement('span'), ds = document.createElement('span');
+            el.className = 'ctr-option'; el.id = id + 'Opt' + i; el.tabIndex = -1; el.setAttribute('role', 'option'); el.setAttribute('aria-selected', String(o.value === sel));
+            if (o.tone) el.setAttribute('data-tone', o.tone);
+            lb.className = 'ctr-option__label'; lb.textContent = o.label; ds.className = 'ctr-option__desc'; ds.textContent = o.desc;
+            tx.appendChild(lb); tx.appendChild(document.createTextNode(' ')); tx.appendChild(ds); el.appendChild(tx); el.insertAdjacentHTML('beforeend', CHECK);
+            el.addEventListener('click', function () { pick(i); });
+            el.addEventListener('focus', function () { cur = i; });
+            box.appendChild(el); items.push({ el: el, value: o.value });
+          });
+        }
+        function active(i) { cur = Math.max(0, Math.min(items.length - 1, i)); items[cur].el.focus(); }
+        function open() {
+          var s = 0;
+          dds.forEach(function (d) { if (d !== api) d.close(false); });
+          box.style.maxHeight = ''; build(); box.hidden = false; btn.setAttribute('aria-expanded', 'true');
+          items.forEach(function (it, i) { if (it.el.getAttribute('aria-selected') === 'true') s = i; });
+          active(s); reveal();
+        }
+        /* Dải menu nổi ở đáy màn hình (dưới 1024px) có thể che phần dưới của danh sách: cuộn trang vừa đủ cho danh sách hiện trọn phía trên dải đó (nút vẫn còn thấy); màn hình thấp quá thì co chiều cao danh sách và cuộn trong danh sách. */
+        function reveal() {
+          var side = document.querySelector('.ctr__side'), dock = side && getComputedStyle(side).position === 'fixed' ? Math.max(0, innerHeight - side.getBoundingClientRect().top) : 0, limit = innerHeight - dock - 12, r = box.getBoundingClientRect(), over = r.bottom - limit;
+          if (over > 0) { window.scrollBy({ top: Math.max(0, Math.min(over, btn.getBoundingClientRect().top - 90)), left: 0, behavior: 'instant' }); r = box.getBoundingClientRect(); }
+          if (r.bottom > limit) box.style.maxHeight = Math.max(160, Math.floor(limit - r.top)) + 'px';
+        }
+        function close(back) { if (!isOpen()) return; box.hidden = true; box.style.maxHeight = ''; btn.setAttribute('aria-expanded', 'false'); if (back) btn.focus(); }
+        function pick(i) { var v = items[i].value; close(true); onPick(v); }
+        btn.addEventListener('click', function () { if (isOpen()) close(false); else open(); });
+        btn.addEventListener('keydown', function (e) {
+          if (e.key === 'ArrowDown' || e.key === 'ArrowUp') { e.preventDefault(); if (!isOpen()) open(); }
+          else if (e.key === 'Escape' && isOpen()) { e.preventDefault(); close(true); }
+        });
+        box.addEventListener('keydown', function (e) {
+          var k = e.key;
+          if (k === 'ArrowDown') active(cur + 1); else if (k === 'ArrowUp') active(cur - 1); else if (k === 'Home') active(0); else if (k === 'End') active(items.length - 1);
+          else if (k === 'Enter' || k === ' ') pick(cur); else if (k === 'Escape') close(true);
+          else if (k === 'Tab') { close(false); return; } else return;
+          e.preventDefault();
+        });
+        document.addEventListener('pointerdown', function (e) { if (isOpen() && !root.contains(e.target)) close(false); });
+        root.addEventListener('focusout', function (e) { if (isOpen() && e.relatedTarget && !root.contains(e.relatedTarget)) close(false); });
+        api = { sync: function () { label.textContent = getText(); }, close: close, isOpen: isOpen };
+        dds.push(api); api.sync();
+        return api;
+      }
+      function monthOptions() {
+        return monthKeys.map(function (k) { return { value: k, label: monthName(k), desc: openKey[k] ? 'Đang đối soát' + (asOfShort ? ' · đến ' + asOfShort : '') : 'Đã chốt', tone: openKey[k] ? 'wait' : '' }; });
+      }
+      function weekOptions() {
+        var rows = weeks(scope.month) || [];
+        return [{ value: 0, label: 'Cả tháng', desc: openKey[scope.month] && asOfShort ? 'Tất cả các tuần · đến ' + asOfShort : 'Tất cả các tuần của tháng', tone: '' }].concat(rows.map(function (r) {
+          return { value: r.no, label: r.name, desc: r.sub + (r.part ? ' · đến ' + asOfShort : ''), tone: r.part ? 'wait' : '' };
+        }));
+      }
+      function weekText() { var wk = currentWeek(); return wk ? wk.name + ' · ' + wk.sub : 'Cả tháng'; }
+      function change() { monthDd.sync(); weekDd.sync(); apply(true); listeners.forEach(function (fn) { fn(); }); }
+      var monthDd = dropdown('tqMonth', monthOptions, function () { return scope.month; }, function () { return monthName(scope.month); }, function (v) { if (v === scope.month) return; scope.month = v; scope.week = 0; change(); });
+      var weekDd = dropdown('tqWeek', weekOptions, function () { return scope.week; }, weekText, function (v) { if (v === scope.week) return; scope.week = v; change(); });
+
+      /* Đối chiếu: các tuần cộng lại phải bằng số kỳ ở PERIODS. Lệch là dữ liệu mẫu đã bị sửa không khớp. */
+      monthKeys.forEach(function (k) {
+        var rows = weeks(k), p = PERIODS[k], t = { valid: 0, rev: 0, comm: 0, pend: 0 };
+        if (!rows) return;
+        rows.forEach(function (r) { t.valid += r.valid; t.rev += r.rev; t.comm += r.comm; t.pend += r.pend; });
+        if (t.valid !== digitsOf(p.validOrders) || t.rev !== digitsOf(p.revenue) || t.comm !== digitsOf(p.confirmedComm) || t.pend !== digitsOf(p.pendingOrders)) console.warn('Thống kê theo tuần lệch số liệu tổng quan tháng ' + k + ':', t, p);
+      });
+      apply(false);
+      return {
+        scope: scope,
+        weeks: weeks,
+        isOpen: function (k) { return !!openKey[k]; },
+        openKeys: function () { return Object.keys(openKey); },
+        onChange: function (fn) { listeners.push(fn); }
+      };
+    })();
     /* ---- Biểu đồ hoa hồng (khối Tổng quan) ----
        Mọi số đều lấy từ dữ liệu có sẵn trong trang, không số nhập riêng:
-       (a) cột "Hoa hồng đã ghi nhận" của bảng ở mục Hoa hồng (ngay dưới Tổng quan); (b) hoa hồng luỹ kế của tháng trong danh sách ORDERS (chỉ đơn hợp lệ, theo ngày đặt).
+       (a) cột "Hoa hồng đã ghi nhận" của bảng ở mục Hoa hồng (ngay dưới Tổng quan); (b) hoa hồng luỹ kế của tháng trong danh sách ORDERS (chỉ đơn hợp lệ, theo ngày đặt). (c) khối Thống kê theo tuần / theo tháng ở cuối: xem chú thích riêng của khối đó.
        Đơn chờ xác nhận không có hoa hồng ("Chưa tính") nên chỉ đánh dấu ngày đặt, không vẽ thành tiền. Chưa chạy script thì khối này ẩn, bảng vẫn đủ. */
     (function () {
       var host = document.getElementById('commCharts');
@@ -2941,7 +3270,7 @@
       var asOfDay = pts.length ? Math.max(pts[pts.length - 1].d, asOf && asOf.m === monthNo && asOf.y === yearNo ? asOf.d : 0) : 1;
       var key = yearNo + '-' + pad2(monthNo);
       /* Đối chiếu với ô "Hoa hồng đã ghi nhận" của kỳ: lệch là dữ liệu mẫu đã bị sửa không khớp. */
-      if (pts.length && PERIODS[key] && total !== digits(PERIODS[key].confirmedComm)) console.warn('Biểu đồ luỹ kế lệch số liệu tổng quan:', total, PERIODS[key].confirmedComm);
+      if (pts.length && PERIODS[key] && total !== digits(PERIODS[key].confirmedComm)) console.warn('Biểu đồ lũy kế lệch số liệu tổng quan:', total, PERIODS[key].confirmedComm);
 
       var lineShow = wire(lineFrame, function () { return pts.length; }, function (x) {
         if (!lineGeo) return -1;
@@ -2955,12 +3284,12 @@
         var p = pts[i], when = pad2(p.d) + '/' + monthLabel, lines = [];
         if (p.add > 0) lines.push(['Ghi nhận thêm', '+' + money(p.add)]);
         if (p.pend > 0) lines.push(['Chờ xác nhận', p.pend + ' đơn, chưa tính', 'wait']);
-        lines.push(['Luỹ kế', money(p.cum)]);
+        lines.push(['Lũy kế', money(p.cum)]);
         g.cross.setAttribute('x1', g.xs[i]); g.cross.setAttribute('x2', g.xs[i]); g.cross.setAttribute('visibility', 'visible');
         g.read.setAttribute('cx', g.xs[i]); g.read.setAttribute('cy', g.ys[i]); g.read.setAttribute('visibility', 'visible');
         fillTip(lineTip, 'Ngày ' + when, lines);
         placeTip(lineTip, lineFrame, g.xs[i], g.ys[i] - 8);
-        lineStatus.textContent = 'Ngày ' + when + ': ' + (p.add > 0 ? 'ghi nhận thêm ' + money(p.add) + ', ' : '') + (p.pend > 0 ? p.pend + ' đơn chờ xác nhận chưa tính hoa hồng, ' : '') + 'luỹ kế ' + money(p.cum) + '.';
+        lineStatus.textContent = 'Ngày ' + when + ': ' + (p.add > 0 ? 'ghi nhận thêm ' + money(p.add) + ', ' : '') + (p.pend > 0 ? p.pend + ' đơn chờ xác nhận chưa tính hoa hồng, ' : '') + 'lũy kế ' + money(p.cum) + '.';
       });
 
       function lineDraw() {
@@ -3014,10 +3343,10 @@
       }
 
       if (pts.length) {
-        document.getElementById('lineTitle').textContent = 'Hoa hồng luỹ kế tháng ' + monthLabel;
+        document.getElementById('lineTitle').textContent = 'Hoa hồng lũy kế tháng ' + monthLabel;
         document.getElementById('lineSub').textContent = 'Theo ngày đặt đơn, chỉ tính đơn hợp lệ. Số liệu đến ' + asOfFull + '.';
-        lineFrame.setAttribute('aria-label', 'Biểu đồ đường hoa hồng luỹ kế tháng ' + monthLabel + ' theo ngày đặt đơn. Dùng phím mũi tên trái, phải để xem từng ngày có đơn; số liệu đầy đủ ở mục Xem dạng bảng.');
-        document.getElementById('cumTable').setAttribute('aria-label', 'Hoa hồng luỹ kế tháng ' + monthLabel + ' theo ngày đặt đơn');
+        lineFrame.setAttribute('aria-label', 'Biểu đồ đường hoa hồng lũy kế tháng ' + monthLabel + ' theo ngày đặt đơn. Dùng phím mũi tên trái, phải để xem từng ngày có đơn; số liệu đầy đủ ở mục Xem dạng bảng.');
+        document.getElementById('cumTable').setAttribute('aria-label', 'Hoa hồng lũy kế tháng ' + monthLabel + ' theo ngày đặt đơn');
         var lineNote = document.getElementById('lineNote');
         lineNote.textContent = waitDates.length ? waitDates.length + ' đơn chờ xác nhận (' + waitDates.join(', ') + ') chưa được tính hoa hồng nên chưa có trên đường này.' : '';
         lineNote.hidden = !lineNote.textContent;
@@ -3032,6 +3361,80 @@
         });
       }
 
+      /* ---- (c) Thống kê theo tuần (bảng dựng bằng script, dưới hai biểu đồ) ----
+         Kỳ xem do droplist Tháng + Tuần ở đầu Tổng quan quyết định (qua tq, mục 1b), khối không còn nút chọn riêng: bảng liệt kê các tuần của THÁNG đang chọn kèm dòng Tổng của tháng, mới nhất ở trên (cùng thứ tự các droplist và bảng Hoa hồng);
+         hàng của tuần đang chọn được tô đậm và nhãn ở góc phải đầu khối ghi đúng kỳ đang chọn (thay hai nút "Theo tuần / Theo tháng" cũ). Số tuần lấy từ tq.weeks (tháng đang mở cộng từ ORDERS, tháng đã chốt là số mẫu cộng đúng bằng số kỳ ở PERIODS). */
+      var statsBlock = document.getElementById('statsBlock');
+      if (statsBlock) (function () {
+        /* Nhãn từng ô số: dùng làm chữ đầu ô khi hàng thành thẻ ở khổ hẹp (data-label). */
+        var LABELS = ['Đơn hợp lệ', 'Doanh số giới thiệu hợp lệ', 'Hoa hồng đã ghi nhận', 'Đơn chờ xác nhận'];
+        var subEl = document.getElementById('statsSub'), rowsEl = document.getElementById('statsRows'), footEl = document.getElementById('statsFoot'), wrapEl = statsBlock.querySelector('.ctr-table-wrap'),
+          noteEl = document.getElementById('statsNote'), capEl = document.getElementById('statsCaption'), scopeEl = document.getElementById('statsScopeText');
+        function keyOf(label) { return label.slice(3) + '-' + label.slice(0, 2); }
+        function monthName(k) { return k.slice(5, 7) + '/' + k.slice(0, 4); }
+        function el(tag, cls, text) { var n = document.createElement(tag); if (cls) n.className = cls; if (text != null) n.textContent = text; return n; }
+        function sum(rows) { return rows.reduce(function (a, r) { return { valid: a.valid + r.valid, rev: a.rev + r.rev, comm: a.comm + r.comm, pend: a.pend + r.pend }; }, { valid: 0, rev: 0, comm: 0, pend: 0 }); }
+        /* Ô số i (0 đơn hợp lệ, 1 doanh số, 2 hoa hồng, 3 đơn chờ) với data-label và vai trò ô; vai trò ghi rõ để khổ hẹp (thẻ) vẫn đọc được là bảng. */
+        function addCell(tr, i, cls, text) { var td = el('td', 'ctr-num' + (cls ? ' ' + cls : ''), text); td.setAttribute('role', 'cell'); td.setAttribute('data-label', LABELS[i]); tr.appendChild(td); return td; }
+        /* Khung bảng chỉ thành vùng cuộn (focus được, có tên) khi thật sự tràn ngang; khổ thường bảng vừa khung, khổ hẹp là thẻ nên không cuộn. */
+        function syncScroll() {
+          if (wrapEl.scrollWidth > wrapEl.clientWidth + 1) { wrapEl.setAttribute('tabindex', '0'); wrapEl.setAttribute('role', 'region'); wrapEl.setAttribute('aria-labelledby', 'statsTitle'); }
+          else { wrapEl.removeAttribute('tabindex'); wrapEl.removeAttribute('role'); wrapEl.removeAttribute('aria-labelledby'); }
+        }
+
+        function render() {
+          var sc = tq.scope, selKey = sc.month, rows = tq.weeks(selKey) || [], tot = sum(rows), max = 0, pos = 0, anyPart = false, partRow = null, picked = null;
+          rowsEl.textContent = ''; footEl.textContent = '';
+          rows.forEach(function (r) { if (r.comm > max) max = r.comm; if (r.comm > 0) pos++; if (r.part) { anyPart = true; if (!partRow) partRow = r; } if (sc.week > 0 && r.no === sc.week) picked = r; });
+          if (!rows.length) {
+            var er = el('tr'), ec = el('td', 'ctr-stats__empty', 'Chưa có số liệu theo tuần của tháng ' + monthName(selKey) + '.');
+            er.setAttribute('role', 'row'); ec.setAttribute('role', 'cell'); ec.colSpan = 5; er.appendChild(ec); rowsEl.appendChild(er);
+          }
+          rows.forEach(function (r) {
+            var tr = el('tr'), th = el('th'), top = el('span', 'ctr-stats__period'), sub = el('span', 'ctr-stats__sub', r.sub + (r.part ? ' · đến ' + asOfShort : ''));
+            tr.setAttribute('role', 'row'); th.setAttribute('role', 'rowheader'); th.scope = 'row';
+            top.appendChild(el('span', 'ctr-stats__name', r.name));
+            if (pos > 1 && r.comm === max) { top.appendChild(document.createTextNode(' ')); top.appendChild(el('span', 'ctr-stats__best', 'Cao nhất')); }
+            if (r.part) { sub.setAttribute('data-tone', 'wait'); tr.setAttribute('data-open', ''); }
+            th.appendChild(top); th.appendChild(document.createTextNode(' ')); th.appendChild(sub);
+            if (r === picked) { tr.setAttribute('data-selected', ''); th.appendChild(el('span', 'sr-only', ', đang chọn')); }
+            tr.appendChild(th);
+            addCell(tr, 0, '', String(r.valid));
+            addCell(tr, 1, '', money(r.rev));
+            var tdc = addCell(tr, 2, 'ctr-comm', null), box = el('span', 'ctr-stats__comm'), bar = el('span', 'ctr-stats__bar'), fill = el('span', 'ctr-stats__fill');
+            bar.setAttribute('aria-hidden', 'true');
+            if (r.comm > 0) { fill.style.width = Math.max(4, r.comm / max * 100) + '%'; if (r.part) fill.setAttribute('data-open', ''); } else fill.hidden = true;
+            bar.appendChild(fill); box.appendChild(bar); box.appendChild(el('span', 'ctr-stats__val', money(r.comm))); tdc.appendChild(box);
+            addCell(tr, 3, r.pend > 0 ? 'ctr-stats__wait' : 'ctr-stats__zero', String(r.pend));
+            rowsEl.appendChild(tr);
+          });
+          if (rows.length) {
+            var fth = el('th'), fp = el('span', 'ctr-stats__period');
+            fth.setAttribute('role', 'rowheader'); fth.scope = 'row';
+            fp.appendChild(el('span', 'ctr-stats__name', 'Tổng tháng ' + monthName(selKey)));
+            fth.appendChild(fp);
+            if (anyPart) { var fs = el('span', 'ctr-stats__sub', 'Đến ' + asOfShort); fs.setAttribute('data-tone', 'wait'); fth.appendChild(document.createTextNode(' ')); fth.appendChild(fs); }
+            footEl.appendChild(fth);
+            addCell(footEl, 0, '', String(tot.valid)); addCell(footEl, 1, '', money(tot.rev)); addCell(footEl, 2, 'ctr-comm', money(tot.comm)); addCell(footEl, 3, tot.pend > 0 ? 'ctr-stats__wait' : '', String(tot.pend));
+          }
+          scopeEl.textContent = 'Tháng ' + monthName(selKey) + (picked ? ' · ' + picked.name + ' (' + picked.sub + ')' : '');
+          subEl.textContent = 'Các tuần của tháng ' + monthName(selKey) + ' theo ngày đặt đơn, mới nhất ở trên. Đổi tháng hoặc chọn một tuần ở bộ lọc phía trên.' + (picked ? ' Hàng tô đậm là tuần đang chọn.' : '');
+          capEl.textContent = 'Thống kê theo tuần của tháng ' + monthName(selKey) + ': đơn hợp lệ, doanh số giới thiệu hợp lệ, hoa hồng đã ghi nhận và đơn chờ xác nhận.';
+          var note = 'Tuần 1 gồm ngày 1–7 của tháng, tuần 2 gồm ngày 8–14, và cứ thế đến hết tháng. Đơn đã hủy không được tính.';
+          if (partRow) note += ' ' + partRow.name + ' chưa trọn: số liệu đến ' + asOfFull + '. Đơn chờ xác nhận chưa được tính hoa hồng.';
+          noteEl.textContent = rows.length ? note : '';
+          noteEl.hidden = !noteEl.textContent;
+          syncScroll();
+        }
+        /* Đối chiếu: hoa hồng theo tháng phải bằng bảng ở mục Hoa hồng (các tuần cộng lại đã được đối chiếu ở tq). Lệch là dữ liệu mẫu đã bị sửa không khớp. */
+        months.forEach(function (r) { var p = PERIODS[keyOf(r.label)]; if (p && digits(p.confirmedComm) !== r.value) console.warn('Thống kê theo tháng lệch bảng Hoa hồng:', r.label, r.value, p.confirmedComm); });
+
+        tq.onChange(render);
+        render();
+        statsBlock.hidden = false; syncScroll();
+        if ('ResizeObserver' in window) new ResizeObserver(syncScroll).observe(wrapEl); else window.addEventListener('resize', syncScroll);
+        if (document.fonts && document.fonts.ready) document.fonts.ready.then(syncScroll);
+      })();
       host.hidden = false;
       function drawAll() { barDraw(); lineDraw(); }
       drawAll();
@@ -3152,5 +3555,69 @@
   if (tgl) { tgl.addEventListener('click', syncToggle); syncToggle(); }
 })();
 </script>
+<script src="../download-morph.js"></script>
+<script id="gf-ctr-download-js">
+/* Nút "Tải xuống" ở thẻ Kho tài nguyên: trang quyết định ý nghĩa của một lần bấm và giữ TẤT CẢ: trạng thái, giá trị, tên nút, aria-disabled và lời thông báo.
+   <ui-download-morph> chỉ vẽ. Bản mẫu (không gọi API): lần tải thật do trình duyệt làm (liên kết có thuộc tính download vẫn chạy như cũ); ở đây
+   trang mô phỏng tiến độ cho biểu tượng, cứ 150 ms ghi thêm giá trị theo các bước bên dưới cho tới 100 rồi báo xong, 2,6 giây sau về lại idle.
+   Nút đang tải được đánh dấu aria-disabled (không dùng disabled, để vẫn nằm trong thứ tự Tab); bấm lần nữa lúc đó không làm gì cả.
+   Lời báo cho người dùng đọc màn hình nằm trong MỘT vùng role="status", nói ở mỗi phần mười và khi kết thúc, không bao giờ chỉ bằng hình hay màu. */
+(function () {
+  'use strict';
+  var hosts = document.querySelectorAll('.ctr-asset__acts ui-download-morph');
+  var scope = document.querySelector('[data-collaborator-resources]');
+  if (!hosts.length || !scope) { return; }
+
+  var STEPS = [8, 12, 9, 15, 11, 14, 10, 13, 8], INTERVAL = 150, SHOW_DONE = 2600;
+  var live = document.createElement('output');
+  live.className = 'sr-only';
+  live.setAttribute('role', 'status');
+  scope.appendChild(live);
+  function say(words) { live.textContent = words; }
+
+  Array.prototype.forEach.call(hosts, function (host) {
+    var link = host.querySelector('a');
+    var title = host.closest('.ctr-asset').querySelector('.ctr-asset__name');
+    if (!link || !title) { return; }
+    var name = title.textContent.trim(), idleLabel = 'Tải xuống ' + name, timer = 0, back = 0;
+    /* Chỉ để trình duyệt tải thật khi có tệp thật và thuộc tính download có tác dụng. Mở bằng file:/// trình duyệt bỏ qua download và CHUYỂN TRANG sang tệp,
+       làm mất chính hiệu ứng; liên kết href="#" thì chưa có tệp. Hai trường hợp đó trang chỉ mô phỏng, không chuyển trang. */
+    var real = link.getAttribute('href') !== '#' && window.location.protocol !== 'file:';
+    link.setAttribute('aria-label', idleLabel); /* nhãn nghỉ chứa đúng chữ trên nút ("Tải xuống …") */
+
+    function show(state, label, busy) {
+      host.setAttribute('state', state);
+      link.setAttribute('aria-label', label);
+      if (busy) { link.setAttribute('aria-disabled', 'true'); } else { link.removeAttribute('aria-disabled'); }
+    }
+
+    function finish() {
+      window.clearInterval(timer);
+      timer = 0;
+      show('done', 'Đã tải xuống ' + name, false);
+      say('Đã tải xuống ' + name);
+      back = window.setTimeout(function () { show('idle', idleLabel, false); }, SHOW_DONE);
+    }
+
+    link.addEventListener('click', function (event) {
+      if (link.getAttribute('aria-disabled') === 'true') { event.preventDefault(); return; }
+      if (!real) { event.preventDefault(); }
+      window.clearInterval(timer);
+      window.clearTimeout(back);
+      var value = 0, step = 0, told = 0;
+      host.setAttribute('value', '0'); /* giá trị được ghi TRƯỚC khi sang loading, để lần tải biết dung lượng không bắt đầu bằng cung quay */
+      show('loading', 'Đang tải xuống ' + name, true);
+      say('Đang tải xuống ' + name + ', 0 phần trăm');
+      timer = window.setInterval(function () {
+        if (value >= 100) { finish(); return; }
+        value = Math.min(100, value + STEPS[step % STEPS.length]);
+        step += 1;
+        host.setAttribute('value', String(value));
+        var tenth = Math.floor(value / 10) * 10;
+        if (tenth !== told && value < 100) { told = tenth; say('Đang tải xuống ' + name + ', ' + tenth + ' phần trăm'); }
+      }, INTERVAL);
+    });
+  });
+})();</script>
 </body>
 </html>

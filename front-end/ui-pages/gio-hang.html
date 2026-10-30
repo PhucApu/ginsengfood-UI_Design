@@ -530,8 +530,6 @@
       .eco__mode { font-size: 10px; padding: 0; border: 0; background: transparent; letter-spacing: .06em; }
       .eco__name { font-size: 14px; }
       .eco__note { display: none; }
-      .collection__count { display: none; }
-      .collection__head { flex-wrap: wrap; }
       .collection__title { font-size: 22px; }
       .collection__nav .iconbtn { display: none; }
       .cards { gap: 12px; }
@@ -622,47 +620,8 @@
     .cart-empty .btn { height: auto; min-height: 44px; padding: 9px 18px; font-size: 14px; font-weight: 700; }
     .cart-empty .btn--outline { border-color: var(--gf-border); }
     .cart-empty__icon .material-symbols-outlined { font-size: 32px; }
-    .eco > li:nth-child(n+4) { display: none; } /* storefront chỉ liệt kê các nhóm đang mở bán, không có bốn nhóm "sắp ra mắt" */
-    [data-collection="extended"] { display: none; }
-    .eco__lead { margin-top: 12px; font-size: 15px; }
-    .collections-heading { margin: 0 0 44px; font-family: var(--font-serif); font-size: 30px; font-weight: 700; line-height: 1.3; text-align: center; color: var(--gf-navy); }
-    .collection__head { align-items: flex-end; margin-bottom: 18px; padding-bottom: 14px; border-bottom: 1px solid var(--gf-border); }
-    .collection__order { gap: 0; font-size: 12px; letter-spacing: .08em; color: #7B5614; }
-    .collection__order::before { display: none; }
-    .collection__title { margin-top: 0; font-family: var(--font-serif); font-size: 26px; color: var(--gf-navy); }
-    .collection__goal { margin-top: 0; font-size: 13px; }
-    .collection__nav .link-more { font-size: 13px; font-weight: 700; gap: 4px; }
-    .cards { margin-top: 0; }
-    .card article { gap: 0; padding: 0; overflow: hidden; border-radius: 16px; box-shadow: 0 6px 20px rgba(16,48,95,.06); }
-    .card__media { border-radius: 0; background: var(--gf-ivory); }
-    .card__type { top: 10px; left: 10px; max-width: calc(100% - 20px); padding: 4px 9px; border: 0; background: rgba(16,48,95,.92); color: #fff; font-weight: 700; }
     .card__flag { top: auto; right: auto; bottom: 10px; left: 10px; max-width: calc(100% - 20px); padding: 4px 9px; border: 1px solid #B9D9C4; background: #EFF7EF; color: #216244; }
     .card__flag.is-off { border-color: #E6C7C1; background: #FFF1EE; color: #A5362A; }
-    .card__body { display: flex; flex: 1; flex-direction: column; gap: 8px; padding: 15px; }
-    .card__diet { align-self: flex-start; padding: 3px 7px; border-radius: 99px; background: #E8F5DE; color: #28603C; font-size: 11px; font-weight: 700; }
-    .card__name { font-size: 15px; font-weight: 700; line-height: 1.35; color: var(--gf-navy); }
-    .card__reason { display: -webkit-box; overflow: hidden; font-size: 12px; line-height: 1.45; color: var(--gf-muted); -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
-    .price { gap: 4px; margin: 2px 0 0; padding-top: 0; border-top: 0; font-size: 12.5px; }
-    .price__row { align-items: baseline; gap: 10px; font-size: 12.5px; }
-    .price__row dt { color: var(--gf-muted); }
-    .price__row dd { color: var(--gf-navy); font-weight: 600; text-align: right; }
-    .price__row--listed dd { text-decoration: none; }
-    .price__row--final { margin-top: 2px; padding-top: 6px; border-top: 1px dashed var(--gf-border); }
-    .price__row--final dt { font-size: inherit; letter-spacing: 0; text-transform: none; font-weight: 700; color: var(--gf-navy); }
-    .price__row--final dd { font-size: 15px; font-weight: 800; }
-    .price__serving { margin: 0; font-size: 11.5px; font-weight: 400; color: var(--gf-muted); }
-    .price__preview { padding: 0; border-radius: 0; background: transparent; font-size: 12px; font-weight: 600; color: #7B5614; }
-    .price__preview a { color: var(--gf-navy); }
-    .price__why { font-size: 12px; }
-    .price__why summary { list-style: revert; text-decoration: none; font-weight: 600; color: var(--gf-navy); }
-    .price__why summary::-webkit-details-marker { display: revert; }
-    .price__breakdown { gap: 4px; margin-top: 6px; padding: 8px 10px; border-radius: 8px; }
-    .price__breakdown dl { gap: 4px; }
-    .price__breakdown-title { font-size: 11px; letter-spacing: .06em; }
-    .card__actions { flex-direction: column; align-items: stretch; gap: 8px; padding-top: 8px; }
-    .card__add { display: inline-flex; align-items: center; justify-content: center; gap: 6px; width: 100%; min-height: 38px; padding: 6px 10px; border: 0; border-radius: 8px; background: var(--gf-navy); color: #fff; font-size: 12px; font-weight: 700; }
-    .card__add:hover:not(:disabled) { background: #1B467C; }
-    .card__add .material-symbols-outlined { font-size: 16px; }
     .card__actions .notify { width: 100%; height: auto; min-height: 38px; padding: 6px 10px; border-color: var(--gf-border); border-radius: 8px; font-size: 12px; font-weight: 700; }
     .sticky-bar .btn { height: auto; min-height: 44px; padding: 9px 18px; border-radius: 10px; font-size: 14px; font-weight: 700; }
     .changes .btn { height: auto; padding: 8px 12px; border: 1px solid var(--gf-border); border-radius: 8px; background: #fff; color: var(--gf-navy); font-size: 12px; font-weight: 400; }
@@ -679,7 +638,7 @@
         }
     .tiers > .container { width: 100%; min-width: 0; }
     .tiers__head { text-align: center; }
-    .tiers__head .section__title { margin-top: 6px; font-size: 32px; line-height: 1.2; }
+    .tiers__head .section__title { margin-top: 6px; font-size: 32px; line-height: 1.2; text-wrap: balance; } /* "Đặc quyền theo hạng thành viên" (chủ dự án đổi 2026-10-27): cân hai dòng ở điện thoại, không để chữ "viên" rớt lẻ */
     .tiers__lead { max-width: 660px; margin: 12px auto 0; font-size: 15px; line-height: 1.65; color: var(--gf-muted); }
     .tiers__list { --tier-gap: 22px; position: relative; margin: 26px 0 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--tier-gap); }
     .tiers__list::before, .tiers__list::after {
@@ -751,6 +710,7 @@
     .tiers__perks .icon { width: 16px; height: 16px; flex: 0 0 auto; color: var(--gf-gold-text); stroke-width: 2.2; }
     .tiers__perks b { font-weight: 700; color: var(--gf-navy); }
     .tiers__note { font-size: 12px; line-height: 1.5; color: var(--gf-muted); }
+    .tiers__invite-desc { margin: 0; font-size: 14px; line-height: 1.5; color: var(--gf-text); } /* một câu điều kiện thay ba ý + dòng ghi chú cũ (chủ dự án 2026-10-27) */
     .tiers__actions { display: flex; flex-wrap: wrap; gap: 10px; }
     .tiers__actions .btn .icon { width: 18px; height: 18px; }
     .tiers__list.is-dragging { cursor: grabbing; scroll-snap-type: none; user-select: none; }
@@ -842,7 +802,6 @@
           0%, 100% { outline-color: transparent; background-color: #fff; }
           15%, 65% { outline-color: var(--tier-primary); background-color: color-mix(in srgb, var(--tier-surface) 70%, #fff); }
         }
-    .tiers.is-in .tiers__list::after { transform: scaleX(var(--tier-fill, 0)); }
 </style>
   <link rel="stylesheet" href="mobile-account.css">
 <!-- gf-shell:css:begin -->
@@ -1868,7 +1827,439 @@ html { scrollbar-gutter: stable; }
   .storefront-reference-shell .mobile-nav > * { animation: none !important; }
 }
 </style>
+<style id="home-header-fit">
+/* Thêm mục "Khởi nghiệp cùng Ssavigroup" làm menu có sáu mục, rộng 773px (chữ 15px, khe 16px). Khung header từ 1280px trở lên chỉ có
+   1240px nội dung nên menu đè lên cụm nút bên phải: 21px ở 1280px, 159px từ 1440px (khi ô tìm kiếm 208px nằm ngang).
+   Từ 1280px: chữ menu 15 → 14px, khe 16 → 12px (menu còn 707px, chừa tối thiểu 45px so với cụm nút bên phải).
+   Từ 1440px: ô tìm kiếm quay về nút kính lúp + bảng thả như dải 1280–1439px (dùng lại đúng mã #searchToggle có sẵn). */
+@media (min-width: 1280px) {
+  .storefront-reference-shell .desktop-nav { gap: 12px; }
+  .storefront-reference-shell .desktop-nav > a { font-size: 14px; }
+}
+@media (min-width: 1440px) {
+  .storefront-reference-shell .search-region,
+  .storefront-reference-shell .search-region.open,
+  .storefront-reference-shell .search-region.is-open {
+    position: absolute;
+    right: 0;
+    left: 0;
+    width: auto;
+    flex: 0 1 auto;
+  }
+  .storefront-reference-shell .search-inner { display: grid; padding: 12px 40px 16px; }
+  .storefront-reference-shell .search-box { height: auto; min-height: 44px; }
+  .storefront-reference-shell .search-box input { font-size: 15px; }
+  .storefront-reference-shell .reference-search-dropdown { right: 0; left: 0; width: auto; }
+  .storefront-reference-shell #searchToggle { display: flex; }
+}
+</style>
+<!-- search-motion: hiệu ứng mở/đóng thanh tìm kiếm như trang chủ khách (chép từ trang-chu.html, 2026-10-21), đặt NGOÀI khối gf-shell:css để lớp vỏ dùng chung giữ nguyên -->
+<style id="home-search-motion">
+/* Trước đây bảng tìm kiếm chỉ đổi display none → block nên hiện ra trong đúng một khung hình (kèm cả ô gợi ý), và khoá cuộn làm thanh
+   cuộn biến mất nên cả header nhảy ngang ~8px (Windows có thanh cuộn thật). Bây giờ:
+   · nền navy trải xuống từ mép dưới header (scaleY, 260ms + --ease-entrance có sẵn của trang), bóng đổ hiện dần;
+   · ô tìm kiếm trôi xuống nhẹ + hiện dần (trễ 60ms), khung gợi ý hiện sau cùng (trễ 120ms); đóng thì nhanh hơn và không so le;
+   · chỉ dùng transform/opacity (chạy trên GPU), không đổi chiều cao nên không kéo bố cục;
+   · html giữ chỗ thanh cuộn (scrollbar-gutter) để khoá cuộn không làm trang nhảy ngang;
+   · bật "giảm chuyển động" thì hiện/ẩn tức thì như cũ. Luôn display:block, ẩn bằng visibility để chuyển động được. */
+html { scrollbar-gutter: stable; }
+
+.storefront-reference-shell .search-region,
+.storefront-reference-shell .search-region.open,
+.storefront-reference-shell .search-region.is-open {
+  display: block;
+  border-top: 1px solid transparent;
+  background: none;
+  box-shadow: none;
+}
+.storefront-reference-shell .search-region {
+  visibility: hidden;
+  pointer-events: none;
+  transition: visibility 0s linear 240ms;
+}
+.storefront-reference-shell .search-region.open,
+.storefront-reference-shell .search-region.is-open {
+  visibility: visible;
+  pointer-events: auto;
+  transition-delay: 0s;
+}
+
+/* Nền navy + vạch vàng mảnh (::before) trải xuống từ mép header; bóng đổ (::after) hiện dần riêng để không bị cắt cứng. */
+.storefront-reference-shell .search-region::before,
+.storefront-reference-shell .search-region::after {
+  content: "";
+  position: absolute;
+  top: -1px;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  pointer-events: none;
+}
+.storefront-reference-shell .search-region::before {
+  z-index: -1;
+  border-top: 1px solid rgba(198, 154, 43, 0.4);
+  background: var(--storefront-header-surface);
+  transform: scaleY(0);
+  transform-origin: top center;
+  transition: transform var(--motion-base) var(--ease-standard) 40ms;
+}
+.storefront-reference-shell .search-region::after {
+  z-index: -2;
+  box-shadow: 0 18px 32px rgba(7, 42, 78, 0.3);
+  opacity: 0;
+  transition: opacity var(--motion-base) var(--ease-standard);
+}
+.storefront-reference-shell .search-region.open::before,
+.storefront-reference-shell .search-region.is-open::before {
+  transform: none;
+  transition: transform var(--motion-medium) var(--ease-entrance);
+}
+.storefront-reference-shell .search-region.open::after,
+.storefront-reference-shell .search-region.is-open::after {
+  opacity: 1;
+  transition: opacity var(--motion-medium) var(--ease-standard) 60ms;
+}
+
+/* Ô tìm kiếm: trôi xuống nhẹ + hiện dần, trễ 60ms sau nền. */
+.storefront-reference-shell .search-inner {
+  opacity: 0;
+  transform: translateY(-8px);
+  transition: opacity var(--motion-fast) var(--ease-standard), transform var(--motion-base) var(--ease-standard);
+}
+.storefront-reference-shell .search-region.open .search-inner,
+.storefront-reference-shell .search-region.is-open .search-inner {
+  opacity: 1;
+  transform: none;
+  transition: opacity var(--motion-medium) var(--ease-standard) 60ms, transform 320ms var(--ease-entrance) 60ms;
+}
+
+/* Khung gợi ý (hiện khi ô nhập có tiêu điểm): hiện sau cùng. */
+.storefront-reference-shell .reference-search-dropdown {
+  display: block;
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(-6px);
+  pointer-events: none;
+  transition: opacity var(--motion-fast) var(--ease-standard), transform var(--motion-base) var(--ease-standard), visibility 0s linear var(--motion-base);
+}
+.storefront-reference-shell .reference-search-form:focus-within .reference-search-dropdown {
+  visibility: inherit;
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+  transition: opacity var(--motion-medium) var(--ease-standard) 120ms, transform 320ms var(--ease-entrance) 120ms, visibility 0s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .storefront-reference-shell .search-region,
+  .storefront-reference-shell .search-region::before,
+  .storefront-reference-shell .search-region::after,
+  .storefront-reference-shell .search-inner,
+  .storefront-reference-shell .reference-search-dropdown { transition: none !important; }
+}
+</style>
+<!-- guest-cta: nút "Đăng ký" của khách ở header như trang chủ khách (chép từ trang-chu.html, 2026-10-21), đặt NGOÀI khối gf-shell:css để lớp vỏ dùng chung giữ nguyên -->
+<style id="home-guest-cta">
+/* Nút "Đăng ký" của khách ở header (chủ dự án yêu cầu 2026-10-20: gộp icon người và chữ "Đăng ký" thành MỘT nút, làm nổi bật hơn).
+   Trước đây nút trong suốt, chỉ có icon + chữ màu ngà nên đọc ra như hai thứ rời nhau và chìm giữa các nút tròn viền vàng. Bây giờ:
+   · một viên thuốc vàng đặc, icon người và chữ nằm chung trong nút, cùng màu navy #072A4E (tương phản từ 6:1 trên phần vàng đậm nhất của nút, #CDA130);
+   · nổi lên nhờ quầng sáng vàng quanh nút; cứ 6 giây một lượt: vệt sáng chéo lướt qua nút rồi một vòng viền vàng mảnh lan ra mờ dần;
+   · rê chuột hoặc dùng bàn phím: nút nâng nhẹ, sáng hơn, quầng sáng đậm hơn, icon nhích lên; nhấn: nhún xuống;
+   · bật "giảm chuyển động": chỉ còn nút tĩnh, không vệt sáng, không vòng viền, không nâng khi rê;
+   · dưới 1280px nút nằm trong menu mở ra (bảng nền sáng): cùng kiểu, rộng hết bảng (tối đa 360px), cao 48px, chữ 16px.
+   Không đổi mã HTML của lớp vỏ: chỉ ghi đè style của .header-guest-btn (cả hai bản: hàng header và menu điện thoại). */
+.storefront-reference-shell .storefront-header .header-account-slot .diamond-member-btn.header-member-btn.header-guest-btn {
+  --guest-cta-ring: rgba(240, 214, 138, 0.95);
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-height: 42px;
+  padding: 0 17px 0 13px;
+  border: 0;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #F6E3A5 0%, #E8C979 46%, #CDA130 100%);
+  background-color: #E8C979;
+  color: #072A4E;
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: 0.01em;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.42);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.7),
+    inset 0 -2px 0 rgba(139, 98, 12, 0.26),
+    0 7px 16px -6px rgba(198, 154, 43, 0.8),
+    0 0 22px rgba(232, 201, 121, 0.3);
+  filter: none;
+  transition: transform 180ms cubic-bezier(0.2, 0.74, 0.18, 1), box-shadow 180ms cubic-bezier(0.2, 0.74, 0.18, 1), filter 180ms cubic-bezier(0.2, 0.74, 0.18, 1);
+}
+.storefront-reference-shell .storefront-header .header-account-slot .diamond-member-btn.header-member-btn.header-guest-btn:hover,
+.storefront-reference-shell .storefront-header .header-account-slot .diamond-member-btn.header-member-btn.header-guest-btn:focus-visible {
+  background: linear-gradient(180deg, #F6E3A5 0%, #E8C979 46%, #CDA130 100%);
+  background-color: #E8C979;
+  color: #072A4E;
+  transform: translateY(-1px);
+  filter: brightness(1.07) saturate(1.05);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.8),
+    inset 0 -2px 0 rgba(139, 98, 12, 0.24),
+    0 10px 20px -6px rgba(198, 154, 43, 0.9),
+    0 0 30px rgba(232, 201, 121, 0.45);
+}
+.storefront-reference-shell .storefront-header .header-account-slot .diamond-member-btn.header-member-btn.header-guest-btn:active {
+  transform: translateY(0) scale(0.97);
+}
+
+/* Icon người: bỏ ô tròn viền navy của menu điện thoại, đặt thẳng trên nền vàng, nét đặc cho dễ đọc. */
+.storefront-reference-shell .storefront-header .header-account-slot .diamond-member-btn.header-member-btn.header-guest-btn .material-symbols-outlined {
+  display: inline-flex;
+  flex: 0 0 auto;
+  width: auto;
+  height: auto;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  color: currentcolor;
+  filter: none;
+  font-size: 20px;
+  font-variation-settings: "FILL" 1, "wght" 600, "GRAD" 0, "opsz" 20;
+  transition: transform 180ms cubic-bezier(0.2, 0.74, 0.18, 1);
+}
+.storefront-reference-shell .storefront-header .header-account-slot .diamond-member-btn.header-member-btn.header-guest-btn:hover .material-symbols-outlined,
+.storefront-reference-shell .storefront-header .header-account-slot .diamond-member-btn.header-member-btn.header-guest-btn:focus-visible .material-symbols-outlined {
+  transform: translateY(-1px) scale(1.1);
+}
+.storefront-reference-shell .storefront-header .header-account-slot .diamond-member-btn.header-member-btn.header-guest-btn .header-member-label {
+  font: inherit;
+  letter-spacing: inherit;
+}
+
+/* Vệt sáng chéo (::before) và vòng viền lan ra (::after); đứng yên khi chưa bật chuyển động. */
+.storefront-reference-shell .storefront-header .header-account-slot .diamond-member-btn.header-member-btn.header-guest-btn::before {
+  content: "";
+  display: block;
+  position: absolute;
+  inset: 0;
+  width: auto;
+  height: auto;
+  border-radius: inherit;
+  pointer-events: none;
+  transform: none;
+  background: linear-gradient(105deg, rgba(255, 255, 255, 0) 42%, rgba(255, 255, 255, 0.85) 50%, rgba(255, 255, 255, 0) 58%) 0 0 / 300% 100% no-repeat;
+  animation: none;
+}
+.storefront-reference-shell .storefront-header .header-account-slot .diamond-member-btn.header-member-btn.header-guest-btn::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  outline: 2px solid transparent;
+  outline-offset: 0;
+}
+@keyframes guestCtaShine {
+  0% { background-position: 0% 0; }
+  22%, 100% { background-position: 100% 0; }
+}
+@keyframes guestCtaPulse {
+  0%, 18% { outline-color: transparent; outline-offset: 0; }
+  20% { outline-color: var(--guest-cta-ring); outline-offset: 0; }
+  46%, 100% { outline-color: transparent; outline-offset: 12px; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .storefront-reference-shell .storefront-header .header-account-slot .diamond-member-btn.header-member-btn.header-guest-btn::before { animation: guestCtaShine 6s ease-in-out 0.9s infinite; }
+  .storefront-reference-shell .storefront-header .header-account-slot .diamond-member-btn.header-member-btn.header-guest-btn::after { animation: guestCtaPulse 6s ease-out 0.9s infinite; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .storefront-reference-shell .storefront-header .header-account-slot .diamond-member-btn.header-member-btn.header-guest-btn:hover,
+  .storefront-reference-shell .storefront-header .header-account-slot .diamond-member-btn.header-member-btn.header-guest-btn:focus-visible,
+  .storefront-reference-shell .storefront-header .header-account-slot .diamond-member-btn.header-member-btn.header-guest-btn:active { transform: none; }
+  .storefront-reference-shell .storefront-header .header-account-slot .diamond-member-btn.header-member-btn.header-guest-btn:hover .material-symbols-outlined,
+  .storefront-reference-shell .storefront-header .header-account-slot .diamond-member-btn.header-member-btn.header-guest-btn:focus-visible .material-symbols-outlined { transform: none; }
+}
+
+/* 1280–1439px: menu chính chiếm nhiều chỗ hơn nên thu đệm nút để còn khe thở giữa menu và cụm nút bên phải. */
+@media (min-width: 1280px) and (max-width: 1439px) {
+  .storefront-reference-shell .storefront-header .header-account-slot .diamond-member-btn.header-member-btn.header-guest-btn {
+    gap: 6px;
+    padding: 0 14px 0 11px;
+  }
+}
+
+/* Dưới 1280px: nút nằm trong menu mở ra (nền sáng) nên bỏ quầng sáng, vòng viền đậm hơn, nút rộng hết bảng và cao 48px. */
+@media (max-width: 1279px) {
+  .storefront-reference-shell .storefront-header .mobile-nav-actions .header-account-slot .diamond-member-btn.header-member-btn.header-guest-btn {
+    --guest-cta-ring: rgba(198, 154, 43, 0.9);
+    width: 100%;
+    max-width: 360px;
+    min-height: 48px;
+    gap: 10px;
+    padding: 0 22px;
+    font-size: 16px;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.7),
+      inset 0 -2px 0 rgba(139, 98, 12, 0.26),
+      0 0 0 1px rgba(198, 154, 43, 0.4),
+      0 8px 16px -8px rgba(198, 154, 43, 0.85);
+  }
+  .storefront-reference-shell .storefront-header .mobile-nav-actions .header-account-slot .diamond-member-btn.header-member-btn.header-guest-btn:hover,
+  .storefront-reference-shell .storefront-header .mobile-nav-actions .header-account-slot .diamond-member-btn.header-member-btn.header-guest-btn:focus-visible {
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.8),
+      inset 0 -2px 0 rgba(139, 98, 12, 0.24),
+      0 0 0 1px rgba(198, 154, 43, 0.55),
+      0 10px 18px -8px rgba(198, 154, 43, 0.95);
+  }
+  .storefront-reference-shell .storefront-header .mobile-nav-actions .header-account-slot .diamond-member-btn.header-member-btn.header-guest-btn:focus-visible { outline-color: #072A4E; }
+  .storefront-reference-shell .storefront-header .mobile-nav-actions .header-account-slot .diamond-member-btn.header-member-btn.header-guest-btn .material-symbols-outlined { font-size: 22px; }
+}
+
+/* Chế độ tương phản cao: bỏ nền gradient và hiệu ứng, dùng màu hệ thống để chữ luôn đọc được. */
+@media (forced-colors: active) {
+  .storefront-reference-shell .storefront-header .header-account-slot .diamond-member-btn.header-member-btn.header-guest-btn {
+    border: 1px solid ButtonText;
+    background: ButtonFace;
+    color: ButtonText;
+    box-shadow: none;
+    text-shadow: none;
+  }
+  .storefront-reference-shell .storefront-header .header-account-slot .diamond-member-btn.header-member-btn.header-guest-btn::before,
+  .storefront-reference-shell .storefront-header .header-account-slot .diamond-member-btn.header-member-btn.header-guest-btn::after { display: none; }
+}
+</style>
+<style id="home-tiers-sync">
+/* Khu "Đặc quyền theo hạng thành viên" của giỏ hàng lấy đúng từ trang chủ (chủ dự án 2026-10-27): tiêu đề, bốn card hạng, khung mời. Giỏ hàng chưa có khung mời màu navy lẫn nút ghép của card Giờ Vàng, nên hai phần CSS đó chép sang đây từ trang chủ (khối home-invite-cta và khối nút ghép .golden__combo). Luật cũ của nút vàng a.btn--primary trong khung mời không chép vì khung mời không còn nút đó. */
+
+/* Giỏ hàng dùng token chữ hơi khác trang chủ (--gf-text #20324A, --gf-muted #66738A) và cỡ chữ gốc 15px; riêng khu này lấy đúng giá trị của trang chủ để chữ, màu, độ cao dòng giống hệt. */
+#quyen-loi { --gf-text: #172B4D; --gf-muted: #667085; font-size: 16px; color: var(--gf-text); }
+
+/* Tiêu đề khu màu vàng nâu như trang chủ (trang chủ đặt cùng màu cho #tiersTitle, #ecoTitle, .story__heading, #homeAboutTitle). */
+#tiersTitle { color: var(--gf-gold-text); }
+
+/* Khung mời màu navy: nền gradient navy, vạch vàng đặc 4px mép trái, tiêu đề vàng nhạt, câu điều kiện ngà (chép từ trang chủ). */
+.tiers .tiers__foot {
+  background:
+    radial-gradient(520px 190px at 0% 0%, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0) 70%),
+    linear-gradient(100deg, #10305F 0%, #072A4E 100%);
+  border-color: rgba(232, 201, 121, 0.45) rgba(232, 201, 121, 0.45) rgba(232, 201, 121, 0.45) #C69A2B;
+  box-shadow:
+    inset 0 1px 0 rgba(232, 201, 121, 0.28),
+    0 18px 36px -20px rgba(7, 42, 78, 0.65);
+}
+.tiers .tiers__foot .tiers__invite-title { color: #E8C979; } /* tiêu đề khung màu vàng (chủ dự án 2026-10-27); trước là ngà #FFF8EA */
+.tiers .tiers__foot .tiers__perks { color: rgba(255, 248, 234, 0.92); }
+.tiers .tiers__foot .tiers__invite-desc { color: rgba(255, 248, 234, 0.92); }
+.tiers .tiers__foot .tiers__perks .icon { color: #E8C979; }
+.tiers .tiers__foot .tiers__perks b { color: #FFF8EA; }
+.tiers .tiers__foot .tiers__note { color: rgba(255, 248, 234, 0.7); }
+
+/* Nút ghép "Đăng ký ngay" (dải thông điệp hai dòng + nút tròn vàng 3D) dùng đúng nút mời của card Giờ Vàng ở trang chủ, phối màu navy cho hợp khung (chép từ trang chủ). */
+.golden__combo { position: relative; display: inline-flex; align-items: center; max-width: 100%; text-decoration: none; border-radius: 999px; -webkit-tap-highlight-color: transparent; }
+.golden__combo-msg {
+  position: relative; z-index: 1; flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; justify-content: center; min-height: 44px; padding: 4px 42px 4px 20px;
+  border: 1.5px solid rgba(232,201,121,.7); border-radius: 999px;
+  background: linear-gradient(180deg, #7A140D 0%, #5E0E09 100%);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.14), inset 0 -6px 10px -6px rgba(0,0,0,.45), 0 8px 16px -8px rgba(40,6,4,.7);
+  color: #F8E3A0; font-weight: 700; font-size: 14px; line-height: 1.25; text-wrap: balance;
+  transition: border-color var(--motion-base) var(--ease-standard), box-shadow var(--motion-base) var(--ease-standard);
+}
+.golden__combo-line { display: block; } /* "quyền lợi thành viên" luôn xuống dòng thứ hai */
+.golden__combo-knob {
+  position: relative; z-index: 2; flex: 0 0 auto; display: grid; place-items: center; width: 68px; height: 68px; margin-left: -28px; padding: 0 3px; text-align: center;
+  border: 2px solid transparent; border-radius: 50%;
+  background:
+    radial-gradient(ellipse 60% 55% at 30% 6%, rgba(255,255,255,.55) 0%, rgba(255,255,255,0) 100%) padding-box,
+    linear-gradient(180deg, #F8E3A0 0%, #E8C979 55%, #D2A43C 100%) padding-box,
+    linear-gradient(145deg, #FFFFFF 0%, #FFF3DC 22%, #E6C26A 55%, #A9781D 100%) border-box;
+  box-shadow:
+    inset 0 2px 0 rgba(255,255,255,.7), inset 0 -8px 10px -6px rgba(122,85,22,.45),
+    0 1px 0 #C09330, 0 2px 0 #B1862A, 0 3px 0 #A07623, 0 4px 0 #8F671D, 0 5px 0 #7D5817,
+    0 12px 14px -4px rgba(40,6,4,.7), 0 0 24px rgba(248,227,160,.3);
+  color: #6E110C; text-shadow: 0 1px 0 rgba(255,246,214,.7); font-weight: 800; font-size: 13.5px; line-height: 1.12;
+  transition: background var(--motion-base) var(--ease-standard), box-shadow var(--motion-base) var(--ease-standard), transform var(--motion-base) var(--ease-standard), color var(--motion-base) var(--ease-standard);
+}
+.golden__combo:hover .golden__combo-msg { border-color: #F3D98A; box-shadow: inset 0 1px 0 rgba(255,255,255,.2), inset 0 -6px 10px -6px rgba(0,0,0,.45), 0 10px 20px -8px rgba(40,6,4,.8); }
+.golden__combo:hover .golden__combo-knob {
+  background:
+    radial-gradient(ellipse 60% 55% at 30% 6%, rgba(255,255,255,.6) 0%, rgba(255,255,255,0) 100%) padding-box,
+    linear-gradient(180deg, #FFF0BF 0%, #F3D98A 55%, #E0B44A 100%) padding-box,
+    linear-gradient(145deg, #FFFFFF 0%, #FFFFFF 20%, #F3D98A 55%, #B98A2B 100%) border-box;
+  box-shadow:
+    inset 0 2px 0 rgba(255,255,255,.8), inset 0 -8px 10px -6px rgba(122,85,22,.4),
+    0 1px 0 #C09330, 0 2px 0 #B1862A, 0 3px 0 #A07623, 0 4px 0 #8F671D, 0 5px 0 #7D5817, 0 6px 0 #6B4912,
+    0 16px 18px -4px rgba(40,6,4,.75), 0 0 30px rgba(248,227,160,.4);
+  color: #5A0D09; transform: translateY(-1px);
+}
+/* Nhấn: đặt SAU luật rê chuột để thắng khi vừa rê vừa nhấn; cạnh co còn 2px, nút tròn lún 3px. */
+.golden__combo:active .golden__combo-knob {
+  box-shadow: inset 0 2px 0 rgba(255,255,255,.6), inset 0 -6px 8px -6px rgba(122,85,22,.45), 0 1px 0 #C09330, 0 2px 0 #B1862A, 0 5px 8px -3px rgba(40,6,4,.6);
+  transform: translateY(3px);
+}
+.golden__combo:focus-visible { outline: 3px solid #FFFFFF; outline-offset: 4px; } /* viền focus chung (quầng xanh 28%) không thấy được trên nền đỏ */
+@media (forced-colors: active) { .golden__combo-msg, .golden__combo-knob { border-color: LinkText; } } /* tương phản cao bỏ ảnh nền: viền trong suốt sẽ mất khung nút */
+@media (prefers-reduced-motion: reduce) { .golden__combo-msg, .golden__combo-knob { transition: none; } }
+@media (max-width: 480px) { .golden .golden__cta { align-items: stretch; } .golden__combo { width: 100%; } } /* điện thoại: dải giãn hết khối chữ, nút tròn nằm cuối bên phải */
+@media (max-width: 359px) { .golden__combo-msg { padding-left: 14px; font-size: 13px; } .golden__combo-knob { width: 64px; height: 64px; font-size: 13px; } }
+/* Phối màu navy của nút ghép: dải navy đậm viền vàng, nút tròn vàng giữ nguyên, chữ trong nút tròn đổi sang navy như nút "Đăng ký" ở header. */
+.golden__combo--navy .golden__combo-msg { background: linear-gradient(180deg, #0C2A52 0%, #061D3C 100%); border-color: rgba(232,201,121,.75); text-align: center; } /* chữ trên dải ("Đăng ký để kích hoạt / quyền lợi thành viên", chủ dự án 2026-10-27) căn giữa dải */
+.golden__combo--navy .golden__combo-knob { color: #072A4E; }
+.golden__combo--navy:hover .golden__combo-knob { color: #041A33; }
+
+/* Chế độ tương phản cao: bỏ nền gradient navy, dùng màu hệ thống để chữ luôn đọc được (như trang chủ). */
+@media (forced-colors: active) { .tiers .tiers__foot { background: Canvas; border-color: CanvasText; box-shadow: none; } }
+</style>
 <!-- gf-contact-rail:css:begin -->
+<style id="home-collections-sync">
+/* Khu "Chương trình bán hàng 24/7": khoảng đệm trên/dưới, tiêu đề và dòng mô tả (như trang chủ). Trang chủ còn chứa thanh nhóm trong khu này; trang chi tiết thì thanh luôn nằm ở đầu trang. Chép từ trang chi tiết sản phẩm (khách). */
+#he-mo-rong { padding-top: 46px; }
+#he-mo-rong { padding-bottom: 36px; }
+@media (max-width: 767px) {
+  #he-mo-rong { padding-top: 26px; }
+  #he-mo-rong { padding-top: 32px; padding-bottom: 30px; }
+}
+.section__title.eco__title { margin: 0; text-align: center; font-size: 32px; line-height: 1.2; }
+@media (max-width: 767px) {
+  .section__title.eco__title { font-size: 24px; }
+}
+.eco__lead { text-align: center; }
+
+/* Thẻ trắng nhấn cạnh (phương án D 2026-10-19, như trang chủ): viền đậm một nấc + vạch màu nhóm 4px cạnh trên của thẻ sản phẩm, thẻ xem trước và khối rỗng. */
+.collection .card article { border-color: var(--gf-border-strong); box-shadow: inset 0 4px 0 0 var(--cat-accent, var(--gf-gold)), var(--shadow-card); }
+.collection .preview-card, .collection .empty { border-color: var(--gf-border-strong); box-shadow: inset 0 4px 0 0 var(--cat-accent, var(--gf-gold)); }
+
+/* Cùng trang chi tiết (khách): chữ trong khu 24/7 + nhóm co 1,5 dòng; nhóm "sắp ra mắt" ẩn bằng thuộc tính hidden (trang này chưa có thanh lọc nên không hiện); dải card có khe trên 20px; nút điều hướng bị khoá giữ viền xanh. */
+.tiers, .golden-section, #he-mo-rong, #collections { line-height: 1.5; }
+.collection[hidden] { display: none !important; }
+.cards { margin-top:20px; display:flex; gap:24px; overflow-x:auto; scroll-snap-type:x mandatory; scrollbar-width:none; padding:4px; margin-left:-4px; margin-right:-4px; scroll-padding:4px; cursor:grab; }
+@media (max-width: 767px) { .cards { gap: 12px; } } /* luật .cards ở trên đứng sau @media cũ nên phải nhắc lại khe 12px của điện thoại */
+.card__actions .iconbtn.is-added { background:var(--gf-navy); border-color:var(--gf-navy); color:#fff; }
+.card .iconbtn:disabled, .collection__nav .iconbtn:disabled { opacity: unset; border-color: var(--gf-navy); color: var(--gf-navy); cursor: default; } /* nút trượt hết đầu/cuối vẫn xanh như trang chủ (chỉ đổi con trỏ); luật cũ ở khối đầu trang đặt viền be + chữ nhạt */
+
+/* Tiêu đề khu "Chương trình bán hàng 24/7" màu vàng nâu như trang chủ (trang chủ đặt cùng màu cho #tiersTitle, #ecoTitle, .story__heading, #homeAboutTitle). */
+#ecoTitle { color: var(--gf-gold-text); }
+
+/* Biến viền đậm một nấc (#D9C79C thay #E8DDC3) cho vạch thẻ như trang chủ: trong giỏ hàng biến này chỉ nằm trong phạm vi vỏ trang nên ngoài đó rỗng. */
+:root { --gf-border-strong: #D9C79C; }
+/* Bổ sung theo trang chủ (khu nhóm + card): nút trượt nhóm 30px viền xanh, giá niêm yết ở card không gạch ngang, nút giỏ không viền, khe trên hàng nút; tiêu đề khu 24/7 màu vàng nâu. Chép từ trang chủ. */
+.collection__nav .iconbtn { position:relative; width:30px; height:30px; border-color:var(--gf-navy); background:#fff; color:var(--gf-navy); transition:background var(--motion-fast) var(--ease-standard); }
+.collection__nav .iconbtn::before { content:""; position:absolute; inset:-7px; border-radius:999px; }
+.collection__nav .iconbtn .icon { width:15px; height:15px; stroke-width:2; }
+.collection__nav .iconbtn:hover:not(:disabled) { background:var(--gf-cream); }
+.price__row--listed dd { text-decoration:none; }
+.card__actions .iconbtn { border:0; }
+.card__actions { padding-top:4px; }
+#ecoTitle { color: var(--gf-gold-text); }
+
+/* Giỏ hàng dùng token chữ hơi khác trang chủ (--gf-text #20324A, --gf-muted #66738A) và cỡ chữ gốc 15px; riêng hai khu này lấy đúng giá trị của trang chủ để chữ, màu, độ cao dòng giống hệt. */
+#he-mo-rong, #collections { --gf-text: #172B4D; --gf-muted: #667085; font-size: 16px; color: var(--gf-text); }
+.price__breakdown .price__row { font-size:13px; }
+@media (max-width: 767px) { .card__name { font-size:16px; } }
+@media (max-width: 767px) { .price__row--final dd { font-size:21px; } }
+
+@media (max-width: 767px) { [data-collection="extended"] .collection__head { flex-direction:column; align-items:flex-start; gap:6px; } }
+</style>
 <style id="gf-contact-rail-css">
 /* Thanh liên hệ nhanh của trang chủ storefront (ReferenceFooter → .reference-social-shell). Chép từ
    referenceHomeSupplementalCss + nền .social-* của bộ mẫu; nút đóng/mở dùng ô chọn ẩn + nhãn (CSS thuần, không JS).
@@ -2181,6 +2572,7 @@ html { scrollbar-gutter: stable; }
 .storefront-reference-shell .nav-sub__note { display: block; margin-top: 2px; font-size: 13px; font-weight: 500; line-height: 1.4; color: #667085; }
 .storefront-reference-shell .mobile-nav > a.mobile-sub { min-height: 44px; padding-left: 36px; font-size: 15px; font-weight: 500; }
 .storefront-reference-shell .mobile-nav > a.mobile-sub::before { content: ""; position: absolute; top: 50%; left: 16px; width: 10px; height: 2px; border-radius: 999px; background: var(--storefront-header-gold, #C9A227); transform: translateY(-50%); }
+@media (min-width: 1280px) and (max-width: 1299px) { .storefront-reference-shell .desktop-nav { gap: 9px; } }
 </style>
 <!-- Menu ☰ phương án A (chủ dự án chọn 2026-10-23, chép từ storefrontHeaderMobileMenuCss.ts của web chính; phần cuối là bổ sung riêng của bản mẫu). Đặt cuối <head> để thắng cùng độ ưu tiên với khối gf-shell:css. -->
 <style id="gf-mobile-menu-a">
@@ -2618,6 +3010,7 @@ html { scrollbar-gutter: stable; }
     .storefront-reference-shell .mobile-nav-actions .header-member-menu-item.is-danger.is-full-md { grid-column: 1 / -1; }
   }
 </style>
+<link rel="stylesheet" href="menu-close-morph.css">
 </head>
 <body>
 <a class="skip-link" href="#noi-dung">Bỏ qua điều hướng, tới nội dung chính</a>
@@ -2663,7 +3056,7 @@ html { scrollbar-gutter: stable; }
 <header class="header storefront-reference-shell" id="header" data-stuck="false">
 <div class="storefront-header">
 <div class="header-grid">
-<button id="navToggle" class="icon-btn menu-trigger" type="button" aria-label="Mở menu điều hướng" aria-controls="mobileNav" aria-expanded="false"><span class="material-symbols-outlined" aria-hidden="true">menu</span><svg class="gf-js-icon" aria-hidden="true" focusable="false"><use href="#i-menu"/></svg></button>
+<ui-menu-close-morph><button id="navToggle" class="icon-btn menu-trigger" type="button" aria-label="Mở menu điều hướng" aria-controls="mobileNav" aria-expanded="false"></button><script src="menu-close-morph.js"></script></ui-menu-close-morph>
 <a class="brand-logo header__logo" aria-label="Về trang chủ Ginsengfood" href="trang-chu-theo-doi-tuong/trang-chu.html">
 <img src="../public/home-webp-v1/logo-header-v2.w360.webp" srcset="../public/home-webp-v1/logo-header-v2.w120.webp 120w, ../public/home-webp-v1/logo-header-v2.w240.webp 240w, ../public/home-webp-v1/logo-header-v2.w360.webp 360w" sizes="(max-width: 767px) 136px, 176px" alt="Biểu trưng Ginsengfood" width="186" height="67" decoding="async">
 </a>
@@ -2676,6 +3069,7 @@ html { scrollbar-gutter: stable; }
 </div>
 <a href="tin-tuc.html">Tin tức</a>
 <a href="tra-cuu-don-hang.html">Tra cứu đơn hàng</a>
+<a href="trang-chu-theo-doi-tuong/dieu-khoan-cong-tac-vien.html">Khởi nghiệp cùng Ssavigroup</a>
 <a href="trang-chu-theo-doi-tuong/dai-ly-nha-phan-phoi.html">Đại lý nhà phân phối</a>
 </nav>
 <div class="header-actions">
@@ -2693,9 +3087,9 @@ html { scrollbar-gutter: stable; }
 <div id="reference-search-results" class="reference-search-dropdown" role="listbox" aria-label="Gợi ý tìm kiếm sản phẩm">
 <div class="reference-search-result-group">
 <p class="reference-search-heading">Gợi ý</p>
-<a class="reference-search-group" role="option" aria-selected="false" aria-label="Nhóm Cháo Sâm Theo Mùa" href="trang-chu-theo-doi-tuong/trang-chu.html#col-seasonal"><span class="material-symbols-outlined" aria-hidden="true">category</span><span>Cháo Sâm Theo Mùa</span></a>
-<a class="reference-search-group" role="option" aria-selected="false" aria-label="Nhóm Cháo Sâm Chức Năng" href="trang-chu-theo-doi-tuong/trang-chu.html#col-functional"><span class="material-symbols-outlined" aria-hidden="true">category</span><span>Cháo Sâm Chức Năng</span></a>
-<a class="reference-search-group" role="option" aria-selected="false" aria-label="Nhóm Cháo Sâm Bổ Dưỡng" href="trang-chu-theo-doi-tuong/trang-chu.html#col-nourishing"><span class="material-symbols-outlined" aria-hidden="true">category</span><span>Cháo Sâm Bổ Dưỡng</span></a>
+<a class="reference-search-group" role="option" aria-selected="false" aria-label="Nhóm Cháo sâm theo mùa" href="trang-chu-theo-doi-tuong/trang-chu.html#col-seasonal"><span class="material-symbols-outlined" aria-hidden="true">category</span><span>Cháo sâm theo mùa</span></a>
+<a class="reference-search-group" role="option" aria-selected="false" aria-label="Nhóm Cháo sâm theo yêu cầu" href="trang-chu-theo-doi-tuong/trang-chu.html#col-functional"><span class="material-symbols-outlined" aria-hidden="true">category</span><span>Cháo sâm theo yêu cầu</span></a>
+<a class="reference-search-group" role="option" aria-selected="false" aria-label="Nhóm Cháo sâm bổ dưỡng" href="trang-chu-theo-doi-tuong/trang-chu.html#col-nourishing"><span class="material-symbols-outlined" aria-hidden="true">category</span><span>Cháo sâm bổ dưỡng</span></a>
 </div>
 </div>
 </form>
@@ -2719,12 +3113,17 @@ html { scrollbar-gutter: stable; }
 <a class="mobile-sub" href="ve-san-pham.html">Về sản phẩm</a>
 <a href="tin-tuc.html"><span class="material-symbols-outlined" aria-hidden="true">newspaper</span>Tin tức</a>
 <a href="tra-cuu-don-hang.html"><span class="material-symbols-outlined" aria-hidden="true">receipt_long</span>Tra cứu đơn hàng</a>
+<a href="trang-chu-theo-doi-tuong/dieu-khoan-cong-tac-vien.html"><span class="material-symbols-outlined" aria-hidden="true">rocket_launch</span>Khởi nghiệp cùng Ssavigroup</a>
 <a href="trang-chu-theo-doi-tuong/dai-ly-nha-phan-phoi.html"><span class="material-symbols-outlined" aria-hidden="true">storefront</span>Đại lý nhà phân phối</a>
 </nav>
 </div>
 <button type="button" id="searchCancel" class="gf-js-hook" hidden tabindex="-1" aria-hidden="true">Hủy</button>
 </header>
 <!-- gf-shell:header:end -->
+
+<!-- Màn che phía sau menu di động và bảng tìm kiếm -->
+<div class="nav-scrim" id="navScrim"></div>
+
 
 <main id="noi-dung">
   <div class="container">
@@ -2800,7 +3199,7 @@ html { scrollbar-gutter: stable; }
           <h2 class="summary__title" id="sumTitle">Tóm tắt đơn hàng</h2>
           <p class="summary__sel" id="sumSel" hidden></p>
           <dl class="totals">
-            <div><dt>Giá tham khảo <span id="sumQty"></span></dt><dd id="sumListed">0đ</dd></div>
+            <div><dt>Giá niêm yết <span id="sumQty"></span></dt><dd id="sumListed">0đ</dd></div>
             <div class="totals__save" id="sumSaveRow"><dt>Ưu đãi chương trình 24/7</dt><dd id="sumSave">0đ</dd></div>
             <div class="totals__save" id="sumGhRow"><dt>Ưu đãi Giờ Vàng Tri Ân</dt><dd id="sumGh">0đ</dd></div>
             <div class="totals__muted"><dt>Quyền lợi thành viên</dt><dd>Chưa áp dụng</dd></div>
@@ -2854,7 +3253,7 @@ html { scrollbar-gutter: stable; }
     <div class="container">
       <div class="tiers__head">
         <!-- Đề mục "Quyền lợi thành viên" (dòng căn giữa phía trên tiêu đề, có hai gạch vàng hai bên) đã bỏ (chủ dự án 2026-10-19; đồng bộ web chính 2026-10-23); nhãn ở mục lục trái vẫn giữ. -->
-        <h2 class="section__title" id="tiersTitle">Bốn hạng, quyền lợi tăng dần theo hành trình</h2>
+        <h2 class="section__title" id="tiersTitle">Đặc quyền theo hạng thành viên</h2>
         <p class="tiers__lead">Thành viên tích lũy doanh số hợp lệ trong chu kỳ 12 tháng. Đạt mốc của hạng nào, bạn nhận quyền lợi và quyền mua sớm Giờ Vàng của hạng đó.</p>
       </div>
 
@@ -2863,11 +3262,11 @@ html { scrollbar-gutter: stable; }
           <span class="tier__dot" aria-hidden="true"></span>
           <article class="tier__card">
             <h3 class="tier__name">Silver</h3>
-            <p class="tier__benefit"><b>5%</b><span>quyền lợi trên đơn đủ điều kiện</span></p>
-            <p class="tier__early"><svg class="icon" aria-hidden="true"><use href="#i-alarm"/></svg>Mua sớm Giờ Vàng <b>5 phút</b></p>
+            <p class="tier__benefit"><b>8%</b><span>quyền lợi trên đơn đủ điều kiện</span></p>
+            <p class="tier__early"><svg class="icon" aria-hidden="true"><use href="#i-alarm"/></svg>Mua sớm Giờ Vàng <b>10 phút</b></p>
             <dl class="tier__meta">
-              <div><dt>Doanh số hợp lệ</dt><dd>1.000.000đ – 2.999.999đ</dd></div>
-              <div><dt>Mốc duy trì</dt><dd>500.000đ</dd></div>
+              <div><dt>Doanh số hợp lệ</dt><dd>1.000.000đ – 1.999.999đ</dd></div>
+              <div><dt>Hiệu lực</dt><dd>12 tháng</dd></div>
             </dl>
           </article>
         </li>
@@ -2875,11 +3274,11 @@ html { scrollbar-gutter: stable; }
           <span class="tier__dot" aria-hidden="true"></span>
           <article class="tier__card">
             <h3 class="tier__name">Gold</h3>
-            <p class="tier__benefit"><b>8%</b><span>quyền lợi trên đơn đủ điều kiện</span></p>
-            <p class="tier__early"><svg class="icon" aria-hidden="true"><use href="#i-alarm"/></svg>Mua sớm Giờ Vàng <b>10 phút</b></p>
+            <p class="tier__benefit"><b>12%</b><span>quyền lợi trên đơn đủ điều kiện</span></p>
+            <p class="tier__early"><svg class="icon" aria-hidden="true"><use href="#i-alarm"/></svg>Mua sớm Giờ Vàng <b>15 phút</b></p>
             <dl class="tier__meta">
-              <div><dt>Doanh số hợp lệ</dt><dd>3.000.000đ – 4.999.999đ</dd></div>
-              <div><dt>Mốc duy trì</dt><dd>1.500.000đ</dd></div>
+              <div><dt>Doanh số hợp lệ</dt><dd>2.000.000đ – 2.999.999đ</dd></div>
+              <div><dt>Hiệu lực</dt><dd>12 tháng</dd></div>
             </dl>
           </article>
         </li>
@@ -2887,11 +3286,11 @@ html { scrollbar-gutter: stable; }
           <span class="tier__dot" aria-hidden="true"></span>
           <article class="tier__card">
             <h3 class="tier__name">Platinum</h3>
-            <p class="tier__benefit"><b>12%</b><span>quyền lợi trên đơn đủ điều kiện</span></p>
+            <p class="tier__benefit"><b>16%</b><span>quyền lợi trên đơn đủ điều kiện</span></p>
             <p class="tier__early"><svg class="icon" aria-hidden="true"><use href="#i-alarm"/></svg>Mua sớm Giờ Vàng <b>20 phút</b></p>
             <dl class="tier__meta">
-              <div><dt>Doanh số hợp lệ</dt><dd>5.000.000đ – 7.999.999đ</dd></div>
-              <div><dt>Mốc duy trì</dt><dd>2.500.000đ</dd></div>
+              <div><dt>Doanh số hợp lệ</dt><dd>3.000.000đ – 3.999.999đ</dd></div>
+              <div><dt>Hiệu lực</dt><dd>12 tháng</dd></div>
             </dl>
           </article>
         </li>
@@ -2900,30 +3299,28 @@ html { scrollbar-gutter: stable; }
           <article class="tier__card">
             <h3 class="tier__name">Diamond</h3>
             <p class="tier__benefit"><b>20%</b><span>quyền lợi trên đơn đủ điều kiện</span></p>
-            <p class="tier__early"><svg class="icon" aria-hidden="true"><use href="#i-alarm"/></svg>Mua sớm Giờ Vàng <b>30 phút</b></p>
+            <p class="tier__early"><svg class="icon" aria-hidden="true"><use href="#i-alarm"/></svg>Mua sớm Giờ Vàng <b>25 phút</b></p>
             <dl class="tier__meta">
-              <div><dt>Doanh số hợp lệ</dt><dd>Từ 8.000.000đ</dd></div>
-              <div><dt>Mốc duy trì</dt><dd>4.000.000đ</dd></div>
+              <div><dt>Doanh số hợp lệ</dt><dd>4.000.000đ – 4.999.999đ</dd></div>
+              <div><dt>Hiệu lực</dt><dd>12 tháng</dd></div>
             </dl>
           </article>
         </li>
       </ol>
 
-      <!-- Lời mời tham gia thành viên: chủ dự án yêu cầu dời lên trước Cộng tác viên và viết lại cho mời gọi hơn.
-           Giữ đủ các ý chính sách theo spec (mục chu kỳ thành viên): chu kỳ 12 tháng từ ngày được công nhận hạng; hết chu kỳ chưa đạt mốc duy trì
-           thì có 60 ngày ân hạng và tạm giữ hạng; quyền lợi áp dụng cho đơn hàng đủ điều kiện theo chính sách hiện hành. Không hứa "miễn phí" hay % khi chưa đạt hạng. -->
+      <!-- Lời mời tham gia thành viên (nội dung đổi theo chủ dự án 2026-10-27): tiêu đề "Đăng ký để kích hoạt quyền lợi thành viên" và MỘT câu điều kiện (quyền lợi lên đến 12 tháng; mốc duy trì từ 50% trở lên
+           trong 60 ngày); thay ba ý có icon và dòng ghi chú ân hạng cũ. Nút bên phải dùng đúng NÚT GHÉP của card Giờ Vàng (dải thông điệp hai dòng + nút tròn 3D "Đăng ký ngay"), phối màu navy cho hợp card.
+           Không hứa "miễn phí" hay % khi chưa đạt hạng. -->
       <div class="tiers__foot">
         <div class="tiers__invite">
-          <h3 class="tiers__invite-title">Tham gia ngay, mỗi đơn hàng đều đưa bạn tiến gần hạng mới</h3>
-          <ul class="tiers__perks">
-            <li><svg class="icon" aria-hidden="true"><use href="#i-cart"/></svg><span>Mỗi đơn đủ điều kiện đều được tích lũy</span></li>
-            <li><svg class="icon" aria-hidden="true"><use href="#i-clock"/></svg><span>Giữ hạng 12 tháng từ ngày được công nhận</span></li>
-            <li><svg class="icon" aria-hidden="true"><use href="#i-shield"/></svg><span>Chưa đạt mốc duy trì? Vẫn có thêm 60 ngày ân hạng</span></li>
-          </ul>
-          <p class="tiers__note">Trong thời gian ân hạng, hạng của bạn được tạm giữ. Quyền lợi áp dụng cho đơn hàng đủ điều kiện theo chính sách hiện hành.</p>
+          <h3 class="tiers__invite-title">Đăng ký để kích hoạt quyền lợi thành viên</h3>
+          <p class="tiers__invite-desc">Quyền lợi lên đến 12 tháng, mốc duy trì phải từ 50% trở lên trong thời gian 60 ngày</p>
         </div>
         <div class="tiers__actions">
-          <a class="btn btn--primary btn--sm" href="#">Đăng ký thành viên <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+          <a class="golden__combo golden__combo--navy" href="#">
+            <span class="golden__combo-msg">Đăng ký để kích hoạt <span class="golden__combo-line">quyền lợi thành viên</span></span>
+            <span class="golden__combo-knob">Đăng ký ngay</span>
+          </a>
         </div>
       </div>
 
@@ -2933,262 +3330,141 @@ html { scrollbar-gutter: stable; }
   </section>
 
     <section class="section" id="he-mo-rong" aria-labelledby="ecoTitle">
-      <div class="container">
-        <p class="eyebrow book-section__eyebrow eco__heading"><span class="eyebrow__rule" aria-hidden="true"></span>Nhóm sản phẩm<span class="eyebrow__rule" aria-hidden="true"></span></p>
-        <h2 class="section__title" id="ecoTitle">Nhóm sản phẩm</h2>
-        <p class="eco__lead">Chọn thêm món cho giỏ từ các nhóm đang mở bán.</p>
-        <div class="eco-slider">
-          <button type="button" class="fb-arrow gh-slider__btn gh-slider__btn--prev" data-scroll="prev" aria-label="Nhóm trước"><svg class="icon" aria-hidden="true"><use href="#i-chev-l"/></svg></button>
-          <ul class="eco">
-            <li><a class="eco__item" href="#col-seasonal" style="--eco-accent: #3E7149; --eco-surface: #F2F7EF; --pos: 84% 50%;">
-              <div class="eco__media"><img src="../public/banner_hero_4.webp" loading="lazy" decoding="async" width="2470" height="637" alt="Hộp Cháo Sâm Mùa Hạ và tô cháo trên bãi biển"></div>
-              <span class="eco__mode">Nhóm A · 4 sản phẩm</span>
-              <span class="eco__name">Cháo Sâm Theo Mùa</span>
-              <span class="eco__note">Diêm mạch &amp; Hạt sen (Xuân) · Cá Basa (Hạ) · Lươn đồng (Thu) · Thịt cừu &amp; Táo tàu (Đông)</span>
-            </a></li>
-            <li><a class="eco__item" href="#col-functional" style="--eco-accent: #C96B22; --eco-surface: #FFF4EA; --pos: 50% 50%;">
-              <div class="eco__media"><img src="../public/home-webp-v1/step5.webp" loading="lazy" decoding="async" width="500" height="500" alt="Tô Cháo Sâm với rau củ"></div>
-              <span class="eco__mode">Nhóm B · 6 sản phẩm</span>
-              <span class="eco__name">Cháo Sâm Chức Năng</span>
-              <span class="eco__note">Rau má &amp; Đậu xanh · DHA Não bộ · Cá cơm &amp; Vừng · Thịt heo &amp; Da heo · Hàu biển · Gà ác</span>
-            </a></li>
-            <li><a class="eco__item" href="#col-nourishing" style="--eco-accent: #315E82; --eco-surface: #EEF6FC; --pos: 47% 50%;">
-              <div class="eco__media"><img src="../public/banner_hero_3.webp" loading="lazy" decoding="async" width="2470" height="637" alt="Tô Cháo Sâm nóng bên củ sâm giữa rừng tuyết"></div>
-              <span class="eco__mode">Nhóm C · 9 sản phẩm</span>
-              <span class="eco__name">Cháo Sâm Bổ Dưỡng</span>
-              <span class="eco__note">Bào ngư · Đông trùng hạ thảo · Nấm đông cô · Cua biển · Cá ngừ · Tôm &amp; Rong biển · Thịt gà · Thịt heo · Thịt bò</span>
-            </a></li>
-            <li><a class="eco__item" href="#col-functional-food" style="--eco-accent: #2F6F6A; --eco-surface: #EEF6F5; --pos: 50% 100%;">
-              <div class="eco__media"><img src="../public/home-webp-v1/9.webp" loading="lazy" decoding="async" width="1254" height="1254" alt="Củ sâm, tô cháo và nguyên liệu tươi trên cát biển"></div>
-              <span class="eco__mode">Sắp ra mắt · thực phẩm bổ sung</span>
-              <span class="eco__name">Thực phẩm chức năng</span>
-              <span class="eco__note">Viên và bột bổ sung dinh dưỡng, làm từ cùng nguồn sâm với Cháo Sâm</span>
-            </a></li>
-            <li><a class="eco__item" href="#col-cosmetics" style="--eco-accent: #9A4A6B; --eco-surface: #FBF0F4; --pos: 38% 50%;">
-              <div class="eco__media"><img src="../public/banner_hero_1.webp" loading="lazy" decoding="async" width="2470" height="637" alt="Vùng trồng sâm bên bờ biển"></div>
-              <span class="eco__mode">Sắp ra mắt · chăm sóc da</span>
-              <span class="eco__name">Mỹ phẩm</span>
-              <span class="eco__note">Dòng chăm sóc da từ chiết xuất Sâm vùng cát biển</span>
-            </a></li>
-            <li><a class="eco__item" href="#col-medicine" style="--eco-accent: #7B5614; --eco-surface: #FFF6E3; --pos: 44% 50%;">
-              <div class="eco__media"><img src="../public/banner_hero_2.webp" loading="lazy" decoding="async" width="2470" height="637" alt="Củ sâm, táo đỏ và các vị dược liệu bên lá phong mùa thu"></div>
-              <span class="eco__mode">Sắp ra mắt · dược liệu</span>
-              <span class="eco__name">Thuốc Y học cổ truyền</span>
-              <span class="eco__note">Bài thuốc từ dược liệu theo Y học cổ truyền, mở bán khi được cơ quan chức năng duyệt</span>
-            </a></li>
-            <li><a class="eco__item" href="#col-newgen" style="--eco-accent: #4B5E2A; --eco-surface: #F3F6EA; --pos: 30% 55%;">
-              <div class="eco__media"><img src="../public/banner_login.webp" loading="lazy" decoding="async" width="1920" height="1080" alt="Củ sâm khô trên nền cát vàng"></div>
-              <span class="eco__mode">Sắp ra mắt · dược liệu chuẩn hóa</span>
-              <span class="eco__name">Dược liệu thế hệ mới</span>
-              <span class="eco__note">Dược liệu sấy thăng hoa, giữ được hoạt chất và đo được hàm lượng trong từng mẻ</span>
-            </a></li>
-          </ul>
-          <button type="button" class="fb-arrow gh-slider__btn gh-slider__btn--next" data-scroll="next" aria-label="Nhóm tiếp theo"><svg class="icon" aria-hidden="true"><use href="#i-chev-r"/></svg></button>
-        </div>
-      </div>
-    </section>
+    <div class="container">
+      <!-- Tiêu đề khu đổi từ "Nhóm sản phẩm" thành "Chương trình bán hàng 24/7" (chủ dự án 2026-10-19). Định dạng giống tiêu đề "Bốn hạng, quyền lợi tăng dần theo hành trình" (chữ serif đậm navy, căn giữa, không in hoa, không gạch vàng). Nhãn "Nhóm sản phẩm:" đầu thanh chip (2026-10-27) chỉ hiện khi thanh đang gắn dưới thanh Chủ đề; tại chỗ không có nhãn (nút mở bảng trên điện thoại vẫn giữ); mục "Nhóm sản phẩm" ở mục lục trái chưa đổi. -->
+      <h2 class="section__title eco__title" id="ecoTitle">Chương trình bán hàng 24/7</h2>
+      <!-- Dòng mô tả dưới tiêu đề (chủ dự án 2026-10-19: thêm cho giống khối "Bốn hạng, quyền lợi tăng dần theo hành trình"); chữ nháp chờ chủ dự án duyệt. -->
+      <p class="tiers__lead eco__lead">Đặt Cháo Sâm Ginsengfood bất cứ lúc nào trong ngày. Giá chương trình 24/7 hiển thị ngay trên từng sản phẩm, thành viên có thêm quyền lợi theo hạng.</p>
+
+      <!-- Thanh "Nhóm sản phẩm" nằm dưới tiêu đề khu Chương trình bán hàng 24/7 (dời từ đáy khu Sản phẩm 2026-10-19; đồng bộ HomeProductGroupBar, chủ dự án chốt 2026-10-12): mỗi badge một màu riêng (data-hue, bảng màu trong CSS; sáu badge theo yêu cầu chủ dự án 2026-10-19); cuộn qua thì gắn dưới thanh Chủ đề (JS cuối trang). -->
+      
+      <!-- Dải 7 card nhóm sản phẩm (kèm nút ‹ ›) đã bỏ khỏi khu này (chủ dự án 2026-10-19): các nhóm vẫn bấm được ở thanh chip phía trên và nằm ở các khu bên dưới. CSS .eco-slider / .eco* còn nguyên nhưng không còn dùng. -->
+    </div>
+  </section>
 
     <section class="section" id="collections" aria-labelledby="collectionsTitle">
-      <div class="container">
-        <h2 class="collections-heading" id="collectionsTitle">Khám phá sản phẩm</h2>
-        <div class="collections">
+    <div class="container">
+      <h2 class="visually-hidden" id="collectionsTitle">Nhóm sản phẩm Ginsengfood</h2>
+      <!-- Dải chip dính riêng của khối này (≤1023px) đã thay bằng dải nhãn nhóm dính dưới header (.catbar, bảy nhóm) theo quyết định chủ dự án -->
 
-          <!-- Nhóm A · seasonal (4 SKU) — thẻ dựng bằng JS từ cùng bảng dữ liệu với giỏ -->
-          <section class="collection" id="col-seasonal" data-collection="seasonal" aria-labelledby="seasonalTitle">
-            <div class="collection__head">
-              <div>
-                <p class="collection__order"><span>Nhóm A<span class="collection__count"> · 4 sản phẩm</span></span></p>
-                <h3 class="collection__title" id="seasonalTitle">Cháo Sâm Theo Mùa</h3>
-                <p class="collection__goal">Xuân · Hạ · Thu · Đông, ưu tiên mùa đang hiệu lực</p>
-              </div>
-              <div class="collection__nav">
-                <a class="link-more" href="nhom-san-pham.html#col-seasonal">Xem tất cả <span aria-hidden="true">→</span></a>
-                <button type="button" class="iconbtn" data-scroll="prev" aria-label="Sản phẩm trước"><svg class="icon" aria-hidden="true"><use href="#i-chev-l"/></svg></button>
-                <button type="button" class="iconbtn" data-scroll="next" aria-label="Sản phẩm tiếp theo"><svg class="icon" aria-hidden="true"><use href="#i-chev-r"/></svg></button>
-              </div>
-            </div>
-            <ul class="cards" data-group="seasonal"></ul>
-          </section>
+      <div class="collections">
 
-          <!-- Nhóm B · functional (6 SKU) -->
-          <section class="collection" id="col-functional" data-collection="functional" aria-labelledby="functionalTitle">
-            <div class="collection__head">
-              <div>
-                <p class="collection__order"><span>Nhóm B<span class="collection__count"> · 6 sản phẩm</span></span></p>
-                <h3 class="collection__title" id="functionalTitle">Cháo Sâm Chức Năng</h3>
-                <p class="collection__goal">Sáu công thức theo công dụng: thanh nhiệt, não bộ, xương khớp, collagen, sinh lực, phục hồi</p>
-              </div>
-              <div class="collection__nav">
-                <a class="link-more" href="nhom-san-pham.html#col-functional">Xem tất cả <span aria-hidden="true">→</span></a>
-                <button type="button" class="iconbtn" data-scroll="prev" aria-label="Sản phẩm trước"><svg class="icon" aria-hidden="true"><use href="#i-chev-l"/></svg></button>
-                <button type="button" class="iconbtn" data-scroll="next" aria-label="Sản phẩm tiếp theo"><svg class="icon" aria-hidden="true"><use href="#i-chev-r"/></svg></button>
-              </div>
-            </div>
-            <ul class="cards" data-group="functional"></ul>
-          </section>
+        <!-- Dòng nhãn phía trên tên mỗi nhóm ("Nhóm A/B/C · …" kèm số sản phẩm và "Sắp ra mắt · …") đã bỏ (chủ dự án 2026-10-19); CSS .collection__order còn nguyên nhưng không còn dùng. -->
 
-          <!-- Nhóm C · nourishing (9 SKU) -->
-          <section class="collection" id="col-nourishing" data-collection="nourishing" aria-labelledby="nourishTitle">
-            <div class="collection__head">
-              <div>
-                <p class="collection__order"><span>Nhóm C<span class="collection__count"> · 9 sản phẩm</span></span></p>
-                <h3 class="collection__title" id="nourishTitle">Cháo Sâm Bổ Dưỡng</h3>
-                <p class="collection__goal">Chín công thức bồi bổ từ hải sản, nấm dược liệu và thịt</p>
-              </div>
-              <div class="collection__nav">
-                <a class="link-more" href="nhom-san-pham.html#col-nourishing">Xem tất cả <span aria-hidden="true">→</span></a>
-                <button type="button" class="iconbtn" data-scroll="prev" aria-label="Sản phẩm trước"><svg class="icon" aria-hidden="true"><use href="#i-chev-l"/></svg></button>
-                <button type="button" class="iconbtn" data-scroll="next" aria-label="Sản phẩm tiếp theo"><svg class="icon" aria-hidden="true"><use href="#i-chev-r"/></svg></button>
-              </div>
+        <!-- Nhóm A · seasonal (A. Cháo Sâm Theo Mùa — 4 SKU) -->
+        <section class="collection" id="col-seasonal" data-collection="seasonal" aria-labelledby="seasonalTitle">
+          <div class="collection__head">
+            <div>
+              <h3 class="collection__title" id="seasonalTitle">Cháo sâm theo mùa</h3>
+              <p class="collection__goal">Xuân · Hạ · Thu · Đông</p>
             </div>
-            <ul class="cards" data-group="nourishing"></ul>
-          </section>
+            <div class="collection__nav">
+              <button type="button" class="iconbtn" data-scroll="prev" aria-label="Sản phẩm trước"><svg class="icon" aria-hidden="true"><use href="#i-chev-l"/></svg></button>
+              <button type="button" class="iconbtn" data-scroll="next" aria-label="Sản phẩm tiếp theo"><svg class="icon" aria-hidden="true"><use href="#i-chev-r"/></svg></button>
+            </div>
+          </div>
+          <ul class="cards" data-group="seasonal"></ul>
+        </section>
 
-          <!-- ===== Bốn nhóm sắp ra mắt — giữ nguyên nội dung và trạng thái như trang-chu.html ===== -->
+        <!-- Nhóm B · functional (B. Cháo Sâm cháo chức năng — 6 SKU) -->
+        <section class="collection" id="col-functional" data-collection="functional" aria-labelledby="functionalTitle">
+          <div class="collection__head">
+            <div>
+              <h3 class="collection__title" id="functionalTitle">Cháo sâm theo yêu cầu</h3>
+              <p class="collection__goal">Thanh nhiệt, Collagen tự nhiên, DHA tự nhiên, Canxi tự nhiên…</p>
+            </div>
+            <div class="collection__nav">
+              <button type="button" class="iconbtn" data-scroll="prev" aria-label="Sản phẩm trước"><svg class="icon" aria-hidden="true"><use href="#i-chev-l"/></svg></button>
+              <button type="button" class="iconbtn" data-scroll="next" aria-label="Sản phẩm tiếp theo"><svg class="icon" aria-hidden="true"><use href="#i-chev-r"/></svg></button>
+            </div>
+          </div>
+          <ul class="cards" data-group="functional"></ul>
+        </section>
 
-          <!-- Thực phẩm chức năng — PREVIEW -->
-          <section class="collection" id="col-functional-food" data-collection="extended" aria-labelledby="functionalFoodTitle">
-            <div class="collection__head">
-              <div>
-                <p class="collection__order"><span>Sắp ra mắt · thực phẩm bổ sung</span></p>
-                <h3 class="collection__title" id="functionalFoodTitle">Thực phẩm chức năng</h3>
-                <p class="collection__goal">Các sản phẩm bổ sung dinh dưỡng dạng viên và dạng bột, làm từ cùng nguồn sâm với Cháo Sâm.</p>
-              </div>
-              <p class="collection__note">Chưa mở bán</p>
+        <!-- Nhóm C · nourishing (C. Cháo Sâm Bổ Dưỡng — 9 SKU) -->
+        <section class="collection" id="col-nourishing" data-collection="nourishing" aria-labelledby="nourishTitle">
+          <div class="collection__head">
+            <div>
+              <h3 class="collection__title" id="nourishTitle">Cháo sâm bổ dưỡng</h3>
+              <p class="collection__goal">Công thức bổ dưỡng tinh túy theo ẩm thực phương Đông</p>
             </div>
-            <div class="legalgate">
-              <span class="legalgate__badge">SẮP RA MẮT</span>
-              <span class="legalgate__text">Nhóm này mới ở mức giới thiệu, chúng tôi chưa mở bán nên chưa có giá.</span>
+            <div class="collection__nav">
+              <button type="button" class="iconbtn" data-scroll="prev" aria-label="Sản phẩm trước"><svg class="icon" aria-hidden="true"><use href="#i-chev-l"/></svg></button>
+              <button type="button" class="iconbtn" data-scroll="next" aria-label="Sản phẩm tiếp theo"><svg class="icon" aria-hidden="true"><use href="#i-chev-r"/></svg></button>
             </div>
-            <div class="preview-grid">
-              <article class="preview-card">
-                <div class="preview-card__media"><img src="../public/home-webp-v1/step5.webp" loading="lazy" decoding="async" width="500" height="500" alt="Tô cháo và rau củ tươi"></div>
-                <span class="preview-card__tag">SẮP RA MẮT</span>
-                <h4 class="preview-card__name">Viên bổ sung Sâm cát biển</h4>
-                <p class="preview-card__note">Dạng viên nhỏ gọn, tiện mang theo cho những ngày không kịp ngồi xuống ăn một tô cháo.</p>
-                <a class="link-more" href="#">Tìm hiểu thêm <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-              </article>
-              <article class="preview-card">
-                <div class="preview-card__media"><img src="../public/home-webp-v1/12.webp" loading="lazy" decoding="async" width="1254" height="1254" alt="Sâm, hoài sơn và rau củ dùng làm bột dinh dưỡng"></div>
-                <span class="preview-card__tag">SẮP RA MẮT</span>
-                <h4 class="preview-card__name">Bột dinh dưỡng Sâm &amp; Hoài sơn</h4>
-                <p class="preview-card__note">Bột pha uống, nguyên liệu lấy từ chính vùng trồng làm nên Cháo Sâm.</p>
-                <a class="link-more" href="#">Tìm hiểu thêm <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-              </article>
-              <article class="preview-card">
-                <div class="preview-card__media"><img src="../public/home-webp-v1/9.webp" loading="lazy" decoding="async" width="1254" height="1254" alt="Củ sâm tươi trên cát biển"></div>
-                <span class="preview-card__tag">SẮP RA MẮT</span>
-                <h4 class="preview-card__name">Cao Sâm cát biển</h4>
-                <p class="preview-card__note">Cao đặc nấu từ sâm vùng cát biển, pha một thìa với nước ấm là dùng được.</p>
-                <a class="link-more" href="#">Tìm hiểu thêm <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-              </article>
-            </div>
-            <div class="previewfoot">
-              <span class="previewfoot__icon" aria-hidden="true"><svg class="icon"><use href="#i-shield"/></svg></span>
-              <span>
-                <span class="previewfoot__title">Chúng tôi đang hoàn tất thủ tục cho nhóm này</span><br>
-                <span class="previewfoot__note">Chỉ những thông tin đã được duyệt mới xuất hiện ở đây. Xong thủ tục, chúng tôi sẽ mở bán và báo bạn biết.</span>
-              </span>
-              <button type="button" class="btn btn--outline btn--sm" data-goto="col-seasonal">Xem nhóm Cháo Sâm</button>
-            </div>
-          </section>
+          </div>
+          <ul class="cards" data-group="nourishing"></ul>
+        </section>
 
-          <!-- Mỹ phẩm — EMPTY -->
-          <section class="collection" id="col-cosmetics" data-collection="extended" aria-labelledby="cosmeticsTitle">
-            <div class="collection__head">
-              <div>
-                <p class="collection__order"><span>Sắp ra mắt · chăm sóc da</span></p>
-                <h3 class="collection__title" id="cosmeticsTitle">Mỹ phẩm</h3>
-                <p class="collection__goal">Dòng chăm sóc da từ chiết xuất Sâm vùng cát biển.</p>
-              </div>
-              <p class="collection__note">Chưa mở bán</p>
-            </div>
-            <div class="empty">
-              <div class="empty__media"><img src="../public/banner_hero_1.webp" loading="lazy" decoding="async" width="2470" height="637" alt="Vùng trồng sâm bên bờ biển"></div>
-              <div class="empty__copy">
-                <h4 class="empty__title">Chúng tôi đang chuẩn bị cho nhóm này</h4>
-                <p class="empty__body">Dòng mỹ phẩm từ sâm vẫn còn trên bàn thử nghiệm. Trong lúc chờ, mời bạn xem các nhóm Cháo Sâm đang bán, hoặc để lại email để chúng tôi báo bạn sớm nhất.</p>
-                <div class="empty__actions">
-                  <button type="button" class="btn btn--primary" data-goto="col-seasonal">Xem nhóm đang bán</button>
-                  <a class="btn btn--outline" href="#">Chọn món phù hợp với tôi</a>
-                </div>
-              </div>
-            </div>
-          </section>
+        <!-- ===== Bốn nhóm sắp ra mắt, đem sang từ nhom-san-pham.html (quyết định chủ dự án) =====
+             Nội dung, ảnh và trạng thái (preview + khối pháp lý / khối rỗng) giữ như nhom-san-pham.html; ảnh dùng bản webp sẵn có của trang chủ.
+             Link "Tìm hiểu thêm", "Báo tôi khi có hàng"… là anchor mock; nút data-goto cuộn về nhóm đang bán. -->
 
-          <!-- Thuốc Y học cổ truyền — PREVIEW + LEGAL GATE -->
-          <section class="collection" id="col-medicine" data-collection="extended" aria-labelledby="medicineTitle">
-            <div class="collection__head">
-              <div>
-                <p class="collection__order"><span>Sắp ra mắt · dược liệu</span></p>
-                <h3 class="collection__title" id="medicineTitle">Thuốc Y học cổ truyền</h3>
-                <p class="collection__goal">Các bài thuốc từ dược liệu theo Y học cổ truyền. Chúng tôi chỉ nói những gì đã được cơ quan chức năng cho phép.</p>
-              </div>
-              <p class="collection__note">Chưa mở bán</p>
-            </div>
-            <div class="legalgate">
-              <span class="legalgate__badge">SẮP RA MẮT</span>
-              <span class="legalgate__text">Thuốc cần được cơ quan chức năng duyệt trước khi bán, nên hiện chưa có giá.</span>
-            </div>
-            <div class="preview-grid">
-              <article class="preview-card">
-                <div class="preview-card__media"><img src="../public/home-webp-v1/11.webp" loading="lazy" decoding="async" width="1254" height="1254" alt="Sâm và các vị dược liệu dùng làm viên hoàn"></div>
-                <span class="preview-card__tag">SẮP RA MẮT</span>
-                <h4 class="preview-card__name">Viên hoàn Sâm cát biển</h4>
-                <p class="preview-card__note">Viên hoàn làm theo bài thuốc cổ truyền, vo tay từ mẻ dược liệu cùng vùng trồng.</p>
-                <a class="link-more" href="#">Tìm hiểu thêm <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-              </article>
-              <article class="preview-card">
-                <div class="preview-card__media"><img src="../public/home-webp-v1/13.webp" loading="lazy" decoding="async" width="1254" height="1254" alt="Sâm và đương quy dùng làm trà"></div>
-                <span class="preview-card__tag">SẮP RA MẮT</span>
-                <h4 class="preview-card__name">Trà dược liệu Sâm &amp; Đương quy</h4>
-                <p class="preview-card__note">Trà túi lọc từ sâm và đương quy, hợp với người muốn dùng nhẹ nhàng mỗi ngày.</p>
-                <a class="link-more" href="#">Tìm hiểu thêm <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-              </article>
-              <article class="preview-card">
-                <div class="preview-card__media"><img src="../public/home-webp-v1/14.webp" loading="lazy" decoding="async" width="1254" height="1254" alt="Sâm và kỷ tử trên nền gỗ"></div>
-                <span class="preview-card__tag">SẮP RA MẮT</span>
-                <h4 class="preview-card__name">Cao dược liệu Sâm &amp; Kỷ tử</h4>
-                <p class="preview-card__note">Cao đặc theo công thức cổ truyền, cô lại từ mẻ dược liệu cùng vùng trồng.</p>
-                <a class="link-more" href="#">Tìm hiểu thêm <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-              </article>
-            </div>
-            <div class="previewfoot">
-              <span class="previewfoot__icon" aria-hidden="true"><svg class="icon"><use href="#i-shield"/></svg></span>
-              <span>
-                <span class="previewfoot__title">Thuốc và dược liệu cần được duyệt trước khi bán</span><br>
-                <span class="previewfoot__note">Chúng tôi không nói về công dụng khi chưa được cơ quan chức năng cho phép. Nhóm này sẽ mở bán khi có đủ giấy tờ.</span>
-              </span>
-              <button type="button" class="btn btn--outline btn--sm" data-goto="col-nourishing">Xem nhóm Bổ Dưỡng</button>
-            </div>
-          </section>
+        <!-- Chủ dự án 2026-10-19: mỗi nhóm sắp ra mắt chỉ còn đầu nhóm (tên, mô tả, "Chưa mở bán") và thẻ "SẮP RA MẮT"; đã bỏ thẻ xem trước, khối chân preview và khối rỗng. CSS .preview-*, .previewfoot*, .empty* còn nguyên nhưng không còn dùng. Thuốc Y học cổ truyền giữ câu pháp lý riêng trong thẻ. -->
 
-          <!-- Dược liệu thế hệ mới — EMPTY -->
-          <section class="collection" id="col-newgen" data-collection="extended" aria-labelledby="newgenTitle">
-            <div class="collection__head">
-              <div>
-                <p class="collection__order"><span>Sắp ra mắt · dược liệu chuẩn hóa</span></p>
-                <h3 class="collection__title" id="newgenTitle">Thuốc dược liệu thế hệ mới</h3>
-                <p class="collection__goal">Dược liệu sấy thăng hoa, giữ được hoạt chất và đo được hàm lượng trong từng mẻ.</p>
-              </div>
-              <p class="collection__note">Chưa mở bán</p>
+        <!-- Thực phẩm chức năng — chỉ còn thẻ SẮP RA MẮT -->
+        <section class="collection" id="col-functional-food" data-collection="extended" aria-labelledby="functionalFoodTitle" hidden>
+          <div class="collection__head">
+            <div>
+              <h3 class="collection__title" id="functionalFoodTitle">Thực phẩm chức năng</h3>
+              <p class="collection__goal">Các sản phẩm bổ sung dinh dưỡng dạng viên và dạng bột, làm từ cùng nguồn sâm với Cháo Sâm.</p>
             </div>
-            <div class="empty">
-              <div class="empty__media"><img src="../public/banner_hero_3.webp" loading="lazy" decoding="async" width="2470" height="637" alt="Củ sâm và nguyên liệu dược liệu giữa khung cảnh núi rừng"></div>
-              <div class="empty__copy">
-                <h4 class="empty__title">Nhóm này sắp có mặt</h4>
-                <p class="empty__body">Chúng tôi đang hoàn thiện phần chuẩn hóa hoạt chất cho dòng này. Sản phẩm đầu tiên sẽ xuất hiện ngay tại đây khi sẵn sàng.</p>
-                <div class="empty__actions">
-                  <button type="button" class="btn btn--primary" data-goto="col-seasonal">Xem nhóm đang bán</button>
-                  <a class="btn btn--outline" href="#">Báo tôi khi có hàng</a>
-                </div>
-              </div>
-            </div>
-          </section>
+            <p class="collection__note">Chưa mở bán</p>
+          </div>
+          <div class="legalgate">
+            <span class="legalgate__badge">SẮP RA MẮT</span>
+            <span class="legalgate__text">Nhóm này mới ở mức giới thiệu, chúng tôi chưa mở bán nên chưa có giá.</span>
+          </div>
+        </section>
 
-        </div>
+        <!-- Mỹ phẩm — chỉ còn thẻ SẮP RA MẮT -->
+        <section class="collection" id="col-cosmetics" data-collection="extended" aria-labelledby="cosmeticsTitle" hidden>
+          <div class="collection__head">
+            <div>
+              <h3 class="collection__title" id="cosmeticsTitle">Mỹ phẩm</h3>
+              <p class="collection__goal">Dòng chăm sóc da từ chiết xuất Sâm vùng cát biển.</p>
+            </div>
+            <p class="collection__note">Chưa mở bán</p>
+          </div>
+          <div class="legalgate">
+            <span class="legalgate__badge">SẮP RA MẮT</span>
+            <span class="legalgate__text">Nhóm này mới ở mức giới thiệu, chúng tôi chưa mở bán nên chưa có giá.</span>
+          </div>
+        </section>
+
+        <!-- Thuốc Y học cổ truyền — chỉ còn thẻ SẮP RA MẮT (câu pháp lý riêng) -->
+        <section class="collection" id="col-medicine" data-collection="extended" aria-labelledby="medicineTitle" hidden>
+          <div class="collection__head">
+            <div>
+              <h3 class="collection__title" id="medicineTitle">Thuốc y học cổ truyền</h3>
+              <p class="collection__goal">Các bài thuốc từ dược liệu theo Y học cổ truyền. Chúng tôi chỉ nói những gì đã được cơ quan chức năng cho phép.</p>
+            </div>
+            <p class="collection__note">Chưa mở bán</p>
+          </div>
+          <div class="legalgate">
+            <span class="legalgate__badge">SẮP RA MẮT</span>
+            <span class="legalgate__text">Thuốc cần được cơ quan chức năng duyệt trước khi bán, nên hiện chưa có giá.</span>
+          </div>
+        </section>
+
+        <!-- Thuốc dược liệu thế hệ mới — chỉ còn thẻ SẮP RA MẮT -->
+        <section class="collection" id="col-newgen" data-collection="extended" aria-labelledby="newgenTitle" hidden>
+          <div class="collection__head">
+            <div>
+              <h3 class="collection__title" id="newgenTitle">Thuốc dược liệu thế hệ mới</h3>
+              <p class="collection__goal">Dược liệu sấy thăng hoa, giữ được hoạt chất và đo được hàm lượng trong từng mẻ.</p>
+            </div>
+            <p class="collection__note">Chưa mở bán</p>
+          </div>
+          <div class="legalgate">
+            <span class="legalgate__badge">SẮP RA MẮT</span>
+            <span class="legalgate__text">Nhóm này mới ở mức giới thiệu, chúng tôi chưa mở bán nên chưa có giá.</span>
+          </div>
+        </section>
+
       </div>
-    </section>
+    </div>
+  </section>
   </div>
 </main>
 
@@ -3324,7 +3600,7 @@ html { scrollbar-gutter: stable; }
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var IMG = '../public/home-webp-v1/products-image/';
   var MAX_QTY = 20, KEY = 'gf-cart', HELD_KEY = 'gf-cart-held', CLOCK_KEY = 'gf-cart-clock', NOTIFY_KEY = 'gf-notify', PCT_247 = 12;
-  var COLLECTION = { seasonal: 'Cháo Sâm Theo Mùa', functional: 'Cháo Sâm Chức Năng', nourishing: 'Cháo Sâm Bổ Dưỡng' };
+  var COLLECTION = { seasonal: 'Cháo sâm theo mùa', functional: 'Cháo sâm theo yêu cầu', nourishing: 'Cháo sâm bổ dưỡng' };
   var SIZES = '(max-width: 767px) calc(76vw - 30px), (max-width: 1279px) calc((100vw - 96px) / 2 - 30px), (min-width: 1320px) 364.667px, calc((100vw - 136px) / 3 - 30px)';
 
   /* 19 món — số liệu chép đúng từ card ở trang-chu.html (thứ tự trong nhóm cũng như trang chủ).
@@ -3335,12 +3611,12 @@ html { scrollbar-gutter: stable; }
     ['A4/CS/CUU', 'seasonal', 'Cháo Sâm Mùa Đông – Thịt cừu & Táo tàu', 'Mặn', 'th%E1%BB%8Bt%20c%E1%BB%ABu%20v%C3%A0%20t%C3%A1o%20t%C3%A0o', 'Tô Cháo Sâm Mùa Đông với thịt cừu và táo tàu', 388000, 341440, '~85.360đ mỗi bữa', 4, 'Ôn trung – trợ dương – giữ ấm cơ thể mùa lạnh', 324368, 'GF-2609-A15', 240560],
     ['A1/CS/DM/HS', 'seasonal', 'Cháo Sâm Mùa Xuân – Diêm mạch & Hạt sen', 'Thuần chay', 'di%C3%AAm%20m%E1%BA%A1ch%20h%E1%BA%A1t%20sen', 'Tô Cháo Sâm Mùa Xuân với diêm mạch và hạt sen', 296000, 260480, '~65.120đ mỗi bữa', 4, 'Kiện tỳ – dưỡng khí – ổn định tiêu hóa sau mùa đông', 247456, 'GF-2608-A03', 183520],
     ['B1/CS/RM/ĐX', 'functional', 'Cháo Sâm – Rau má & Đậu xanh', 'Thuần chay', 'rau%20m%C3%A1%20%C4%91%E1%BA%ADu%20xanh(2)', 'Tô Cháo Sâm với rau má và đậu xanh', 288000, 253440, '~63.360đ mỗi bữa', 4, 'Thanh nhiệt – hỗ trợ giải độc – làm mát cơ thể', 240768, 'GF-2609-B04', 178560],
-    ['B2/CS/DHA', 'functional', 'Cháo Sâm – DHA Não bộ', 'Mặn', 'c%C3%A1%20h%E1%BB%93i(2)', 'Tô Cháo Sâm DHA Não bộ với cá hồi', 312000, 274560, '~68.640đ mỗi bữa', 4, 'Nuôi dưỡng não bộ – hỗ trợ trí nhớ – bền thần kinh', 260832, 'GF-2609-B11', 0],
-    ['B3/CS/CACOM', 'functional', 'Cháo Sâm – Cá cơm & Vừng', 'Mặn', 'c%C3%A1c%20c%C6%A1m%20v%C3%A0%20v%E1%BB%ABng', 'Tô Cháo Sâm với cá cơm và vừng', 292000, 256960, '~64.240đ mỗi bữa', 4, 'Bổ sung khoáng – canxi tự nhiên – hỗ trợ xương khớp', 244112, 'GF-2609-B08', 0],
+    ['B2/CS/DHA', 'functional', 'Cháo Sâm – DHA Não bộ', 'Mặn', 'c%C3%A1%20h%E1%BB%93i(2)', 'Tô Cháo Sâm DHA Não bộ với cá hồi', 312000, 274560, '~68.640đ mỗi bữa', 4, 'Bổ sung DHA tự nhiên từ cá hồi', 260832, 'GF-2609-B11', 0],
+    ['B3/CS/CACOM', 'functional', 'Cháo Sâm – Cá cơm & Vừng', 'Mặn', 'c%C3%A1c%20c%C6%A1m%20v%C3%A0%20v%E1%BB%ABng', 'Tô Cháo Sâm với cá cơm và vừng', 292000, 256960, '~64.240đ mỗi bữa', 4, 'Bổ sung Canxi tự nhiên từ cá cơm', 244112, 'GF-2609-B08', 0],
     ['B4/CS/COLAGEN', 'functional', 'Cháo Sâm – Thịt heo & Da heo', 'Mặn', 'th%E1%BB%8Bt%20heo%20v%C3%A0%20da%20heo', 'Tô Cháo Sâm với thịt heo và da heo', 328000, 288640, '~72.160đ mỗi bữa', 4, 'Collagen tự nhiên – phục hồi da, gân, khớp', 274208, 'GF-2609-B13', 0],
-    ['B5/CS/SINHLUC', 'functional', 'Cháo Sâm – Hàu biển', 'Mặn', 'h%C3%A0u%20bi%E1%BB%83n(2)', 'Tô Cháo Sâm với hàu biển', 468000, 411840, '~137.280đ mỗi bữa', 3, 'Bổ thận – tăng cường sinh lực – hỗ trợ nội tiết nam', 391248, 'GF-2607-B19', 290160],
+    ['B5/CS/SINHLUC', 'functional', 'Cháo Sâm – Hàu biển', 'Mặn', 'h%C3%A0u%20bi%E1%BB%83n(2)', 'Tô Cháo Sâm với hàu biển', 468000, 411840, '~137.280đ mỗi bữa', 3, 'Bổ thận – tăng cường sinh lực – hỗ trợ nội tiết nam', 391248, 'GF-2607-B19', 271440],
     ['B6/CS/GAAC', 'functional', 'Cháo Sâm – Gà ác', 'Mặn', 'g%C3%A0%20%C3%A1c(2)', 'Tô Cháo Sâm với gà ác', 528000, 464640, '~154.880đ mỗi bữa', 3, 'Bổ huyết – dưỡng âm – phục hồi thể trạng suy nhược', 441408, 'GF-2609-B21', 327360],
-    ['C1/CS/BAONGU', 'nourishing', 'Cháo Sâm – Bào ngư', 'Mặn', 'b%C3%A0o%20ng%C6%B0', 'Tô Cháo Sâm với bào ngư', 588000, 517440, '~172.480đ mỗi bữa', 3, 'Bổ dưỡng cao cấp – phục hồi thể lực – tăng sức bền', 491568, 'GF-2608-C11', 364560],
+    ['C1/CS/BAONGU', 'nourishing', 'Cháo Sâm – Bào ngư', 'Mặn', 'b%C3%A0o%20ng%C6%B0', 'Tô Cháo Sâm với bào ngư', 588000, 517440, '~172.480đ mỗi bữa', 3, 'Bổ dưỡng cao cấp – phục hồi thể lực – tăng sức bền', 491568, 'GF-2608-C11', 341040],
     ['C2/CS/DONGTRUNG', 'nourishing', 'Cháo Sâm – Đông trùng hạ thảo', 'Thuần chay', '%C4%91%C3%B4ng%20tr%C3%B9ng%20h%E1%BA%A1%20th%E1%BA%A3o(2)', 'Tô Cháo Sâm với đông trùng hạ thảo', 552000, 485760, '~161.920đ mỗi bữa', 3, 'Tăng cường miễn dịch – phục hồi sinh lực – nâng sức bền', 461472, 'GF-2609-C02', 0],
     ['C3/CS/NAMDONGCO', 'nourishing', 'Cháo Sâm – Nấm đông cô', 'Thuần chay', 'n%E1%BA%A5m%20%C4%91%C3%B4ng%20c%C3%B4(2)', 'Tô Cháo Sâm với nấm đông cô', 304000, 267520, '~66.880đ mỗi bữa', 4, 'Thanh bổ – hỗ trợ miễn dịch – dễ tiêu', 254144, 'GF-2609-C05', 0],
     ['C4/CS/CUABIEN', 'nourishing', 'Cháo Sâm – Cua biển', 'Mặn', 'cua%20bi%E1%BB%83n(2)', 'Tô Cháo Sâm với cua biển', 498000, 438240, '~146.080đ mỗi bữa', 3, 'Bổ sung khoáng – phục hồi thể lực – hỗ trợ xương khớp', 416328, 'GF-2609-C14', 0],
@@ -3359,7 +3635,7 @@ html { scrollbar-gutter: stable; }
 
   var $ = function (id) { return document.getElementById(id); };
   function pad(n) { return ('0' + n).slice(-2); }
-  function money(n) { return Math.round(n).toLocaleString('vi-VN') + '\u00a0₫'; }
+  function money(n) { return Math.round(n).toLocaleString('vi-VN') + 'đ'; }
   function signed(n) { return (n > 0 ? '+' : '−') + money(Math.abs(n)); }
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
   function thumb(file) { return IMG + file + '.w480.q90.webp'; }
@@ -3474,7 +3750,7 @@ html { scrollbar-gutter: stable; }
         var arr = JSON.parse(sessionStorage.getItem(KEY) || 'null');
         var held = JSON.parse(sessionStorage.getItem(HELD_KEY) || 'null');
         if (Array.isArray(held)) return restore(held, Array.isArray(arr) ? arr : null);
-        if (Array.isArray(arr)) return arr.map(sanitize).filter(Boolean);   // mảng rỗng = khách đã xoá hết, giữ giỏ trống
+        if (Array.isArray(arr)) return arr.map(sanitize).filter(Boolean);   // mảng rỗng = khách đã xóa hết, giữ giỏ trống
       } catch (_) {}
     }
     return sample();
@@ -3506,7 +3782,7 @@ html { scrollbar-gutter: stable; }
   function rowHtml(it) {
     var off = it.status !== 'SELLABLE', q = quote(it), ch = off ? null : change(it);
     var cat = (COLLECTION[it.col] ? COLLECTION[it.col] : 'Ginsengfood') + (it.type ? ' · ' + it.type : '');
-    var meta = [it.pack, it.serving].filter(Boolean).join(' · ').replace(/đ/g, '\u00a0₫');
+    var meta = [it.pack, it.serving].filter(Boolean).join(' · ');
     var chips = (meta ? '<span class="chip">' + esc(meta) + '</span>' : '') + '<span class="chip">' + esc(whenAdded(it.addedAt)) + '</span>';
     if (it.lot && !off) chips += '<a class="chip chip--lot" href="#"><svg class="icon" aria-hidden="true"><use href="#i-shield"/></svg>Lô SX <b>' + esc(it.lot) + '</b></a>';
     if (!off && q.kind === 'GH') chips += '<span class="chip chip--gh"><svg class="icon" aria-hidden="true"><use href="#i-bolt"/></svg>Giá Giờ Vàng · còn <b data-cd="' + esc(it.sku) + '" aria-hidden="true">' + mmss(q.end - now()) + '</b><span class="visually-hidden">, giữ giá tới ' + hhmm(q.end) + '</span></span>';
@@ -3526,7 +3802,7 @@ html { scrollbar-gutter: stable; }
       +   '<p class="line__cat"><span class="line__dot" aria-hidden="true"></span>' + esc(cat) + '</p>'
       +   '<h3 class="line__name"><a href="chi-tiet-san-pham.html">' + esc(it.name) + '</a></h3>'
       +   (off ? '<span class="pill-off">Tạm hết hàng</span>'
-               : '<p class="line__price">Giá tham khảo: <b' + (q.kind === 'GH' ? ' class="is-gh"' : '') + '>' + money(q.price) + '<span class="visually-hidden"> mỗi hộp' + (q.kind === 'GH' ? ', giá Giờ Vàng' : '') + '</span></b>'
+               : '<p class="line__price">' + (q.kind === 'GH' ? 'Giá Giờ Vàng' : 'Giá chương trình 24/7') + ': <b' + (q.kind === 'GH' ? ' class="is-gh"' : '') + '>' + money(q.price) + '<span class="visually-hidden"> mỗi hộp</span></b>'
                  + (it.listed > q.price ? '<s><span class="visually-hidden">Giá niêm yết </span>' + money(it.listed) + '</s>' : '') + '</p>')
       +   '<div class="line__chips">' + chips + '</div>'
       +   remind
@@ -3547,7 +3823,7 @@ html { scrollbar-gutter: stable; }
         +  '<p class="line__total"><span class="visually-hidden">Thành tiền </span><b>' + money(q.price * it.qty) + '</b>'
         +  (it.listed > q.price ? '<s><span class="visually-hidden">Giá niêm yết </span>' + money(it.listed * it.qty) + '</s>' : '') + '</p>';
     }
-    h += '<button type="button" class="line__remove" data-act="remove" aria-label="Xoá ' + esc(it.name) + ' khỏi giỏ" title="Xoá khỏi giỏ"><span class="material-symbols-outlined" aria-hidden="true">close</span></button></li>';
+    h += '<button type="button" class="line__remove" data-act="remove" aria-label="Xóa ' + esc(it.name) + ' khỏi giỏ" title="Xóa khỏi giỏ"><span class="material-symbols-outlined" aria-hidden="true">close</span></button></li>';
     return h;
   }
 
@@ -3665,31 +3941,25 @@ html { scrollbar-gutter: stable; }
 
   /* ---- Thẻ sản phẩm 3 nhóm đang bán (cùng markup với trang-chu.html) ---- */
   function cardHtml(c) {
-    var src = IMG + c.img, oos = OOS[c.sku], disc = c.listed - c.price;
+    var src = IMG + c.img, oos = OOS[c.sku];
     var srcset = [480, 768, 1152, 1448].map(function (w) { return src + '.w' + w + '.q90.webp ' + w + 'w'; }).join(', ');
-    return '<li class="card" data-sku="' + esc(c.sku) + '"><article>'
+    var d = function (n) { return Math.round(n).toLocaleString('vi-VN') + 'đ'; };   // giá trên thẻ viết như trang chủ: 336.000đ
+    return '<li class="card" data-sku="' + esc(c.sku) + '" data-packs="' + c.packs + '"><article>'
       + '<div class="card__media"><img src="' + src + '.w1448.q90.webp" srcset="' + srcset + '" sizes="' + SIZES + '" loading="lazy" decoding="async" width="1448" height="1086" alt="' + esc(c.alt) + '">'
-      +   '<span class="card__type">Đang bán</span>'
+      +   '<span class="card__type' + (c.type === 'Thuần chay' ? ' card__type--chay' : '') + '">' + esc(c.type) + '</span>'
       +   '<span class="card__flag" data-flag hidden></span></div>'
-      + '<div class="card__body"><p class="card__diet">' + esc(c.type) + '</p>'
       + '<h4 class="card__name"><a href="chi-tiet-san-pham.html">' + esc(c.name) + '</a></h4>'
       + '<p class="card__reason">' + esc(c.reason) + '</p>'
       + '<dl class="price">'
-      +   '<div class="price__row price__row--listed"><dt>Giá niêm yết</dt><dd>' + money(c.listed) + '</dd></div>'
-      +   '<div class="price__row"><dt>Giá chương trình 24/7</dt><dd>' + money(c.price) + '</dd></div>'
-      +   '<div class="price__row price__row--final"><dt>Giá bạn thanh toán</dt><dd>' + money(c.price) + '</dd></div>'
+      +   '<div class="price__row price__row--listed"><dt>Giá niêm yết</dt><dd>' + d(c.listed) + '</dd></div>'
+      +   '<div class="price__row"><dt>Giá chương trình 24/7</dt><dd>' + d(c.price) + '</dd></div>'
+      +   '<div class="price__row price__row--final"><dt>Giá bạn thanh toán</dt><dd>' + d(c.price) + '</dd></div>'
       + '</dl>'
-      + '<p class="price__serving">Chi phí mỗi bữa: ' + esc(c.serving.replace(/\s*mỗi bữa$/, '').replace(/đ/g, '\u00a0₫')) + '</p>'
-      + '<p class="price__preview">Thành viên Silver chỉ trả ' + money(c.silver) + ' · <a href="#">Tìm hiểu</a></p>'
-      + '<details class="price__why"><summary>Vì sao tôi có giá này?</summary><div class="price__breakdown"><p class="price__breakdown-title">Cấu thành giá</p><dl>'
-      +   '<div class="price__row"><dt>Giá niêm yết</dt><dd>' + money(c.listed) + '</dd></div>'
-      +   '<div class="price__row"><dt>Giá chương trình 24/7</dt><dd>' + money(c.price) + '</dd></div>'
-      +   '<div class="price__row"><dt>Quyền lợi thành viên</dt><dd>Silver · ' + money(c.silver) + '</dd></div>'
-      + '</dl></div></details>'
       + '<div class="card__actions">'
       +   (oos ? '<button type="button" class="notify" data-card-notify aria-pressed="false"></button>'
-               : '<button type="button" class="card__add" data-card-add aria-label="Thêm ' + esc(c.name) + ' vào giỏ"><span class="material-symbols-outlined" aria-hidden="true">add_shopping_cart</span><span>Thêm vào giỏ</span></button>')
-      + '</div></div>'
+               : '<button type="button" class="btn btn--primary" data-card-buy>Mua ngay</button>'
+                 + '<button type="button" class="iconbtn" data-card-add aria-label="Thêm ' + esc(c.name) + ' vào giỏ"><svg class="icon" aria-hidden="true"><use href="#i-cart"/></svg></button>')
+      + '</div>'
       + '</article></li>';
   }
   function renderCards() {
@@ -3757,7 +4027,7 @@ html { scrollbar-gutter: stable; }
     $('emptyTitle').focus();
   }
   function remove(it, row) {
-    if (row.classList.contains('is-leaving')) return;   // bấm xoá lần hai trong lúc hàng đang trượt ra
+    if (row.classList.contains('is-leaving')) return;   // bấm xóa lần hai trong lúc hàng đang trượt ra
     var listEl = row.parentNode, rowIndex = Array.prototype.indexOf.call(listEl.children, row);
     var done = function () {
       var at = items.indexOf(it);
@@ -3765,7 +4035,7 @@ html { scrollbar-gutter: stable; }
       items.splice(at, 1);
       commit();
       focusAfterRemove(listEl, rowIndex);
-      showToast('Đã xoá ' + it.name + ' khỏi giỏ.', function () {
+      showToast('Đã xóa ' + it.name + ' khỏi giỏ.', function () {
         items.push(it);   // addedAt giữ nguyên nên món về đúng chỗ cũ trong danh sách
         commit(it.status === 'SELLABLE' ? it.sku : null);
         var back = document.querySelector('.line[data-sku="' + CSS.escape(it.sku) + '"] .line__name a');
@@ -3844,13 +4114,13 @@ html { scrollbar-gutter: stable; }
       renderLines(); syncCards();
       var again = listOff.querySelector('.line[data-sku="' + CSS.escape(it.sku) + '"] [data-act="notify"]');
       if (again) again.focus();
-      showToast(notifySet[it.sku] ? 'Ginsengfood sẽ báo cho bạn khi ' + it.name + ' có lô mới.' : 'Đã huỷ báo tin cho ' + it.name + '.');
+      showToast(notifySet[it.sku] ? 'Ginsengfood sẽ báo cho bạn khi ' + it.name + ' có lô mới.' : 'Đã hủy báo tin cho ' + it.name + '.');
     }
     if (act === 'remind') {
       it.remind = !it.remind; save(); renderLines();
       var r = listOn.querySelector('.line[data-sku="' + CSS.escape(it.sku) + '"] [data-act="remind"]');
       if (r) r.focus();
-      showToast(it.remind ? 'Đã đặt nhắc: Ginsengfood báo bạn trước 10 phút khi phiên ' + hhmm(it.next) + ' ' + dayWord(it.next) + ' mở.' : 'Đã huỷ nhắc phiên Giờ Vàng.');
+      showToast(it.remind ? 'Đã đặt nhắc: Ginsengfood báo bạn trước 10 phút khi phiên ' + hhmm(it.next) + ' ' + dayWord(it.next) + ' mở.' : 'Đã hủy nhắc phiên Giờ Vàng.');
     }
     /* nút −/+ bị vô hiệu khi chạm 1 hoặc 20: chuyển tiêu điểm sang nút còn bấm được thay vì để rơi về body */
     if ((act === 'inc' || act === 'dec') && ctl.disabled) {
@@ -3923,7 +4193,7 @@ html { scrollbar-gutter: stable; }
     if (nb) {
       notifySet[sku] = !notifySet[sku]; saveNotify();
       syncCards(); renderLines();
-      showToast(notifySet[sku] ? 'Ginsengfood sẽ báo cho bạn khi ' + name + ' có lô mới.' : 'Đã huỷ báo tin cho ' + name + '.');
+      showToast(notifySet[sku] ? 'Ginsengfood sẽ báo cho bạn khi ' + name + ' có lô mới.' : 'Đã hủy báo tin cho ' + name + '.');
     }
   });
   /* Nút ở nhóm sắp ra mắt trỏ về một nhóm đang bán */
@@ -4059,14 +4329,70 @@ html { scrollbar-gutter: stable; }
   /* ---- Shell: header dính, menu di động, nút Hỗ trợ, bản tin ---- */
   var header = $('header');
   window.addEventListener('scroll', function () { header.setAttribute('data-stuck', window.scrollY > 8 ? 'true' : 'false'); }, { passive: true });
-  var navToggle = $('navToggle'), mobileNav = $('mobileNav');
-  navToggle.addEventListener('click', function () {
-    var open = !mobileNav.classList.contains('is-open');
+  /* Menu di động và bảng tìm kiếm: mở/đóng bằng lớp is-open (CSS lo chuyển động), có màn che,
+     khoá cuộn nền và giữ tiêu điểm trong lớp phủ — cùng một hệ với trang-chu.html */
+  var navToggle = document.getElementById('navToggle');
+  var mobileNav = document.getElementById('mobileNav');
+  var navScrim = document.getElementById('navScrim');
+  var searchToggle = document.getElementById('searchToggle');
+  var searchPanel = document.getElementById('searchPanel');
+  var searchInput = document.getElementById('searchPanelInput');
+  var mqTabs = window.matchMedia('(max-width: 1023px)');
+  var mqCompact = window.matchMedia('(max-width: 1279px)');
+  function navIsOpen() { return mobileNav.classList.contains('is-open'); }
+  function searchIsOpen() { return searchPanel.classList.contains('is-open'); }
+  /* Màn che và khoá cuộn dùng chung cho cả menu lẫn bảng tìm kiếm */
+  function syncOverlay() {
+    var on = navIsOpen() || searchIsOpen();
+    navScrim.classList.toggle('is-on', on);
+    document.body.classList.toggle('is-nav-open', on);
+  }
+  function setNav(open) {
+    if (open === navIsOpen()) return;
+    if (open) setSearch(false);   /* hai lớp phủ cùng bám mép header, không mở đồng thời */
     mobileNav.classList.toggle('is-open', open);
-    navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    navToggle.setAttribute('aria-expanded', String(open));
     navToggle.setAttribute('aria-label', open ? 'Đóng menu' : 'Mở menu');
-    navToggle.querySelector('use').setAttribute('href', open ? '#i-close' : '#i-menu');
+    var navMorph = navToggle.closest('ui-menu-close-morph'); if (navMorph) navMorph.state = open ? 'close' : 'menu';
+    syncOverlay();
+    if (open) mobileNav.querySelector('a').focus();
+  }
+  function setSearch(open) {
+    if (open === searchIsOpen()) return;
+    if (open) setNav(false);
+    searchPanel.classList.toggle('is-open', open);
+    searchToggle.setAttribute('aria-expanded', String(open));
+    searchToggle.setAttribute('aria-label', open ? 'Đóng tìm kiếm' : 'Mở tìm kiếm');
+    searchToggle.querySelector('use').setAttribute('href', open ? '#i-close' : '#i-search');
+    syncOverlay();
+    if (open) searchInput.focus();
+  }
+  navToggle.addEventListener('click', function () { setNav(!navIsOpen()); });
+  searchToggle.addEventListener('click', function () { setSearch(!searchIsOpen()); });
+  document.getElementById('searchCancel').addEventListener('click', function () { setSearch(false); searchToggle.focus(); });
+  searchPanel.querySelector('form').addEventListener('submit', function (e) { e.preventDefault(); setSearch(false); }); /* mock: chưa có trang kết quả */
+  searchPanel.addEventListener('click', function (e) { if (e.target.closest('a')) setSearch(false); });
+  navScrim.addEventListener('click', function () {
+    if (searchIsOpen()) { setSearch(false); searchToggle.focus(); }
+    if (navIsOpen()) { setNav(false); navToggle.focus(); }
   });
+  document.addEventListener('keydown', function (e) {
+    var openPanel = navIsOpen() ? mobileNav : (searchIsOpen() ? searchPanel : null);
+    if (!openPanel) return;
+    var trigger = openPanel === mobileNav ? navToggle : searchToggle;
+    var close = openPanel === mobileNav ? setNav : setSearch;
+    if (e.key === 'Escape') { close(false); trigger.focus(); return; }
+    if (e.key !== 'Tab') return;
+    /* Giữ tiêu điểm trong lớp phủ: nền đã bị màn che, Tab không nên đi ra sau lưng nó */
+    var f = [trigger].concat(Array.prototype.slice.call(openPanel.querySelectorAll('a, button, input')));
+    var first = f[0], last = f[f.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  });
+  mobileNav.addEventListener('click', function (e) { if (e.target.closest('a')) setNav(false); });
+  /* Nới màn hình qua mốc desktop thì nút mở tương ứng biến mất, phải đóng kẻo lớp phủ kẹt lại */
+  mqTabs.addEventListener('change', function (e) { if (!e.matches) setNav(false); });
+  mqCompact.addEventListener('change', function (e) { if (!e.matches) setSearch(false); });
   var supportBtn = $('supportBtn'), supportMenu = $('supportMenu');
   supportBtn.addEventListener('click', function () {
     var open = supportMenu.hidden;

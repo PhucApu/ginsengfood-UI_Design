@@ -1650,7 +1650,7 @@
   <label class="mock__group" id="mkReasonWrap" hidden><span class="mock__label">Lý do</span>
     <select id="mkReason">
       <option value="khong-ro">Chưa rõ lý do</option>
-      <option value="huy">Khách huỷ giao dịch</option>
+      <option value="huy">Khách hủy giao dịch</option>
       <option value="ngan-hang">Ngân hàng từ chối</option>
     </select>
   </label>
@@ -1697,12 +1697,12 @@
                 <h3>Chi tiết số tiền thanh toán</h3>
                 <p>Các khoản tiền dưới đây đã được hệ thống tính và xác nhận.</p>
                 <dl>
-                  <div><dt>Giá niêm yết</dt><dd>924.000&nbsp;₫</dd></div>
-                  <div><dt>Ưu đãi</dt><dd>−110.880&nbsp;₫</dd></div>
-                  <div><dt>Tiền hàng sau ưu đãi</dt><dd>813.120&nbsp;₫</dd></div>
-                  <div><dt>Phí vận chuyển</dt><dd>30.000&nbsp;₫</dd></div>
+                  <div><dt>Giá niêm yết</dt><dd>924.000đ</dd></div>
+                  <div><dt>Ưu đãi</dt><dd>−110.880đ</dd></div>
+                  <div><dt>Tiền hàng sau ưu đãi</dt><dd>813.120đ</dd></div>
+                  <div><dt>Phí vận chuyển</dt><dd>30.000đ</dd></div>
                   <div><dt>Thuế (đã bao gồm)</dt><dd>—</dd></div>
-                  <div><dt>Thanh toán</dt><dd>843.120&nbsp;₫</dd></div>
+                  <div><dt>Thanh toán</dt><dd>843.120đ</dd></div>
                 </dl>
               </section>
             </div>
@@ -1815,7 +1815,7 @@
     var ISSUES = { 'chu-ky': 1, 'so-tien': 1, 'khong-thay': 1, 'chua-xac-nhan': 1 };
 
     var el = function (id) { return document.getElementById(id); };
-    function money(n) { return Math.round(n).toLocaleString('vi-VN') + '\u00a0₫'; }
+    function money(n) { return Math.round(n).toLocaleString('vi-VN') + 'đ'; }
     function ic(id) { return '<svg class="icon" aria-hidden="true"><use href="#' + id + '"/></svg>'; }
 
     /* Biểu tượng trạng thái: vẽ trực tiếp để nét được tô theo từng bước */
@@ -1878,7 +1878,7 @@
           tone: 'info', icon: 'wait', spin: true, steps: 'current', doc: 'Đang chờ xác nhận thanh toán', total: 'Tổng thanh toán',
           title: 'Đang chờ xác nhận thanh toán',
           lead: 'Chúng tôi chưa nhận được xác nhận cuối cùng từ VNPAY cho đơn hàng ' + CODE + '. Việc này thường chỉ mất vài phút.',
-          badges: [['info', 'Đang chờ thanh toán', 'schedule'], ['info', 'Đang xác nhận', 'pending_actions']],
+          badges: [['info', 'Đang chờ thanh toán', 'schedule'], ['info', 'Chờ thanh toán', 'pending_actions']],
           facts: [codeRow(), ['Phương thức', ORDER.method], ['Cập nhật gần nhất', '<span id="resUpdated">' + ORDER.updatedAt + '</span>'], ['Số tiền cần thanh toán', money(ORDER.total), 'total']],
           alerts: [
             ['info', 'Nếu bạn vừa thanh toán trực tuyến, trạng thái có thể cần cổng thanh toán hoàn tất xác nhận trước khi đổi sang đã thanh toán.'],
@@ -1904,7 +1904,7 @@
             tips: ['Kiểm tra số dư và hạn mức giao dịch của thẻ hoặc tài khoản', 'Nhập đúng thông tin thẻ và mã OTP trong thời gian quy định', 'Thử lại hoặc chọn thẻ, ngân hàng khác']
           },
           'huy': {
-            lead: 'Bạn đã huỷ giao dịch trên cổng VNPAY, nên đơn hàng ' + CODE + ' chưa được thanh toán.',
+            lead: 'Bạn đã hủy giao dịch trên cổng VNPAY, nên đơn hàng ' + CODE + ' chưa được thanh toán.',
             tips: ['Bấm “Thanh toán lại” để mở lại cổng VNPAY khi bạn sẵn sàng', 'Bạn cũng có thể xem lại đơn trong lịch sử đơn hàng']
           },
           'ngan-hang': {
@@ -1917,7 +1917,7 @@
           tone: 'bad', icon: 'bad', steps: 'stop', doc: 'Thanh toán chưa thành công', total: 'Tổng thanh toán',
           title: 'Thanh toán chưa thành công',
           lead: r.lead,
-          badges: [['bad', 'Thanh toán thất bại', 'error'], ['info', 'Đang xác nhận', 'pending_actions']],
+          badges: [['bad', 'Thanh toán thất bại', 'error'], ['info', 'Chờ thanh toán', 'pending_actions']],
           facts: [codeRow(), ['Phương thức', ORDER.method], ['Cập nhật gần nhất', ORDER.updatedAt], ['Số tiền cần thanh toán', money(ORDER.total), 'total']],
           tips: { title: 'Bạn có thể thử', items: r.tips },
           alerts: [['warn', 'Nếu tài khoản của bạn đã bị trừ tiền, vui lòng liên hệ hỗ trợ kèm mã đơn hàng để được kiểm tra.']],
